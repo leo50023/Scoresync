@@ -30,6 +30,7 @@
     background: linear-gradient(145deg, rgba(17,27,47,0.9), rgba(11,17,31,0.96));
     border: 1px solid rgba(148,163,184,0.14);
   }
+  .home-cta-button { color: #1e293b !important; }
   @media (max-width: 767px) {
     .home-hero-layout { grid-template-columns: 1fr; text-align: center; }
     .home-hero-copy { margin-left: auto; margin-right: auto; }
@@ -283,7 +284,7 @@
     <h2 class="text-3xl sm:text-4xl font-black mb-4 tracking-tight">Make your next event run smoothly.</h2>
     <p class="text-sm sm:text-base mb-8 leading-relaxed" style="color:#b7c5da">Bring confident scoring and clear results to competitions in Gloria and beyond.</p>
     <div class="flex gap-3 justify-center flex-wrap">
-      <a href="/register" class="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-black px-10 py-4 rounded-xl shadow-xl transition text-sm">
+      <a href="/register" class="home-cta-button inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-black px-10 py-4 rounded-xl shadow-xl transition text-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
         Start Now
       </a>
