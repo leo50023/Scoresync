@@ -244,7 +244,7 @@
   </div>
 
   <!-- ── Official Tabulation Sheet ── -->
-  <div class="section-card animate-fadeup-2 overflow-x-auto">
+  <div class="section-card animate-fadeup-2 overflow-x-auto print-tabulation-sheet">
     <div class="section-header no-print">
       <h2>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -274,12 +274,12 @@
           <th>Contestant</th>
           <th class="hidden sm:table-cell">Barangay</th>
           {{#each criteria}}
-          <th class="text-center text-xs px-3">
+          <th class="text-center text-xs px-3 print-criterion-col">
             <div class="font-bold">{{name}}</div>
             <div class="font-normal text-slate-400 text-[10px]">{{weight}}% &bull; max {{maxScore}}</div>
           </th>
           {{/each}}
-          <th class="text-center text-blue-700 font-extrabold">Final Score</th>
+          <th class="text-center text-blue-700 font-extrabold print-final-score">Final Score</th>
           <th class="text-center text-slate-500 text-xs no-print">Gap to 1st</th>
         </tr>
       </thead>
@@ -308,7 +308,7 @@
           </td>
           <td class="text-sm hidden sm:table-cell" style="color:#64748b">{{barangay}}</td>
           {{#each breakdown}}
-          <td class="text-center px-3">
+          <td class="text-center px-3 print-criterion-col">
             <div class="font-extrabold text-sm" style="color:#e2e8f0">{{avg}}</div>
             <div class="text-[10px] font-bold" style="color:{{color}}">{{weighted}}%</div>
             <div class="mt-1 h-1 rounded-full overflow-hidden w-16 mx-auto" style="background:rgba(255,255,255,0.08)">
@@ -316,7 +316,7 @@
             </div>
           </td>
           {{/each}}
-          <td class="text-center">
+          <td class="text-center print-final-score">
             <span class="font-extrabold text-lg
               {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
               {{finalScoreDisplay}}%
@@ -619,6 +619,38 @@
 
   /* ── Full standings table — show centered ── */
   .overflow-x-auto { overflow: visible !important; }
+
+  /* Keep every criterion and score column within the printable page width. */
+  .print-tabulation-sheet {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+  .data-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+  }
+  .data-table th,
+  .data-table td {
+    padding: 4px 3px !important;
+    font-size: 8px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+  .data-table th:nth-child(1),
+  .data-table td:nth-child(1) { width: 32px !important; }
+  .data-table th:nth-child(2),
+  .data-table td:nth-child(2) { width: 32px !important; }
+  .data-table th:nth-child(3),
+  .data-table td:nth-child(3) { width: 18% !important; }
+  .data-table th:nth-child(4),
+  .data-table td:nth-child(4) { width: 12% !important; }
+  .data-table .print-final-score { width: 9% !important; }
+  .data-table .print-criterion-col { width: auto !important; }
+  .data-table tbody tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
 .print-show { display: none; }
 </style>
