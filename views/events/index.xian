@@ -4,6 +4,13 @@
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+  <style>
+    .event-card-actions { display:flex; flex-wrap:nowrap; align-items:stretch; gap:8px; }
+    .event-card-actions > * { flex:1 1 0; min-width:0; }
+    .event-card-actions > form { display:flex; }
+    .event-card-actions > a,
+    .event-card-actions > form > button { width:100%; min-width:0; }
+  </style>
 
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
@@ -86,14 +93,14 @@
           {{/if}}
         </div>
 
-        <div class="flex flex-wrap gap-2 mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06)">
-          <a href="/events/{{id}}" class="btn-primary btn-sm flex-1 justify-center py-2">
+        <div class="event-card-actions mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06)">
+          <a href="/events/{{id}}" class="btn-primary btn-sm justify-center py-2">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             View
           </a>
           {{#if ../isAdmin}}
             {{#if (eq status 'upcoming')}}
-            <form method="POST" action="/events/{{id}}/status" class="inline flex-1">
+            <form method="POST" action="/events/{{id}}/status">
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">
               <input type="hidden" name="status" value="ongoing">
               <button type="submit" class="btn-sm w-full justify-center py-2 text-xs font-semibold text-white"
@@ -103,7 +110,7 @@
             </form>
             {{/if}}
             {{#if (eq status 'ongoing')}}
-            <form method="POST" action="/events/{{id}}/status" class="inline flex-1" onsubmit="return confirm('Manually end event?')">
+            <form method="POST" action="/events/{{id}}/status" onsubmit="return confirm('Manually end event?')">
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">
               <input type="hidden" name="status" value="completed">
               <button type="submit" class="btn-sm w-full justify-center py-2 text-xs font-semibold text-white"
@@ -112,7 +119,7 @@
               </button>
             </form>
             {{/if}}
-          <a href="/events/{{id}}/edit" class="btn-sm btn-sm-gray flex-1 justify-center py-2">
+          <a href="/events/{{id}}/edit" class="btn-sm btn-sm-gray justify-center py-2">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Edit
           </a>
