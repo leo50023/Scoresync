@@ -21,6 +21,12 @@
     .rank-other { background: linear-gradient(135deg,#1e3a5f,#2563eb); }
     .score-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
     .gold-text { background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b); background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: shimmer 3s ease infinite; }
+    @media screen and (max-width:640px) {
+      #display-podium { display:none; }
+      .display-rank-row { gap:10px !important; padding:12px !important; }
+      .display-rank-name { overflow-wrap:anywhere; }
+      .display-rank-score { min-width:64px !important; }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -83,7 +89,7 @@
 
     <!-- Top 3 Podium -->
     {{#if (gte ranked.length 3)}}
-    <div class="flex items-end justify-center gap-4 mb-8 max-w-3xl mx-auto">
+    <div id="display-podium" class="flex items-end justify-center gap-4 mb-8 max-w-3xl mx-auto">
 
       <!-- 2nd -->
       {{#each ranked}}{{#if (eq rank 2)}}
@@ -134,10 +140,14 @@
     </div>
     {{/if}}
 
-    <!-- Full Rankings Table -->
+    <!-- All participants, ranked by score -->
     <div class="max-w-4xl mx-auto space-y-2">
+      <div class="flex items-center justify-between px-1">
+        <h2 class="text-sm font-extrabold text-white">All Participants by Rank</h2>
+        <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(59,130,246,0.12);color:#93c5fd">{{ranked.length}} participants</span>
+      </div>
       {{#each ranked}}
-      <div class="flex items-center gap-4 px-5 py-3.5 rounded-2xl animate-in"
+      <div class="display-rank-row flex items-center gap-4 px-5 py-3.5 rounded-2xl animate-in"
         style="animation-delay:{{@index}}0ms;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
 
         <!-- Rank -->
@@ -154,7 +164,7 @@
         {{/if}}
 
         <!-- Name -->
-        <div class="flex-1 min-w-0">
+        <div class="display-rank-name flex-1 min-w-0">
           <div class="font-bold text-sm" style="color:#e2e8f0">{{name}}</div>
           {{#if barangay}}<div class="text-xs" style="color:#475569">Brgy. {{barangay}}</div>{{/if}}
         </div>
@@ -169,7 +179,7 @@
         </div>
 
         <!-- Score -->
-        <div class="text-right flex-shrink-0 min-w-[80px]">
+        <div class="display-rank-score text-right flex-shrink-0 min-w-[80px]">
           <div class="text-lg font-black {{#if (eq rank 1)}}gold-text{{/if}}" style="{{#unless (eq rank 1)}}color:#e2e8f0{{/unless}}">{{finalScoreDisplay}}%</div>
           {{#if gapToFirst}}{{#unless (eq rank 1)}}<div class="text-[10px]" style="color:#374151">-{{gapToFirst}}%</div>{{/unless}}{{/if}}
         </div>

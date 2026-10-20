@@ -169,7 +169,7 @@
     <div class="flex items-center justify-between px-1">
       <h3 class="font-extrabold text-base flex items-center gap-2" style="color:#e2e8f0">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Full Standings
+        All Participants by Rank
       </h3>
       <span class="badge badge-blue text-xs">{{ranked.length}} contestants</span>
     </div>
@@ -181,7 +181,7 @@
       {{#if (eq rank 3)}}ring-1 ring-orange-200{{/if}}">
 
       <!-- Contestant row -->
-      <div class="px-5 py-4 flex items-center gap-4">
+      <div class="results-standing-row px-5 py-4 flex items-center gap-4">
         <!-- Rank badge -->
         <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shadow-sm
           {{#if (eq rank 1)}}text-white{{else}}{{#if (eq rank 2)}}text-white{{else}}{{#if (eq rank 3)}}text-white{{else}}bg-slate-100 text-slate-500{{/if}}{{/if}}{{/if}}"
@@ -195,7 +195,7 @@
         </div>
 
         <!-- Name + barangay -->
-        <div class="flex-1 min-w-0">
+        <div class="results-standing-name flex-1 min-w-0">
           <div class="font-extrabold text-sm leading-tight truncate" style="color:#e2e8f0">{{name}}</div>
           {{#if tieDetected}}
             {{#if tieBroken}}
@@ -222,7 +222,7 @@
         </div>
 
         <!-- Final score -->
-        <div class="flex-shrink-0 text-right">
+        <div class="results-standing-score flex-shrink-0 text-right">
           <div class="font-black text-xl
             {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
             {{finalScoreDisplay}}<span class="text-sm font-normal opacity-60">%</span>
@@ -630,28 +630,31 @@
     flex-wrap: wrap;
     column-gap: 4px;
   }
-  [data-role="podium-blocks"] {
-    padding: 16px !important;
-  }
-  .results-podium-layout {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 12px;
-  }
-  .results-podium-layout > [data-podium-rank="1"] {
-    grid-column: 1 / -1;
-    order: -1;
-    max-width: none;
-    margin-top: 0;
-  }
-  .results-podium-layout > [data-podium-rank="2"],
-  .results-podium-layout > [data-podium-rank="3"] {
-    width: 100%;
-    max-width: none;
-  }
-  .results-podium-layout > [data-podium-rank] > div:last-child {
+  #podium-container {
     display: none;
+  }
+  .results-standing-row {
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+  .results-standing-row > :first-child {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .results-standing-row > :nth-child(2) {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .results-standing-name .truncate {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
+  .results-standing-score {
+    min-width: 64px;
+  }
+  .results-standing-score > div:first-child {
+    font-size: 1rem;
   }
 }
 @media print {
