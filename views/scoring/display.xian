@@ -21,6 +21,23 @@
     .rank-other { background: linear-gradient(135deg,#1e3a5f,#2563eb); }
     .score-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
     .gold-text { background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b); background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: shimmer 3s ease infinite; }
+    .display-podium-layout { margin-bottom:1rem !important; }
+    .display-podium-layout > [data-podium-rank] > div:first-child { font-size:1.5rem; margin-bottom:0.25rem; }
+    .display-podium-layout > [data-podium-rank] > div:nth-child(2) { padding:0.75rem !important; }
+    .display-podium-layout > [data-podium-rank] > div:nth-child(2) > img,
+    .display-podium-layout > [data-podium-rank] > div:nth-child(2) > div.rounded-full {
+      width:3.5rem !important;
+      height:3.5rem !important;
+      margin-bottom:0.5rem !important;
+    }
+    .display-podium-layout > [data-podium-rank="1"] > div:nth-child(2) > img,
+    .display-podium-layout > [data-podium-rank="1"] > div:nth-child(2) > div.rounded-full {
+      width:4rem !important;
+      height:4rem !important;
+    }
+    .display-podium-layout > [data-podium-rank] > div:last-child { display:none; }
+    .display-podium-layout > [data-podium-rank] > div:nth-child(2) > .text-2xl { font-size:1.25rem; }
+    .display-podium-layout > [data-podium-rank="1"] > div:nth-child(2) > .text-3xl { font-size:1.5rem; }
     @media screen and (max-width:640px) {
       .display-podium-layout {
         display:grid !important;
@@ -100,7 +117,7 @@
   </div>
 
   <!-- Scoreboard -->
-  <div class="flex-1 px-6 py-6 overflow-y-auto">
+  <div class="flex-1 px-6 py-4 overflow-y-auto">
 
     {{#if ranked.length}}
 
