@@ -1,15 +1,24 @@
 import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
-  addDoc, updateDoc, query, where, serverTimestamp,
+  updateDoc, runTransaction, serverTimestamp,
 } from "firebase/firestore";
 import crypto from "crypto";
 import { sortContestantsByNumber } from "../utils/contestantOrder.js";
+
+function ensureVoterId(req) {
+  if (!req.session) throw new Error("Voting session is unavailable.");
+  if (typeof req.session.voterId !== "string") {
+    req.session.voterId = crypto.randomUUID();
+  }
+  return req.session.voterId;
+}
 
 // ─── Public voting page ───────────────────────────────────────────────────────
 export const votingPage = async (req, res) => {
   const { eventId } = req.params;
   try {
+    const voterId = ensureVoterId(req);
     const [eSnap, cSnap, vSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
@@ -49,6 +58,7 @@ export const votingPage = async (req, res) => {
       votingOpen,
       maxVotes,
       totalVotes,
+      alreadyVoted: vSnap.docs.some(d => d.id === voterId),
     });
   } catch (err) {
     console.error(err);
@@ -69,39 +79,38 @@ export const submitVote = async (req, res) => {
       return res.redirect(`/events/${eventId}/vote`);
     }
 
-    // (b) Fingerprint
-    const fingerprint = crypto
-      .createHash("sha256")
-      .update((req.ip || "") + "|" + (req.headers["user-agent"] || ""))
-      .digest("hex");
-
-    // (c) Check for duplicate vote
-    const dupQ   = query(
-      collection(db, "events", eventId, "votes"),
-      where("fingerprint", "==", fingerprint)
-    );
-    const dupSnap = await getDocs(dupQ);
-    if (!dupSnap.empty) {
-      req.flash("error_msg", "You have already voted.");
-      return res.redirect(`/events/${eventId}/vote`);
-    }
-
-    // (d) Sanitize contestantId
+    // (b) Sanitize and validate the selected contestant
     const contestantId = String(req.body.contestantId || "").trim().slice(0, 128);
     if (!contestantId) {
       req.flash("error_msg", "Invalid contestant.");
       return res.redirect(`/events/${eventId}/vote`);
     }
+    const contestantSnap = await getDoc(doc(db, "events", eventId, "contestants", contestantId));
+    if (!contestantSnap.exists()) {
+      req.flash("error_msg", "Invalid contestant.");
+      return res.redirect(`/events/${eventId}/vote`);
+    }
 
-    // (e) Record the vote
-    await addDoc(collection(db, "events", eventId, "votes"), {
-      contestantId,
-      fingerprint,
-      votedAt: serverTimestamp(),
-      ip:      req.ip || "",
+    // The browser's signed session ID makes duplicate submissions atomic per event.
+    const voterId = ensureVoterId(req);
+    const voteRef = doc(db, "events", eventId, "votes", voterId);
+    const voteRecorded = await runTransaction(db, async transaction => {
+      const existingVote = await transaction.get(voteRef);
+      if (existingVote.exists()) return false;
+
+      transaction.set(voteRef, {
+        contestantId,
+        voterId,
+        votedAt: serverTimestamp(),
+      });
+      return true;
     });
+    if (!voteRecorded) {
+      req.flash("error_msg", "You have already voted.");
+      return res.redirect(`/events/${eventId}/vote`);
+    }
 
-    // (f) Flash success + redirect
+    // (c) Flash success + redirect
     req.flash("success_msg", "Your vote has been cast!");
     res.redirect(`/events/${eventId}/vote`);
   } catch (err) {

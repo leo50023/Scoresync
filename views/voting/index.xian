@@ -18,11 +18,12 @@
   </div>
   {{/if}}
 
-  <!-- ── Already-voted banner (shown by JS if localStorage hit) ── -->
-  <div id="voted-banner" class="alert-success animate-fadeup" style="display:none" role="status">
+  {{#if alreadyVoted}}
+  <div class="alert-success animate-fadeup" role="status">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     ✓ You already voted! Thank you for participating.
   </div>
+  {{/if}}
 
   <!-- ── Hero Header ── -->
   <div class="card-flat overflow-hidden animate-fadeup" style="background:linear-gradient(135deg,#0f2156,#1a56db);border-color:rgba(255,255,255,0.12)">
@@ -42,6 +43,9 @@
         <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">{{event.name}}</h1>
         <p class="mt-1 text-sm font-semibold" style="color:rgba(255,255,255,0.7)">
           People's Choice Award
+        </p>
+        <p class="mt-2 text-xs" style="color:rgba(255,255,255,0.7)">
+          Scan the QR code to see all contestants. You can vote once per browser session.
         </p>
       </div>
       <div class="flex-shrink-0">
@@ -110,8 +114,9 @@
                   class="vote-btn btn-primary w-full text-sm"
                   data-id="{{id}}"
                   style="border-radius:10px;padding:8px 0;width:100%"
-                  {{#unless ../votingOpen}}disabled{{/unless}}>
-            Vote ♥
+                  {{#unless ../votingOpen}}disabled{{/unless}}
+                  {{#if ../alreadyVoted}}disabled{{/if}}>
+            {{#if ../alreadyVoted}}✓ Voted{{else}}Vote ♥{{/if}}
           </button>
         </form>
       </div>
@@ -127,7 +132,8 @@
   <!-- ── QR Code Section ── -->
   <div class="card-flat p-5 animate-fadeup-2 flex flex-col sm:flex-row sm:items-center gap-4">
     <div class="flex-1 min-w-0">
-      <div class="font-bold text-sm" style="color:#e2e8f0">Share this voting page</div>
+      <div class="font-bold text-sm" style="color:#e2e8f0">Scan to vote</div>
+      <div class="text-xs mt-1" style="color:#94a3b8">Opens the page with the full contestant list.</div>
       <div class="text-xs mt-1 break-all" style="color:#64748b" id="vote-url"></div>
     </div>
     <button type="button"
@@ -149,27 +155,6 @@
     // Show current URL under QR section
     var urlEl = document.getElementById('vote-url');
     if (urlEl) urlEl.textContent = window.location.href;
-
-    var STORAGE_KEY = 'ss_voted_' + '{{event.id}}';
-
-    // If already voted, disable buttons + show banner
-    if (localStorage.getItem(STORAGE_KEY)) {
-      document.getElementById('voted-banner').style.display = '';
-      document.querySelectorAll('.vote-btn').forEach(function (b) {
-        b.disabled = true;
-        b.textContent = '✓ Voted';
-      });
-    }
-
-    // After success flash, mark voted in localStorage
-    var successEl = document.querySelector('.alert-success');
-    if (successEl && successEl.textContent.indexOf('vote has been cast') !== -1) {
-      localStorage.setItem(STORAGE_KEY, '1');
-      document.querySelectorAll('.vote-btn').forEach(function (b) {
-        b.disabled = true;
-        b.textContent = '✓ Voted';
-      });
-    }
 
     // Live vote count refresh every 10 seconds
     var EVENT_ID = '{{event.id}}';
