@@ -247,7 +247,7 @@
             </h2>
             <span id="criteria-weight-badge" class="text-xs font-extrabold px-2 py-0.5 rounded-full" style="background:rgba(139,92,246,0.15);color:#c4b5fd;border:1px solid rgba(139,92,246,0.3)">0 / 100%</span>
           </div>
-          <div class="px-5 py-2 text-xs" style="color:#64748b">Auto-filled from event type. Edit, remove, or add rows. Weights must total <strong style="color:#c4b5fd">100%</strong>.</div>
+          <div class="px-5 py-2 text-xs" style="color:#64748b">Auto-filled from event type. Edit, remove, or add rows. Weights must total <strong style="color:#c4b5fd">100%</strong>. Audience Impact is scored by judges; public votes remain a separate People's Choice award.</div>
           <!-- Column headers -->
           <div class="px-5 flex items-center gap-2 mb-1">
             <span class="flex-1 text-[10px] font-bold uppercase tracking-wider" style="color:#374151">Criteria Name</span>
@@ -511,11 +511,12 @@ function clearCreateQR() {
    ════════════════════════════════════════════════════════════ */
 const CRITERIA_PRESETS = {
   pageant: [
-    { name: 'Beauty of Face',   weight: 25, max: 100 },
-    { name: 'Beauty of Figure', weight: 20, max: 100 },
-    { name: 'Poise & Bearing',  weight: 20, max: 100 },
-    { name: 'Intelligence & Q&A', weight: 20, max: 100 },
-    { name: 'Swimwear / Attire', weight: 15, max: 100 },
+    { name: 'Beauty of Face',     weight: 22, max: 100 },
+    { name: 'Beauty of Figure',   weight: 18, max: 100 },
+    { name: 'Poise & Bearing',    weight: 18, max: 100 },
+    { name: 'Intelligence & Q&A', weight: 18, max: 100 },
+    { name: 'Swimwear / Attire',  weight: 14, max: 100 },
+    { name: 'Audience Impact',    weight: 10, max: 100 },
   ],
   cultural: [
     { name: 'Choreography',     weight: 30, max: 100 },

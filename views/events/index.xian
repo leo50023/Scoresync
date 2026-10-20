@@ -5,11 +5,11 @@
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
   <style>
-    .event-card-actions { display:flex; flex-wrap:nowrap; align-items:stretch; gap:8px; }
-    .event-card-actions > * { flex:1 1 0; min-width:0; }
-    .event-card-actions > form { display:flex; }
+    .event-card-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; gap:8px; }
+    .event-card-actions.event-card-actions-three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .event-card-actions > form { display:contents; }
     .event-card-actions > a,
-    .event-card-actions > form > button { width:100%; min-width:0; }
+    .event-card-actions > form > button { box-sizing:border-box; width:100%; min-width:0; }
   </style>
 
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
@@ -93,7 +93,7 @@
           {{/if}}
         </div>
 
-        <div class="event-card-actions mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06)">
+        <div class="event-card-actions {{#if ../isAdmin}}{{#if (eq status 'ongoing')}}event-card-actions-three{{else}}{{#if (eq status 'upcoming')}}event-card-actions-three{{/if}}{{/if}}{{/if}} mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06)">
           <a href="/events/{{id}}" class="btn-primary btn-sm justify-center py-2">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             View
