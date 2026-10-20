@@ -21,8 +21,25 @@
     .rank-other { background: linear-gradient(135deg,#1e3a5f,#2563eb); }
     .score-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
     .gold-text { background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b); background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: shimmer 3s ease infinite; }
-    #display-podium { display:none; }
     @media screen and (max-width:640px) {
+      .display-podium-layout {
+        display:grid !important;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        align-items:stretch;
+        gap:12px;
+        margin-bottom:20px;
+      }
+      .display-podium-layout > [data-podium-rank="1"] {
+        grid-column:1 / -1;
+        order:-1;
+      }
+      .display-podium-layout > [data-podium-rank="2"],
+      .display-podium-layout > [data-podium-rank="3"] {
+        min-width:0;
+      }
+      .display-podium-layout > [data-podium-rank] > div:last-child {
+        display:none;
+      }
       .display-rank-row { gap:10px !important; padding:12px !important; }
       .display-rank-name { overflow-wrap:anywhere; }
       .display-rank-score { min-width:64px !important; }
@@ -89,11 +106,11 @@
 
     <!-- Top 3 Podium -->
     {{#if (gte ranked.length 3)}}
-    <div id="display-podium" class="flex items-end justify-center gap-4 mb-8 max-w-3xl mx-auto">
+    <div id="display-podium" class="display-podium-layout flex items-end justify-center gap-4 mb-8 max-w-3xl mx-auto">
 
       <!-- 2nd -->
       {{#each ranked}}{{#if (eq rank 2)}}
-      <div class="flex-1 min-w-0 text-center animate-in" style="animation-delay:0.1s">
+      <div class="flex-1 min-w-0 text-center animate-in" data-podium-rank="2" style="animation-delay:0.1s">
         <div class="text-3xl mb-2">🥈</div>
         <div class="rounded-2xl p-4" style="background:rgba(100,116,139,0.15);border:2px solid rgba(100,116,139,0.3)">
           {{#if photo}}<img src="{{photo}}" alt="{{name}}" class="w-16 h-16 rounded-full object-cover mx-auto mb-2 shadow-lg" style="border:2px solid #94a3b8;object-position:center top"/>
@@ -108,13 +125,13 @@
 
       <!-- 1st -->
       {{#each ranked}}{{#if (eq rank 1)}}
-      <div class="flex-1 min-w-0 text-center animate-in" style="animation-delay:0s;margin-bottom:0">
+      <div class="flex-1 min-w-0 text-center animate-in" data-podium-rank="1" style="animation-delay:0s;margin-bottom:0">
         <div class="text-4xl mb-2" style="filter:drop-shadow(0 4px 12px rgba(251,191,36,0.5))">🏆</div>
         <div class="rounded-2xl p-5" style="background:linear-gradient(160deg,rgba(146,64,14,0.2),rgba(245,158,11,0.15));border:2px solid rgba(245,158,11,0.5)">
           {{#if photo}}<img src="{{photo}}" alt="{{name}}" class="w-20 h-20 rounded-full object-cover mx-auto mb-2 shadow-xl" style="border:3px solid #f59e0b;object-position:center top"/>
           {{else}}<div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-black text-xl mx-auto mb-2" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>{{/if}}
           <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:#fbbf24">Champion</div>
-          <div class="text-xl font-black text-white" style="overflow-wrap:anywhere">{{name}}</div>
+          <div class="text-xl font-black" style="color:#fef3c7;overflow-wrap:anywhere">{{name}}</div>
           {{#if barangay}}<div class="text-xs mt-0.5" style="color:#fbbf24">Brgy. {{barangay}}</div>{{/if}}
           <div class="text-3xl font-black mt-2 gold-text">{{finalScoreDisplay}}%</div>
         </div>
@@ -124,7 +141,7 @@
 
       <!-- 3rd -->
       {{#each ranked}}{{#if (eq rank 3)}}
-      <div class="flex-1 min-w-0 text-center animate-in" style="animation-delay:0.2s">
+      <div class="flex-1 min-w-0 text-center animate-in" data-podium-rank="3" style="animation-delay:0.2s">
         <div class="text-3xl mb-2">🥉</div>
         <div class="rounded-2xl p-4" style="background:rgba(124,45,18,0.15);border:2px solid rgba(249,115,22,0.3)">
           {{#if photo}}<img src="{{photo}}" alt="{{name}}" class="w-16 h-16 rounded-full object-cover mx-auto mb-2 shadow-lg" style="border:2px solid #f97316;object-position:center top"/>

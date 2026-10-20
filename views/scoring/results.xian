@@ -70,7 +70,7 @@
   {{#if ranked.length}}
 
   <!-- ── Podium ── -->
-  <div id="podium-container" class="card-flat overflow-hidden animate-fadeup" style="display:none">
+  <div id="podium-container" class="card-flat overflow-hidden animate-fadeup">
     <!-- Header -->
     <div class="px-6 pt-6 pb-3 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#0f2156,#1a56db)">
       <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(255,255,255,0.07) 0%,transparent 70%)"></div>
@@ -125,7 +125,7 @@
               <div class="w-full h-full flex items-center justify-center text-white text-base font-extrabold" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>
               {{/if}}
             </div>
-            <div class="font-extrabold text-slate-900 text-base leading-tight" style="overflow-wrap:anywhere">{{name}}</div>
+            <div class="font-extrabold text-base leading-tight" style="color:#713f12;overflow-wrap:anywhere">{{name}}</div>
             {{#if barangay}}<div class="text-slate-500 text-xs mt-0.5">Brgy. {{barangay}}</div>{{/if}}
             <div class="text-3xl font-black text-yellow-600 mt-3 leading-none"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-base font-normal text-yellow-400">%</span></div>
             <div class="mt-2 h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
@@ -629,6 +629,29 @@
     display: flex;
     flex-wrap: wrap;
     column-gap: 4px;
+  }
+  [data-role="podium-blocks"] {
+    padding: 16px !important;
+  }
+  .results-podium-layout {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+  }
+  .results-podium-layout > [data-podium-rank="1"] {
+    grid-column: 1 / -1;
+    order: -1;
+    max-width: none;
+    margin-top: 0;
+  }
+  .results-podium-layout > [data-podium-rank="2"],
+  .results-podium-layout > [data-podium-rank="3"] {
+    width: 100%;
+    max-width: none;
+  }
+  .results-podium-layout > [data-podium-rank] > div:last-child {
+    display: none;
   }
   .results-standing-row {
     gap: 8px !important;
