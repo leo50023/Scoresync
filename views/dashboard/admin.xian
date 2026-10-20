@@ -10,6 +10,27 @@
     .dashboard-event-action { display:inline-flex; width:44px; min-width:44px; height:44px; min-height:44px; align-items:center; justify-content:center; flex:0 0 44px; }
     .dashboard-event-action svg { width:14px; height:14px; }
     @media (max-width:640px) {
+      .dashboard-events-scroll { overflow-x:hidden !important; }
+      .dashboard-recent-events-table { display:block; width:100% !important; min-width:0 !important; table-layout:fixed; }
+      .dashboard-recent-events-table thead,
+      .dashboard-recent-events-table tbody { display:block; width:100%; }
+      .dashboard-recent-events-table thead tr { display:block; }
+      .dashboard-recent-events-table thead th:first-child { display:block; padding:10px 12px; }
+      .dashboard-recent-events-table thead th:not(:first-child) { display:none; }
+      .dashboard-recent-events-table tbody tr {
+        display:grid;
+        grid-template-columns:minmax(0,1fr) auto;
+        grid-template-areas:"event event" "status actions";
+        align-items:center;
+        width:100%;
+      }
+      .dashboard-recent-events-table tbody td { min-width:0; }
+      .dashboard-recent-events-table tbody td:first-child { grid-area:event; padding:12px; }
+      .dashboard-recent-events-table tbody td:first-child > div { min-width:0; }
+      .dashboard-recent-events-table tbody td:first-child > div > div:last-child { min-width:0; }
+      .dashboard-recent-events-table tbody td:first-child a { display:block; overflow-wrap:anywhere; }
+      .dashboard-recent-events-table tbody td:nth-child(3) { grid-area:status; padding:0 12px 10px; }
+      .dashboard-recent-events-table tbody td:nth-child(4) { grid-area:actions; padding:0 8px 6px; }
       .dashboard-event-actions { gap:4px; }
     }
   </style>
@@ -157,8 +178,8 @@
       </div>
 
       {{#if recentEvents.length}}
-      <div class="overflow-x-auto">
-        <table class="w-full text-left" style="border-collapse:collapse">
+      <div class="dashboard-events-scroll overflow-x-auto">
+        <table class="dashboard-recent-events-table w-full text-left" style="border-collapse:collapse">
           <thead>
             <tr style="background:rgba(255,255,255,0.02)">
               <th class="py-2.5 px-5 text-[10px] font-extrabold uppercase tracking-wider" style="color:#374151">Event</th>
