@@ -263,7 +263,7 @@
     <!-- Print title (hidden on screen) -->
     <div class="hidden print-show px-6 py-4 border-b border-slate-100">
       <div style="text-align:center;margin-bottom:6px">
-        <img src="/scoresync-logo.png?v=7" alt="ScoreSync" style="width:40px;height:40px;border-radius:50%;display:inline-block;margin-bottom:6px"/>
+        <img src="/scoresync-logo.png?v=8" alt="ScoreSync" style="width:40px;height:40px;border-radius:50%;display:inline-block;margin-bottom:6px"/>
       </div>
       <h2 class="font-extrabold text-lg text-slate-900" style="text-align:center">{{event.name}}</h2>
       <p class="text-sm text-slate-500" style="text-align:center">Official Tabulation Sheet &bull; {{judgeCount}} Judge(s) &bull; Generated: <span id="print-date"></span></p>

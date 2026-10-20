@@ -3,7 +3,7 @@
   <!-- Brand -->
   <div class="px-5 py-5 flex-shrink-0 flex items-center justify-between" style="background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.08)">
     <div class="flex items-center gap-3 sidebar-brand-content">
-      <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-10 h-10 rounded-full flex-shrink-0 shadow-lg object-cover" style="border:2px solid rgba(255,255,255,0.15)"/>
+      <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-10 h-10 rounded-full flex-shrink-0 shadow-lg object-cover" style="border:2px solid rgba(255,255,255,0.15)"/>
       <div class="sidebar-label-text">
         <div class="text-white font-black text-base leading-tight tracking-tight">ScoreSync</div>
         <div class="text-blue-300 text-[10px] font-medium mt-0.5" style="opacity:0.7">Gloria, Oriental Mindoro</div>

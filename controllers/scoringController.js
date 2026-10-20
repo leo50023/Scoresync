@@ -292,7 +292,7 @@ export const resultsPage = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/events");
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({
       id: d.id,
       ...d.data(),
@@ -450,7 +450,7 @@ export const displayBoard = async (req, res) => {
     ]);
     if (!eSnap.exists()) return res.redirect("/");
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({ id: d.id, ...d.data(), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] }));
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
@@ -495,7 +495,7 @@ export const publicResults = async (req, res) => {
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
     const ev = { id: eSnap.id, ...eSnap.data() };
     // Only public if completed or organizer made it public
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({ id: d.id, ...d.data(), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] }));
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
@@ -552,7 +552,7 @@ export const exportResults = async (req, res) => {
 
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
 
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({
       id: d.id,
       ...d.data(),
@@ -641,7 +641,7 @@ export const reportPage = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/events");
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({
       id: d.id,
       ...d.data(),
@@ -778,7 +778,7 @@ export const scoresJson = async (req, res) => {
     if (!eSnap.exists()) return res.status(404).json({ error: "Event not found." });
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({
       id: d.id,
       ...d.data(),
@@ -863,7 +863,7 @@ export const announcePage = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/events");
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map((d, i) => ({
       id: d.id,
       ...d.data(),

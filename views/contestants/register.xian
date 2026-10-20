@@ -23,7 +23,7 @@
 
     <!-- Header -->
     <div class="text-center mb-7">
-      <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-14 h-14 rounded-full mx-auto mb-3 shadow-xl" style="border:2.5px solid rgba(16,185,129,0.5)"/>
+      <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-14 h-14 rounded-full mx-auto mb-3 shadow-xl" style="border:2.5px solid rgba(16,185,129,0.5)"/>
       <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#34d399">Contestant Registration</div>
       <h1 class="text-xl font-black text-white">{{event.name}}</h1>
       {{#if event.date}}<p class="text-xs mt-1" style="color:#475569">{{event.date}} · {{event.venue}}</p>{{/if}}
@@ -88,5 +88,4 @@
   </div>
 </body>
 </html>
-
 

@@ -12,7 +12,7 @@
 
   <!-- Brand -->
   <a href="/dashboard" class="flex items-center gap-2 flex-shrink-0">
-    <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-8 h-8 object-cover rounded-full" style="border:1.5px solid rgba(255,255,255,0.15)"/>
+    <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-8 h-8 object-cover rounded-full" style="border:1.5px solid rgba(255,255,255,0.15)"/>
     <span class="font-black text-white text-sm tracking-tight hidden sm:block">ScoreSync</span>
   </a>
 
