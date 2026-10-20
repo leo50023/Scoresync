@@ -5,6 +5,14 @@
 {{> sidebar }}
 
 <main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+  <style>
+    .dashboard-event-actions { display:flex; flex-wrap:nowrap; align-items:center; justify-content:flex-end; gap:6px; white-space:nowrap; }
+    .dashboard-event-action { display:inline-flex; width:44px; min-width:44px; height:44px; min-height:44px; align-items:center; justify-content:center; flex:0 0 44px; }
+    .dashboard-event-action svg { width:14px; height:14px; }
+    @media (max-width:640px) {
+      .dashboard-event-actions { gap:4px; }
+    }
+  </style>
 
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
@@ -179,15 +187,15 @@
               <td class="py-3 px-3">
                 <span class="badge {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize">{{status}}</span>
               </td>
-              <td class="py-3 px-5 text-right">
-                <div class="flex items-center justify-end gap-1.5">
-                  <a href="/events/{{id}}" class="p-1.5 rounded-lg" style="background:rgba(16,185,129,0.10);color:#34d399" title="View">
+              <td class="py-3 px-3 sm:px-5 text-right">
+                <div class="dashboard-event-actions">
+                  <a href="/events/{{id}}" class="dashboard-event-action rounded-lg" style="background:rgba(16,185,129,0.10);color:#34d399" title="View" aria-label="View event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   </a>
-                  <a href="/events/{{id}}/edit" class="p-1.5 rounded-lg hidden sm:flex" style="background:rgba(255,255,255,0.06);color:#94a3b8" title="Edit">
+                  <a href="/events/{{id}}/edit" class="dashboard-event-action rounded-lg hidden sm:inline-flex" style="background:rgba(255,255,255,0.06);color:#94a3b8" title="Edit" aria-label="Edit event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                   </a>
-                  <a href="/events/{{id}}/results" class="p-1.5 rounded-lg" style="background:rgba(59,130,246,0.10);color:#60a5fa" title="Results">
+                  <a href="/events/{{id}}/results" class="dashboard-event-action rounded-lg" style="background:rgba(59,130,246,0.10);color:#60a5fa" title="Results" aria-label="View event results">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                   </a>
                 </div>
