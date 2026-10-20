@@ -23,7 +23,7 @@
 
   <!-- Header -->
   <div class="text-center py-10 px-4" style="background:linear-gradient(135deg,#071a0e,#0a2a14,#0d1f2d)">
-    <img src="/scoresync-logo.png" alt="ScoreSync" class="w-16 h-16 rounded-full mx-auto mb-4 shadow-xl" style="border:3px solid rgba(16,185,129,0.5)"/>
+    <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-16 h-16 rounded-full mx-auto mb-4 shadow-xl" style="border:3px solid rgba(16,185,129,0.5)"/>
     <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#34d399">Official Competition Results</div>
     <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{event.name}}</h1>
     {{#if event.venue}}<p class="mt-2 text-sm" style="color:#64748b">{{event.venue}}</p>{{/if}}
@@ -96,6 +96,5 @@
 
 </body>
 </html>
-
 
 

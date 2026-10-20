@@ -227,7 +227,7 @@
     <!-- Logo -->
     <div class="flex flex-col items-center mb-7">
       <div class="auth-logo w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-4 flex-shrink-0">
-        <img src="/scoresync-logo.png" alt="ScoreSync" class="w-full h-full object-cover" style="object-position:center center;transform:scale(1.1);transform-origin:center center"/>
+        <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-full h-full object-cover"/>
       </div>
       <span class="auth-kicker">ScoreSync account</span>
       <h1 class="auth-title font-black text-white">Welcome back</h1>
@@ -340,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
 
 
 

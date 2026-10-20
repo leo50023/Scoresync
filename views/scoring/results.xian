@@ -244,7 +244,7 @@
   </div>
 
   <!-- ── Official Tabulation Sheet ── -->
-  <div class="section-card animate-fadeup-2 overflow-x-auto print-tabulation-sheet">
+  <div class="section-card animate-fadeup-2 print-tabulation-sheet">
     <div class="section-header no-print">
       <h2>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -255,46 +255,52 @@
         <span class="badge badge-purple text-xs no-print">{{judgeCount}} judge(s)</span>
       </div>
     </div>
+    <div class="tabulation-note no-print">
+      <span>Criterion cells show the average score and its weighted contribution.</span>
+      <span class="tabulation-scroll-hint">Swipe or scroll horizontally to view all criteria</span>
+    </div>
 
     <!-- Print title (hidden on screen) -->
     <div class="hidden print-show px-6 py-4 border-b border-slate-100">
       <div style="text-align:center;margin-bottom:6px">
-        <img src="/scoresync-logo.png" style="width:40px;height:40px;border-radius:50%;display:inline-block;margin-bottom:6px"/>
+        <img src="/scoresync-logo.png?v=7" alt="ScoreSync" style="width:40px;height:40px;border-radius:50%;display:inline-block;margin-bottom:6px"/>
       </div>
       <h2 class="font-extrabold text-lg text-slate-900" style="text-align:center">{{event.name}}</h2>
       <p class="text-sm text-slate-500" style="text-align:center">Official Tabulation Sheet &bull; {{judgeCount}} Judge(s) &bull; Generated: <span id="print-date"></span></p>
       {{#if event.date}}<p class="text-xs text-slate-400" style="text-align:center;margin-top:2px">{{event.date}}{{#if event.time}} at {{event.time}}{{/if}}{{#if event.venue}} &bull; {{event.venue}}{{/if}}</p>{{/if}}
     </div>
 
-    <table class="data-table min-w-max w-full">
+    <div class="tabulation-scroll" role="region" aria-label="Official tabulation sheet" tabindex="0">
+    <table class="data-table tabulation-table min-w-max w-full">
+      <caption class="sr-only">Official standings with each criterion's average score, weighted contribution, final score, and gap to first place.</caption>
       <thead>
         <tr>
-          <th class="w-10 text-center">Rank</th>
-          <th class="w-9">No.</th>
-          <th>Contestant</th>
-          <th class="hidden sm:table-cell">Barangay</th>
+          <th scope="col" class="tabulation-sticky-rank text-center">Rank</th>
+          <th scope="col" class="tabulation-sticky-number">No.</th>
+          <th scope="col" class="tabulation-sticky-contestant">Contestant</th>
+          <th scope="col" class="hidden sm:table-cell">Barangay</th>
           {{#each criteria}}
-          <th class="text-center text-xs px-3 print-criterion-col">
+          <th scope="col" class="text-center text-xs px-3 print-criterion-col">
             <div class="font-bold">{{name}}</div>
             <div class="font-normal text-slate-400 text-[10px]">{{weight}}% &bull; max {{maxScore}}</div>
           </th>
           {{/each}}
-          <th class="text-center text-blue-700 font-extrabold print-final-score">Final Score</th>
-          <th class="text-center text-slate-500 text-xs no-print">Gap to 1st</th>
+          <th scope="col" class="text-center text-blue-700 font-extrabold print-final-score">Final Score</th>
+          <th scope="col" class="text-center text-slate-500 text-xs no-print">Gap to 1st</th>
         </tr>
       </thead>
       <tbody>
         {{#each ranked}}
         <tr class="{{#if (eq rank 1)}}ring-1 ring-inset ring-yellow-500/20{{/if}}{{#if (eq rank 2)}}ring-1 ring-inset ring-slate-500/20{{/if}}" style="{{#if (eq rank 1)}}background:rgba(217,119,6,0.08){{else}}{{#if (eq rank 2)}}background:rgba(100,116,139,0.05){{/if}}{{/if}}">
-          <td class="text-center">
+          <td class="text-center tabulation-sticky-rank">
             <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-black
               {{#if (eq rank 1)}}text-white{{else}}{{#if (eq rank 2)}}text-white{{else}}{{#if (eq rank 3)}}text-white{{else}}bg-slate-100 text-slate-500{{/if}}{{/if}}{{/if}}"
               style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#b45309,#f59e0b){{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#475569,#94a3b8){{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#92400e,#f97316){{/if}}{{/if}}{{/if}}">
               {{rank}}
             </span>
           </td>
-          <td class="font-mono text-slate-400 text-sm text-center">{{number}}</td>
-          <td>
+          <td class="font-mono text-slate-400 text-sm text-center tabulation-sticky-number">{{number}}</td>
+          <td class="tabulation-sticky-contestant">
             <div class="font-extrabold text-sm" style="color:#e2e8f0">{{name}}</div>
             {{#if tieDetected}}
               {{#if tieBroken}}
@@ -309,15 +315,15 @@
           <td class="text-sm hidden sm:table-cell" style="color:#64748b">{{barangay}}</td>
           {{#each breakdown}}
           <td class="text-center px-3 print-criterion-col">
-            <div class="font-extrabold text-sm" style="color:#e2e8f0">{{avg}}</div>
-            <div class="text-[10px] font-bold" style="color:{{color}}">{{weighted}}%</div>
+            <div class="font-extrabold text-sm" style="color:#e2e8f0">{{avg}}<span class="tabulation-unit"> avg</span></div>
+            <div class="text-[10px] font-bold" style="color:{{color}}">{{weighted}}%<span class="tabulation-unit"> weighted</span></div>
             <div class="mt-1 h-1 rounded-full overflow-hidden w-16 mx-auto" style="background:rgba(255,255,255,0.08)">
               <div class="h-full rounded-full" style="width:{{barPct}}%;background:{{color}}"></div>
             </div>
           </td>
           {{/each}}
           <td class="text-center print-final-score">
-            <span class="font-extrabold text-lg
+            <span class="tabulation-score font-extrabold text-lg
               {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
               {{finalScoreDisplay}}%
             </span>
@@ -333,6 +339,7 @@
         {{/each}}
       </tbody>
     </table>
+    </div>
   </div>
 
   <!-- ── Judge Scoring Progress ── -->
@@ -523,7 +530,95 @@
 </div>
 
 <style>
+/* Keep contestant identity visible while wide criteria columns scroll. */
+.tabulation-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  color: #94a3b8;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.tabulation-scroll-hint { color: #60a5fa; }
+.tabulation-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.tabulation-scroll:focus-visible { outline-offset: -2px; }
+.tabulation-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.tabulation-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #0d1424;
+}
+.tabulation-table .tabulation-sticky-rank,
+.tabulation-table .tabulation-sticky-number,
+.tabulation-table .tabulation-sticky-contestant {
+  position: sticky;
+  z-index: 2;
+  background: inherit;
+}
+.tabulation-table .tabulation-sticky-rank {
+  left: 0;
+  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+.tabulation-table .tabulation-sticky-number {
+  left: 56px;
+  width: 58px;
+  min-width: 58px;
+  max-width: 58px;
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+.tabulation-table .tabulation-sticky-contestant {
+  left: 114px;
+  min-width: 190px;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.18);
+}
+.tabulation-table thead .tabulation-sticky-rank,
+.tabulation-table thead .tabulation-sticky-number,
+.tabulation-table thead .tabulation-sticky-contestant { z-index: 4; }
+.tabulation-unit {
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 500;
+}
+.tabulation-score {
+  display: inline-block;
+  min-width: 76px;
+  padding: 5px 9px;
+  border-radius: 10px;
+  background: rgba(59,130,246,0.1);
+}
 @media print {
+  .tabulation-note { display: none !important; }
+  .tabulation-scroll { overflow: visible !important; }
+  .tabulation-table thead th,
+  .tabulation-table .tabulation-sticky-rank,
+  .tabulation-table .tabulation-sticky-number,
+  .tabulation-table .tabulation-sticky-contestant {
+    position: static !important;
+    left: auto !important;
+    box-shadow: none !important;
+  }
+  .tabulation-table .tabulation-sticky-rank,
+  .tabulation-table .tabulation-sticky-number,
+  .tabulation-table .tabulation-sticky-contestant {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
   /* ── Hide non-content elements ── */
   .no-print { display: none !important; }
   .print-show { display: block !important; }

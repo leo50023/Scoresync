@@ -1,7 +1,7 @@
-// ScoreSync Service Worker — v8
+// ScoreSync Service Worker — v10
 // Full offline support: caches scoring page + serves offline-scoring.html when no internet
 
-const CACHE_STATIC = 'scoresync-static-v8';
+const CACHE_STATIC = 'scoresync-static-v10';
 const CACHE_PAGES  = 'scoresync-pages-v7';
 const CACHE_FONTS  = 'scoresync-fonts-v7';
 

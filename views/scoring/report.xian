@@ -223,8 +223,7 @@
     <div class="report-header">
       <div class="header-top">
         <div class="header-logos">
-          <img src="/scoresync-logo.png" alt="ScoreSync" class="header-logo"/>
-          <img src="/scoresync-logo.png" alt="ScoreSync" class="header-logo"/>
+          <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="header-logo"/>
         </div>
         <div class="header-brand">
           ScoreSync

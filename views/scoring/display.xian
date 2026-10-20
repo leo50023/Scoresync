@@ -33,7 +33,7 @@
   <!-- Header -->
   <div class="flex-shrink-0 px-6 py-4 flex items-center justify-between mt-1" style="background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07)">
     <div class="flex items-center gap-4">
-      <img src="/scoresync-logo.png" alt="ScoreSync" class="w-12 h-12 rounded-full shadow-xl" style="border:2px solid rgba(255,255,255,0.2)"/>
+      <img src="/scoresync-logo.png?v=7" alt="ScoreSync" class="w-12 h-12 rounded-full shadow-xl" style="border:2px solid rgba(255,255,255,0.2)"/>
       <div>
         <div class="text-xs font-bold uppercase tracking-widest" style="color:#34d399">Live Scoreboard</div>
         <h1 class="text-2xl font-black tracking-tight text-white">{{event.name}}</h1>
@@ -239,6 +239,5 @@
 @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 </style>
 </html>
-
 
 
