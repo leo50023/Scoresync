@@ -6,8 +6,8 @@
 <main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
 
   <!-- ── Sticky Top Bar ── -->
-  <div class="sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(10,15,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
-    <div class="flex items-center justify-between gap-2" style="min-width:0">
+  <div class="results-toolbar sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(10,15,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
+    <div class="results-toolbar-main flex items-center justify-between gap-2" style="min-width:0">
       <div class="flex items-center gap-3 min-w-0">
         <a href="/events/{{event.id}}" class="btn-sm btn-sm-gray text-xs no-print flex items-center gap-1.5 flex-shrink-0">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
@@ -18,14 +18,14 @@
         </div>
         <div class="min-w-0">
           <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">Official Results — {{event.name}}</div>
-          <div class="text-xs text-slate-400">
+          <div class="results-meta text-xs text-slate-400">
             <span class="font-semibold text-blue-600">{{judgeCount}}</span> judge(s) &bull;
             <span class="font-semibold text-purple-600">{{ranked.length}}</span> contestant(s) &bull;
             <span class="font-semibold text-emerald-600">{{criteria.length}}</span> criteria
           </div>
         </div>
       </div>
-      <div class="flex items-center gap-2 flex-shrink-0 overflow-x-auto" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;max-width:calc(100vw - 120px)">
+      <div class="results-toolbar-actions flex items-center gap-2 flex-shrink-0 overflow-x-auto" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;max-width:calc(100vw - 120px)">
       <style>.no-scroll-bar::-webkit-scrollbar{display:none}</style>
         {{#if isAdmin}}
         <a href="/analytics?eventId={{event.id}}" class="btn-sm btn-sm-purple text-xs">
@@ -86,7 +86,7 @@
 
     <!-- Podium Blocks -->
     <div class="px-6 py-8" data-role="podium-blocks" style="background:#0d1526">
-      <div class="flex items-end justify-center gap-3 max-w-2xl mx-auto">
+      <div class="results-podium-layout flex items-end justify-center gap-3 max-w-2xl mx-auto">
 
         <!-- 2nd Place -->
         {{#each ranked}}{{#if (eq rank 2)}}
@@ -600,6 +600,59 @@
   padding: 5px 9px;
   border-radius: 10px;
   background: rgba(59,130,246,0.1);
+}
+@media screen and (max-width: 640px) {
+  .results-toolbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .results-toolbar-main {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .results-toolbar-actions {
+    width: 100%;
+    max-width: none !important;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    overflow: visible;
+  }
+  .results-toolbar-actions > a,
+  .results-toolbar-actions > button {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 0;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+  }
+  .results-meta {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4px;
+  }
+  [data-role="podium-blocks"] {
+    padding: 16px !important;
+  }
+  .results-podium-layout {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+  }
+  .results-podium-layout > [data-podium-rank="1"] {
+    grid-column: 1 / -1;
+    order: -1;
+    max-width: none;
+    margin-top: 0;
+  }
+  .results-podium-layout > [data-podium-rank="2"],
+  .results-podium-layout > [data-podium-rank="3"] {
+    width: 100%;
+    max-width: none;
+  }
+  .results-podium-layout > [data-podium-rank] > div:last-child {
+    display: none;
+  }
 }
 @media print {
   .tabulation-note { display: none !important; }

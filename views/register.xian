@@ -162,9 +162,14 @@
     padding-bottom: 28px;
   }
   .auth-logo {
-    border: 1px solid rgba(199,210,254,0.42);
-    background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(99,102,241,0.12));
-    box-shadow: 0 0 0 6px rgba(99,102,241,0.06), 0 18px 42px rgba(0,0,0,0.42), 0 0 36px rgba(99,102,241,0.18);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .auth-logo img {
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 22px rgba(0,0,0,0.38));
   }
   .auth-kicker {
     display: inline-flex;
@@ -417,5 +422,4 @@ function togglePwd(){
 </script>
 </body>
 </html>
-
 
