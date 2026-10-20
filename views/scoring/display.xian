@@ -21,8 +21,8 @@
     .rank-other { background: linear-gradient(135deg,#1e3a5f,#2563eb); }
     .score-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
     .gold-text { background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b); background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: shimmer 3s ease infinite; }
+    #display-podium { display:none; }
     @media screen and (max-width:640px) {
-      #display-podium { display:none; }
       .display-rank-row { gap:10px !important; padding:12px !important; }
       .display-rank-name { overflow-wrap:anywhere; }
       .display-rank-score { min-width:64px !important; }

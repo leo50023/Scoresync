@@ -70,7 +70,7 @@
   {{#if ranked.length}}
 
   <!-- ── Podium ── -->
-  <div id="podium-container" class="card-flat overflow-hidden animate-fadeup">
+  <div id="podium-container" class="card-flat overflow-hidden animate-fadeup" style="display:none">
     <!-- Header -->
     <div class="px-6 pt-6 pb-3 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#0f2156,#1a56db)">
       <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(255,255,255,0.07) 0%,transparent 70%)"></div>
@@ -629,9 +629,6 @@
     display: flex;
     flex-wrap: wrap;
     column-gap: 4px;
-  }
-  #podium-container {
-    display: none;
   }
   .results-standing-row {
     gap: 8px !important;
