@@ -1,5 +1,5 @@
 import { db } from "../models/firebaseConfig.js";
-import { doc, getDoc, updateDoc, collection, getDocs, addDoc, serverTimestamp, query, orderBy, limit } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteField, collection, getDocs, addDoc, serverTimestamp, query, orderBy, limit } from "firebase/firestore";
 import { sanitizeText } from "../utils/sanitize.js";
 import { setCachedUserAvatar } from "../utils/userAvatarCache.js";
 
@@ -61,6 +61,7 @@ export const settingsPage = async (req, res) => {
 export const updateSettings = async (req, res) => {
   try {
     const { name, avatar } = req.body;
+    const removeAvatar = req.body.removeAvatar === "1";
     if (req.session.userId) {
       const updates = {};
 
@@ -73,8 +74,12 @@ export const updateSettings = async (req, res) => {
         }
       }
 
-      // Validate avatar: must be a valid image data URL, max 2MB
-      if (avatar && typeof avatar === "string") {
+      if (removeAvatar) {
+        updates.avatar = deleteField();
+        updates.photoURL = deleteField();
+        updates.photo = deleteField();
+      } else if (avatar && typeof avatar === "string") {
+        // Validate avatar: must be a valid image data URL, max 2MB
         const validMime = /^data:image\/(jpeg|jpg|png|webp|gif);base64,/.test(avatar);
         // Base64 string length * 0.75 ≈ actual byte size
         const approxBytes = Math.round((avatar.length * 3) / 4);
@@ -93,7 +98,10 @@ export const updateSettings = async (req, res) => {
 
       if (Object.keys(updates).length > 0) {
         await updateDoc(doc(db, "users", req.session.userId), updates);
-        if (Object.hasOwn(updates, "avatar")) {
+        if (removeAvatar) {
+          req.session.userAvatar = "";
+          setCachedUserAvatar(req.session.userId, "");
+        } else if (Object.hasOwn(updates, "avatar")) {
           setCachedUserAvatar(req.session.userId, updates.avatar);
         }
       }
