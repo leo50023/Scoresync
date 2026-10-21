@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseEventCriteria } from "../utils/eventCriteria.js";
+import {
+  hasPeoplesChoiceCriterion,
+  parseEventCriteria,
+} from "../utils/eventCriteria.js";
 
 test("parses criteria from Express extended URL-encoded body shape", () => {
   const criteria = parseEventCriteria({
@@ -41,4 +44,11 @@ test("omits incomplete criteria", () => {
     }),
     [{ name: "Valid", description: "", weight: 100, maxScore: 100 }]
   );
+});
+
+test("detects a People's Choice criterion regardless of case or apostrophe style", () => {
+  assert.equal(hasPeoplesChoiceCriterion(["People’s Choice"]), true);
+  assert.equal(hasPeoplesChoiceCriterion(["PEOPLE'S CHOICE AWARD"]), true);
+  assert.equal(hasPeoplesChoiceCriterion(["Audience Impact"]), false);
+  assert.equal(hasPeoplesChoiceCriterion([]), false);
 });

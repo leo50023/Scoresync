@@ -21,3 +21,16 @@ export function parseEventCriteria(body = {}) {
     }))
     .filter(criterion => criterion.name && criterion.weight > 0);
 }
+
+export function hasPeoplesChoiceCriterion(criteria = []) {
+  return criteria.some(name => {
+    if (typeof name !== "string") return false;
+    const normalizedName = name
+      .trim()
+      .toLowerCase()
+      .replace(/[‘’]/g, "'")
+      .replace(/\s+/g, " ");
+    return normalizedName === "people's choice"
+      || normalizedName === "people's choice award";
+  });
+}

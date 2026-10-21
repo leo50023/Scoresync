@@ -5,6 +5,7 @@ import {
 } from "firebase/firestore";
 import crypto from "crypto";
 import { sortContestantsByNumber } from "../utils/contestantOrder.js";
+import { hasPeoplesChoiceCriterion } from "../utils/eventCriteria.js";
 
 function ensureVoterId(req) {
   if (!req.session) throw new Error("Voting session is unavailable.");
@@ -14,21 +15,57 @@ function ensureVoterId(req) {
   return req.session.voterId;
 }
 
+// ─── Organizer QR sharing page ────────────────────────────────────────────────
+export const audienceVotingQrPage = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const [eSnap, criteriaSnap] = await Promise.all([
+      getDoc(doc(db, "events", eventId)),
+      getDocs(collection(db, "events", eventId, "criteria")),
+    ]);
+    if (!eSnap.exists()) {
+      req.flash("error_msg", "Event not found.");
+      return res.redirect("/events");
+    }
+
+    const event = { id: eSnap.id, ...eSnap.data() };
+    const hasChoiceCriterion = hasPeoplesChoiceCriterion(
+      criteriaSnap.docs.map(d => d.data().name)
+    );
+
+    res.render("voting/qr", {
+      title: `Audience Voting QR — ${event.name}`,
+      event,
+      votingOpen: event.votingOpen === true && hasChoiceCriterion,
+      peopleChoiceCriterionMissing: !hasChoiceCriterion,
+      votePath: `/events/${encodeURIComponent(eventId)}/vote`,
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Could not load the audience voting QR code.");
+    res.redirect(`/events/${eventId}`);
+  }
+};
+
 // ─── Public voting page ───────────────────────────────────────────────────────
 export const votingPage = async (req, res) => {
   const { eventId } = req.params;
   try {
     const voterId = ensureVoterId(req);
-    const [eSnap, cSnap, vSnap] = await Promise.all([
+    const [eSnap, cSnap, vSnap, criteriaSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
       getDocs(collection(db, "events", eventId, "votes")),
+      getDocs(collection(db, "events", eventId, "criteria")),
     ]);
 
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
-    const votingOpen  = ev.votingOpen === true;
+    const hasChoiceCriterion = hasPeoplesChoiceCriterion(
+      criteriaSnap.docs.map(d => d.data().name)
+    );
+    const votingOpen = ev.votingOpen === true && hasChoiceCriterion;
 
     // Build vote count map
     const votesByContestant = {};
@@ -56,6 +93,7 @@ export const votingPage = async (req, res) => {
       contestants,
       votesByContestant,
       votingOpen,
+      peopleChoiceCriterionMissing: !hasChoiceCriterion,
       maxVotes,
       totalVotes,
       alreadyVoted: vSnap.docs.some(d => d.id === voterId),
@@ -70,9 +108,17 @@ export const votingPage = async (req, res) => {
 export const submitVote = async (req, res) => {
   const { eventId } = req.params;
   try {
-    // (a) Fetch event; check votingOpen
-    const eSnap = await getDoc(doc(db, "events", eventId));
+    // (a) Fetch event and its criteria; audience votes require a People's Choice criterion.
+    const [eSnap, criteriaSnap] = await Promise.all([
+      getDoc(doc(db, "events", eventId)),
+      getDocs(collection(db, "events", eventId, "criteria")),
+    ]);
     if (!eSnap.exists()) return res.redirect(`/events/${eventId}/vote`);
+
+    if (!hasPeoplesChoiceCriterion(criteriaSnap.docs.map(d => d.data().name))) {
+      req.flash("error_msg", "Add a People's Choice criterion before accepting audience votes.");
+      return res.redirect(`/events/${eventId}/vote`);
+    }
 
     if (!eSnap.data().votingOpen) {
       req.flash("error_msg", "Voting is currently closed.");
@@ -133,7 +179,16 @@ export const toggleVoting = async (req, res) => {
     const eSnap = await getDoc(doc(db, "events", eventId));
     if (!eSnap.exists()) return res.redirect("/events");
 
-    const newState = !eSnap.data().votingOpen;
+    const isVotingOpen = eSnap.data().votingOpen === true;
+    const newState = !isVotingOpen;
+    if (newState) {
+      const criteriaSnap = await getDocs(collection(db, "events", eventId, "criteria"));
+      if (!hasPeoplesChoiceCriterion(criteriaSnap.docs.map(d => d.data().name))) {
+        req.flash("error_msg", "Add a People's Choice criterion before opening audience voting.");
+        return res.redirect(`/events/${eventId}`);
+      }
+    }
+
     await updateDoc(doc(db, "events", eventId), { votingOpen: newState });
 
     req.flash(

@@ -105,9 +105,10 @@ router.post("/events/:eventId/criteria/:id/delete", requireAuth, requireRole("ad
 
 // ─── Audience Voting ──────────────────────────────────────────────────────────
 import {
-  votingPage, submitVote, voteResults, toggleVoting, voteCounts,
+  audienceVotingQrPage, votingPage, submitVote, voteResults, toggleVoting, voteCounts,
 } from "../controllers/votingController.js";
 
+router.get( "/events/:eventId/vote/qr",   requireAuth, requireRole("admin","organizer"), audienceVotingQrPage);
 router.get( "/events/:eventId/vote",         votingPage);
 router.post("/events/:eventId/vote",         submitVote);
 router.get( "/events/:eventId/vote/results", requireAuth,                                  voteResults);

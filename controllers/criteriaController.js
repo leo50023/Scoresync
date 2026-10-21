@@ -3,6 +3,7 @@ import {
   collection, addDoc, getDocs, getDoc, doc,
   updateDoc, deleteDoc, serverTimestamp,
 } from "firebase/firestore";
+import { hasPeoplesChoiceCriterion } from "../utils/eventCriteria.js";
 
 // Criteria are sub-collections under events: events/{eventId}/criteria
 
@@ -67,9 +68,26 @@ export const storeCriteria = async (req, res) => {
 export const deleteCriteria = async (req, res) => {
   const { eventId, id } = req.params;
   try {
-    await deleteDoc(doc(db, "events", eventId, "criteria", id));
-    req.flash("success_msg", "Criteria removed.");
+    const criterionRef = doc(db, "events", eventId, "criteria", id);
+    const criterionSnap = await getDoc(criterionRef);
+    const removesPeopleChoice = criterionSnap.exists()
+      && hasPeoplesChoiceCriterion([criterionSnap.data().name]);
+    if (removesPeopleChoice) {
+      const eventRef = doc(db, "events", eventId);
+      const eventSnap = await getDoc(eventRef);
+      if (eventSnap.exists() && eventSnap.data().votingOpen === true) {
+        await updateDoc(eventRef, { votingOpen: false });
+      }
+    }
+    await deleteDoc(criterionRef);
+    req.flash(
+      "success_msg",
+      removesPeopleChoice
+        ? "People's Choice criterion removed. Audience voting has been closed."
+        : "Criteria removed."
+    );
   } catch (err) {
+    console.error(err);
     req.flash("error_msg", "Failed to remove criteria.");
   }
   res.redirect(`/events/${eventId}/criteria`);
