@@ -118,6 +118,9 @@ export const showEvent = async (req, res) => {
       return res.redirect("/events");
     }
     const ev = { id: snap.id, ...snap.data() };
+    ev.hiddenOrganizerMoreItems = Array.isArray(ev.hiddenOrganizerMoreItems)
+      ? ev.hiddenOrganizerMoreItems
+      : [];
 
     ev.isPaymentType   = PAYMENT_TYPES.includes(ev.type);
     ev.isPrizeType     = PRIZE_TYPES.includes(ev.type);

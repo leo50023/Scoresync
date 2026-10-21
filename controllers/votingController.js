@@ -206,10 +206,24 @@ export const toggleVoting = async (req, res) => {
   }
 };
 
-// ─── Toggle organizer More menu visibility ────────────────────────────────────
-export const toggleOrganizerMoreMenu = async (req, res) => {
+// ─── Save organizer More menu visibility ──────────────────────────────────────
+export const saveOrganizerMoreMenu = async (req, res) => {
   const { eventId } = req.params;
   try {
+    const availableItems = new Set([
+      "edit", "assignJudge", "criteria", "display", "publicResults",
+      "registrationQr", "report", "exportCsv", "finance",
+      "audienceVoting", "toggleVoting", "delete",
+    ]);
+    const submittedItems = req.body.hiddenItems === undefined
+      ? []
+      : Array.isArray(req.body.hiddenItems)
+        ? req.body.hiddenItems
+        : [req.body.hiddenItems];
+    const hiddenItems = [...new Set(
+      submittedItems.filter(item => typeof item === "string" && availableItems.has(item))
+    )];
+
     const eventRef = doc(db, "events", eventId);
     const eventSnap = await getDoc(eventRef);
     if (!eventSnap.exists()) {
@@ -217,18 +231,12 @@ export const toggleOrganizerMoreMenu = async (req, res) => {
       return res.redirect("/events");
     }
 
-    const hidden = eventSnap.data().hideOrganizerMoreMenu !== true;
-    await updateDoc(eventRef, { hideOrganizerMoreMenu: hidden });
-    req.flash(
-      "success_msg",
-      hidden
-        ? "The More menu is now hidden from organizers."
-        : "The More menu is visible to organizers again."
-    );
+    await updateDoc(eventRef, { hiddenOrganizerMoreItems: hiddenItems });
+    req.flash("success_msg", "Organizer menu visibility saved.");
     res.redirect(`/events/${eventId}`);
   } catch (err) {
     console.error(err);
-    req.flash("error_msg", "Failed to update organizer menu visibility.");
+    req.flash("error_msg", "Failed to save organizer menu visibility.");
     res.redirect(`/events/${eventId}`);
   }
 };

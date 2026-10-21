@@ -106,11 +106,11 @@ router.post("/events/:eventId/criteria/:id/delete", requireAuth, requireRole("ad
 // ─── Audience Voting ──────────────────────────────────────────────────────────
 import {
   audienceVotingQrPage, votingPage, submitVote, voteResults, toggleVoting,
-  toggleOrganizerMoreMenu, voteCounts,
+  saveOrganizerMoreMenu, voteCounts,
 } from "../controllers/votingController.js";
 
 router.get( "/events/:eventId/vote/qr",   requireAuth, requireRole("admin","organizer"), audienceVotingQrPage);
-router.post("/events/:eventId/organizer-menu/toggle", requireAuth, requireRole("admin"), toggleOrganizerMoreMenu);
+router.post("/events/:eventId/organizer-menu", requireAuth, requireRole("admin"), saveOrganizerMoreMenu);
 router.get( "/events/:eventId/vote",         votingPage);
 router.post("/events/:eventId/vote",         submitVote);
 router.get( "/events/:eventId/vote/results", requireAuth,                                  voteResults);
