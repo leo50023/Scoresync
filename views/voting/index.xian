@@ -134,33 +134,9 @@
   </div>
   {{/if}}
 
-  <!-- ── QR Code Section ── -->
-  <div class="card-flat p-5 animate-fadeup-2 flex flex-col sm:flex-row sm:items-center gap-4">
-    <div class="flex-1 min-w-0">
-      <div class="font-bold text-sm" style="color:#e2e8f0">Scan to vote</div>
-      <div class="text-xs mt-1" style="color:#94a3b8">Opens the page with the full contestant list.</div>
-      <div class="text-xs mt-1 break-all" style="color:#64748b" id="vote-url"></div>
-    </div>
-    <button type="button"
-            onclick="showQR()"
-            class="btn-secondary flex-shrink-0"
-            style="padding:8px 18px;font-size:0.8rem"
-            aria-label="Show QR Code">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
-      </svg>
-      Show QR Code
-    </button>
-  </div>
-
   <!-- ── Client script ── -->
   <script>
   (function () {
-    // Show current URL under QR section
-    var urlEl = document.getElementById('vote-url');
-    if (urlEl) urlEl.textContent = window.location.href;
-
     // Live vote count refresh every 10 seconds
     var EVENT_ID = '{{event.id}}';
     function refreshCounts() {
@@ -192,62 +168,9 @@
     }
   })();
 
-  // ── QR overlay ──
-  function showQR() {
-    document.getElementById('qr-overlay').style.display = 'flex';
-    if (!window._qrLoaded) {
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js';
-      s.onload = function () {
-        window._qrLoaded = true;
-        QRCode.toCanvas(
-          document.getElementById('qr-canvas'),
-          window.location.href,
-          { width: 280, color: { dark: '#1e3a8a', light: '#ffffff' } }
-        );
-      };
-      document.head.appendChild(s);
-    }
-  }
-  function hideQR() {
-    document.getElementById('qr-overlay').style.display = 'none';
-  }
   </script>
 
 </main>
-
-<!-- ── QR Overlay ── -->
-<div id="qr-overlay"
-     role="dialog"
-     aria-modal="true"
-     aria-label="QR Code"
-     style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.75);
-            backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-            align-items:center;justify-content:center;padding:16px;
-            overflow:hidden;max-width:100vw">
-  <div style="background:#0d1424;border:1px solid rgba(255,255,255,0.12);border-radius:20px;
-              padding:28px 24px;max-width:calc(100vw - 32px);width:100%;text-align:center;
-              box-shadow:0 24px 64px rgba(0,0,0,0.7)">
-    <p class="font-bold text-sm mb-4" style="color:#e2e8f0">Scan to vote</p>
-    <canvas id="qr-canvas" style="display:block;margin:0 auto;border-radius:10px"></canvas>
-    <p class="text-xs mt-3 break-all" style="color:#64748b" id="qr-url-label"></p>
-    <button type="button"
-            onclick="hideQR()"
-            class="btn-secondary mt-4"
-            style="padding:8px 24px;font-size:0.8rem"
-            aria-label="Close QR Code">
-      Close
-    </button>
-  </div>
-</div>
-
-<script>
-// Populate QR overlay URL label
-(function () {
-  var el = document.getElementById('qr-url-label');
-  if (el) el.textContent = window.location.href;
-})();
-</script>
 
 </body>
 </html>
