@@ -29,8 +29,15 @@ export function hasPeoplesChoiceCriterion(criteria = []) {
       .trim()
       .toLowerCase()
       .replace(/[‘’]/g, "'")
+      .replace(/'/g, "")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
       .replace(/\s+/g, " ");
-    return normalizedName === "people's choice"
-      || normalizedName === "people's choice award";
+    return [
+      "people choice",
+      "people choice award",
+      "peoples choice",
+      "peoples choice award",
+    ].includes(normalizedName);
   });
 }

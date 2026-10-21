@@ -46,9 +46,11 @@ test("omits incomplete criteria", () => {
   );
 });
 
-test("detects a People's Choice criterion regardless of case or apostrophe style", () => {
+test("detects common People's Choice criterion name variants", () => {
   assert.equal(hasPeoplesChoiceCriterion(["People’s Choice"]), true);
   assert.equal(hasPeoplesChoiceCriterion(["PEOPLE'S CHOICE AWARD"]), true);
+  assert.equal(hasPeoplesChoiceCriterion(["People Choice"]), true);
+  assert.equal(hasPeoplesChoiceCriterion(["Peoples Choice Award"]), true);
   assert.equal(hasPeoplesChoiceCriterion(["Audience Impact"]), false);
   assert.equal(hasPeoplesChoiceCriterion([]), false);
 });

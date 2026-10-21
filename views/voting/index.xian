@@ -1,176 +1,207 @@
 {{> head }}
-<body class="min-h-screen" style="background:#0a0f1e">
-<header class="h-14 border-b flex items-center px-4 sm:px-6" style="background:#0d1424;border-bottom-color:rgba(255,255,255,0.06)">
-  <a href="/" class="flex items-center gap-2">
-    <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-8 h-8 object-cover rounded-full" style="border:1.5px solid rgba(255,255,255,0.15)"/>
-    <span class="font-black text-white text-sm tracking-tight">ScoreSync</span>
-  </a>
+<body class="min-h-screen" style="background:radial-gradient(ellipse at 50% -15%,rgba(37,99,235,0.28),transparent 48%),#080d19;color:#e2e8f0">
+<header class="border-b" style="background:rgba(8,13,25,0.86);border-color:rgba(255,255,255,0.08)">
+  <div class="max-w-6xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5" aria-label="ScoreSync home">
+      <img src="/scoresync-logo.png?v=8" alt="" class="w-9 h-9 object-cover rounded-xl" style="border:1px solid rgba(255,255,255,0.16)"/>
+      <span class="font-black text-white tracking-tight">ScoreSync</span>
+    </a>
+    <span class="hidden sm:inline text-xs font-semibold tracking-wide" style="color:#94a3b8">AUDIENCE VOTING</span>
+  </div>
 </header>
 
-<main class="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
-
-  <!-- ── Flash Banners ── -->
-  {{#if success_msg}}
-  <div class="alert-success animate-fadeup" role="alert">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    {{success_msg}}
-  </div>
-  {{/if}}
-  {{#if error_msg}}
-  <div class="alert-error animate-fadeup" role="alert">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    {{error_msg}}
-  </div>
-  {{/if}}
-
-  {{#if alreadyVoted}}
-  <div class="alert-success animate-fadeup" role="status">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-    ✓ You already voted! Thank you for participating.
-  </div>
-  {{/if}}
-
-  <!-- ── Hero Header ── -->
-  <div class="card-flat overflow-hidden animate-fadeup" style="background:linear-gradient(135deg,#0f2156,#1a56db);border-color:rgba(255,255,255,0.12)">
-    <div class="p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-4">
-      <div class="flex-1 min-w-0">
-        <div class="flex flex-wrap items-center gap-2 mb-1">
-          {{#if votingOpen}}
-          <span class="badge badge-green">
-            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-            Voting Open
-          </span>
-          {{else}}
-          <span class="badge badge-gray">Voting Closed</span>
-          {{/if}}
-          <span class="badge badge-blue">{{totalVotes}} votes cast</span>
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">{{event.name}}</h1>
-        <p class="mt-1 text-sm font-semibold" style="color:rgba(255,255,255,0.7)">
-          People's Choice Award
-        </p>
-        <p class="mt-2 text-xs" style="color:rgba(255,255,255,0.7)">
-          Scan the QR code to see all contestants. You can vote once per browser session.
-        </p>
-      </div>
-      <div class="flex-shrink-0">
-        <svg width="52" height="52" viewBox="0 0 24 24" fill="rgba(244,63,94,0.8)" stroke="none">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </div>
+<main class="max-w-6xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
+  {{#if peopleChoiceCriterionMissing}}
+  <section class="max-w-xl mx-auto text-center rounded-3xl p-7 sm:p-10 animate-fadeup"
+    style="background:linear-gradient(145deg,rgba(20,30,53,0.98),rgba(12,19,34,0.98));border:1px solid rgba(251,191,36,0.22);box-shadow:0 24px 80px rgba(0,0,0,0.34)"
+    role="status">
+    <div class="mx-auto mb-5 w-14 h-14 rounded-2xl flex items-center justify-center"
+      style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2)">
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+      </svg>
     </div>
-  </div>
+    <p class="text-xs font-extrabold tracking-[0.18em] uppercase mb-3" style="color:#fbbf24">Voting unavailable</p>
+    <h1 class="text-2xl sm:text-3xl font-black text-white leading-tight">{{event.name}}</h1>
+    <p class="mt-3 text-base font-semibold" style="color:#e2e8f0">Audience voting is not set up for this event yet.</p>
+    <p class="mt-2 text-sm leading-relaxed" style="color:#94a3b8">
+      The organizer must add a <strong style="color:#f8fafc">People’s Choice</strong> criterion before audience voting can open.
+    </p>
+    <div class="mt-7 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold"
+      style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.16);color:#fcd34d">
+      <span class="w-1.5 h-1.5 rounded-full" style="background:#fbbf24"></span>
+      Please check back with the event organizer
+    </div>
+  </section>
+  {{else}}
+    {{#if votingOpen}}
+    {{#if success_msg}}
+    <div class="max-w-3xl mx-auto mb-5 rounded-2xl px-4 py-3 flex items-center gap-3 text-sm"
+      style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.24);color:#a7f3d0" role="status">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      {{success_msg}}
+    </div>
+    {{/if}}
+    {{#if error_msg}}
+    <div class="max-w-3xl mx-auto mb-5 rounded-2xl px-4 py-3 flex items-center gap-3 text-sm"
+      style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.24);color:#fecaca" role="alert">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      {{error_msg}}
+    </div>
+    {{/if}}
 
-  <!-- ── Voting Closed Banner ── -->
-  {{#unless votingOpen}}
-  <div class="alert-error animate-fadeup-1" role="status">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    {{#if peopleChoiceCriterionMissing}}Add a People's Choice criterion to this event before audience voting can open.{{else}}Voting is currently closed. Check back later.{{/if}}
-  </div>
-  {{/unless}}
+    {{#if alreadyVoted}}
+    <div class="max-w-3xl mx-auto mb-5 rounded-2xl px-4 py-3 flex items-center gap-3 text-sm"
+      style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.24);color:#a7f3d0" role="status">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      You’ve already voted. Thank you for supporting your favorite!
+    </div>
+    {{/if}}
 
-  <!-- ── Contestant Grid ── -->
-  {{#if contestants}}
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 animate-fadeup-1">
-    {{#each contestants}}
-    <div class="card-flat overflow-hidden flex flex-col" style="border-radius:16px">
-
-      <!-- Photo / Placeholder -->
-      <div class="relative" style="aspect-ratio:3/4;background:rgba(0,0,0,0.3)">
-        {{#if photo}}
-        <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" loading="lazy">
-        {{else}}
-        <div class="w-full h-full flex items-center justify-center" style="background:linear-gradient(135deg,#0f2156,#1a56db)">
-          <span class="text-4xl font-black text-white" style="opacity:0.5">{{number}}</span>
+    <section class="max-w-3xl mx-auto overflow-hidden rounded-3xl animate-fadeup"
+      style="background:linear-gradient(135deg,#10244d 0%,#153b7a 55%,#17305b 100%);border:1px solid rgba(147,197,253,0.2);box-shadow:0 24px 80px rgba(0,0,0,0.3)">
+      <div class="p-6 sm:p-9">
+        <div class="flex items-center gap-2 mb-5">
+          <span class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold"
+            style="background:rgba(16,185,129,0.13);color:#a7f3d0;border:1px solid rgba(16,185,129,0.24)">
+            <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#34d399"></span>
+            Voting is open
+          </span>
+          <span class="text-xs font-semibold" style="color:#bfdbfe">{{totalVotes}} votes so far</span>
         </div>
-        {{/if}}
-
-        <!-- Number badge -->
-        <div class="absolute top-2 left-2 w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-extrabold shadow" style="background:#2563eb;border:1.5px solid rgba(255,255,255,0.3)">
-          {{number}}
-        </div>
-      </div>
-
-      <!-- Info -->
-      <div class="p-3 flex flex-col gap-2 flex-1">
-        <div>
-          <div class="font-bold text-sm truncate" style="color:#e2e8f0">{{name}}</div>
-          {{#if barangay}}
-          <div class="text-xs truncate mt-0.5" style="color:#64748b">{{barangay}}</div>
-          {{/if}}
-        </div>
-
-        <!-- Vote bar -->
-        <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden">
-          <div id="bar-{{id}}"
-               style="height:100%;background:#e11d48;border-radius:999px;width:{{voteBarPct}}%;transition:width 0.6s ease">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
+          <div>
+            <p class="text-xs font-extrabold tracking-[0.18em] uppercase mb-2" style="color:#bfdbfe">People’s Choice Award</p>
+            <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">{{event.name}}</h1>
+            <p class="mt-3 text-sm sm:text-base max-w-xl leading-relaxed" style="color:#dbeafe">
+              Celebrate your favorite. Choose one contestant below to cast your audience vote.
+            </p>
+          </div>
+          <div class="hidden sm:flex w-16 h-16 rounded-2xl items-center justify-center flex-shrink-0"
+            style="background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.13)">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21.2l7.8-7.7 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+            </svg>
           </div>
         </div>
-
-        <!-- Vote count -->
-        <span id="count-{{id}}" class="text-xs font-semibold" style="color:#94a3b8">
-          {{voteCount}} vote{{#unless (eq voteCount 1)}}s{{/unless}}
-        </span>
-
-        <!-- Vote button -->
-        <form method="POST" action="/events/{{../event.id}}/vote" style="margin-top:auto">
-          <input type="hidden" name="contestantId" value="{{id}}">
-          <button type="submit"
-                  class="vote-btn btn-primary w-full text-sm"
-                  data-id="{{id}}"
-                  style="border-radius:10px;padding:8px 0;width:100%"
-                  {{#unless ../votingOpen}}disabled{{/unless}}
-                  {{#if ../alreadyVoted}}disabled{{/if}}>
-            {{#if ../alreadyVoted}}✓ Voted{{else}}Vote ♥{{/if}}
-          </button>
-        </form>
+        <div class="mt-6 pt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs" style="border-top:1px solid rgba(255,255,255,0.12);color:#bfdbfe">
+          <span class="inline-flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            One vote per browser
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>
+            Your choice matters
+          </span>
+        </div>
       </div>
+    </section>
+
+    <div class="max-w-3xl mx-auto mt-9 mb-4 flex items-end justify-between gap-3">
+      <div>
+        <p class="text-xs font-extrabold tracking-[0.16em] uppercase" style="color:#60a5fa">The contestants</p>
+        <h2 class="mt-1 text-xl sm:text-2xl font-black text-white">Who gets your vote?</h2>
+      </div>
+      <span class="text-xs font-semibold text-right" style="color:#94a3b8">Tap Vote on your favorite</span>
     </div>
-    {{/each}}
-  </div>
-  {{else}}
-  <div class="card-flat p-8 text-center animate-fadeup-1">
-    <p style="color:#64748b">No contestants registered yet.</p>
-  </div>
+
+    {{#if contestants}}
+    <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {{#each contestants}}
+      <article class="overflow-hidden rounded-2xl flex flex-col sm:flex-row"
+        style="background:linear-gradient(145deg,rgba(20,29,48,0.98),rgba(13,20,35,0.98));border:1px solid rgba(255,255,255,0.09);box-shadow:0 12px 32px rgba(0,0,0,0.18)">
+        <div class="relative w-full sm:w-44 flex-shrink-0 overflow-hidden" style="height:210px;background:#111c30">
+          {{#if photo}}
+          <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" loading="lazy" style="height:210px"/>
+          {{else}}
+          <div class="w-full h-full flex items-center justify-center" style="min-height:210px;background:radial-gradient(circle at 50% 35%,rgba(59,130,246,0.34),transparent 60%),linear-gradient(145deg,#13294b,#101827)">
+            <span class="text-5xl font-black" style="color:rgba(219,234,254,0.68)">{{number}}</span>
+          </div>
+          {{/if}}
+          <span class="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-extrabold text-white"
+            style="background:rgba(8,13,25,0.78);border:1px solid rgba(255,255,255,0.18);backdrop-filter:blur(8px)">#{{number}}</span>
+        </div>
+        <div class="p-4 sm:p-5 flex flex-col flex-1 min-w-0">
+          <div class="flex-1">
+            <h3 class="text-lg font-extrabold text-white leading-snug">{{name}}</h3>
+            {{#if barangay}}<p class="mt-1 text-xs" style="color:#94a3b8">{{barangay}}</p>{{/if}}
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span style="color:#94a3b8">Audience votes</span>
+              <span id="count-{{id}}" class="font-bold" style="color:#cbd5e1">{{voteCount}} vote{{#unless (eq voteCount 1)}}s{{/unless}}</span>
+            </div>
+            <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
+              <div id="bar-{{id}}" class="h-full rounded-full" style="background:linear-gradient(90deg,#fb7185,#f43f5e);width:{{voteBarPct}}%;transition:width 0.5s ease"></div>
+            </div>
+          </div>
+          <form method="POST" action="/events/{{../event.id}}/vote" class="mt-4">
+            <input type="hidden" name="contestantId" value="{{id}}">
+            <button type="submit" class="w-full rounded-xl py-3 text-sm font-extrabold text-white"
+              data-id="{{id}}" {{#if ../alreadyVoted}}disabled{{/if}}
+              style="background:linear-gradient(135deg,#e11d48,#be123c);box-shadow:0 8px 20px rgba(225,29,72,0.2);opacity:{{#if ../alreadyVoted}}0.55{{else}}1{{/if}}">
+              {{#if ../alreadyVoted}}Vote already submitted{{else}}Vote for {{name}}{{/if}}
+            </button>
+          </form>
+        </div>
+      </article>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="max-w-3xl mx-auto rounded-2xl p-8 text-center" style="background:rgba(20,29,48,0.8);border:1px solid rgba(255,255,255,0.08)">
+      <p class="font-bold text-white">Contestants are not available yet</p>
+      <p class="mt-2 text-sm" style="color:#94a3b8">Please check back once the event organizer has registered contestants.</p>
+    </div>
+    {{/if}}
+
+    <p class="max-w-3xl mx-auto mt-6 text-center text-xs leading-relaxed" style="color:#64748b">
+      Audience votes are counted toward the People’s Choice Award. You can vote once from this browser.
+    </p>
+    <script>
+    (function () {
+      var eventId = '{{event.id}}';
+      function refreshCounts() {
+        fetch('/events/' + encodeURIComponent(eventId) + '/vote/counts', { cache: 'no-store' })
+          .then(function (response) {
+            if (!response.ok) throw new Error('Could not refresh audience vote counts.');
+            return response.json();
+          })
+          .then(function (data) {
+            var votes = data.votes || {};
+            var values = Object.keys(votes).map(function (id) { return Number(votes[id]) || 0; });
+            var max = values.length ? Math.max.apply(null, values) : 0;
+            Object.keys(votes).forEach(function (id) {
+              var count = Number(votes[id]) || 0;
+              var countEl = document.getElementById('count-' + id);
+              var barEl = document.getElementById('bar-' + id);
+              if (countEl) countEl.textContent = count + (count === 1 ? ' vote' : ' votes');
+              if (barEl) barEl.style.width = (max ? Math.round(count / max * 100) : 0) + '%';
+            });
+          })
+          .catch(function (error) { console.error(error); });
+      }
+      refreshCounts();
+      window.setInterval(refreshCounts, 10000);
+    })();
+    </script>
+    {{else}}
+    <section class="max-w-xl mx-auto text-center rounded-3xl p-7 sm:p-10 animate-fadeup"
+      style="background:linear-gradient(145deg,rgba(20,30,53,0.98),rgba(12,19,34,0.98));border:1px solid rgba(255,255,255,0.1);box-shadow:0 24px 80px rgba(0,0,0,0.34)"
+      role="status">
+      <div class="mx-auto mb-5 w-14 h-14 rounded-2xl flex items-center justify-center"
+        style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+        </svg>
+      </div>
+      <p class="text-xs font-extrabold tracking-[0.18em] uppercase mb-3" style="color:#93c5fd">Voting is not open yet</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-white leading-tight">{{event.name}}</h1>
+      <p class="mt-3 text-sm leading-relaxed" style="color:#94a3b8">
+        The organizer has not opened audience voting yet. Please check back later.
+      </p>
+    </section>
+    {{/if}}
   {{/if}}
-
-  <!-- ── Client script ── -->
-  <script>
-  (function () {
-    // Live vote count refresh every 10 seconds
-    var EVENT_ID = '{{event.id}}';
-    function refreshCounts() {
-      fetch('/events/' + EVENT_ID + '/vote/counts')
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          var votes  = data.votes  || {};
-          var total  = data.total  || 0;
-          var vals   = Object.values(votes).map(Number);
-          var maxVal = vals.length ? Math.max.apply(null, vals) : 1;
-          if (maxVal < 1) maxVal = 1;
-          Object.keys(votes).forEach(function (cid) {
-            var countEl = document.getElementById('count-' + cid);
-            var barEl   = document.getElementById('bar-'   + cid);
-            if (countEl) countEl.textContent = votes[cid] + (votes[cid] === 1 ? ' vote' : ' votes');
-            if (barEl)   barEl.style.width   = Math.round((votes[cid] / maxVal) * 100) + '%';
-          });
-        })
-        .catch(function () {});
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      refreshCounts();
-      setInterval(refreshCounts, 10000);
-    });
-    // Also run immediately in case DOMContentLoaded already fired
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      refreshCounts();
-    }
-  })();
-
-  </script>
-
 </main>
-
 </body>
 </html>
