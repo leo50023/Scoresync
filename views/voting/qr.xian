@@ -1,9 +1,17 @@
 {{> head }}
 <body class="min-h-screen flex flex-col" style="background:#0a0f1e">
-  <header class="h-14 border-b flex items-center px-4 sm:px-6" style="background:#0d1424;border-bottom-color:rgba(255,255,255,0.06)">
+  <header class="h-14 border-b flex items-center justify-between px-4 sm:px-6" style="background:#0d1424;border-bottom-color:rgba(255,255,255,0.06)">
     <a href="/" class="flex items-center gap-2">
       <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-8 h-8 object-cover rounded-full" style="border:1.5px solid rgba(255,255,255,0.15)"/>
       <span class="font-black text-white text-sm tracking-tight">ScoreSync</span>
+    </a>
+    <a href="{{eventPath}}" class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs sm:text-sm font-bold"
+      style="color:#cbd5e1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)"
+      aria-label="Back to event management">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/><path d="M20 12H9"/>
+      </svg>
+      <span>Back to event</span>
     </a>
   </header>
 

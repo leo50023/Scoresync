@@ -39,6 +39,7 @@ export const audienceVotingQrPage = async (req, res) => {
       votingOpen: event.votingOpen === true && hasChoiceCriterion,
       peopleChoiceCriterionMissing: !hasChoiceCriterion,
       votePath: `/events/${encodeURIComponent(eventId)}/vote`,
+      eventPath: `/events/${encodeURIComponent(eventId)}`,
     });
   } catch (err) {
     console.error(err);
