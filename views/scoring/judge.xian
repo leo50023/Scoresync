@@ -72,8 +72,7 @@
 
     {{#each contestants}}
     <!-- ══ Contestant Panel ══ -->
-    <div class="contestant-panel" data-idx="{{@index}}" data-contestant-id="{{id}}"
-      style="background:linear-gradient(160deg,#0a1628 0%,#0d1f3c 100%);border:1px solid rgba(201,162,39,0.2);border-radius:20px;margin:16px;padding:0;overflow:hidden">
+    <div class="contestant-panel" data-idx="{{@index}}" data-contestant-id="{{id}}">
 
       <!-- Two-column layout: photo left, scoring right -->
       <div class="judge-card-inner">
@@ -81,13 +80,12 @@
         <!-- ── Left column: Photo ── -->
         <div class="judge-photo-col">
           {{#if photo}}
-          <div class="judge-photo-frame" style="position:relative;width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;overflow:hidden;background:#081326">
+          <div class="judge-photo-frame">
             <img src="{{photo}}" alt="{{name}}"
-              style="width:100%;height:100%;object-fit:contain;object-position:center;border-radius:16px;border:2px solid #c9a227;display:block;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,transparent 40%);pointer-events:none;border-radius:16px"></div>
+              style="object-position:center 20%"/>
           </div>
           {{else}}
-          <div class="judge-photo-frame judge-photo-placeholder" style="width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;border:1px solid rgba(201,162,39,0.35);background:radial-gradient(ellipse at 50% 30%,rgba(201,162,39,0.12),transparent 55%),linear-gradient(160deg,#101f38,#091326);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+          <div class="judge-photo-frame judge-photo-placeholder">
             <div class="judge-photo-placeholder-icon">
               <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/><path d="M4 4.5 5.5 6M20 4.5 18.5 6"/></svg>
             </div>
@@ -101,52 +99,48 @@
         </div>
 
         <!-- ── Right column: Scoring ── -->
-        <div class="judge-scoring-col" style="position:relative">
-
-          <!-- Crown SVG watermark -->
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="position:absolute;top:12px;right:16px;opacity:0.04;pointer-events:none;z-index:0" stroke="#c9a227" stroke-width="1.2"><path d="M2 20h20M4 20l2-8 6 4 6-4 2 8"/><circle cx="4" cy="10" r="2" fill="#c9a227"/><circle cx="12" cy="6" r="2" fill="#c9a227"/><circle cx="20" cy="10" r="2" fill="#c9a227"/></svg>
+        <div class="judge-scoring-col">
 
           <!-- Header: crown + judging system label -->
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-            <span style="font-size:1.1rem;line-height:1">👑</span>
-            <span style="font-size:0.65rem;font-weight:900;letter-spacing:0.22em;text-transform:uppercase;color:#c9a227">Judging System</span>
+          <div class="judge-card-eyebrow">
+            <span class="judge-card-eyebrow-dot"></span>
+            <span>Judge evaluation</span>
           </div>
 
           <!-- Contestant name + number -->
-          <div style="margin-bottom:4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
-            <h2 style="font-size:1.45rem;font-weight:900;letter-spacing:0.01em;color:#f1f5f9;margin:0;line-height:1.15">{{name}}</h2>
-            <span style="font-size:1rem;font-weight:900;color:#c9a227">#{{number}}</span>
+          <div class="judge-contestant-heading">
+            <h2>{{name}}</h2>
+            <span>#{{number}}</span>
           </div>
 
           <!-- Barangay / age -->
-          <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:16px">
+          <div class="judge-contestant-meta">
             {{#if barangay}}<span>Brgy. {{barangay}}</span>{{/if}}
             {{#if age}}<span style="margin-left:6px">&bull; {{age}} yrs</span>{{/if}}
             {{#if platform}}<span style="margin-left:6px">&bull; {{platform}}</span>{{/if}}
           </div>
 
           <!-- Gold divider -->
-          <div style="height:1px;background:linear-gradient(90deg,rgba(201,162,39,0.4),rgba(201,162,39,0.08));margin:0 0 14px 0;border-radius:1px"></div>
+          <div class="judge-card-divider"></div>
 
           <!-- ── Criteria rows (all visible at once) ── -->
           {{#each scores}}
-          <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}"
-            style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.15);border-radius:10px;padding:14px 16px;margin-bottom:6px;transition:border-color 0.2s,background 0.2s">
+          <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
 
             <!-- Criteria name row -->
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;flex-wrap:wrap">
-              <span style="font-size:0.86rem;font-weight:700;color:#f1f5f9;text-transform:capitalize">{{criteriaName}}</span>
-              <span style="font-size:0.7rem;font-weight:900;background:linear-gradient(135deg,#8b6914,#c9a227);color:#0a1628;padding:3px 12px;border-radius:999px;flex-shrink:0">{{weight}}%</span>
+            <div class="judge-criteria-heading">
+              <span>{{criteriaName}}</span>
+              <span class="judge-weight-badge">{{weight}}%</span>
             </div>
 
             <!-- Progress bar + input row -->
-            <div style="display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap">
+            <div class="judge-score-row">
               <!-- Progress bar -->
-              <div style="flex:1;height:8px;border-radius:6px;overflow:hidden;background:rgba(255,255,255,0.06);min-width:0">
-                <div class="criteria-bar" style="height:100%;width:0%;border-radius:6px;background:linear-gradient(90deg,#8b6914,#c9a227,#f0c040);background-size:200% auto;animation:shimmer 2.5s linear infinite;transition:width 0.3s ease"></div>
+              <div class="judge-score-track">
+                <div class="criteria-bar"></div>
               </div>
               <!-- Visible score input -->
-              <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+              <div class="judge-score-entry">
                 <input type="number"
                   class="score-entry-input"
                   min="0" max="{{maxScore}}" step="0.01"
@@ -155,8 +149,8 @@
                   {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
                   data-max="{{maxScore}}"
                   oninput="handleScoreInput(this)"
-                  style="width:72px;height:44px;font-size:16px !important;font-weight:900;text-align:center;border-radius:10px;border:1.5px solid rgba(201,162,39,0.4);background:rgba(0,0,0,0.35);color:#f0c040;outline:none;-webkit-appearance:none;-moz-appearance:textfield;min-height:44px"/>
-                <span style="font-size:0.68rem;font-weight:700;color:#64748b;white-space:nowrap">/{{maxScore}}</span>
+                />
+                <span>/ {{maxScore}}</span>
               </div>
             </div>
 
@@ -182,26 +176,25 @@
           {{/each}}
 
           <!-- Live total display -->
-          <div class="contestant-total-display" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 4px 0;border-top:1px solid rgba(201,162,39,0.15);margin-top:8px">
-            <span style="font-size:0.75rem;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8">Total</span>
-            <div style="display:flex;align-items:center">
-              <span class="contestant-total" style="font-size:2rem;font-weight:900;background:linear-gradient(135deg,#f0c040,#c9a227);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0.00%</span>
-              <span class="contestant-fill-label" style="font-size:0.65rem;font-weight:900;background:rgba(201,162,39,0.12);color:#f0c040;border:1px solid rgba(201,162,39,0.25);padding:2px 8px;border-radius:999px;margin-left:8px;white-space:nowrap">0/{{scores.length}} filled</span>
+          <div class="contestant-total-display">
+            <span class="judge-total-label">Total score</span>
+            <div class="judge-total-value">
+              <span class="contestant-total">0.00%</span>
+              <span class="contestant-fill-label">0/{{scores.length}} filled</span>
             </div>
           </div>
 
           <!-- Overall progress bar (thin) -->
-          <div style="height:6px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.04);margin-bottom:14px;margin-top:4px">
-            <div class="contestant-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#8b6914,#c9a227,#f0c040);transition:width 0.5s ease"></div>
+          <div class="judge-overall-track">
+            <div class="contestant-progress-bar"></div>
           </div>
 
           <!-- SUBMIT button -->
           {{#unless ../readOnly}}
           <button type="button"
             class="submit-btn"
-            onclick="submitContestant({{@index}})"
-            style="width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,#8b6914,#c9a227,#f0c040,#c9a227);background-size:300% auto;color:#0a1628;font-weight:900;font-size:15px;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;box-shadow:0 4px 24px rgba(201,162,39,0.4)">
-            ✓ Submit Scores
+            onclick="submitContestant({{@index}})">
+            Submit scores
           </button>
           {{else}}
           <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:#94a3b8;border:1px solid rgba(255,255,255,0.08)">Read-only score review</div>
@@ -248,100 +241,325 @@
 </div>
 
 <style>
-/* Two-column judge card */
+/* Judge scoring card */
+.contestant-panel {
+  margin: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(148,163,184,0.16);
+  border-radius: 18px;
+  background: linear-gradient(145deg,#101c30 0%,#0b1424 100%);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+}
 .judge-card-inner {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 260px minmax(0,1fr);
   align-items: stretch;
 }
 .judge-photo-col {
-  width: 280px;
-  flex-shrink: 0;
-  padding: 20px 0 20px 20px;
-  display: flex;
-  align-items: center;
-}
-.judge-photo-col img, .judge-photo-col > div {
-  width: 100%;
-  border-radius: 14px;
-}
-.judge-photo-frame {
-  max-width: 100%;
-}
-.judge-photo-placeholder {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 36px rgba(0,0,0,0.22);
-}
-.judge-photo-placeholder-icon {
-  width: 76px;
-  height: 76px;
+  min-width: 0;
+  padding: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #d6b54a;
-  border: 1px solid rgba(201,162,39,0.28);
+  background: rgba(4,10,20,0.24);
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.judge-photo-col img {
+  width: 100%;
+}
+.judge-photo-frame {
+  width: 100%;
+  aspect-ratio: 4/5;
+  max-height: 390px;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #101827;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.judge-photo-placeholder {
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(160deg,#17243a,#101827);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.judge-photo-placeholder > .text-center {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+.judge-photo-placeholder-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  border: 1px solid rgba(148,163,184,0.2);
   border-radius: 50%;
-  background: rgba(201,162,39,0.08);
+  background: rgba(148,163,184,0.08);
 }
 .judge-photo-frame img {
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 0;
 }
 .judge-scoring-col {
-  flex: 1;
+  min-width: 0;
+  padding: 24px 26px;
+}
+.judge-card-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+  color: #94a3b8;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.judge-card-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c9a227;
+}
+.judge-contestant-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 4px;
+}
+.judge-contestant-heading h2 {
+  margin: 0;
+  color: #f1f5f9;
+  font-size: 1.35rem;
+  font-weight: 850;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.judge-contestant-heading > span {
+  color: #d6b54a;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+.judge-contestant-meta {
+  min-height: 18px;
+  margin-bottom: 16px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+.judge-card-divider {
+  height: 1px;
+  margin-bottom: 14px;
+  background: rgba(255,255,255,0.08);
+}
+.criteria-panel {
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  border: 1px solid rgba(148,163,184,0.13);
+  border-left: 3px solid transparent;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.025);
+  transition: border-color 0.2s,background 0.2s;
+}
+.criteria-panel:hover {
+  border-color: rgba(148,163,184,0.24);
+  background: rgba(255,255,255,0.04);
+}
+.criteria-panel.has-score {
+  border-left-color: #c9a227;
+}
+.criteria-panel:focus-within {
+  border-color: rgba(201,162,39,0.4);
+  background: rgba(255,255,255,0.04);
+}
+.criteria-panel.has-score:focus-within {
+  border-left-color: #c9a227;
+}
+.judge-criteria-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.judge-weight-badge {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border: 1px solid rgba(201,162,39,0.2);
+  border-radius: 999px;
+  background: rgba(201,162,39,0.1);
+  color: #e5c45a;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.judge-score-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.judge-score-track, .judge-overall-track {
+  height: 7px;
   min-width: 0;
   overflow: hidden;
-  padding: 20px 16px 20px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.07);
+}
+.judge-score-track {
+  flex: 1;
+}
+.judge-score-track .criteria-bar, .judge-overall-track .contestant-progress-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg,#a17b1c,#d6b54a);
+  transition: width 0.35s ease;
+}
+.judge-score-entry {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.judge-score-entry input {
+  width: 76px;
+  height: 42px;
+  min-height: 42px;
+  border: 1px solid rgba(148,163,184,0.24);
+  border-radius: 10px;
+  outline: none;
+  background: #0a1220;
+  color: #f1f5f9;
+  font-size: 16px !important;
+  font-weight: 800;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.judge-score-entry input:focus {
+  border-color: #c9a227;
+  box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+}
+.judge-score-entry input::-webkit-inner-spin-button,
+.judge-score-entry input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+.judge-score-entry > span {
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.contestant-total-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 0 5px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.judge-total-label {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.judge-total-value {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.contestant-total {
+  color: #e5c45a;
+  font-size: 1.65rem;
+  font-weight: 850;
+}
+.contestant-fill-label {
+  padding: 3px 8px;
+  border: 1px solid rgba(201,162,39,0.18);
+  border-radius: 999px;
+  background: rgba(201,162,39,0.08);
+  color: #d6b54a;
+  font-size: 0.65rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.judge-overall-track {
+  margin: 2px 0 14px;
+  height: 5px;
+}
+.submit-btn {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 16px;
+  border: 1px solid rgba(214,181,74,0.35);
+  border-radius: 11px;
+  background: #c9a227;
+  color: #111827;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.18s,transform 0.18s;
+}
+.submit-btn:hover {
+  background: #d8b43d;
+}
+.submit-btn:active {
+  transform: translateY(1px);
 }
 
 /* Mobile: stack photo on top */
 @media (max-width: 640px) {
   .judge-card-inner {
-    flex-direction: column;
     grid-template-columns: 1fr;
   }
   .judge-photo-col {
-    width: 100%;
-    padding: 12px 12px 0 12px;
-    display: flex;
-    justify-content: center;
+    padding: 16px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .judge-photo-frame {
-    width: min(100%, 240px) !important;
+    width: min(100%, 220px);
+    max-height: 280px;
   }
   .judge-photo-placeholder {
-    min-height: 280px;
-  }
-  .judge-photo-col img, .judge-photo-col > div {
-    max-height: 320px !important;
+    min-height: 240px;
   }
   .judge-scoring-col {
-    padding: 12px;
+    padding: 18px 16px;
   }
-  /* Full-width score input on mobile */
-  .score-entry-input {
-    width: 100% !important;
-    min-height: 44px !important;
-    font-size: 16px !important;
+  .contestant-panel {
+    margin: 12px 10px;
+    border-radius: 15px;
+  }
+  .judge-score-entry input {
+    width: 68px;
   }
 }
-
-/* Score entry input focus glow */
-.score-entry-input:focus {
-  border-color: #f0c040 !important;
-  box-shadow: 0 0 0 2px rgba(240,192,64,0.25) !important;
-}
-/* Hide number input spinners */
-.score-entry-input::-webkit-outer-spin-button,
-.score-entry-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.score-entry-input { -moz-appearance: textfield; }
 
 .nav-dot.scored { background:rgba(16,185,129,0.25) !important;color:#6ee7b7 !important;border-color:rgba(16,185,129,0.5) !important; }
 .nav-dot.active-dot { background:rgba(201,162,39,0.25) !important;color:#f0c040 !important;border-color:rgba(201,162,39,0.6) !important; }
 
-/* All interactive elements: fast transitions */
-.nav-dot, [onclick] {
-  transition: background 60ms ease, color 60ms ease, border-color 60ms ease !important;
+/* Keep navigation feedback responsive without overriding control-specific transitions. */
+.nav-dot {
+  transition: background 60ms ease, color 60ms ease, border-color 60ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 /* Hide scrollbars */
@@ -351,24 +569,10 @@ main::-webkit-scrollbar { display:none; }
 .nav-dot { will-change: background, transform; }
 #scoring-main { will-change: scroll-position; }
 
-/* Criteria panel hover & filled state */
-.criteria-panel:hover { border-color: rgba(201,162,39,0.35) !important; background: rgba(255,255,255,0.07) !important; }
-.criteria-panel.has-score { border-left: 3px solid #c9a227 !important; }
-
 /* Shimmer animation for progress bar fill */
 @keyframes shimmer {
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
-}
-
-/* Submit button */
-.submit-btn {
-  background-size: 300% auto;
-  transition: background-position 80ms ease, box-shadow 80ms ease, opacity 80ms ease;
-}
-.submit-btn:hover {
-  background-position: right center;
-  box-shadow: 0 6px 32px rgba(201,162,39,0.6);
 }
 </style>
 
