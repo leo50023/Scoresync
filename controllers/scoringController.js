@@ -32,18 +32,20 @@ export const scoringPage = async (req, res) => {
       await applyAutoStatus(eventId, ev);
     }
 
-    // Block scoring when event is not ongoing (judges only)
-    if (req.session.userRole === 'judge' && ev.status !== 'ongoing') {
+    const readOnly = req.session.userRole === 'judge' && ev.status === 'completed';
+
+    // Judges may review their submitted scores after completion, but cannot edit them.
+    if (req.session.userRole === 'judge' && ev.status !== 'ongoing' && !readOnly) {
       req.flash("error_msg",
         ev.status === 'upcoming'
           ? `"${ev.name}" has not started yet. Scoring opens when the event goes live.`
-          : `"${ev.name}" has already ended. Scoring is now closed.`
+          : `"${ev.name}" is no longer available for scoring.`
       );
       return res.redirect("/dashboard");
     }
 
     // Block if scoring is locked
-    if (ev.scoringLocked && req.session.userRole === 'judge') {
+    if (ev.scoringLocked && req.session.userRole === 'judge' && !readOnly) {
       req.flash("error_msg", "Scoring has been locked by the administrator. Please contact the event organizer.");
       return res.redirect("/dashboard");
     }
@@ -97,6 +99,7 @@ export const scoringPage = async (req, res) => {
       criteria,
       judgeId,
       scoringLocked: ev.scoringLocked || false,
+      readOnly,
       hasExistingScores,
       userName:    req.session.userName,
       userRole:    req.session.userRole,

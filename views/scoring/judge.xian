@@ -30,7 +30,7 @@
         </div>
         <a href="/events/{{event.id}}/results" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Live Results
+          {{#if readOnly}}View Results{{else}}Live Results{{/if}}
         </a>
 
       </div>
@@ -52,10 +52,17 @@
   {{#if success_msg}}<div class="alert-success m-4">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error m-4">{{error_msg}}</div>{{/if}}
 
+  {{#if readOnly}}
+  <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 no-print" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25)">
+  <div class="text-xs" style="color:#bfdbfe">Event completed. Scores are available in read-only mode.</div>
+    <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results →</a>
+  </div>
+  {{/if}}
+
   {{#if hasExistingScores}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex items-start gap-2.5 no-print" style="background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.25)">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <div class="text-xs" style="color:#f0c040">You have previously submitted scores for this event. Your existing scores are shown below — you can update them and re-submit.</div>
+    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below — you can update them and re-submit.{{/if}}</div>
   </div>
   {{/if}}
 
@@ -74,13 +81,13 @@
         <!-- ── Left column: Photo ── -->
         <div class="judge-photo-col">
           {{#if photo}}
-          <div style="position:relative;width:100%;height:100%;min-height:300px;border-radius:16px;overflow:hidden">
+          <div class="judge-photo-frame" style="position:relative;width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;overflow:hidden;background:#081326">
             <img src="{{photo}}" alt="{{name}}"
-              style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:16px;border:2px solid #c9a227;display:block;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)"/>
+              style="width:100%;height:100%;object-fit:contain;object-position:center;border-radius:16px;border:2px solid #c9a227;display:block;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)"/>
             <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,transparent 40%);pointer-events:none;border-radius:16px"></div>
           </div>
           {{else}}
-          <div style="width:100%;height:100%;min-height:220px;border-radius:16px;border:2px solid #c9a227;background:linear-gradient(160deg,#0d1f3c,#1a2f50);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)">
+          <div class="judge-photo-frame" style="width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;border:2px solid #c9a227;background:linear-gradient(160deg,#0d1f3c,#1a2f50);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)">
             <span style="font-size:3rem;font-weight:900;color:#c9a227;line-height:1">#{{number}}</span>
             <span style="font-size:0.7rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.1em">No Photo</span>
           </div>
@@ -139,6 +146,7 @@
                   min="0" max="{{maxScore}}" step="0.01"
                   placeholder="0"
                   value="{{value}}"
+                  {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
                   data-max="{{maxScore}}"
                   oninput="handleScoreInput(this)"
                   style="width:72px;height:44px;font-size:16px !important;font-weight:900;text-align:center;border-radius:10px;border:1.5px solid rgba(201,162,39,0.4);background:rgba(0,0,0,0.35);color:#f0c040;outline:none;-webkit-appearance:none;-moz-appearance:textfield;min-height:44px"/>
@@ -159,6 +167,7 @@
                 value="{{value}}"
                 min="0" max="{{maxScore}}" step="0.01"
                 class="score-input sr-only"
+                {{#if ../../readOnly}}readonly{{/if}}
                 data-weight="{{weight}}" data-max="{{maxScore}}"
                 tabindex="-1"/>
             </div>
@@ -181,12 +190,16 @@
           </div>
 
           <!-- SUBMIT button -->
+          {{#unless ../readOnly}}
           <button type="button"
             class="submit-btn"
             onclick="submitContestant({{@index}})"
             style="width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,#8b6914,#c9a227,#f0c040,#c9a227);background-size:300% auto;color:#0a1628;font-weight:900;font-size:15px;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;box-shadow:0 4px 24px rgba(201,162,39,0.4)">
             ✓ Submit Scores
           </button>
+          {{else}}
+          <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:#94a3b8;border:1px solid rgba(255,255,255,0.08)">Read-only score review</div>
+          {{/unless}}
 
         </div><!-- /.judge-scoring-col -->
       </div><!-- /.judge-card-inner -->
@@ -242,12 +255,13 @@
 }
 .judge-photo-col img, .judge-photo-col > div {
   width: 100%;
-  height: 100%;
-  min-height: 0;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  object-position: center top;
   border-radius: 14px;
+}
+.judge-photo-frame {
+  max-width: 100%;
+}
+.judge-photo-frame img {
+  object-fit: contain;
 }
 .judge-scoring-col {
   flex: 1;
@@ -267,11 +281,14 @@
   .judge-photo-col {
     width: 100%;
     padding: 12px 12px 0 12px;
+    display: flex;
+    justify-content: center;
+  }
+  .judge-photo-frame {
+    width: min(100%, 240px) !important;
   }
   .judge-photo-col img, .judge-photo-col > div {
-    aspect-ratio: 4/3;
-    height: 200px;
-    min-height: 0;
+    max-height: 320px !important;
   }
   .judge-scoring-col {
     padding: 12px;
