@@ -206,6 +206,33 @@ export const toggleVoting = async (req, res) => {
   }
 };
 
+// ─── Toggle organizer More menu visibility ────────────────────────────────────
+export const toggleOrganizerMoreMenu = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const eventRef = doc(db, "events", eventId);
+    const eventSnap = await getDoc(eventRef);
+    if (!eventSnap.exists()) {
+      req.flash("error_msg", "Event not found.");
+      return res.redirect("/events");
+    }
+
+    const hidden = eventSnap.data().hideOrganizerMoreMenu !== true;
+    await updateDoc(eventRef, { hideOrganizerMoreMenu: hidden });
+    req.flash(
+      "success_msg",
+      hidden
+        ? "The More menu is now hidden from organizers."
+        : "The More menu is visible to organizers again."
+    );
+    res.redirect(`/events/${eventId}`);
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Failed to update organizer menu visibility.");
+    res.redirect(`/events/${eventId}`);
+  }
+};
+
 // ─── Live vote counts (JSON, no auth, no cache) ───────────────────────────────
 export const voteCounts = async (req, res) => {
   const { eventId } = req.params;
