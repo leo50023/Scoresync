@@ -87,9 +87,15 @@
             <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,transparent 40%);pointer-events:none;border-radius:16px"></div>
           </div>
           {{else}}
-          <div class="judge-photo-frame" style="width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;border:2px solid #c9a227;background:linear-gradient(160deg,#0d1f3c,#1a2f50);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 0 0 2px #c9a227,0 0 32px rgba(201,162,39,0.25)">
-            <span style="font-size:3rem;font-weight:900;color:#c9a227;line-height:1">#{{number}}</span>
-            <span style="font-size:0.7rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.1em">No Photo</span>
+          <div class="judge-photo-frame judge-photo-placeholder" style="width:100%;aspect-ratio:3/4;max-height:420px;border-radius:16px;border:1px solid rgba(201,162,39,0.35);background:radial-gradient(ellipse at 50% 30%,rgba(201,162,39,0.12),transparent 55%),linear-gradient(160deg,#101f38,#091326);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+            <div class="judge-photo-placeholder-icon">
+              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/><path d="M4 4.5 5.5 6M20 4.5 18.5 6"/></svg>
+            </div>
+            <div class="text-center px-3">
+              <div style="font-size:0.9rem;font-weight:800;color:#e2e8f0">{{name}}</div>
+              <div style="font-size:0.68rem;font-weight:700;color:#94a3b8;margin-top:4px">Contestant #{{number}}</div>
+              <div style="font-size:0.6rem;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:0.12em;margin-top:12px">Photo not uploaded</div>
+            </div>
           </div>
           {{/if}}
         </div>
@@ -249,9 +255,11 @@
   align-items: stretch;
 }
 .judge-photo-col {
-  width: 220px;
+  width: 280px;
   flex-shrink: 0;
-  padding: 16px 0 16px 16px;
+  padding: 20px 0 20px 20px;
+  display: flex;
+  align-items: center;
 }
 .judge-photo-col img, .judge-photo-col > div {
   width: 100%;
@@ -259,6 +267,20 @@
 }
 .judge-photo-frame {
   max-width: 100%;
+}
+.judge-photo-placeholder {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 36px rgba(0,0,0,0.22);
+}
+.judge-photo-placeholder-icon {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d6b54a;
+  border: 1px solid rgba(201,162,39,0.28);
+  border-radius: 50%;
+  background: rgba(201,162,39,0.08);
 }
 .judge-photo-frame img {
   object-fit: contain;
@@ -286,6 +308,9 @@
   }
   .judge-photo-frame {
     width: min(100%, 240px) !important;
+  }
+  .judge-photo-placeholder {
+    min-height: 280px;
   }
   .judge-photo-col img, .judge-photo-col > div {
     max-height: 320px !important;
