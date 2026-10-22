@@ -1,7 +1,7 @@
 ﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
-  setDoc, updateDoc, addDoc, serverTimestamp, query, where,
+  setDoc, updateDoc, addDoc, serverTimestamp,
 } from "firebase/firestore";
 import { sanitizeText } from "../utils/sanitize.js";
 import { applyAutoStatus } from "../utils/autoStatus.js";
@@ -642,7 +642,7 @@ export const reportPage = async (req, res) => {
       getDocs(collection(db, "events", eventId, "criteria")),
       getDocs(collection(db, "events", eventId, "scores")),
       getDocs(collection(db, "events", eventId, "report_signatures")),
-      getDocs(query(collection(db, "users"), where("role", "==", "tabulator"))),
+      getDocs(collection(db, "users")),
     ]);
 
     if (!eSnap.exists()) return res.redirect("/events");
@@ -730,17 +730,17 @@ export const reportPage = async (req, res) => {
     // Build tabulator breakdown for signature section
     const tabulators = tabulatorSnap.docs
       .map(d => ({ id: d.id, ...d.data() }))
-      .filter(u => u.status === 'approved' || u.status === 'active')
+      .filter(u => u.role === 'tabulator' && (u.status === 'approved' || u.status === 'active'))
       .map((u, idx) => {
         const sig = sigMap[u.id];
         return {
-          tabulatorId:  u.id,
+          tabulatorId:   u.id,
           tabulatorName: u.name || u.email || 'Tabulator',
-          alias:        `Chief Tabulator ${idx + 1}`,
-          initial:      String(idx + 1),
-          signed:       !!sig,
-          signedAt:     sig ? sig.signedAt : null,
-          isSelf:       u.id === req.session.userId,
+          alias:         `Chief Tabulator ${idx + 1}`,
+          initial:       String(idx + 1),
+          signed:        !!sig,
+          signedAt:      sig ? sig.signedAt : null,
+          isSelf:        u.id === req.session.userId,
         };
       });
 
