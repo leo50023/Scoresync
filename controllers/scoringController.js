@@ -1,7 +1,7 @@
 ﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
-  setDoc, updateDoc, addDoc, serverTimestamp,
+  setDoc, updateDoc, addDoc, serverTimestamp, query, where,
 } from "firebase/firestore";
 import { sanitizeText } from "../utils/sanitize.js";
 import { applyAutoStatus } from "../utils/autoStatus.js";
@@ -636,12 +636,13 @@ export const exportResults = async (req, res) => {
 export const reportPage = async (req, res) => {
   const { eventId } = req.params;
   try {
-    const [eSnap, cSnap, crSnap, sSnap, sigSnap] = await Promise.all([
+    const [eSnap, cSnap, crSnap, sSnap, sigSnap, tabulatorSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
       getDocs(collection(db, "events", eventId, "criteria")),
       getDocs(collection(db, "events", eventId, "scores")),
       getDocs(collection(db, "events", eventId, "report_signatures")),
+      getDocs(query(collection(db, "users"), where("role", "==", "tabulator"))),
     ]);
 
     if (!eSnap.exists()) return res.redirect("/events");
@@ -726,6 +727,23 @@ export const reportPage = async (req, res) => {
       };
     });
 
+    // Build tabulator breakdown for signature section
+    const tabulators = tabulatorSnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(u => u.status === 'approved' || u.status === 'active')
+      .map((u, idx) => {
+        const sig = sigMap[u.id];
+        return {
+          tabulatorId:  u.id,
+          tabulatorName: u.name || u.email || 'Tabulator',
+          alias:        `Chief Tabulator ${idx + 1}`,
+          initial:      String(idx + 1),
+          signed:       !!sig,
+          signedAt:     sig ? sig.signedAt : null,
+          isSelf:       u.id === req.session.userId,
+        };
+      });
+
     res.render("scoring/report", {
       title:        `Report � ${ev.name}`,
       event:        ev,
@@ -742,6 +760,7 @@ export const reportPage = async (req, res) => {
       isOrganizer:  req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
       currentUserId: req.session.userId,
+      tabulators,
     });
   } catch (err) {
     console.error(err);
