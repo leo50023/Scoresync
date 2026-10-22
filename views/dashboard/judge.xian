@@ -56,11 +56,17 @@
     <div class="flex-1">
       <h3 class="font-extrabold text-sm" style="color:#a5b4fc">{{#if isTabulator}}Tabulator Guidelines{{else}}Scoring Guidelines{{/if}}</h3>
       <p class="text-xs font-medium mt-1 leading-relaxed" style="color:#6366f1">
+        {{#if isTabulator}}
+        Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">Review / Edit Scores</span> on any event to see all judges' scores.
+        You can correct any score entry — all edits are logged in the audit trail.
+        Locked events are <strong style="color:#a5b4fc">read-only</strong>.
+        {{else}}
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">
           <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Score Now
-        </span>{{#unless isTabulator}} on <strong style="color:#a5b4fc">Ongoing</strong> events only.{{else}} for events; locked events are read-only.{{/unless}}
+        </span> on <strong style="color:#a5b4fc">Ongoing</strong> events only.
         Scores are saved per contestant — one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
         Your scores are <strong style="color:#a5b4fc">anonymous</strong> to participants.
+        {{/if}}
       </p>
     </div>
   </div>
@@ -155,7 +161,7 @@
               {{/if}}
 
               <!-- Completion progress bar (for ongoing, judges only) -->
-              {{#unless isTabulator}}
+              {{#unless @root.isTabulator}}
               {{#if (eq status 'ongoing')}}
               {{#if contestantCount}}
               <div class="mt-2.5">
@@ -179,7 +185,7 @@
             <span class="badge {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize text-xs">
               {{status}}
             </span>
-              {{#if isTabulator}}
+              {{#if @root.isTabulator}}
               <a href="/events/{{id}}/tabulator" class="btn-sm btn-sm-blue text-xs inline-flex items-center gap-1.5">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
                 {{#if scoringLocked}}View Scores{{else}}Review / Edit Scores{{/if}}
