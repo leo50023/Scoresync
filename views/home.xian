@@ -1,5 +1,5 @@
-{{> head }}
-<body class="flex flex-col min-h-screen" style="background:#0a0f1e">
+﻿{{> head }}
+<body class="flex flex-col min-h-screen" class="ss-page-bg">
 <style>
   .home-hero {
     position: relative;

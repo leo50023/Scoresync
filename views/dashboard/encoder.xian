@@ -1,5 +1,5 @@
-{{> head }}
-<body class="min-h-screen flex flex-col" style="background:#0a0f1e">
+﻿{{> head }}
+<body class="min-h-screen flex flex-col" class="ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}

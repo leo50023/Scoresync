@@ -1,5 +1,5 @@
-{{> head}}
-<body style="background:#0a0f1e;color:#e2e8f0">
+﻿{{> head}}
+<body class="ss-page-bg">
   <div class="text-center mt-20">
     <h2 class="text-2xl font-bold" style="color:#e2e8f0">Dashboard</h2>
     <p class="mt-4" style="color:#64748b">Welcome to your dashboard!</p>

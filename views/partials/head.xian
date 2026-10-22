@@ -102,7 +102,7 @@
 
     /* ── Smooth scrolling + touch ── */
     html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg-page) !important; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+    body, .ss-page-bg { background: var(--bg-page) !important; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
     /* GPU compositing for smooth animations */
     .card, .card-flat, .section-card, .kpi-card, .btn-primary, .btn-secondary, .btn-danger {
       will-change: transform;

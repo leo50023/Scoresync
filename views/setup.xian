@@ -1,5 +1,5 @@
 ﻿{{> head }}
-<body class="min-h-screen flex" style="background:#0a0f1e">
+<body class="min-h-screen flex" class="ss-page-bg">
   <div class="hidden lg:flex lg:w-[44%] auth-panel-bg flex-col justify-between p-10 relative">
     <div class="relative z-10">
       <div class="flex items-center gap-3 mb-14">
