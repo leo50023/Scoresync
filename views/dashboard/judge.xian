@@ -21,13 +21,13 @@
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-extrabold"
           style="background:rgba(139,92,246,0.2);color:#c4b5fd;border:1px solid rgba(139,92,246,0.35)">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Official Judge Panel
+          {{#if isTabulator}}Official Tabulator Panel{{else}}Official Judge Panel{{/if}}
         </div>
         <!-- Welcome -->
         <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
           Welcome back, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> 👋
         </h1>
-        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">Select an active event to score contestants — one at a time, in order.</p>
+        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants — one at a time, in order.{{/if}}</p>
       </div>
 
       <!-- Stats mini row -->
@@ -54,11 +54,11 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     </div>
     <div class="flex-1">
-      <h3 class="font-extrabold text-sm" style="color:#a5b4fc">Scoring Guidelines</h3>
+      <h3 class="font-extrabold text-sm" style="color:#a5b4fc">{{#if isTabulator}}Tabulator Guidelines{{else}}Scoring Guidelines{{/if}}</h3>
       <p class="text-xs font-medium mt-1 leading-relaxed" style="color:#6366f1">
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">
           <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Score Now
-        </span> on <strong style="color:#a5b4fc">Ongoing</strong> events only.
+        </span>{{#unless isTabulator}} on <strong style="color:#a5b4fc">Ongoing</strong> events only.{{else}} for events; locked events are read-only.{{/unless}}
         Scores are saved per contestant — one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
         Your scores are <strong style="color:#a5b4fc">anonymous</strong> to participants.
       </p>
@@ -68,7 +68,7 @@
   <!-- ── Events List ── -->
   <div class="space-y-4 animate-fadeup-2">
     <div class="flex items-center justify-between px-1">
-      <h2 class="font-extrabold text-base" style="color:#e2e8f0">Events Available for Scoring</h2>
+      <h2 class="font-extrabold text-base" style="color:#e2e8f0">{{#if isTabulator}}All Event Scores{{else}}Events Available for Scoring{{/if}}</h2>
       <span id="judge-event-count" class="text-xs font-bold" style="color:#64748b" aria-live="polite">{{recentEvents.length}} event(s)</span>
     </div>
 
@@ -177,7 +177,13 @@
             <span class="badge {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize text-xs">
               {{status}}
             </span>
-            {{#if (eq status 'ongoing')}}
+              {{#if isTabulator}}
+              <a href="/events/{{id}}/tabulator" class="btn-sm btn-sm-blue text-xs inline-flex items-center gap-1.5">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
+                {{#if scoringLocked}}View Scores{{else}}Review / Edit Scores{{/if}}
+              </a>
+              <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs">View Results</a>
+              {{else}}{{#if (eq status 'ongoing')}}
             {{#if isAssigned}}
             <a href="/events/{{id}}/scoring"
               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm text-white transition active:scale-95 shadow-lg"
@@ -210,7 +216,7 @@
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               Not Started
             </span>
-            {{/if}}{{/if}}
+            {{/if}}{{/if}}{{/if}}
           </div>
         </div>
 

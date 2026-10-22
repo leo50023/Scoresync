@@ -122,10 +122,11 @@ import {
   scoringPage, submitScores, resultsPage, scoresJson, announcePage,
   displayBoard, publicResults, toggleScoreLock,
   exportResults, getScoringProgress, reportPage, confirmSignature,
+  tabulatorScoringPage, tabulatorUpdateScore,
 } from "../controllers/scoringController.js";
 
-router.get( "/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer"), scoringPage);
-router.post("/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer"), submitScores);
+router.get( "/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
+router.post("/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), submitScores);
 router.get( "/events/:eventId/results",          requireAuth,                               resultsPage);
 router.get( "/events/:eventId/announce",         requireAuth,                               announcePage);
 router.get( "/events/:eventId/scores-json",      requireAuth,                               scoresJson);
@@ -139,6 +140,10 @@ router.post("/events/:eventId/lock",     requireAuth, requireRole("admin","organ
 // Report & signatures
 router.get( "/events/:eventId/report",      requireAuth, reportPage);
 router.post("/events/:eventId/report/sign", requireAuth, confirmSignature);
+
+// ─── Tabulator Score Review & Edit ────────────────────────────────────────────
+router.get( "/events/:eventId/tabulator",        requireAuth, requireRole("admin","tabulator"), tabulatorScoringPage);
+router.post("/events/:eventId/tabulator/update", requireAuth, requireRole("admin","tabulator"), tabulatorUpdateScore);
 
 // ─── AI Score Analytics (admin only) ──────────────────────────────────────────
 import {

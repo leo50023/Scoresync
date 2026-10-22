@@ -32,7 +32,8 @@ export const scoringPage = async (req, res) => {
       await applyAutoStatus(eventId, ev);
     }
 
-    const readOnly = req.session.userRole === 'judge' && ev.status === 'completed';
+    const readOnly = (req.session.userRole === 'judge' && ev.status === 'completed')
+      || (req.session.userRole === 'tabulator' && ev.scoringLocked);
 
     // Judges may review their submitted scores after completion, but cannot edit them.
     if (req.session.userRole === 'judge' && ev.status !== 'ongoing' && !readOnly) {
@@ -108,6 +109,7 @@ export const scoringPage = async (req, res) => {
       isJudge:     req.session.userRole === "judge",
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
     console.error(err);
@@ -985,5 +987,187 @@ export const getScoringProgress = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Could not load scoring progress." });
+  }
+};
+
+// ─── Tabulator: All-Scores Review Page ───────────────────────────────────────
+// Shows every judge's individual scores for every contestant & criterion.
+// The tabulator can edit or override any individual score entry.
+export const tabulatorScoringPage = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
+      getDoc(doc(db, "events", eventId)),
+      getDocs(collection(db, "events", eventId, "contestants")),
+      getDocs(collection(db, "events", eventId, "criteria")),
+      getDocs(collection(db, "events", eventId, "scores")),
+    ]);
+
+    if (!eSnap.exists()) return res.redirect("/events");
+
+    const ev = { id: eSnap.id, ...eSnap.data() };
+    const locked = ev.scoringLocked || false;
+
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const criteria    = crSnap.docs.map((d, i) => ({
+      id: d.id,
+      ...d.data(),
+      color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
+    }));
+    const allScores = sSnap.docs.map(d => ({ docId: d.id, ...d.data() }));
+
+    // Build a map of judgeId -> judgeName (from submitted scores)
+    const judgeMap = {};
+    allScores.forEach(s => {
+      if (s.judgeId && !judgeMap[s.judgeId]) {
+        judgeMap[s.judgeId] = s.judgeName || "Judge";
+      }
+    });
+    const judges = Object.entries(judgeMap).map(([id, name], idx) => ({
+      id,
+      name,
+      alias: `Judge ${idx + 1}`,
+      num: String(idx + 1),
+    }));
+
+    // Build matrix: contestants × criteria × judges
+    // matrix[contestant][criteria] = { judgeId, value, docId }[]
+    const matrix = contestants.map(c => ({
+      ...c,
+      criteriaScores: criteria.map(cr => {
+        const judgeEntries = judges.map(j => {
+          const scoreDoc = allScores.find(
+            s => s.judgeId === j.id && s.contestantId === c.id && s.criteriaId === cr.id
+          );
+          const value = scoreDoc ? scoreDoc.score : null;
+          const barPct = value !== null
+            ? Math.min((value / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1)
+            : "0";
+          return {
+            judgeId:   j.id,
+            judgeName: j.name,
+            alias:     j.alias,
+            num:       j.num,
+            docId:     scoreDoc ? scoreDoc.docId : null,
+            value,
+            barPct,
+          };
+        });
+        // Average across judges for display
+        const submitted = judgeEntries.filter(e => e.value !== null);
+        const avg = submitted.length
+          ? (submitted.reduce((sum, e) => sum + e.value, 0) / submitted.length).toFixed(2)
+          : null;
+        return {
+          criteriaId:   cr.id,
+          criteriaName: cr.name,
+          weight:       cr.weight,
+          maxScore:     cr.maxScore,
+          color:        cr.color,
+          avg,
+          judgeEntries,
+        };
+      }),
+    }));
+
+    // Compute weighted totals per contestant for the summary header
+    const totals = {};
+    contestants.forEach(c => {
+      let total = 0;
+      criteria.forEach(cr => {
+        const cScores = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+        const avg = cScores.length
+          ? cScores.reduce((sum, s) => sum + s.score, 0) / cScores.length
+          : 0;
+        total += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+      });
+      totals[c.id] = total.toFixed(2);
+    });
+
+    res.render("scoring/tabulator", {
+      title:       `Tabulator Review — ${ev.name}`,
+      event:       ev,
+      contestants: matrix,
+      criteria,
+      judges,
+      totals,
+      locked,
+      userName:    req.session.userName,
+      userRole:    req.session.userRole,
+      userInitial: (req.session.userName || "U")[0].toUpperCase(),
+      isAdmin:     req.session.userRole === "admin",
+      isTabulator: req.session.userRole === "tabulator",
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Could not load tabulator review.");
+    res.redirect("/events");
+  }
+};
+
+// ─── Tabulator: Update a single score entry ───────────────────────────────────
+// POST body: { judgeId, contestantId, criteriaId, score }
+export const tabulatorUpdateScore = async (req, res) => {
+  const { eventId } = req.params;
+  const tabulatorId   = req.session.userId;
+  const tabulatorName = req.session.userName || "Tabulator";
+  const { judgeId, contestantId, criteriaId, score: rawScore } = req.body;
+
+  const score = parseFloat(rawScore);
+  if (!judgeId || !contestantId || !criteriaId || isNaN(score)) {
+    req.flash("error_msg", "Invalid score data. Please check all fields.");
+    return res.redirect(`/events/${eventId}/tabulator`);
+  }
+
+  try {
+    // Block if scoring is locked
+    const eSnap = await getDoc(doc(db, "events", eventId));
+    if (!eSnap.exists()) {
+      req.flash("error_msg", "Event not found.");
+      return res.redirect("/events");
+    }
+    if (eSnap.data().scoringLocked) {
+      req.flash("error_msg", "Scoring is locked. No edits are allowed.");
+      return res.redirect(`/events/${eventId}/tabulator`);
+    }
+
+    const docId = `${judgeId}_${contestantId}_${criteriaId}`;
+    const scoreRef = doc(db, "events", eventId, "scores", docId);
+    const existingSnap = await getDoc(scoreRef);
+    const previousScore = existingSnap.exists() ? existingSnap.data().score : null;
+
+    // Upsert the score — preserve original judgeId/judgeName so averages stay correct
+    const judgeSnap = existingSnap.exists() ? existingSnap.data() : null;
+    await setDoc(scoreRef, {
+      judgeId,
+      judgeName:     judgeSnap?.judgeName || "Judge",
+      contestantId,
+      criteriaId,
+      score,
+      submittedAt:   judgeSnap?.submittedAt ?? serverTimestamp(),
+      lastEditedAt:  serverTimestamp(),
+      editedBy:      tabulatorId,
+      editedByName:  tabulatorName,
+    });
+
+    // Audit log
+    await addDoc(collection(db, "events", eventId, "audit_log"), {
+      action:        "tabulator_score_edit",
+      tabulatorId,
+      tabulatorName,
+      judgeId,
+      contestantId,
+      criteriaId,
+      previousScore,
+      newScore:      score,
+      timestamp:     serverTimestamp(),
+    });
+
+    req.flash("success_msg", "Score updated successfully.");
+    res.redirect(`/events/${eventId}/tabulator`);
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Failed to update score.");
+    res.redirect(`/events/${eventId}/tabulator`);
   }
 };

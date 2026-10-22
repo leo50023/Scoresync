@@ -1,0 +1,310 @@
+{{> head }}
+<body class="min-h-screen flex flex-col" style="background:#060b18">
+{{> navbar }}
+<div class="flex flex-1 overflow-hidden">
+{{> sidebar }}
+<main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+
+  {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
+  {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
+
+  <!-- ── Header ── -->
+  <div class="relative rounded-2xl overflow-hidden animate-fadeup"
+    style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border:1px solid rgba(234,179,8,0.2)">
+    <div class="absolute -right-12 -top-12 w-56 h-56 rounded-full blur-3xl pointer-events-none" style="background:rgba(234,179,8,0.07)"></div>
+    <div class="absolute -left-8 -bottom-8 w-40 h-40 rounded-full blur-3xl pointer-events-none" style="background:rgba(14,165,233,0.06)"></div>
+    <div class="relative px-6 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <a href="/events" class="text-xs font-bold" style="color:rgba(253,224,71,0.6)">Events</a>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(253,224,71,0.4)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="text-xs font-bold" style="color:rgba(253,224,71,0.6)">{{event.name}}</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(253,224,71,0.4)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="text-xs font-bold" style="color:#fde047">Tabulator Review</span>
+        </div>
+        <h1 class="text-xl sm:text-2xl font-black text-white leading-tight">{{event.name}}</h1>
+        <p class="text-xs font-semibold" style="color:rgba(253,224,71,0.6)">
+          {{contestants.length}} contestant(s) &bull; {{criteria.length}} criteria &bull; {{judges.length}} judge(s)
+        </p>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap flex-shrink-0">
+        {{#if locked}}
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold"
+          style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Scoring Locked
+        </span>
+        {{else}}
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold"
+          style="background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          Editing Enabled
+        </span>
+        {{/if}}
+        <a href="/events/{{event.id}}/results" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
+          style="background:rgba(234,179,8,0.12);color:#fde047;border:1px solid rgba(234,179,8,0.3)">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          View Results
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {{#if locked}}
+  <div class="rounded-xl px-4 py-3 flex items-center gap-3 animate-fadeup-1"
+    style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2" class="flex-shrink-0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <p class="text-xs font-semibold" style="color:#fca5a5">Scoring is locked. All scores are displayed in read-only mode. Contact the administrator to unlock.</p>
+  </div>
+  {{/if}}
+
+  <!-- ── Judge legend ── -->
+  {{#if judges.length}}
+  <div class="rounded-2xl p-4 animate-fadeup-1" style="background:#0d1424;border:1px solid rgba(255,255,255,0.07)">
+    <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:#64748b">Judges in this event</div>
+    <div class="flex flex-wrap gap-2">
+      {{#each judges}}
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold"
+        style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#cbd5e1">
+        <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white"
+          style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">{{num}}</span>
+        {{alias}}: <span style="color:#94a3b8">{{name}}</span>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if contestants.length}}
+  <!-- ── Contestant Accordion ── -->
+  <div class="space-y-3 animate-fadeup-2" id="tab-contestant-list">
+    {{#each contestants}}
+    <div class="rounded-2xl overflow-hidden tab-contestant-card"
+      style="background:#0d1424;border:1px solid rgba(255,255,255,0.08)"
+      data-contestant-id="{{id}}">
+
+      <!-- Contestant header (click to expand) -->
+      <button type="button"
+        class="w-full px-5 py-4 flex items-center gap-4 text-left tab-card-toggle"
+        onclick="toggleContestant('{{id}}')" aria-expanded="false">
+
+        <!-- Photo thumb -->
+        <div class="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0"
+          style="background:#111827;border:1px solid rgba(255,255,255,0.1)">
+          {{#if photo}}
+          <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover"/>
+          {{else}}
+          <div class="w-full h-full flex items-center justify-center text-sm font-black" style="color:#4b5563">
+            #{{number}}
+          </div>
+          {{/if}}
+        </div>
+
+        <!-- Name + number -->
+        <div class="flex-1 min-w-0">
+          <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">
+            <span style="color:#fde047">#{{number}}</span> {{name}}
+          </div>
+          {{#if barangay}}<div class="text-xs mt-0.5" style="color:#64748b">Brgy. {{barangay}}</div>{{/if}}
+        </div>
+
+        <!-- Weighted total score -->
+        <div class="text-right flex-shrink-0 mr-2">
+          <div class="text-lg font-black" style="color:#fde047">{{lookup ../totals id}}%</div>
+          <div class="text-[10px] font-bold uppercase tracking-wide" style="color:#64748b">Weighted</div>
+        </div>
+
+        <!-- Chevron -->
+        <svg class="tab-chevron flex-shrink-0 transition-transform duration-200" id="chevron-{{id}}"
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <!-- Expanded: criteria × judge score grid -->
+      <div class="tab-card-body hidden" id="body-{{id}}">
+        <div class="px-5 pb-5 space-y-3">
+          {{#each criteriaScores}}
+          <div class="rounded-xl overflow-hidden" style="border:1px solid rgba(255,255,255,0.06)">
+
+            <!-- Criteria header -->
+            <div class="px-4 py-2.5 flex items-center justify-between gap-3"
+              style="background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06)">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:{{color}}"></span>
+                <span class="font-extrabold text-xs truncate" style="color:#e2e8f0">{{criteriaName}}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                  style="background:rgba(234,179,8,0.1);color:#fde047;border:1px solid rgba(234,179,8,0.2)">
+                  {{weight}}%
+                </span>
+              </div>
+              <div class="text-right flex-shrink-0">
+                {{#if avg}}
+                <span class="text-sm font-black" style="color:#fde047">{{avg}}</span>
+                <span class="text-[10px]" style="color:#64748b"> / {{maxScore}} avg</span>
+                {{else}}
+                <span class="text-xs font-bold" style="color:#374151">No scores yet</span>
+                {{/if}}
+              </div>
+            </div>
+
+            <!-- Per-judge score rows -->
+            <div class="divide-y" style="--tw-divide-opacity:1;border-color:rgba(255,255,255,0.04)">
+              {{#each judgeEntries}}
+              <div class="px-4 py-3 flex items-center gap-3 flex-wrap sm:flex-nowrap"
+                style="background:rgba(0,0,0,0.15)">
+
+                <!-- Judge label -->
+                <div class="flex items-center gap-2 w-28 flex-shrink-0">
+                  <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0"
+                    style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
+                    {{num}}
+                  </span>
+                  <span class="text-xs font-bold truncate" style="color:#94a3b8">{{alias}}</span>
+                </div>
+
+                <!-- Current score display -->
+                <div class="flex-1 min-w-0">
+                  {{#if value}}
+                  <div class="flex items-center gap-2">
+                    <!-- Progress bar -->
+                    <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+                      <div class="h-full rounded-full" style="background:linear-gradient(90deg,#92400e,#d97706,#fbbf24);width:{{barPct}}%"></div>
+                    </div>
+                    <span class="text-sm font-extrabold flex-shrink-0" style="color:#f1f5f9">
+                      {{value}}
+                    </span>
+                    <span class="text-[10px] flex-shrink-0" style="color:#475569">/ {{../maxScore}}</span>
+                  </div>
+                  {{else}}
+                  <span class="text-xs font-semibold" style="color:#374151">— not submitted</span>
+                  {{/if}}
+                </div>
+
+                <!-- Edit form (hidden unless unlocked) -->
+                {{#unless @root.locked}}
+                <form method="POST" action="/events/{{@root.event.id}}/tabulator/update"
+                  class="flex items-center gap-2 flex-shrink-0 tab-edit-form"
+                  onsubmit="return confirmEdit(this)">
+                  <input type="hidden" name="_csrf" value="{{@root.csrfToken}}">
+                  <input type="hidden" name="judgeId"       value="{{judgeId}}">
+                  <input type="hidden" name="contestantId"  value="{{../../id}}">
+                  <input type="hidden" name="criteriaId"    value="{{../criteriaId}}">
+                  <input type="number" name="score"
+                    value="{{value}}"
+                    min="0" max="{{../maxScore}}" step="0.01"
+                    placeholder="0"
+                    required
+                    class="tab-score-input"
+                    style="width:72px;height:36px;border-radius:8px;border:1px solid rgba(234,179,8,0.3);background:#0a1220;color:#f1f5f9;font-size:13px;font-weight:800;text-align:center;outline:none;padding:0 6px"
+                    onfocus="this.style.borderColor='#fde047'"
+                    onblur="this.style.borderColor='rgba(234,179,8,0.3)'"
+                  />
+                  <button type="submit"
+                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition active:scale-95 flex-shrink-0"
+                    style="background:rgba(234,179,8,0.15);color:#fde047;border:1px solid rgba(234,179,8,0.35)">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Save
+                  </button>
+                </form>
+                {{else}}
+                <!-- Locked: show value only, no edit -->
+                <span class="text-[10px] font-bold px-2 py-1 rounded-lg flex-shrink-0"
+                  style="background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(239,68,68,0.15)">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;margin-right:3px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Locked
+                </span>
+                {{/unless}}
+            </div>
+
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{else}}
+  <div class="rounded-2xl py-20 text-center px-4 animate-fadeup-1"
+    style="background:#0d1424;border:1px solid rgba(255,255,255,0.07)">
+    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+      style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    </div>
+    <h3 class="font-bold text-sm mb-1" style="color:#e2e8f0">No contestants yet</h3>
+    <p class="text-xs" style="color:#64748b">Contestants will appear here once they are added to this event.</p>
+  </div>
+  {{/if}}
+
+  <!-- ── No judges state ── -->
+  {{#unless judges.length}}
+  <div class="rounded-2xl p-5 flex items-start gap-3 animate-fadeup-2"
+    style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <div>
+      <div class="text-xs font-extrabold" style="color:#fde047">No scores submitted yet</div>
+      <p class="text-xs mt-1" style="color:rgba(253,224,71,0.6)">Judges haven't submitted any scores for this event. Once they do, their individual scores will appear here for review and editing.</p>
+    </div>
+  </div>
+  {{/unless}}
+
+</main>
+</div>
+
+<style>
+.tab-card-toggle { background: none; border: none; cursor: pointer; transition: background 120ms ease; }
+.tab-card-toggle:hover { background: rgba(255,255,255,0.03); }
+.tab-card-body { }
+.tab-score-input::-webkit-inner-spin-button,
+.tab-score-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.tab-score-input { -moz-appearance: textfield; }
+</style>
+
+<script>
+function toggleContestant(id) {
+  const body    = document.getElementById('body-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  const btn     = body.previousElementSibling;
+  const isOpen  = !body.classList.contains('hidden');
+
+  if (isOpen) {
+    body.classList.add('hidden');
+    chevron.style.transform = '';
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    body.classList.remove('hidden');
+    chevron.style.transform = 'rotate(180deg)';
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function confirmEdit(form) {
+  const scoreInput = form.querySelector('input[name="score"]');
+  const val = parseFloat(scoreInput.value);
+  const max = parseFloat(scoreInput.getAttribute('max'));
+  if (isNaN(val) || val < 0) {
+    alert('Please enter a valid score (0 or above).');
+    return false;
+  }
+  if (val > max) {
+    alert('Score cannot exceed the maximum of ' + max + '.');
+    scoreInput.value = max;
+    return false;
+  }
+  return true;
+}
+
+// Auto-expand the first contestant on load if there is only one
+(function() {
+  const cards = document.querySelectorAll('.tab-contestant-card');
+  if (cards.length === 1) {
+    const id = cards[0].dataset.contestantId;
+    if (id) toggleContestant(id);
+  }
+})();
+</script>
+
+{{> footer }}
+</body>
+</html>
