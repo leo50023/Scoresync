@@ -560,8 +560,14 @@
     .bg-amber-50, .bg-yellow-50 { background-color: rgba(245,158,11,0.07) !important; }
     .border-amber-100, .border-yellow-100 { border-color: rgba(245,158,11,0.15) !important; }
 
-    /* ── Print ── */
-    @media print { .sidebar, nav, .no-print { display:none !important; } main { padding:0 !important; } body { background:#fff !important; color:#000 !important; } }
+    /* ── Auth page eye toggle + sidebar collapse btn — must not shift layout ── */
+    #eyeBtn,
+    #sidebar-collapse-btn {
+      min-height: unset !important;
+      min-width: unset !important;
+      height: auto !important;
+      line-height: 1 !important;
+    }
 
     /* ── Global Page Loading Indicator ── */
     #page-loader {

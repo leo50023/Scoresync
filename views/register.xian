@@ -29,6 +29,7 @@
     transition: background-color 9999s ease-in-out 0s;
   }
   .auth-input-pr { padding-right: 48px; }
+  #eyeBtn { min-height: unset !important; min-width: unset !important; height: 28px !important; width: 28px !important; }
   .auth-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);

@@ -13,7 +13,7 @@
       <!-- Desktop collapse toggle -->
       <button type="button" id="sidebar-collapse-btn" onclick="toggleSidebarCollapse()"
         class="hidden md:flex p-1.5 rounded-lg transition items-center justify-center"
-        style="color:rgba(148,163,184,0.5)" title="Collapse sidebar">
+        style="color:rgba(148,163,184,0.5);min-height:unset;width:28px;height:28px" title="Collapse sidebar">
         <!-- Panel/sidebar toggle icon -->
         <svg id="sidebar-collapse-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2"/>
