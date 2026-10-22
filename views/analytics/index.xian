@@ -19,10 +19,10 @@
               <svg class="w-3 h-3 mr-1 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
               Gemini AI Powered
             </span>
-            <span class="text-xs" style="color:#64748b">Official LGU Festival Tabulation Auditor</span>
+            <span class="text-xs" style="color:var(--text-muted)">Official LGU Festival Tabulation Auditor</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-white">Score Analytics & Anomaly Detector</h1>
-          <p class="text-xs sm:text-sm max-w-2xl" style="color:#94a3b8">
+          <p class="text-xs sm:text-sm max-w-2xl" style="color:var(--text-secondary)">
             Automatically scans judge score submissions in real-time to spot extreme score divergence, judge bias, score manipulation, and uniform scoring patterns across festival events.
           </p>
         </div>
@@ -61,7 +61,7 @@
 
       <!-- Loading indicator -->
       <div id="auditLoading" class="hidden rounded-2xl p-8 text-center space-y-4"
-        style="background:#111827;border:1px solid rgba(139,92,246,0.2)">
+        style="background:var(--bg-card);border:1px solid rgba(139,92,246,0.2)">
         <div class="inline-flex items-center justify-center w-12 h-12 rounded-full mb-2"
           style="background:rgba(139,92,246,0.15);color:#a855f7">
           <svg class="animate-spin h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -69,19 +69,19 @@
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
         </div>
-        <h3 class="text-base font-bold" style="color:#e2e8f0">Gemini AI Audit in Progress...</h3>
-        <p class="text-xs max-w-md mx-auto" style="color:#64748b">Analyzing raw judge scores, standard deviation matrices, and peer consensus across criteria. This will take a few seconds.</p>
+        <h3 class="text-base font-bold" style="color:var(--text-primary)">Gemini AI Audit in Progress...</h3>
+        <p class="text-xs max-w-md mx-auto" style="color:var(--text-muted)">Analyzing raw judge scores, standard deviation matrices, and peer consensus across criteria. This will take a few seconds.</p>
       </div>
 
       <!-- Overview Cards -->
       {{#if latestReport}}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:var(--bg-card);border:1px solid var(--border)">
           <div>
-            <div class="text-xs font-bold uppercase tracking-wider" style="color:#64748b">Tabulation Health</div>
-            <div class="text-2xl font-black mt-1" style="color:#e2e8f0">{{latestReport.healthScore}}<span class="text-sm font-normal" style="color:#64748b">/100</span></div>
-            <div class="text-[11px] font-semibold mt-0.5" style="color:#64748b">Judging Consistency</div>
+            <div class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Tabulation Health</div>
+            <div class="text-2xl font-black mt-1" style="color:var(--text-primary)">{{latestReport.healthScore}}<span class="text-sm font-normal" style="color:var(--text-muted)">/100</span></div>
+            <div class="text-[11px] font-semibold mt-0.5" style="color:var(--text-muted)">Judging Consistency</div>
           </div>
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-sm"
             style="{{#if (gte latestReport.healthScore 80)}}background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.25){{else}}{{#if (gte latestReport.healthScore 60)}}background:rgba(245,158,11,0.15);color:#fcd34d;border:1px solid rgba(245,158,11,0.25){{else}}background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25){{/if}}{{/if}}">
@@ -89,14 +89,14 @@
           </div>
         </div>
 
-        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:var(--bg-card);border:1px solid var(--border)">
           <div>
-            <div class="text-xs font-bold uppercase tracking-wider" style="color:#64748b">Audit Risk Level</div>
+            <div class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Audit Risk Level</div>
             <div class="text-xl font-black mt-1 uppercase tracking-tight"
               style="color:{{#if (eq latestReport.riskLevel 'LOW')}}#6ee7b7{{else}}{{#if (eq latestReport.riskLevel 'MODERATE')}}#fcd34d{{else}}{{#if (eq latestReport.riskLevel 'HIGH')}}#fb923c{{else}}#fca5a5{{/if}}{{/if}}{{/if}}">
               {{latestReport.riskLevel}}
             </div>
-            <div class="text-[11px] font-semibold mt-0.5" style="color:#64748b">Anomaly Severity Index</div>
+            <div class="text-[11px] font-semibold mt-0.5" style="color:var(--text-muted)">Anomaly Severity Index</div>
           </div>
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center"
             style="background:rgba(239,68,68,0.12);color:#fca5a5">
@@ -104,22 +104,22 @@
           </div>
         </div>
 
-        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:var(--bg-card);border:1px solid var(--border)">
           <div>
-            <div class="text-xs font-bold uppercase tracking-wider" style="color:#64748b">Judge Consensus</div>
-            <div class="text-2xl font-black mt-1" style="color:#e2e8f0">{{latestReport.judgingConsensusRate}}%</div>
-            <div class="text-[11px] font-semibold mt-0.5" style="color:#64748b">Peer Agreement Level</div>
+            <div class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Judge Consensus</div>
+            <div class="text-2xl font-black mt-1" style="color:var(--text-primary)">{{latestReport.judgingConsensusRate}}%</div>
+            <div class="text-[11px] font-semibold mt-0.5" style="color:var(--text-muted)">Peer Agreement Level</div>
           </div>
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:rgba(99,102,241,0.15);color:#a5b4fc">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
 
-        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+        <div class="p-5 rounded-2xl flex items-center justify-between" style="background:var(--bg-card);border:1px solid var(--border)">
           <div>
-            <div class="text-xs font-bold uppercase tracking-wider" style="color:#64748b">Total Audited</div>
-            <div class="text-2xl font-black mt-1" style="color:#e2e8f0">{{latestReport.totalScoresAudited}}</div>
-            <div class="text-[11px] font-semibold mt-0.5" style="color:#64748b">Raw Judge Submissions</div>
+            <div class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Total Audited</div>
+            <div class="text-2xl font-black mt-1" style="color:var(--text-primary)">{{latestReport.totalScoresAudited}}</div>
+            <div class="text-[11px] font-semibold mt-0.5" style="color:var(--text-muted)">Raw Judge Submissions</div>
           </div>
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:rgba(139,92,246,0.15);color:#c4b5fd">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -129,25 +129,25 @@
       </div>
 
       <!-- AI Summary Banner -->
-      <div class="rounded-2xl p-5 space-y-2" style="background:#111827;border:1px solid rgba(139,92,246,0.2)">
+      <div class="rounded-2xl p-5 space-y-2" style="background:var(--bg-card);border:1px solid rgba(139,92,246,0.2)">
         <div class="flex items-center gap-2">
           <div class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></div>
           <h3 class="text-xs font-bold uppercase tracking-wider" style="color:#c4b5fd">AI Executive Audit Findings</h3>
         </div>
-        <p class="text-sm font-medium leading-relaxed" style="color:#94a3b8">{{latestReport.summaryText}}</p>
+        <p class="text-sm font-medium leading-relaxed" style="color:var(--text-secondary)">{{latestReport.summaryText}}</p>
       </div>
       {{/if}}
 
       <!-- Flagged Anomalies -->
-      <div class="rounded-2xl overflow-hidden" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+      <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
         <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
-          style="border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+          style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div>
-            <h2 class="text-base font-bold flex items-center gap-2" style="color:#e2e8f0">
+            <h2 class="text-base font-bold flex items-center gap-2" style="color:var(--text-primary)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
               Flagged Scoring Anomalies
             </h2>
-            <p class="text-xs mt-0.5" style="color:#64748b">Real-time alerts requiring administrative review before official results certification.</p>
+            <p class="text-xs mt-0.5" style="color:var(--text-muted)">Real-time alerts requiring administrative review before official results certification.</p>
           </div>
           <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25)">
             {{flags.length}} Active Flags
@@ -169,7 +169,7 @@
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">
                   {{type}}
                 </span>
-                <span class="text-xs font-bold" style="color:#e2e8f0">Event: {{eventName}}</span>
+                <span class="text-xs font-bold" style="color:var(--text-primary)">Event: {{eventName}}</span>
               </div>
               <div class="flex items-center gap-2">
                 <form method="POST" action="/analytics/flags/{{id}}/status" class="inline">
@@ -193,24 +193,24 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 rounded-xl text-xs" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
-              <div><span style="color:#64748b">Judge:</span> <span class="font-bold" style="color:#e2e8f0">{{judgeName}}</span></div>
-              <div><span style="color:#64748b">Contestant:</span> <span class="font-bold" style="color:#e2e8f0">{{contestantName}}</span></div>
-              <div><span style="color:#64748b">Criteria:</span> <span class="font-bold" style="color:#e2e8f0">{{criteriaName}}</span></div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 rounded-xl text-xs" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
+              <div><span style="color:var(--text-muted)">Judge:</span> <span class="font-bold" style="color:var(--text-primary)">{{judgeName}}</span></div>
+              <div><span style="color:var(--text-muted)">Contestant:</span> <span class="font-bold" style="color:var(--text-primary)">{{contestantName}}</span></div>
+              <div><span style="color:var(--text-muted)">Criteria:</span> <span class="font-bold" style="color:var(--text-primary)">{{criteriaName}}</span></div>
             </div>
 
             <div class="flex items-center gap-4 text-xs flex-wrap">
               <div class="flex items-center gap-1.5">
-                <span style="color:#64748b">Recorded Score:</span>
+                <span style="color:var(--text-muted)">Recorded Score:</span>
                 <span class="font-black px-2 py-0.5 rounded" style="color:#e2e8f0;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)">{{recordedScore}}</span>
               </div>
               <div class="flex items-center gap-1.5">
-                <span style="color:#64748b">Peer Judge Avg:</span>
+                <span style="color:var(--text-muted)">Peer Judge Avg:</span>
                 <span class="font-bold px-2 py-0.5 rounded" style="color:#94a3b8;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)">{{peerAverage}}</span>
               </div>
               {{#if delta}}
               <div class="flex items-center gap-1.5">
-                <span style="color:#64748b">Divergence:</span>
+                <span style="color:var(--text-muted)">Divergence:</span>
                 <span class="font-black" style="color:{{#if (gt delta 0)}}#fca5a5{{else}}#fcd34d{{/if}}">
                   {{#if (gt delta 0)}}+{{/if}}{{delta}} pts
                 </span>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="space-y-1 text-xs">
-              <p style="color:#94a3b8"><strong style="color:#e2e8f0">Observation:</strong> {{description}}</p>
+              <p style="color:var(--text-secondary)"><strong style="color:var(--text-primary)">Observation:</strong> {{description}}</p>
               <p class="p-2 rounded-lg" style="color:#c4b5fd;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15)">
                 <strong style="color:#a78bfa">Recommended Action:</strong> {{recommendedAction}}
               </p>
@@ -233,8 +233,8 @@
           <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto" style="background:rgba(16,185,129,0.12);color:#6ee7b7">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </div>
-          <h3 class="text-sm font-bold" style="color:#e2e8f0">No Active Score Anomalies Flagged</h3>
-          <p class="text-xs max-w-sm mx-auto" style="color:#64748b">Either no scores have been submitted yet, or the last AI audit verified full judging consensus with zero flags.</p>
+          <h3 class="text-sm font-bold" style="color:var(--text-primary)">No Active Score Anomalies Flagged</h3>
+          <p class="text-xs max-w-sm mx-auto" style="color:var(--text-muted)">Either no scores have been submitted yet, or the last AI audit verified full judging consensus with zero flags.</p>
         </div>
         {{/if}}
       </div>
@@ -247,9 +247,9 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           <h3 class="text-sm font-bold uppercase tracking-wider" style="color:#c4b5fd">Tabulation Protocol Insights</h3>
         </div>
-        <ul class="space-y-2 text-xs" style="color:#94a3b8">
+        <ul class="space-y-2 text-xs" style="color:var(--text-secondary)">
           {{#each latestReport.insights}}
-          <li class="flex items-start gap-2 p-3 rounded-xl" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)">
+          <li class="flex items-start gap-2 p-3 rounded-xl" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
             <span style="color:#a855f7;font-weight:700">•</span>
             <span>{{this}}</span>
           </li>

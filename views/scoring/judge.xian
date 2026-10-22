@@ -6,12 +6,12 @@
 <main class="flex-1 overflow-y-auto overflow-x-hidden pb-32" id="scoring-main" style="min-width:0">
 
   <!-- ══ TOP BAR ══ -->
-  <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06)">
+  <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-subtle)">
 
     <!-- Row 1: Event + judge info + ring -->
     <div class="judge-top-row px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
       <div class="judge-top-info min-w-0">
-        <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">{{event.name}}</div>
+        <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">{{event.name}}</div>
         <div class="judge-top-meta text-xs">
           <span>{{#if isTabulator}}Tabulator{{else}}Judge{{/if}}: <span class="judge-top-name">{{userName}}</span></span>
           <span>Contestant <span id="hdr-pos">1</span> of {{contestants.length}}</span>
@@ -19,14 +19,14 @@
         </div>
       </div>
       <div class="judge-top-actions flex items-center gap-2 flex-shrink-0">
-        <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)">
+        <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
           <svg id="completion-ring" width="28" height="28" viewBox="0 0 28 28">
             <circle cx="14" cy="14" r="10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
             <circle id="ring-progress" cx="14" cy="14" r="10" fill="none" stroke="#c9a227" stroke-width="3"
               stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"
               transform="rotate(-90 14 14)" style="transition:stroke-dashoffset 0.5s,stroke 0.3s"/>
           </svg>
-          <span id="overall-pct" class="font-extrabold" style="color:#e2e8f0">0%</span>
+          <span id="overall-pct" class="font-extrabold" style="color:var(--text-primary)">0%</span>
         </div>
         <a href="/events/{{event.id}}/results" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -49,7 +49,7 @@
       </div>
       <!-- Nav dots -->
       <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
-        <span class="text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0 mr-1" style="color:#374151">Go to:</span>
+        <span class="text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0 mr-1" style="color:var(--text-faint)">Go to:</span>
         {{#each contestants}}
         <button type="button"
           class="nav-dot flex-shrink-0 min-w-[32px] h-8 px-2 rounded-full text-[11px] font-extrabold transition-all border"
@@ -209,7 +209,7 @@
             Submit scores
           </button>
           {{else}}
-          <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:#94a3b8;border:1px solid rgba(255,255,255,0.08)">Read-only score review</div>
+          <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:#94a3b8;border:1px solid var(--border)">Read-only score review</div>
           {{/unless}}
 
         </div><!-- /.judge-scoring-col -->
@@ -222,7 +222,7 @@
 
   {{else}}
   <div class="p-16 text-center">
-    <p style="color:#475569">No contestants yet.</p>
+    <p style="color:var(--text-faint)">No contestants yet.</p>
     <a href="/events/{{event.id}}" class="text-indigo-400 text-sm mt-2 inline-block">Back to event</a>
   </div>
   {{/if}}
@@ -240,7 +240,7 @@
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       Previous
     </button>
-    <div class="judge-bottom-position flex-1 text-center text-xs font-bold" style="color:#94a3b8">
+    <div class="judge-bottom-position flex-1 text-center text-xs font-bold" style="color:var(--text-secondary)">
       Contestant <span id="bottom-pos" style="color:#e5c45a">1</span> / {{contestants.length}}
     </div>
     <button type="button" id="btn-next-contestant"

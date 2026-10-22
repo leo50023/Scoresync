@@ -1,8 +1,8 @@
 ﻿{{> head}}
 <body class="ss-page-bg">
   <div class="text-center mt-20">
-    <h2 class="text-2xl font-bold" style="color:#e2e8f0">Dashboard</h2>
-    <p class="mt-4" style="color:#64748b">Welcome to your dashboard!</p>
+    <h2 class="text-2xl font-bold" style="color:var(--text-primary)">Dashboard</h2>
+    <p class="mt-4" style="color:var(--text-muted)">Welcome to your dashboard!</p>
     <div class="mt-6">
       <a href="/logout" style="color:#f87171;font-weight:600">Logout</a>
     </div>

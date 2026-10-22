@@ -24,12 +24,12 @@
       </div>
       <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#93c5fd">Audience Voting</p>
       <h1 class="text-2xl sm:text-3xl font-black text-white">{{event.name}}</h1>
-      <p class="mt-2 text-sm" style="color:#94a3b8">Scan this code with your phone to vote for your favorite contestant.</p>
+      <p class="mt-2 text-sm" style="color:var(--text-secondary)">Scan this code with your phone to vote for your favorite contestant.</p>
 
       {{#if peopleChoiceCriterionMissing}}
       <div class="mt-6 rounded-2xl p-5 text-left" style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.18)" role="status">
         <p class="text-sm font-bold" style="color:#fecaca">Audience voting is unavailable</p>
-        <p class="mt-1 text-sm leading-relaxed" style="color:#cbd5e1">Add a <strong class="text-white">People’s Choice</strong> criterion in the event settings before opening audience voting.</p>
+        <p class="mt-1 text-sm leading-relaxed" style="color:var(--text-secondary)">Add a <strong class="text-white">People’s Choice</strong> criterion in the event settings before opening audience voting.</p>
       </div>
       {{else}}
         {{#if votingOpen}}
@@ -41,12 +41,12 @@
           <canvas id="vote-qr" aria-label="QR code linking to the public audience voting page"></canvas>
         </div>
         <p id="qr-error" class="hidden mt-4 text-sm" style="color:#fca5a5" role="alert">QR code could not be generated. Please refresh this page and try again.</p>
-        <p id="vote-url" class="mt-4 text-xs break-all" style="color:#64748b"></p>
-        <p class="mt-2 text-xs" style="color:#64748b">Scanning opens the public ballot. Admin tools are not shown to voters.</p>
+        <p id="vote-url" class="mt-4 text-xs break-all" style="color:var(--text-muted)"></p>
+        <p class="mt-2 text-xs" style="color:var(--text-muted)">Scanning opens the public ballot. Admin tools are not shown to voters.</p>
         {{else}}
         <div class="mt-6 rounded-2xl p-5 text-left" style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.18)" role="status">
           <p class="text-sm font-bold" style="color:#bfdbfe">Voting is not open yet</p>
-          <p class="mt-1 text-sm leading-relaxed" style="color:#cbd5e1">Open audience voting from the event page to generate a shareable QR code.</p>
+          <p class="mt-1 text-sm leading-relaxed" style="color:var(--text-secondary)">Open audience voting from the event page to generate a shareable QR code.</p>
         </div>
         {{/if}}
       {{/if}}

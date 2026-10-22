@@ -10,7 +10,7 @@
 
   <!-- ── Hero Header ── -->
   <div class="relative rounded-3xl overflow-hidden animate-fadeup"
-    style="background:linear-gradient(135deg,#0d1117 0%,#111827 50%,#0d1117 100%);border:1px solid rgba(255,255,255,0.07)">
+    style="background:linear-gradient(135deg,#0d1117 0%,#111827 50%,#0d1117 100%);border:1px solid var(--border)">
     <!-- Ambient glow -->
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style="background:rgba(245,158,11,0.06)"></div>
@@ -22,7 +22,7 @@
         <h1 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight" style="color:#f8fafc">
           Welcome back, <span style="background:linear-gradient(90deg,#fbbf24,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span>
         </h1>
-        <p class="text-sm" style="color:#475569">Manage and oversee your live competition events.</p>
+        <p class="text-sm" style="color:var(--text-faint)">Manage and oversee your live competition events.</p>
       </div>
       <div class="flex-shrink-0">
         <a href="/events/create"
@@ -40,7 +40,7 @@
 
     <!-- My Events -->
     <div class="rounded-2xl p-4 sm:p-5 group transition-all hover:-translate-y-0.5"
-      style="background:#0f1623;border:1px solid rgba(255,255,255,0.07)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-4">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.18)">
@@ -50,13 +50,13 @@
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
       </div>
-      <div class="text-3xl font-black mb-1" style="color:#f0fdf4">{{totalEvents}}</div>
-      <div class="text-[11px] font-semibold" style="color:#374151">My Events</div>
+      <div class="text-3xl font-black mb-1" style="color:var(--text-bright)">{{totalEvents}}</div>
+      <div class="text-[11px] font-semibold" style="color:var(--text-faint)">My Events</div>
     </div>
 
     <!-- Live Now -->
     <div class="rounded-2xl p-4 sm:p-5 group transition-all hover:-translate-y-0.5"
-      style="background:#0f1623;border:1px solid rgba(16,185,129,0.12)">
+      style="background:var(--bg-card);border:1px solid rgba(16,185,129,0.12)">
       <div class="flex items-center justify-between mb-4">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.22)">
@@ -64,21 +64,21 @@
         </div>
         <span class="w-2 h-2 rounded-full" style="background:#10b981;box-shadow:0 0 8px #10b981"></span>
       </div>
-      <div class="text-3xl font-black mb-1" style="color:#f0fdf4">{{ongoingCount}}</div>
-      <div class="text-[11px] font-semibold" style="color:#374151">Live Now</div>
+      <div class="text-3xl font-black mb-1" style="color:var(--text-bright)">{{ongoingCount}}</div>
+      <div class="text-[11px] font-semibold" style="color:var(--text-faint)">Live Now</div>
     </div>
 
     <!-- Judges -->
     <div class="rounded-2xl p-4 sm:p-5 group transition-all hover:-translate-y-0.5"
-      style="background:#0f1623;border:1px solid rgba(255,255,255,0.07)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-4">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.18)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
       </div>
-      <div class="text-3xl font-black mb-1" style="color:#f0fdf4">{{judges.length}}</div>
-      <div class="text-[11px] font-semibold" style="color:#374151">Judges</div>
+      <div class="text-3xl font-black mb-1" style="color:var(--text-bright)">{{judges.length}}</div>
+      <div class="text-[11px] font-semibold" style="color:var(--text-faint)">Judges</div>
     </div>
 
     <!-- New Event CTA -->
@@ -109,11 +109,11 @@
           <span class="animate-ping absolute h-2.5 w-2.5 rounded-full opacity-75" style="background:#10b981"></span>
           <span class="relative rounded-full h-2.5 w-2.5" style="background:#10b981"></span>
         </span>
-        <h2 class="font-extrabold text-sm tracking-tight" style="color:#e2e8f0">Live / Ongoing Events</h2>
+        <h2 class="font-extrabold text-sm tracking-tight" style="color:var(--text-primary)">Live / Ongoing Events</h2>
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold"
           style="background:rgba(16,185,129,0.1);color:#6ee7b7;border:1px solid rgba(16,185,129,0.2)">{{ongoingCount}} active</span>
       </div>
-      <a href="/events" class="text-[11px] font-bold flex items-center gap-1" style="color:#64748b">
+      <a href="/events" class="text-[11px] font-bold flex items-center gap-1" style="color:var(--text-muted)">
         All Events <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
     </div>
@@ -122,7 +122,7 @@
     <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
       {{#each ongoingEvents}}
       <div class="rounded-2xl overflow-hidden flex flex-col transition-all duration-200 hover:-translate-y-0.5"
-        style="background:#0f1623;border:1px solid rgba(16,185,129,0.15);box-shadow:0 8px 32px rgba(0,0,0,0.35)">
+        style="background:var(--bg-card);border:1px solid rgba(16,185,129,0.15);box-shadow:0 8px 32px rgba(0,0,0,0.35)">
 
         <!-- Card header with theme gradient -->
         <div class="px-5 py-4 relative overflow-hidden" style="background:{{themeGradient theme}};min-height:88px">
@@ -154,7 +154,7 @@
         </div>
 
         <!-- Primary actions -->
-        <div class="px-3 py-2.5 grid grid-cols-2 gap-1.5" style="border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div class="px-3 py-2.5 grid grid-cols-2 gap-1.5" style="border-bottom:1px solid var(--border-subtle)">
           <a href="/events/{{id}}"
             class="flex items-center justify-center gap-1.5 py-2 rounded-xl text-[11px] font-bold transition active:scale-95"
             style="background:rgba(16,185,129,0.1);color:#6ee7b7;border:1px solid rgba(16,185,129,0.2)">
@@ -182,7 +182,7 @@
         </div>
 
         <!-- Results + End -->
-        <div class="px-3 py-2.5 grid grid-cols-2 gap-1.5" style="border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div class="px-3 py-2.5 grid grid-cols-2 gap-1.5" style="border-bottom:1px solid var(--border-subtle)">
           <a href="/events/{{id}}/results"
             class="flex items-center justify-center gap-1.5 py-2 rounded-xl text-[11px] font-bold transition active:scale-95"
             style="background:rgba(16,185,129,0.07);color:#6ee7b7;border:1px solid rgba(16,185,129,0.12)">
@@ -205,7 +205,7 @@
         <!-- Judges + progress -->
         <div class="px-4 py-3 flex-1">
           {{#if ../judges.length}}
-          <div class="text-[10px] font-extrabold uppercase tracking-wider mb-2" style="color:#374151">Active Judges</div>
+          <div class="text-[10px] font-extrabold uppercase tracking-wider mb-2" style="color:var(--text-faint)">Active Judges</div>
           <div class="flex flex-wrap gap-1 mb-3">
             {{#each ../judges}}
             <div class="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold"
@@ -219,7 +219,7 @@
           <!-- Scoring progress bar -->
           <div id="judge-progress-{{id}}" data-event-id="{{id}}">
             <div class="flex items-center justify-between mb-1">
-              <span class="text-[10px] font-bold" style="color:#374151">Scoring Progress</span>
+              <span class="text-[10px] font-bold" style="color:var(--text-faint)">Scoring Progress</span>
               <span class="text-[10px] font-bold judge-progress-pct" style="color:#6ee7b7">—</span>
             </div>
             <div class="h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.06)">
@@ -227,7 +227,7 @@
             </div>
           </div>
           {{else}}
-          <p class="text-[11px]" style="color:#374151">No judges assigned yet.</p>
+          <p class="text-[11px]" style="color:var(--text-faint)">No judges assigned yet.</p>
           {{/if}}
         </div>
 
@@ -237,13 +237,13 @@
 
     {{else}}
     <div class="rounded-2xl py-16 text-center px-4 flex flex-col items-center justify-center"
-      style="background:#0f1623;border:1px solid rgba(255,255,255,0.06)">
+      style="background:var(--bg-card);border:1px solid var(--border-subtle)">
       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
         style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.12)">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
       </div>
-      <h3 class="font-bold text-sm mb-1" style="color:#e2e8f0">No live events</h3>
-      <p class="text-xs mb-5 max-w-xs mx-auto" style="color:#374151">Start an upcoming event or create a new one.</p>
+      <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No live events</h3>
+      <p class="text-xs mb-5 max-w-xs mx-auto" style="color:var(--text-faint)">Start an upcoming event or create a new one.</p>
       <div class="flex flex-wrap gap-3 justify-center">
         <a href="/events" class="btn-sm btn-sm-green text-xs">All Events</a>
         <a href="/events/create" class="btn-primary text-sm">
@@ -259,13 +259,13 @@
   <div class="grid lg:grid-cols-3 gap-4 animate-fadeup-2">
 
     <!-- Quick Actions -->
-    <div class="lg:col-span-2 rounded-2xl overflow-hidden" style="background:#0f1623;border:1px solid rgba(255,255,255,0.07)">
-      <div class="px-5 py-3.5 flex items-center gap-2.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div class="lg:col-span-2 rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
+      <div class="px-5 py-3.5 flex items-center gap-2.5" style="border-bottom:1px solid var(--border-subtle)">
         <div class="w-6 h-6 rounded-lg flex items-center justify-center"
           style="background:rgba(245,158,11,0.15)">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="#fbbf24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
-        <h2 class="text-sm font-extrabold tracking-tight" style="color:#e2e8f0">Quick Actions</h2>
+        <h2 class="text-sm font-extrabold tracking-tight" style="color:var(--text-primary)">Quick Actions</h2>
       </div>
       <div class="p-2 grid grid-cols-1 sm:grid-cols-2 gap-0.5">
 
@@ -278,8 +278,8 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-bold" style="color:#e2e8f0">Create Event</div>
-            <div class="text-[11px]" style="color:#374151">Set up a new competition</div>
+            <div class="text-xs font-bold" style="color:var(--text-primary)">Create Event</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">Set up a new competition</div>
           </div>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -293,8 +293,8 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-bold" style="color:#e2e8f0">Manage All Events</div>
-            <div class="text-[11px]" style="color:#374151">View, edit &amp; delete events</div>
+            <div class="text-xs font-bold" style="color:var(--text-primary)">Manage All Events</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">View, edit &amp; delete events</div>
           </div>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -308,8 +308,8 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/></svg>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-bold" style="color:#e2e8f0">Ticket Sales &amp; Income</div>
-            <div class="text-[11px]" style="color:#374151">Track revenue per event</div>
+            <div class="text-xs font-bold" style="color:var(--text-primary)">Ticket Sales &amp; Income</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">Track revenue per event</div>
           </div>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -323,8 +323,8 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-bold" style="color:#e2e8f0">Settings</div>
-            <div class="text-[11px]" style="color:#374151">Account &amp; preferences</div>
+            <div class="text-xs font-bold" style="color:var(--text-primary)">Settings</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">Account &amp; preferences</div>
           </div>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -333,14 +333,14 @@
     </div>
 
     <!-- Judges Panel -->
-    <div class="rounded-2xl overflow-hidden flex flex-col" style="background:#0f1623;border:1px solid rgba(255,255,255,0.07)">
-      <div class="px-5 py-3.5 flex items-center justify-between" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div class="rounded-2xl overflow-hidden flex flex-col" style="background:var(--bg-card);border:1px solid var(--border)">
+      <div class="px-5 py-3.5 flex items-center justify-between" style="border-bottom:1px solid var(--border-subtle)">
         <div class="flex items-center gap-2.5">
           <div class="w-6 h-6 rounded-lg flex items-center justify-center"
             style="background:rgba(99,102,241,0.15)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h2 class="text-sm font-extrabold tracking-tight" style="color:#e2e8f0">All Judges</h2>
+          <h2 class="text-sm font-extrabold tracking-tight" style="color:var(--text-primary)">All Judges</h2>
         </div>
         <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold"
           style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.18)">{{judges.length}}</span>
@@ -354,8 +354,8 @@
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0"
             style="background:linear-gradient(135deg,#1e3a8a,#4f46e5)">{{initial}}</div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-bold truncate" style="color:#e2e8f0">{{alias}}</div>
-            <div class="text-[10px]" style="color:#374151">Active</div>
+            <div class="text-xs font-bold truncate" style="color:var(--text-primary)">{{alias}}</div>
+            <div class="text-[10px]" style="color:var(--text-faint)">Active</div>
           </div>
           <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#10b981;box-shadow:0 0 4px #10b981"></span>
         </div>
@@ -364,7 +364,7 @@
       {{else}}
       <div class="flex-1 flex flex-col items-center justify-center py-10 px-4 text-center">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5" class="mb-3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        <p class="text-xs" style="color:#374151">No judges yet.</p>
+        <p class="text-xs" style="color:var(--text-faint)">No judges yet.</p>
       </div>
       {{/if}}
 
@@ -377,7 +377,7 @@
           </div>
           <div class="min-w-0">
             <div class="text-xs font-extrabold truncate" style="color:#fbbf24">{{userName}}</div>
-            <p class="text-[10px] leading-relaxed" style="color:#475569">Organizer · Full event access</p>
+            <p class="text-[10px] leading-relaxed" style="color:var(--text-faint)">Organizer · Full event access</p>
           </div>
         </div>
       </div>

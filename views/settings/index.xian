@@ -10,7 +10,7 @@
 
   <!-- ── Page Header ── -->
   <div class="rounded-2xl p-5 sm:p-7 relative overflow-hidden animate-fadeup"
-    style="background:#111827;border:1px solid rgba(255,255,255,0.08)">
+    style="background:var(--bg-card);border:1px solid var(--border)">
     <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full blur-3xl pointer-events-none" style="background:rgba(99,102,241,0.06)"></div>
     <div class="relative flex items-center justify-between gap-4">
       <div class="space-y-1.5">
@@ -19,8 +19,8 @@
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           Account &amp; Preferences
         </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight" style="color:#f1f5f9">Settings</h1>
-        <p class="text-sm" style="color:#475569">Manage your profile, role permissions, and tabulator configurations.</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight" style="color:var(--text-bright)">Settings</h1>
+        <p class="text-sm" style="color:var(--text-faint)">Manage your profile, role permissions, and tabulator configurations.</p>
       </div>
     </div>
   </div>
@@ -31,14 +31,14 @@
     <div class="lg:col-span-2 space-y-5">
 
       <!-- Profile Card -->
-      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:#111827;border:1px solid rgba(255,255,255,0.08)">
-        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:var(--bg-card);border:1px solid var(--border)">
+        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.3)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div>
-            <h2 class="text-sm font-extrabold" style="color:#e2e8f0">User Profile Settings</h2>
-            <p class="text-[11px]" style="color:#374151">Update your account display details</p>
+            <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">User Profile Settings</h2>
+            <p class="text-[11px]" style="color:var(--text-faint)">Update your account display details</p>
           </div>
         </div>
         <div class="px-6 py-5 space-y-4">
@@ -63,9 +63,9 @@
                 <input type="file" id="avatar-file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" onchange="handleAvatarUpload(this)"/>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="font-extrabold text-sm" style="color:#e2e8f0">{{userName}}</div>
-                <div class="text-xs mt-0.5 capitalize" style="color:#64748b">{{#if isEncoder}}Participant{{else}}{{userRole}}{{/if}}</div>
-                <p class="text-[11px] mt-1.5" style="color:#94a3b8">PNG, JPG, or WebP · Max 2 MB</p>
+                <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{userName}}</div>
+                <div class="text-xs mt-0.5 capitalize" style="color:var(--text-muted)">{{#if isEncoder}}Participant{{else}}{{userRole}}{{/if}}</div>
+                <p class="text-[11px] mt-1.5" style="color:var(--text-secondary)">PNG, JPG, or WebP · Max 2 MB</p>
                 <div class="flex flex-wrap items-center gap-2 mt-3">
                   <button type="button" onclick="document.getElementById('avatar-file').click()"
                     class="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition"
@@ -90,7 +90,7 @@
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Email Address</label>
               <input type="email" value="{{userEmail}}" disabled class="form-input-bare w-full" style="opacity:0.5;cursor:not-allowed"/>
-              <p class="text-[11px] mt-1" style="color:#374151">Email is managed by system authentication.</p>
+              <p class="text-[11px] mt-1" style="color:var(--text-faint)">Email is managed by system authentication.</p>
             </div>
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Assigned Role</label>
@@ -167,55 +167,55 @@ function removeProfilePhoto() {
 </script>
 
       <!-- System Behavior Card — accurate, read-only -->
-      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:#111827;border:1px solid rgba(255,255,255,0.08)">
-        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:var(--bg-card);border:1px solid var(--border)">
+        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.3)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           </div>
           <div>
-            <h2 class="text-sm font-extrabold" style="color:#e2e8f0">Scoring System Behavior</h2>
-            <p class="text-[11px]" style="color:#374151">How scores are calculated in this system</p>
+            <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">Scoring System Behavior</h2>
+            <p class="text-[11px]" style="color:var(--text-faint)">How scores are calculated in this system</p>
           </div>
         </div>
         <div class="px-6 py-4 space-y-3 text-xs">
 
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
-              <span class="font-bold" style="color:#e2e8f0">Weighted Average Scoring</span>
-              <p class="text-[11px] mt-0.5" style="color:#64748b">Each criterion has a weight (%). Final score = sum of (score / maxScore × weight) across all criteria. Total weights must equal 100%.</p>
+              <span class="font-bold" style="color:var(--text-primary)">Weighted Average Scoring</span>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Each criterion has a weight (%). Final score = sum of (score / maxScore × weight) across all criteria. Total weights must equal 100%.</p>
             </div>
           </div>
 
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
-              <span class="font-bold" style="color:#e2e8f0">2 Decimal Precision</span>
-              <p class="text-[11px] mt-0.5" style="color:#64748b">All final scores and rankings are displayed to 2 decimal places (e.g. 98.75%).</p>
+              <span class="font-bold" style="color:var(--text-primary)">2 Decimal Precision</span>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">All final scores and rankings are displayed to 2 decimal places (e.g. 98.75%).</p>
             </div>
           </div>
 
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
-              <span class="font-bold" style="color:#e2e8f0">Multi-Judge Average</span>
-              <p class="text-[11px] mt-0.5" style="color:#64748b">When multiple judges score, the system averages all judge scores per criteria before applying weights. Each judge's identity is anonymous to participants.</p>
+              <span class="font-bold" style="color:var(--text-primary)">Multi-Judge Average</span>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">When multiple judges score, the system averages all judge scores per criteria before applying weights. Each judge's identity is anonymous to participants.</p>
             </div>
           </div>
 
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
-              <span class="font-bold" style="color:#e2e8f0">Live Leaderboard</span>
-              <p class="text-[11px] mt-0.5" style="color:#64748b">Results update in real-time as judges submit scores. Rankings are recalculated automatically on every results page load.</p>
+              <span class="font-bold" style="color:var(--text-primary)">Live Leaderboard</span>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Results update in real-time as judges submit scores. Rankings are recalculated automatically on every results page load.</p>
             </div>
           </div>
 
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
-              <span class="font-bold" style="color:#e2e8f0">Scoring Window</span>
-              <p class="text-[11px] mt-0.5" style="color:#64748b">Judges can only submit scores while the event status is <span class="font-bold" style="color:#6ee7b7">Ongoing</span>. Scoring is locked for Upcoming and Completed events.</p>
+              <span class="font-bold" style="color:var(--text-primary)">Scoring Window</span>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Judges can only submit scores while the event status is <span class="font-bold" style="color:#6ee7b7">Ongoing</span>. Scoring is locked for Upcoming and Completed events.</p>
             </div>
           </div>
 
@@ -223,14 +223,14 @@ function removeProfilePhoto() {
       </div>
 
       <!-- Suggest Feature Card -->
-      <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:#111827;border:1px solid rgba(255,255,255,0.08)">
-        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+      <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:var(--bg-card);border:1px solid var(--border)">
+        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(245,158,11,0.2);border:1px solid rgba(245,158,11,0.3)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </div>
           <div>
-            <h2 class="text-sm font-extrabold" style="color:#e2e8f0">Suggest a New Feature</h2>
-            <p class="text-[11px]" style="color:#374151">Propose enhancements directly to developers</p>
+            <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">Suggest a New Feature</h2>
+            <p class="text-[11px]" style="color:var(--text-faint)">Propose enhancements directly to developers</p>
           </div>
         </div>
         <div class="px-6 py-5">
@@ -269,24 +269,24 @@ function removeProfilePhoto() {
 
       <!-- Community Feature Requests — only shown when real submissions exist -->
       {{#if suggestions.length}}
-      <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07)">
-        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:rgba(255,255,255,0.02);border:1px solid var(--border)">
+        <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border-subtle)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.25)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h2 class="text-sm font-extrabold" style="color:#e2e8f0">Community Feature Requests</h2>
+          <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">Community Feature Requests</h2>
         </div>
         <div class="px-6 py-5 space-y-3">
           {{#each suggestions}}
-          <div class="p-4 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+          <div class="p-4 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px solid var(--border)">
             <div class="flex items-start justify-between gap-3">
-              <h3 class="text-xs font-bold" style="color:#e2e8f0">{{title}}</h3>
+              <h3 class="text-xs font-bold" style="color:var(--text-primary)">{{title}}</h3>
               <div class="flex items-center gap-1.5 flex-shrink-0">
                 <span class="badge badge-blue text-[10px]">{{category}}</span>
                 <span class="badge badge-gray text-[10px]">👍 {{votes}}</span>
               </div>
             </div>
-            {{#if submittedBy}}<p class="text-[11px] mt-1" style="color:#374151">By: <span class="font-semibold" style="color:#94a3b8">{{submittedBy}}</span></p>{{/if}}
+            {{#if submittedBy}}<p class="text-[11px] mt-1" style="color:var(--text-faint)">By: <span class="font-semibold" style="color:var(--text-secondary)">{{submittedBy}}</span></p>{{/if}}
           </div>
           {{/each}}
         </div>
@@ -299,20 +299,20 @@ function removeProfilePhoto() {
     <div class="space-y-5">
 
       <!-- System Info -->
-      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07)">
-        <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
-          <h2 class="text-sm font-extrabold" style="color:#e2e8f0">System Info</h2>
+      <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:rgba(255,255,255,0.02);border:1px solid var(--border)">
+        <div class="px-5 py-3.5" style="border-bottom:1px solid var(--border-subtle)">
+          <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">System Info</h2>
         </div>
         <div class="px-5 py-4 space-y-3 text-xs">
           <div class="flex items-center justify-between py-1.5" style="border-bottom:1px solid rgba(255,255,255,0.05)">
-            <span style="color:#475569">Role</span>
+            <span style="color:var(--text-faint)">Role</span>
             <span class="badge capitalize
               {{#if isAdmin}}badge-blue{{else}}{{#if isJudge}}badge-purple{{else}}{{#if isOrganizer}}badge-yellow{{else}}badge-green{{/if}}{{/if}}{{/if}}">
               {{#if isEncoder}}Participant{{else}}{{userRole}}{{/if}}
             </span>
           </div>
           <div class="flex items-center justify-between py-1.5">
-            <span style="color:#475569">Sync Status</span>
+            <span style="color:var(--text-faint)">Sync Status</span>
             <span class="inline-flex items-center gap-1.5 font-bold" style="color:#34d399">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400" style="box-shadow:0 0 5px #10b981"></span>
               Connected

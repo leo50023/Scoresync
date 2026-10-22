@@ -65,8 +65,8 @@
 
   <!-- ── Judge legend with completion status ── -->
   {{#if judges.length}}
-  <div class="rounded-2xl p-4 animate-fadeup-1" style="background:#0d1424;border:1px solid rgba(255,255,255,0.07)">
-    <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:#64748b">Judge Scoring Status</div>
+  <div class="rounded-2xl p-4 animate-fadeup-1" style="background:#0d1424;border:1px solid var(--border)">
+    <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:var(--text-muted)">Judge Scoring Status</div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {{#each judges}}
       <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl"
@@ -74,12 +74,12 @@
         <span class="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black text-white flex-shrink-0"
           style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">{{num}}</span>
         <div class="flex-1 min-w-0">
-          <div class="text-xs font-bold truncate" style="color:#e2e8f0">{{alias}}</div>
-          <div class="text-[10px] truncate" style="color:#64748b">{{name}}</div>
+          <div class="text-xs font-bold truncate" style="color:var(--text-primary)">{{alias}}</div>
+          <div class="text-[10px] truncate" style="color:var(--text-muted)">{{name}}</div>
         </div>
         <div class="text-right flex-shrink-0">
           <div class="text-xs font-extrabold" style="color:{{#if done}}#6ee7b7{{else}}#fde047{{/if}}">{{completionPct}}%</div>
-          <div class="text-[10px]" style="color:#475569">{{scoredCount}}/{{totalCount}}</div>
+          <div class="text-[10px]" style="color:var(--text-faint)">{{scoredCount}}/{{totalCount}}</div>
         </div>
         {{#if done}}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
@@ -97,7 +97,7 @@
   <div class="space-y-3 animate-fadeup-2" id="tab-contestant-list">
     {{#each contestants}}
     <div class="rounded-2xl overflow-hidden tab-contestant-card"
-      style="background:#0d1424;border:1px solid rgba(255,255,255,0.08)"
+      style="background:#0d1424;border:1px solid var(--border)"
       data-contestant-id="{{id}}">
 
       <!-- Contestant header (click to expand) -->
@@ -107,7 +107,7 @@
 
         <!-- Photo thumb -->
         <div class="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0"
-          style="background:#111827;border:1px solid rgba(255,255,255,0.1)">
+          style="background:var(--bg-card);border:1px solid rgba(255,255,255,0.1)">
           {{#if photo}}
           <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover"/>
           {{else}}
@@ -119,16 +119,16 @@
 
         <!-- Name + number -->
         <div class="flex-1 min-w-0">
-          <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">
+          <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">
             <span style="color:#fde047">#{{number}}</span> {{name}}
           </div>
-          {{#if barangay}}<div class="text-xs mt-0.5" style="color:#64748b">Brgy. {{barangay}}</div>{{/if}}
+          {{#if barangay}}<div class="text-xs mt-0.5" style="color:var(--text-muted)">Brgy. {{barangay}}</div>{{/if}}
         </div>
 
         <!-- Weighted total score -->
         <div class="text-right flex-shrink-0 mr-2">
           <div class="text-lg font-black" style="color:#fde047">{{weightedTotal}}%</div>
-          <div class="text-[10px] font-bold uppercase tracking-wide" style="color:#64748b">Weighted</div>
+          <div class="text-[10px] font-bold uppercase tracking-wide" style="color:var(--text-muted)">Weighted</div>
         </div>
 
         <!-- Chevron -->
@@ -142,14 +142,14 @@
       <div class="tab-card-body hidden" id="body-{{id}}">
         <div class="px-5 pb-5 space-y-3">
           {{#each criteriaScores}}
-          <div class="rounded-xl overflow-hidden" style="border:1px solid rgba(255,255,255,0.06)">
+          <div class="rounded-xl overflow-hidden" style="border:1px solid var(--border-subtle)">
 
             <!-- Criteria header -->
             <div class="px-4 py-2.5 flex items-center justify-between gap-3"
-              style="background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06)">
+              style="background:rgba(255,255,255,0.04);border-bottom:1px solid var(--border-subtle)">
               <div class="flex items-center gap-2 min-w-0">
                 <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:{{color}}"></span>
-                <span class="font-extrabold text-xs truncate" style="color:#e2e8f0">{{criteriaName}}</span>
+                <span class="font-extrabold text-xs truncate" style="color:var(--text-primary)">{{criteriaName}}</span>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
                   style="background:rgba(234,179,8,0.1);color:#fde047;border:1px solid rgba(234,179,8,0.2)">
                   {{weight}}%
@@ -158,9 +158,9 @@
               <div class="text-right flex-shrink-0">
                 {{#if avg}}
                 <span class="text-sm font-black" style="color:#fde047">{{avg}}</span>
-                <span class="text-[10px]" style="color:#64748b"> / {{maxScore}} avg</span>
+                <span class="text-[10px]" style="color:var(--text-muted)"> / {{maxScore}} avg</span>
                 {{else}}
-                <span class="text-xs font-bold" style="color:#374151">No scores yet</span>
+                <span class="text-xs font-bold" style="color:var(--text-faint)">No scores yet</span>
                 {{/if}}
               </div>
             </div>
@@ -177,7 +177,7 @@
                     style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
                     {{num}}
                   </span>
-                  <span class="text-xs font-bold truncate" style="color:#94a3b8">{{alias}}</span>
+                  <span class="text-xs font-bold truncate" style="color:var(--text-secondary)">{{alias}}</span>
                 </div>
 
                 <!-- Current score display -->
@@ -188,13 +188,13 @@
                     <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
                       <div class="h-full rounded-full" style="background:linear-gradient(90deg,#92400e,#d97706,#fbbf24);width:{{barPct}}%"></div>
                     </div>
-                    <span class="text-sm font-extrabold flex-shrink-0" style="color:#f1f5f9">
+                    <span class="text-sm font-extrabold flex-shrink-0" style="color:var(--text-bright)">
                       {{value}}
                     </span>
-                    <span class="text-[10px] flex-shrink-0" style="color:#475569">/ {{../maxScore}}</span>
+                    <span class="text-[10px] flex-shrink-0" style="color:var(--text-faint)">/ {{../maxScore}}</span>
                   </div>
                   {{else}}
-                  <span class="text-xs font-semibold" style="color:#374151">— not submitted</span>
+                  <span class="text-xs font-semibold" style="color:var(--text-faint)">— not submitted</span>
                   {{/if}}
                 </div>
 
@@ -244,13 +244,13 @@
 
   {{else}}
   <div class="rounded-2xl py-20 text-center px-4 animate-fadeup-1"
-    style="background:#0d1424;border:1px solid rgba(255,255,255,0.07)">
+    style="background:#0d1424;border:1px solid var(--border)">
     <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
       style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2)">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
     </div>
-    <h3 class="font-bold text-sm mb-1" style="color:#e2e8f0">No contestants yet</h3>
-    <p class="text-xs" style="color:#64748b">Contestants will appear here once they are added to this event.</p>
+    <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No contestants yet</h3>
+    <p class="text-xs" style="color:var(--text-muted)">Contestants will appear here once they are added to this event.</p>
   </div>
   {{/if}}
 

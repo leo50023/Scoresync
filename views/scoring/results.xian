@@ -6,7 +6,7 @@
 <main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
 
   <!-- ── Sticky Top Bar ── -->
-  <div class="results-toolbar sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(10,15,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
+  <div class="results-toolbar sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(10,15,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
     <div class="results-toolbar-main flex items-center justify-between gap-2" style="min-width:0">
       <div class="flex items-center gap-3 min-w-0">
         <a href="{{#if isTabulator}}/dashboard{{else}}/events/{{event.id}}{{/if}}" class="btn-sm btn-sm-gray text-xs no-print flex items-center gap-1.5 flex-shrink-0">
@@ -17,7 +17,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
         <div class="min-w-0">
-          <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">Official Results — {{event.name}}</div>
+          <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">Official Results — {{event.name}}</div>
           <div class="results-meta text-xs text-slate-400">
             <span class="font-semibold text-blue-600">{{judgeCount}}</span> judge(s) &bull;
             <span class="font-semibold text-purple-600">{{ranked.length}}</span> contestant(s) &bull;
@@ -93,7 +93,7 @@
         <div class="flex-1 min-w-0 text-center max-w-[180px]" data-podium-rank="2">
           <div class="text-4xl mb-2 animate-fadeup-1">🥈</div>
           <div class="rounded-2xl p-4 border-2 shadow-sm hover:shadow-md transition" style="border-color:rgba(100,116,139,0.4);background:#1a2035">
-            <div class="text-[10px] uppercase font-black tracking-widest mb-1" style="color:#94a3b8">2nd Place</div>
+            <div class="text-[10px] uppercase font-black tracking-widest mb-1" style="color:var(--text-secondary)">2nd Place</div>
             <div class="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 shadow-lg" style="border:2px solid rgba(148,163,184,0.5)">
               {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
@@ -102,8 +102,8 @@
               {{/if}}
             </div>
             <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
-            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:#94a3b8">Brgy. {{barangay}}</div>{{/if}}
-            <div class="text-2xl font-black mt-3 leading-none" style="color:#cbd5e1"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal" style="color:#64748b">%</span></div>
+            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:var(--text-secondary)">Brgy. {{barangay}}</div>{{/if}}
+            <div class="text-2xl font-black mt-3 leading-none" style="color:var(--text-secondary)"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal" style="color:var(--text-muted)">%</span></div>
             <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
               <div class="h-full rounded-full bg-slate-400 transition-all duration-700" style="width:{{finalScoreDisplay}}%"></div>
             </div>
@@ -150,7 +150,7 @@
               {{/if}}
             </div>
             <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
-            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:#94a3b8">Brgy. {{barangay}}</div>{{/if}}
+            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:var(--text-secondary)">Brgy. {{barangay}}</div>{{/if}}
             <div class="text-2xl font-black text-orange-500 mt-3 leading-none"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal text-orange-700">%</span></div>
             <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
               <div class="h-full rounded-full bg-orange-400 transition-all duration-700" style="width:{{finalScoreDisplay}}%"></div>
@@ -167,7 +167,7 @@
   <!-- ── Full Ranked List with Criteria Bars ── -->
   <div id="standings-container" class="space-y-3 animate-fadeup-1">
     <div class="flex items-center justify-between px-1">
-      <h3 class="font-extrabold text-base flex items-center gap-2" style="color:#e2e8f0">
+      <h3 class="font-extrabold text-base flex items-center gap-2" style="color:var(--text-primary)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         All Participants by Rank
       </h3>
@@ -196,7 +196,7 @@
 
         <!-- Name + barangay -->
         <div class="results-standing-name flex-1 min-w-0">
-          <div class="font-extrabold text-sm leading-tight truncate" style="color:#e2e8f0">{{name}}</div>
+          <div class="font-extrabold text-sm leading-tight truncate" style="color:var(--text-primary)">{{name}}</div>
           {{#if tieDetected}}
             {{#if tieBroken}}
             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5" style="background:rgba(217,119,6,0.18);color:#d97706">⚖ Tie Broken</span>
@@ -204,10 +204,10 @@
             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5" style="background:rgba(220,38,38,0.18);color:#ef4444">⚖ Tie</span>
             {{/if}}
             {{#if tiebreakCriteria}}
-            <div class="text-[10px] mt-0.5" style="color:#94a3b8">via {{tiebreakCriteria}}</div>
+            <div class="text-[10px] mt-0.5" style="color:var(--text-secondary)">via {{tiebreakCriteria}}</div>
             {{/if}}
           {{/if}}
-          {{#if barangay}}<div class="text-xs mt-0.5" style="color:#64748b">Brgy. {{barangay}}{{#if age}} &bull; {{age}} yrs{{/if}}</div>{{/if}}
+          {{#if barangay}}<div class="text-xs mt-0.5" style="color:var(--text-muted)">Brgy. {{barangay}}{{#if age}} &bull; {{age}} yrs{{/if}}</div>{{/if}}
           <!-- Mini criteria bars -->
           <div class="flex gap-2 mt-2 flex-wrap">
             {{#each breakdown}}
@@ -216,7 +216,7 @@
               <div class="h-1.5 rounded-full overflow-hidden" style="width:40px;background:rgba(255,255,255,0.08)">
                 <div class="h-full rounded-full transition-all duration-700" style="width:{{barPct}}%;background:{{color}}"></div>
               </div>
-              <span class="text-[10px] font-semibold" style="color:#64748b">{{weighted}}%</span>
+              <span class="text-[10px] font-semibold" style="color:var(--text-muted)">{{weighted}}%</span>
             </div>
             {{/each}}
           </div>
@@ -302,21 +302,21 @@
           </td>
           <td class="font-mono text-slate-400 text-sm text-center tabulation-sticky-number">{{number}}</td>
           <td class="tabulation-sticky-contestant">
-            <div class="font-extrabold text-sm" style="color:#e2e8f0">{{name}}</div>
+            <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{name}}</div>
             {{#if tieDetected}}
               {{#if tieBroken}}
               <span class="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-bold" style="background:rgba(217,119,6,0.18);color:#d97706">⚖ Tie Broken</span>
               {{else}}
               <span class="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-bold" style="background:rgba(220,38,38,0.18);color:#ef4444">⚖ Tie</span>
               {{/if}}
-              {{#if tiebreakCriteria}}<div class="text-[9px]" style="color:#94a3b8">{{tiebreakCriteria}}</div>{{/if}}
+              {{#if tiebreakCriteria}}<div class="text-[9px]" style="color:var(--text-secondary)">{{tiebreakCriteria}}</div>{{/if}}
             {{/if}}
-            {{#if age}}<div class="text-xs" style="color:#64748b">{{age}} yrs</div>{{/if}}
+            {{#if age}}<div class="text-xs" style="color:var(--text-muted)">{{age}} yrs</div>{{/if}}
           </td>
-          <td class="text-sm hidden sm:table-cell" style="color:#64748b">{{barangay}}</td>
+          <td class="text-sm hidden sm:table-cell" style="color:var(--text-muted)">{{barangay}}</td>
           {{#each breakdown}}
           <td class="text-center px-3 print-criterion-col">
-            <div class="font-extrabold text-sm" style="color:#e2e8f0">{{avg}}<span class="tabulation-unit"> avg</span></div>
+            <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{avg}}<span class="tabulation-unit"> avg</span></div>
             <div class="text-[10px] font-bold" style="color:{{color}}">{{weighted}}%<span class="tabulation-unit"> weighted</span></div>
             <div class="mt-1 h-1 rounded-full overflow-hidden w-16 mx-auto" style="background:rgba(255,255,255,0.08)">
               <div class="h-full rounded-full" style="width:{{barPct}}%;background:{{color}}"></div>
@@ -360,8 +360,8 @@
           {{add1 @index}}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-sm" style="color:#e2e8f0">{{alias}}</div>
-          <div class="text-[11px]" style="color:#64748b">{{scoredCount}} / {{totalContestants}} contestants scored</div>
+          <div class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</div>
+          <div class="text-[11px]" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
           <div class="mt-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
             <div class="h-full rounded-full transition-all" style="width:{{completionPct}}%;background:#7c3aed"></div>
           </div>
@@ -444,7 +444,7 @@
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#881337,#e11d48)">{{number}}</div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-sm truncate" style="color:#e2e8f0">{{name}}</div>
+          <div class="font-bold text-sm truncate" style="color:var(--text-primary)">{{name}}</div>
           <div class="mt-1 h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
             <div class="h-full rounded-full transition-all duration-700" style="background:linear-gradient(90deg,#be185d,#f43f5e);width:{{#if ../totalAudienceVotes}}{{audienceVotePct}}%{{else}}0%{{/if}}"></div>
           </div>
@@ -474,11 +474,11 @@
         </div>
         <div>
           {{#if ../isAdmin}}
-          <div class="font-bold text-sm" style="color:#e2e8f0">{{judgeName}}</div>
+          <div class="font-bold text-sm" style="color:var(--text-primary)">{{judgeName}}</div>
           {{else}}
-          <div class="font-bold text-sm" style="color:#e2e8f0">{{alias}}</div>
+          <div class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</div>
           {{/if}}
-          <div class="text-[11px]" style="color:#64748b">{{scoredCount}} / {{totalContestants}} contestants scored</div>
+          <div class="text-[11px]" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
         </div>
         <div class="ml-auto">
           <div class="h-1.5 rounded-full w-24 overflow-hidden" style="background:rgba(255,255,255,0.08)">
@@ -490,9 +490,9 @@
       <!-- Top 3 scores by this judge -->
       <div class="flex flex-wrap gap-2">
         {{#each topScores}}
-        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)">
-          <span class="font-bold" style="color:#e2e8f0">{{contestantName}}</span>
-          <span style="color:#475569">&bull;</span>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
+          <span class="font-bold" style="color:var(--text-primary)">{{contestantName}}</span>
+          <span style="color:var(--text-faint)">&bull;</span>
           <span class="font-extrabold text-purple-400">{{score}}%</span>
         </div>
         {{/each}}
@@ -509,8 +509,8 @@
       <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm" style="background:linear-gradient(135deg,#1e3a8a,#1e2d5a)">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       </div>
-      <h3 class="font-extrabold text-lg mb-2" style="color:#e2e8f0">No scores yet</h3>
-      <p class="text-sm max-w-xs mx-auto" style="color:#64748b">Judges need to submit scores before results can be displayed here.</p>
+      <h3 class="font-extrabold text-lg mb-2" style="color:var(--text-primary)">No scores yet</h3>
+      <p class="text-sm max-w-xs mx-auto" style="color:var(--text-muted)">Judges need to submit scores before results can be displayed here.</p>
       {{#if isAdmin}}
       <a href="/events/{{event.id}}/scoring" class="btn-primary mt-6 inline-flex">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>

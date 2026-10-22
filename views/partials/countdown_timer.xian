@@ -1,4 +1,4 @@
-<!-- ═══════════════════════════════════════════════
+﻿<!-- ═══════════════════════════════════════════════
      ScoreSync · Premium Digital Stage Timer
      ═══════════════════════════════════════════════ -->
 
@@ -15,17 +15,17 @@
       </div>
       <div class="min-w-0">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-extrabold tracking-tight" style="color:#e2e8f0">Stage Timer</span>
+          <span class="text-sm font-extrabold tracking-tight" style="color:var(--text-primary)">Stage Timer</span>
           <span id="st-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0"
-            style="background:rgba(255,255,255,0.07);color:#64748b;border:1px solid rgba(255,255,255,0.08)">Ready</span>
+            style="background:rgba(255,255,255,0.07);color:#64748b;border:1px solid var(--border)">Ready</span>
         </div>
-        <p id="st-current-stage-desc" class="text-[10px] mt-0.5 truncate" style="color:#374151">Select a preset and press Start</p>
+        <p id="st-current-stage-desc" class="text-[10px] mt-0.5 truncate" style="color:var(--text-faint)">Select a preset and press Start</p>
       </div>
     </div>
     <div class="flex items-center gap-2 flex-shrink-0">
       <button type="button" onclick="ScoreSyncTimer.toggleSound()" id="st-btn-sound"
         class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold transition"
-        style="background:rgba(255,255,255,0.05);color:#64748b;border:1px solid rgba(255,255,255,0.08)">
+        style="background:rgba(255,255,255,0.05);color:#64748b;border:1px solid var(--border)">
         <span id="st-sound-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
         <span id="st-sound-label" class="hidden sm:inline">Sound</span>
       </button>
@@ -38,7 +38,7 @@
       <button type="button" onclick="ScoreSyncTimer.toggleVisibility()" id="st-btn-visibility"
         aria-controls="st-timer-body" aria-expanded="true"
         class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold transition"
-        style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.08)">
+        style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid var(--border)">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18"/><path d="M10.58 10.59a2 2 0 0 0 2.83 2.83"/><path d="M9.88 5.09A10.94 10.94 0 0 1 12 4.9c6.5 0 10 7.1 10 7.1a16.4 16.4 0 0 1-3.05 3.95"/><path d="M6.61 6.61C3.78 8.25 2 12 2 12s3.5 7.1 10 7.1a10.8 10.8 0 0 0 4.08-.78"/></svg>
         <span id="st-visibility-label">Hide</span>
       </button>
@@ -68,14 +68,14 @@
     <!-- Custom -->
     <div id="st-custom-controls" class="hidden items-center gap-1.5">
       <input type="number" id="st-custom-min" min="0" max="120" value="3" class="w-12 px-2 py-1.5 rounded-lg text-center text-xs font-bold focus:outline-none" style="background:#0d1424;color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)"/>
-      <span style="color:#475569">:</span>
+      <span style="color:var(--text-faint)">:</span>
       <input type="number" id="st-custom-sec" min="0" max="59" value="0" class="w-12 px-2 py-1.5 rounded-lg text-center text-xs font-bold focus:outline-none" style="background:#0d1424;color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)"/>
       <button type="button" onclick="ScoreSyncTimer.applyCustomTime()" class="px-3 py-1.5 rounded-lg text-xs font-extrabold" style="background:#4f46e5;color:#fff">Set</button>
     </div>
     <!-- Contestant input -->
-    <div class="flex items-center gap-2 px-3 py-2 rounded-xl flex-1 min-w-[120px]" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)">
+    <div class="flex items-center gap-2 px-3 py-2 rounded-xl flex-1 min-w-[120px]" style="background:rgba(255,255,255,0.04);border:1px solid var(--border)">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <input type="text" id="st-contestant-input" placeholder="Contestant…" class="bg-transparent text-xs font-semibold focus:outline-none w-full" style="color:#cbd5e1"/>
+      <input type="text" id="st-contestant-input" placeholder="Contestant…" class="bg-transparent text-xs font-semibold focus:outline-none w-full" style="color:var(--text-secondary)"/>
     </div>
     <!-- Adjust buttons -->
     <div class="flex items-center gap-1 flex-shrink-0">
@@ -127,18 +127,18 @@
 
     <!-- Sub-labels under clock -->
     <div class="flex items-center justify-between w-full max-w-sm px-1 mb-5">
-      <div id="st-subtext" class="text-[10px] font-extrabold uppercase tracking-wider" style="color:#374151">Time Remaining</div>
+      <div id="st-subtext" class="text-[10px] font-extrabold uppercase tracking-wider" style="color:var(--text-faint)">Time Remaining</div>
       <div id="st-overtime-label" class="hidden text-[10px] font-black uppercase tracking-wider animate-pulse" style="color:#ef4444">OVERTIME</div>
       <div id="st-progress-percent-badge" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full" style="background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.25)">100% Left</div>
     </div>
 
     <!-- Progress bar -->
     <div class="w-full max-w-sm space-y-1.5">
-      <div class="flex items-center justify-between text-[10px] mb-1" style="color:#374151">
-        <span id="st-progress-time-ratio" class="font-mono" style="color:#475569">00:00 / 01:00</span>
+      <div class="flex items-center justify-between text-[10px] mb-1" style="color:var(--text-faint)">
+        <span id="st-progress-time-ratio" class="font-mono" style="color:var(--text-faint)">00:00 / 01:00</span>
         <span id="st-progress-dot" class="w-1.5 h-1.5 rounded-full" style="background:#6366f1"></span>
       </div>
-      <div class="relative h-2.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06)">
+      <div class="relative h-2.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-subtle)">
         <div id="st-linear-progress" class="h-full rounded-full transition-all duration-300"
           style="width:100%;background:linear-gradient(90deg,#4f46e5,#818cf8)"></div>
         <!-- Shimmer -->
@@ -178,18 +178,18 @@
   <div class="px-4 sm:px-5 py-3" style="border-top:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.18)">
     <div class="flex items-center justify-between mb-2">
       <div class="flex items-center gap-2">
-        <span class="text-[9px] font-extrabold uppercase tracking-widest" style="color:#374151">Completed Stages</span>
+        <span class="text-[9px] font-extrabold uppercase tracking-widest" style="color:var(--text-faint)">Completed Stages</span>
         <span id="st-log-count" class="px-1.5 py-0.5 rounded-full text-[9px] font-bold" style="background:rgba(255,255,255,0.06);color:#64748b">0</span>
       </div>
       <div class="flex items-center gap-3">
-        <button onclick="ScoreSyncTimer.copyLogs()" class="text-[10px] font-bold flex items-center gap-1 transition" style="color:#374151" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#374151'">
+        <button onclick="ScoreSyncTimer.copyLogs()" class="text-[10px] font-bold flex items-center gap-1 transition" style="color:var(--text-faint)" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#374151'">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
         </button>
-        <button onclick="ScoreSyncTimer.clearLogs()" class="text-[10px] font-bold transition" style="color:#374151" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#374151'">Clear</button>
+        <button onclick="ScoreSyncTimer.clearLogs()" class="text-[10px] font-bold transition" style="color:var(--text-faint)" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#374151'">Clear</button>
       </div>
     </div>
     <div id="st-log-container" class="space-y-1 max-h-28 overflow-y-auto pr-1">
-      <div id="st-log-empty" class="py-3 text-center text-[10px] italic" style="color:#374151">No stages logged yet.</div>
+      <div id="st-log-empty" class="py-3 text-center text-[10px] italic" style="color:var(--text-faint)">No stages logged yet.</div>
     </div>
   </div>
   </div>
@@ -208,7 +208,7 @@
       </div>
       <div>
         <h1 class="text-base sm:text-lg font-black text-white tracking-tight">ScoreSync Stage Timer</h1>
-        <p id="st-fs-stage-sub" class="text-[11px]" style="color:#374151">Official Competition Display</p>
+        <p id="st-fs-stage-sub" class="text-[11px]" style="color:var(--text-faint)">Official Competition Display</p>
       </div>
     </div>
     <button onclick="ScoreSyncTimer.toggleFullscreen()"
@@ -237,17 +237,17 @@
       <div class="digit-cell-fs" id="dc-fs-s2"><span class="digit-val-fs" id="dv-fs-s2">0</span></div>
     </div>
 
-    <div id="st-fs-status" class="text-xs sm:text-base md:text-xl font-bold tracking-widest uppercase mt-5 sm:mt-8" style="color:#374151">
+    <div id="st-fs-status" class="text-xs sm:text-base md:text-xl font-bold tracking-widest uppercase mt-5 sm:mt-8" style="color:var(--text-faint)">
       Ready · Press Spacebar to Start
     </div>
 
     <!-- Progress -->
-    <div class="w-full max-w-2xl mt-6 sm:mt-10 rounded-2xl p-4 sm:p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+    <div class="w-full max-w-2xl mt-6 sm:mt-10 rounded-2xl p-4 sm:p-5" style="background:rgba(255,255,255,0.03);border:1px solid var(--border)">
       <div class="flex items-center justify-between text-xs font-bold mb-3">
-        <span id="st-fs-progress-time-ratio" class="font-mono" style="color:#475569">00:00 / 01:00</span>
+        <span id="st-fs-progress-time-ratio" class="font-mono" style="color:var(--text-faint)">00:00 / 01:00</span>
         <span id="st-fs-progress-percent" class="px-3 py-1 rounded-full text-xs font-extrabold" style="background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3)">100% Left</span>
       </div>
-      <div class="h-4 sm:h-5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)">
+      <div class="h-4 sm:h-5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
         <div id="st-fs-progress" class="h-full rounded-full transition-all duration-300" style="width:100%;background:linear-gradient(90deg,#4f46e5,#818cf8)"></div>
       </div>
     </div>
@@ -582,7 +582,7 @@ window.ScoreSyncTimer = (function () {
       const cnt=el('st-log-count'); if(cnt) cnt.textContent=logs.length;
       const emp=el('st-log-empty'); if(emp) emp.classList.add('hidden');
       const box=el('st-log-container');
-      if(box){ const row=document.createElement('div'); row.className='flex items-center gap-3 px-3 py-2 rounded-lg text-xs'; row.style.cssText='background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)'; row.innerHTML=`<span class="font-mono font-bold" style="color:#6366f1">${entry.time}</span><span class="font-semibold" style="color:#e2e8f0">${cval||'—'}</span><span style="color:#374151">${stage}</span><span class="ml-auto font-mono text-[10px]" style="color:#374151">${entry.ts}</span>`; box.insertBefore(row,box.firstChild); }
+      if(box){ const row=document.createElement('div'); row.className='flex items-center gap-3 px-3 py-2 rounded-lg text-xs'; row.style.cssText='background:rgba(255,255,255,0.04);border:1px solid var(--border-subtle)'; row.innerHTML=`<span class="font-mono font-bold" style="color:#6366f1">${entry.time}</span><span class="font-semibold" style="color:var(--text-primary)">${cval||'—'}</span><span style="color:var(--text-faint)">${stage}</span><span class="ml-auto font-mono text-[10px]" style="color:var(--text-faint)">${entry.ts}</span>`; box.insertBefore(row,box.firstChild); }
       this.reset();
       if(el('st-contestant-input')) el('st-contestant-input').value='';
     },

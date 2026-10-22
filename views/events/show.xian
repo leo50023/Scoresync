@@ -37,7 +37,7 @@
       </div>
     </div>
     <!-- Action toolbar -->
-    <div class="px-4 py-3 flex flex-wrap items-center gap-2" style="border-top:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);position:relative;overflow:visible;z-index:20">
+    <div class="px-4 py-3 flex flex-wrap items-center gap-2" style="border-top:1px solid var(--border);background:rgba(255,255,255,0.03);position:relative;overflow:visible;z-index:20">
       {{#if isAdmin}}
 
       <!-- Primary actions — always visible -->
@@ -164,7 +164,7 @@
       <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {{#each contestants}}
         <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition hover:-translate-y-1"
-          style="aspect-ratio:3/4;border:1px solid rgba(255,255,255,0.08);background:#111827">
+          style="aspect-ratio:3/4;border:1px solid var(--border);background:#111827">
           <!-- Photo or gradient fallback -->
           {{#if photo}}
           <img src="{{photo}}" alt="{{name}}"
@@ -260,7 +260,7 @@
       {{#if criteria.length}}
       <div class="p-4 space-y-2.5">
         {{#each criteria}}
-        <div class="rounded-xl p-3.5 transition" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06)"
+        <div class="rounded-xl p-3.5 transition" style="background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle)"
           onmouseover="this.style.background='rgba(139,92,246,0.05)';this.style.borderColor='rgba(139,92,246,0.2)'"
           onmouseout="this.style.background='rgba(255,255,255,0.02)';this.style.borderColor='rgba(255,255,255,0.06)'">
           <div class="flex items-start justify-between gap-3 mb-2">
@@ -269,13 +269,13 @@
               <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-white text-[10px] font-extrabold"
                 style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">{{add1 @index}}</div>
               <div class="min-w-0">
-                <div class="font-bold text-sm leading-tight" style="color:#e2e8f0">{{name}}</div>
-                {{#if description}}<div class="text-[11px] mt-0.5 truncate" style="color:#64748b">{{description}}</div>{{/if}}
+                <div class="font-bold text-sm leading-tight" style="color:var(--text-primary)">{{name}}</div>
+                {{#if description}}<div class="text-[11px] mt-0.5 truncate" style="color:var(--text-muted)">{{description}}</div>{{/if}}
               </div>
             </div>
             <div class="flex items-center gap-2 flex-shrink-0">
               <span class="text-xs font-black px-2.5 py-1 rounded-full" style="background:rgba(139,92,246,0.15);color:#c4b5fd;border:1px solid rgba(139,92,246,0.25)">{{weight}}%</span>
-              <span class="text-[10px] font-semibold px-2 py-1 rounded-full" style="background:rgba(255,255,255,0.05);color:#64748b;border:1px solid rgba(255,255,255,0.08)">max {{maxScore}}</span>
+              <span class="text-[10px] font-semibold px-2 py-1 rounded-full" style="background:rgba(255,255,255,0.05);color:#64748b;border:1px solid var(--border)">max {{maxScore}}</span>
             </div>
           </div>
           <!-- Weight bar -->
@@ -286,7 +286,7 @@
         {{/each}}
         <!-- Total weight indicator -->
         <div class="flex items-center justify-between px-1 pt-1">
-          <span class="text-[11px]" style="color:#475569">Total weight</span>
+          <span class="text-[11px]" style="color:var(--text-faint)">Total weight</span>
           <span class="text-xs font-extrabold" style="color:#c4b5fd">100%</span>
         </div>
       </div>
@@ -295,7 +295,7 @@
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15)">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
-        <p class="text-sm font-semibold mb-1" style="color:#e2e8f0">No criteria defined</p>
+        <p class="text-sm font-semibold mb-1" style="color:var(--text-primary)">No criteria defined</p>
         {{#if isAdmin}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria →</a>{{/if}}
         {{#if isOrganizer}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria →</a>{{/if}}
       </div>
@@ -332,7 +332,7 @@
                 <div class="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
                   {{#if judgeName}}{{judgeName.[0]}}{{else}}J{{/if}}
                 </div>
-                <span class="text-sm font-semibold" style="color:#e2e8f0">{{judgeName}}</span>
+                <span class="text-sm font-semibold" style="color:var(--text-primary)">{{judgeName}}</span>
               </div>
             </td>
             <td>
@@ -341,8 +341,8 @@
                 Scores Submitted
               </span>
             </td>
-            <td class="text-sm font-bold" style="color:#e2e8f0">{{scoreCount}} score(s)</td>
-            <td class="text-xs" style="color:#64748b">{{timestampStr}}</td>
+            <td class="text-sm font-bold" style="color:var(--text-primary)">{{scoreCount}} score(s)</td>
+            <td class="text-xs" style="color:var(--text-muted)">{{timestampStr}}</td>
           </tr>
           {{/each}}
         </tbody>
@@ -395,12 +395,12 @@
   <div class="grid lg:grid-cols-2 gap-5 animate-fadeup-2">
     <div class="section-card">
       <div class="section-header"><h2><svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>Prizes &amp; Awards</h2></div>
-      <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:#94a3b8">{{event.prizes}}</div>
+      <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:var(--text-secondary)">{{event.prizes}}</div>
     </div>
     {{#if event.rules}}
     <div class="section-card">
       <div class="section-header"><h2><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>Rules &amp; Mechanics</h2></div>
-      <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:#94a3b8">{{event.rules}}</div>
+      <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:var(--text-secondary)">{{event.rules}}</div>
     </div>
     {{/if}}
   </div>
@@ -410,7 +410,7 @@
   {{#if event.notes}}
   <div class="section-card animate-fadeup-2">
     <div class="section-header"><h2><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Additional Notes</h2></div>
-    <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:#94a3b8">{{event.notes}}</div>
+    <div class="px-5 py-4 text-sm whitespace-pre-line leading-relaxed" style="color:var(--text-secondary)">{{event.notes}}</div>
   </div>
   {{/if}}
 
@@ -437,21 +437,21 @@
       <!-- Details -->
       <div class="flex-1 space-y-3 text-center sm:text-left">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-wide" style="color:#64748b">How to Pay</p>
-          <p class="text-sm mt-1 leading-relaxed" style="color:#94a3b8">Scan the QR code using your <span class="font-bold" style="color:#34d399">{{#if event.paymentMethod}}{{event.paymentMethod}}{{else}}payment app{{/if}}</span> to send your payment directly.</p>
+          <p class="text-xs font-semibold uppercase tracking-wide" style="color:var(--text-muted)">How to Pay</p>
+          <p class="text-sm mt-1 leading-relaxed" style="color:var(--text-secondary)">Scan the QR code using your <span class="font-bold" style="color:#34d399">{{#if event.paymentMethod}}{{event.paymentMethod}}{{else}}payment app{{/if}}</span> to send your payment directly.</p>
         </div>
         {{#if event.paymentAccountName}}
         <div class="flex items-center gap-2 text-sm">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span style="color:#64748b">Account Name:</span>
-          <span class="font-bold" style="color:#e2e8f0">{{event.paymentAccountName}}</span>
+          <span style="color:var(--text-muted)">Account Name:</span>
+          <span class="font-bold" style="color:var(--text-primary)">{{event.paymentAccountName}}</span>
         </div>
         {{/if}}
         {{#if event.paymentAccountNumber}}
         <div class="flex items-center gap-2 text-sm">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          <span style="color:#64748b">Account No.:</span>
-          <span class="font-bold font-mono tracking-wide" style="color:#e2e8f0">{{event.paymentAccountNumber}}</span>
+          <span style="color:var(--text-muted)">Account No.:</span>
+          <span class="font-bold font-mono tracking-wide" style="color:var(--text-primary)">{{event.paymentAccountNumber}}</span>
         </div>
         {{/if}}
         <div class="flex gap-2 pt-1 justify-center sm:justify-start flex-wrap">
@@ -486,9 +486,9 @@
         <canvas id="event-qr-canvas" width="160" height="160"></canvas>
       </div>
       <div class="flex-1 space-y-2 text-center sm:text-left">
-        <p class="font-bold text-sm" style="color:#e2e8f0">{{event.name}}</p>
-        <p class="text-xs leading-relaxed" style="color:#64748b">Scan this QR code to open the event page directly. Share it with judges, encoders, and participants for instant access.</p>
-        <div class="mt-2 px-3 py-2 rounded-lg text-xs font-mono break-all" id="qr-url-display" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#94a3b8"></div>
+        <p class="font-bold text-sm" style="color:var(--text-primary)">{{event.name}}</p>
+        <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Scan this QR code to open the event page directly. Share it with judges, encoders, and participants for instant access.</p>
+        <div class="mt-2 px-3 py-2 rounded-lg text-xs font-mono break-all" id="qr-url-display" style="background:rgba(255,255,255,0.04);border:1px solid var(--border);color:#94a3b8"></div>
         <div class="flex gap-2 pt-1 justify-center sm:justify-start flex-wrap">
           <button onclick="copyEventUrl()" class="btn-sm btn-sm-gray text-xs">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -560,11 +560,11 @@
     </div>
 
     <!-- Main finance card -->
-    <div class="rounded-2xl overflow-hidden" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+    <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
 
       <!-- Header -->
-      <div class="px-6 py-4 flex items-center justify-between" style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)">
-        <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:#e2e8f0">
+      <div class="px-6 py-4 flex items-center justify-between" style="border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,0.02)">
+        <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           Income &amp; Expense Log
           <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.25)">{{finance.entries.length}} entries</span>
@@ -579,7 +579,7 @@
 
       <!-- Add Entry Form (admin + organizer, collapsible) -->
       {{#if canManageFinance}}
-      <div id="finance-form-wrap" class="hidden" style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(99,102,241,0.04)">
+      <div id="finance-form-wrap" class="hidden" style="border-bottom:1px solid var(--border-subtle);background:rgba(99,102,241,0.04)">
         <form method="POST" action="/events/{{event.id}}/finance" class="px-6 py-5">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -682,7 +682,7 @@
                 {{/if}}
               </td>
               <td><span class="badge badge-gray capitalize text-[11px]">{{category}}</span></td>
-              <td class="text-sm" style="color:#94a3b8">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">—</span>{{/if}}</td>
+              <td class="text-sm" style="color:var(--text-secondary)">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">—</span>{{/if}}</td>
               <td class="text-right font-extrabold text-sm" style="color:{{#if (eq type 'income')}}#6ee7b7{{else}}#fca5a5{{/if}}">
                 {{#if (eq type 'income')}}+{{else}}−{{/if}}₱{{amount}}
               </td>
@@ -728,8 +728,8 @@
         <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.15)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
-        <p class="font-bold text-sm mb-1" style="color:#e2e8f0">No finance entries yet</p>
-        <p class="text-xs mb-5" style="color:#374151">Track registration fees, sponsorships, expenses, and more.</p>
+        <p class="font-bold text-sm mb-1" style="color:var(--text-primary)">No finance entries yet</p>
+        <p class="text-xs mb-5" style="color:var(--text-faint)">Track registration fees, sponsorships, expenses, and more.</p>
         {{#if canManageFinance}}
         <button onclick="toggleFinanceForm()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -946,21 +946,21 @@ window._onTimerEventEnd = function() {
 <div id="add-judge-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
   style="background:rgba(0,0,0,0.7);backdrop-filter:blur(4px)">
   <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
-    style="background:#111827;border:1px solid rgba(99,102,241,0.3);max-height:90vh;overflow-y:auto;max-width:calc(100vw - 32px)">
+    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:90vh;overflow-y:auto;max-width:calc(100vw - 32px)">
     <!-- Header -->
     <div class="px-6 py-4 flex items-center justify-between"
-      style="border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(99,102,241,0.08)">
+      style="border-bottom:1px solid var(--border);background:rgba(99,102,241,0.08)">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div>
-          <h3 class="font-extrabold text-sm" style="color:#e2e8f0">Assign Judge</h3>
-          <p class="text-[11px]" style="color:#64748b">Select an existing judge to assign to this event</p>
+          <h3 class="font-extrabold text-sm" style="color:var(--text-primary)">Assign Judge</h3>
+          <p class="text-[11px]" style="color:var(--text-muted)">Select an existing judge to assign to this event</p>
         </div>
       </div>
-      <button onclick="closeAddJudgeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center transition hover:bg-white/10" style="color:#64748b">
+      <button onclick="closeAddJudgeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center transition hover:bg-white/10" style="color:var(--text-muted)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -968,15 +968,15 @@ window._onTimerEventEnd = function() {
     <!-- Assigned judges list -->
     {{#if assignedJudges.length}}
     <div class="px-6 pt-4">
-      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:#64748b">Currently Assigned</p>
+      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-muted)">Currently Assigned</p>
       <div class="space-y-2 mb-4">
         {{#each assignedJudges}}
         <div class="flex items-center justify-between px-3 py-2 rounded-xl" style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2)">
           <div class="flex items-center gap-2">
             <div class="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">{{name.[0]}}</div>
             <div>
-              <div class="text-xs font-bold" style="color:#e2e8f0">{{name}}</div>
-              <div class="text-[10px]" style="color:#64748b">{{email}}</div>
+              <div class="text-xs font-bold" style="color:var(--text-primary)">{{name}}</div>
+              <div class="text-[10px]" style="color:var(--text-muted)">{{email}}</div>
             </div>
           </div>
           <form method="POST" action="/events/{{../event.id}}/judges/{{id}}/remove" class="inline">
@@ -993,7 +993,7 @@ window._onTimerEventEnd = function() {
     <form method="POST" action="/events/{{event.id}}/judges/assign" class="px-6 py-4 space-y-3">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
       {{#if availableJudges.length}}
-      <p class="text-xs font-bold uppercase tracking-wider" style="color:#64748b">Add Judge</p>
+      <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Add Judge</p>
       <select name="judgeId" required class="form-input-bare w-full">
         <option value="">— Select a judge —</option>
         {{#each availableJudges}}
@@ -1009,7 +1009,7 @@ window._onTimerEventEnd = function() {
           style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">Cancel</button>
       </div>
       {{else}}
-      <div class="py-4 text-center text-xs" style="color:#475569">
+      <div class="py-4 text-center text-xs" style="color:var(--text-faint)">
         All judges are already assigned, or no judge accounts exist yet.
         <br><a href="/users" class="text-indigo-400 font-semibold mt-1 inline-block">Create judge accounts in Users →</a>
       </div>
@@ -1047,11 +1047,11 @@ window._onTimerEventEnd = function() {
 
 {{#if isAdmin}}
 <div id="organizer-menu-modal" class="hidden fixed inset-0 z-[100] items-center justify-center p-4" style="background:rgba(2,6,23,0.78);backdrop-filter:blur(5px)" onclick="if(event.target===this)closeOrganizerMenuModal()">
-  <section class="w-full max-w-lg rounded-2xl overflow-hidden" style="background:#111827;border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 80px rgba(0,0,0,0.55)" role="dialog" aria-modal="true" aria-labelledby="organizer-menu-title">
+  <section class="w-full max-w-lg rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 80px rgba(0,0,0,0.55)" role="dialog" aria-modal="true" aria-labelledby="organizer-menu-title">
     <div class="px-5 py-4 flex items-start justify-between gap-4" style="border-bottom:1px solid rgba(255,255,255,0.08)">
       <div>
         <h2 id="organizer-menu-title" class="text-base font-extrabold text-white">Organizer More menu</h2>
-        <p class="mt-1 text-xs leading-relaxed" style="color:#94a3b8">Choose specific items to hide. The More menu itself will remain visible to organizers.</p>
+        <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-secondary)">Choose specific items to hide. The More menu itself will remain visible to organizers.</p>
       </div>
       <button type="button" onclick="closeOrganizerMenuModal()" class="text-slate-400 hover:text-white" aria-label="Close menu settings">×</button>
     </div>
@@ -1097,7 +1097,7 @@ window._onTimerEventEnd = function() {
           <input type="checkbox" name="hiddenItems" value="delete" {{#if (includes event.hiddenOrganizerMoreItems "delete")}}checked{{/if}}> Delete Event
         </label>
       </div>
-      <div class="px-5 py-4 flex justify-end gap-2" style="border-top:1px solid rgba(255,255,255,0.08)">
+      <div class="px-5 py-4 flex justify-end gap-2" style="border-top:1px solid var(--border)">
         <button type="button" onclick="closeOrganizerMenuModal()" class="btn-secondary px-4 py-2 text-sm">Cancel</button>
         <button type="submit" class="btn-primary px-4 py-2 text-sm">Save choices</button>
       </div>

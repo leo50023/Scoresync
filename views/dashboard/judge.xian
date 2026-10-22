@@ -74,12 +74,12 @@
   <!-- ── Events List ── -->
   <div class="space-y-4 animate-fadeup-2">
     <div class="flex items-center justify-between px-1">
-      <h2 class="font-extrabold text-base" style="color:#e2e8f0">{{#if isTabulator}}All Event Scores{{else}}Events Available for Scoring{{/if}}</h2>
-      <span id="judge-event-count" class="text-xs font-bold" style="color:#64748b" aria-live="polite">{{recentEvents.length}} event(s)</span>
+      <h2 class="font-extrabold text-base" style="color:var(--text-primary)">{{#if isTabulator}}All Event Scores{{else}}Events Available for Scoring{{/if}}</h2>
+      <span id="judge-event-count" class="text-xs font-bold" style="color:var(--text-muted)" aria-live="polite">{{recentEvents.length}} event(s)</span>
     </div>
 
     {{#if recentEvents.length}}
-    <div class="rounded-2xl p-3 sm:p-4 space-y-3" style="background:#111827;border:1px solid rgba(255,255,255,0.07)">
+    <div class="rounded-2xl p-3 sm:p-4 space-y-3" style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex flex-col sm:flex-row gap-3">
         <label class="relative flex-1">
           <span class="sr-only">Search events</span>
@@ -115,7 +115,7 @@
       <div class="rounded-2xl overflow-hidden transition-all duration-300
         {{#if (eq status 'ongoing')}}hover:-translate-y-0.5 hover:shadow-xl{{/if}}"
         data-judge-event data-status="{{status}}" data-assigned="{{isAssigned}}"
-        style="background:#111827;border:1px solid {{#if (eq status 'ongoing')}}rgba(16,185,129,0.3){{else}}{{#if (eq status 'completed')}}rgba(59,130,246,0.2){{else}}rgba(255,255,255,0.07){{/if}}{{/if}};box-shadow:{{#if (eq status 'ongoing')}}0 4px 24px rgba(16,185,129,0.1){{else}}none{{/if}}">
+        style="background:var(--bg-card);border:1px solid {{#if (eq status 'ongoing')}}rgba(16,185,129,0.3){{else}}{{#if (eq status 'completed')}}rgba(59,130,246,0.2){{else}}rgba(255,255,255,0.07){{/if}}{{/if}};box-shadow:{{#if (eq status 'ongoing')}}0 4px 24px rgba(16,185,129,0.1){{else}}none{{/if}}">
 
         <div class="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
 
@@ -129,12 +129,12 @@
 
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-0.5">
-                <h3 class="font-extrabold text-base truncate" style="color:#e2e8f0">{{name}}</h3>
+                <h3 class="font-extrabold text-base truncate" style="color:var(--text-primary)">{{name}}</h3>
                 {{#if (eq status 'ongoing')}}
                 <span class="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                 {{/if}}
               </div>
-              <div class="flex flex-wrap items-center gap-2 text-xs" style="color:#64748b">
+              <div class="flex flex-wrap items-center gap-2 text-xs" style="color:var(--text-muted)">
                 {{#if venue}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>{{venue}}</span>{{/if}}
                 {{#if date}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{{date}}{{#if time}} at {{time}}{{/if}}</span>{{/if}}
                 <span class="capitalize px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:#94a3b8">{{#if (eq type 'other')}}{{#if otherType}}{{otherType}}{{else}}Other{{/if}}{{else}}{{type}}{{/if}}</span>
@@ -143,11 +143,11 @@
               <!-- Stats row -->
               {{#if contestantCount}}
               <div class="flex items-center gap-3 mt-2 flex-wrap">
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:#94a3b8">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:var(--text-secondary)">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                   {{contestantCount}} contestant{{#if (gt contestantCount 1)}}s{{/if}}
                 </span>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:#94a3b8">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:var(--text-secondary)">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   {{criteriaCount}} criteri{{#if (gt criteriaCount 1)}}a{{else}}on{{/if}}
                 </span>
@@ -165,9 +165,9 @@
               {{#if (eq status 'ongoing')}}
               {{#if contestantCount}}
               <div class="mt-2.5">
-                <div class="flex justify-between text-[10px] mb-1" style="color:#64748b">
+                <div class="flex justify-between text-[10px] mb-1" style="color:var(--text-muted)">
                   <span>My progress</span>
-                  <span class="font-bold" style="color:#e2e8f0">{{completionPct}}%</span>
+                  <span class="font-bold" style="color:var(--text-primary)">{{completionPct}}%</span>
                 </div>
                 <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
                   <div class="h-full rounded-full transition-all duration-700"
@@ -232,9 +232,9 @@
 
       {{/each}}
       <div id="judge-no-matches" class="hidden rounded-2xl py-10 text-center px-4"
-        style="background:#111827;border:1px solid rgba(255,255,255,0.06)" role="status">
-        <h3 class="font-bold text-sm mb-1" style="color:#e2e8f0">No matching events</h3>
-        <p class="text-xs mb-4" style="color:#64748b">Try another search or show all events.</p>
+        style="background:var(--bg-card);border:1px solid var(--border-subtle)" role="status">
+        <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No matching events</h3>
+        <p class="text-xs mb-4" style="color:var(--text-muted)">Try another search or show all events.</p>
         <button type="button" id="judge-clear-filters" class="rounded-xl px-4 py-2 text-xs font-bold"
           style="background:rgba(99,102,241,0.2);color:#c7d2fe">Show all events</button>
       </div>
@@ -243,13 +243,13 @@
     {{else}}
     <!-- Empty state -->
     <div class="rounded-2xl py-20 text-center px-4"
-      style="background:#111827;border:1px solid rgba(255,255,255,0.06)">
+      style="background:var(--bg-card);border:1px solid var(--border-subtle)">
       <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
         style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <h3 class="font-bold text-base mb-2" style="color:#e2e8f0">No Scoring Events Available</h3>
-      <p class="text-sm max-w-xs mx-auto leading-relaxed" style="color:#475569">
+      <h3 class="font-bold text-base mb-2" style="color:var(--text-primary)">No Scoring Events Available</h3>
+      <p class="text-sm max-w-xs mx-auto leading-relaxed" style="color:var(--text-faint)">
         No events are currently assigned for scoring. Contact the administrator to set up an event and assign you as judge.
       </p>
     </div>
@@ -265,7 +265,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fde047">Review All Scores</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">Click <strong style="color:#fde047">Review / Edit Scores</strong> to see every judge's individual scores per contestant.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Click <strong style="color:#fde047">Review / Edit Scores</strong> to see every judge's individual scores per contestant.</p>
       </div>
     </div>
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15)">
@@ -274,7 +274,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#6ee7b7">Edit Any Score</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">Correct any judge's score entry. All edits are logged in the audit trail.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Correct any judge's score entry. All edits are logged in the audit trail.</p>
       </div>
     </div>
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15)">
@@ -283,7 +283,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fca5a5">Locked Events</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
       </div>
     </div>
   </div>
@@ -295,7 +295,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#a5b4fc">Anonymous Scoring</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">Your identity is hidden from participants. Results show Judge 1, 2, 3.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Your identity is hidden from participants. Results show Judge 1, 2, 3.</p>
       </div>
     </div>
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15)">
@@ -304,7 +304,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#6ee7b7">Draft Auto-Save</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">Scores are saved locally as you type. No data loss on refresh.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Scores are saved locally as you type. No data loss on refresh.</p>
       </div>
     </div>
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15)">
@@ -313,7 +313,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fcd34d">Live Leaderboard</div>
-        <p class="text-[11px] leading-relaxed" style="color:#475569">Results update in real-time as all judges submit scores.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Results update in real-time as all judges submit scores.</p>
       </div>
     </div>
   </div>

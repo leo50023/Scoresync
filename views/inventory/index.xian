@@ -61,7 +61,7 @@
           </div>
           <span class="badge badge-green text-[10px]">+{{items.length}} entries</span>
         </div>
-        <div class="text-3xl font-black" style="color:#e2e8f0">₱{{totalValue}}</div>
+        <div class="text-3xl font-black" style="color:var(--text-primary)">₱{{totalValue}}</div>
         <div class="mt-3 h-10" id="sparkline-income"></div>
       </div>
     </div>
@@ -114,8 +114,8 @@
       <div class="card-flat p-5">
         <div class="flex items-center justify-between mb-4">
           <div>
-            <h2 class="font-extrabold text-base" style="color:#e2e8f0">Income by Record</h2>
-            <p class="text-xs mt-0.5" style="color:#64748b">All ticket sales entries — bar height = total income</p>
+            <h2 class="font-extrabold text-base" style="color:var(--text-primary)">Income by Record</h2>
+            <p class="text-xs mt-0.5" style="color:var(--text-muted)">All ticket sales entries — bar height = total income</p>
           </div>
           <span class="badge badge-green text-xs" id="chart-total-badge">₱{{totalValue}} total</span>
         </div>
@@ -154,8 +154,8 @@
               </div>
               {{/if}}
               <div>
-                <div class="font-semibold text-sm" style="color:#e2e8f0">{{ticketType}}</div>
-                <div class="text-xs mt-0.5" style="color:#64748b">
+                <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>
+                <div class="text-xs mt-0.5" style="color:var(--text-muted)">
                   {{#unless ../filterEventId}}{{eventName}} &bull; {{/unless}}
                   {{quantity}} Ã— ₱{{unitPrice}}
                   {{#if notes}} &bull; {{notes}}{{/if}}
@@ -185,8 +185,8 @@
           {{/each}}
         </div>
         <!-- Footer total -->
-        <div class="px-5 py-3 flex items-center justify-between" style="border-top:1px solid rgba(255,255,255,0.07);background:rgba(16,185,129,0.05)">
-          <span class="text-xs font-extrabold uppercase tracking-wide" style="color:#64748b">Total Â· {{totalItems}} tickets</span>
+        <div class="px-5 py-3 flex items-center justify-between" style="border-top:1px solid var(--border);background:rgba(16,185,129,0.05)">
+          <span class="text-xs font-extrabold uppercase tracking-wide" style="color:var(--text-muted)">Total Â· {{totalItems}} tickets</span>
           <span class="font-black text-emerald-400 text-base">₱{{totalValue}}</span>
         </div>
 
@@ -212,14 +212,14 @@
       <!-- Donut: Income breakdown by type -->
       <div class="card-flat p-5">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="font-extrabold text-sm" style="color:#e2e8f0">Income Breakdown</h2>
+          <h2 class="font-extrabold text-sm" style="color:var(--text-primary)">Income Breakdown</h2>
           <span class="text-xs text-slate-400">by type</span>
         </div>
         <div class="flex items-center justify-center my-2" style="height:160px;position:relative">
           <canvas id="income-donut"></canvas>
           <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <div class="text-xs font-bold text-slate-400">Total</div>
-            <div class="text-xl font-black" style="color:#e2e8f0" id="donut-center">₱{{totalValue}}</div>
+            <div class="text-xl font-black" style="color:var(--text-primary)" id="donut-center">₱{{totalValue}}</div>
           </div>
         </div>
         <div id="donut-legend" class="space-y-2 mt-4"></div>
@@ -244,7 +244,7 @@
                 {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover"/>{{else}}₱{{/if}}
               </div>
               <div>
-                <div class="font-semibold text-sm" style="color:#e2e8f0">{{ticketType}}</div>
+                <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>
                 <div class="text-slate-400 text-xs">just now</div>
               </div>
             </div>
@@ -261,8 +261,8 @@
                 {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover"/>{{else}}T{{/if}}
               </div>
               <div>
-                <div class="font-semibold text-sm" style="color:#e2e8f0">{{ticketType}}</div>
-                <div class="text-xs" style="color:#64748b">{{#unless ../filterEventId}}{{eventName}}{{/unless}}</div>
+                <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>
+                <div class="text-xs" style="color:var(--text-muted)">{{#unless ../filterEventId}}{{eventName}}{{/unless}}</div>
               </div>
             </div>
             <span class="font-extrabold text-emerald-400 text-sm">+₱{{totalValue}}</span>
@@ -289,22 +289,22 @@
 <!-- â•â• ADD RECORD MODAL â•â• -->
 <div id="add-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(4px)">
   <div class="card-flat w-full max-w-md mx-4 shadow-2xl">
-    <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.07)">
+    <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border)">
       <div class="w-8 h-8 grad-green rounded-lg flex items-center justify-center shadow-sm">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </div>
       <div>
-        <h3 class="font-bold" style="color:#e2e8f0">Add Ticket / Income Record</h3>
-        <p class="text-xs" style="color:#64748b">Record ticket sales or other income</p>
+        <h3 class="font-bold" style="color:var(--text-primary)">Add Ticket / Income Record</h3>
+        <p class="text-xs" style="color:var(--text-muted)">Record ticket sales or other income</p>
       </div>
-      <button onclick="closeAddModal()" class="ml-auto transition" style="color:#64748b">
+      <button onclick="closeAddModal()" class="ml-auto transition" style="color:var(--text-muted)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <form method="POST" action="/inventory" class="px-6 py-5 space-y-4">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Event <span class="text-red-500">*</span></label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Event <span class="text-red-500">*</span></label>
         <select name="eventId" required class="form-input-bare">
           <option value="">Select an event…</option>
           {{#each events}}
@@ -313,7 +313,7 @@
         </select>
       </div>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Ticket / Income Type <span class="text-red-500">*</span></label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Ticket / Income Type <span class="text-red-500">*</span></label>
         <input type="text" name="ticketType" placeholder="e.g. General Admission, VIP, Sponsor Fee…" required class="form-input-bare"/>
       </div>
       <!-- Quick presets -->
@@ -329,11 +329,11 @@
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Quantity</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Quantity</label>
           <input type="number" name="quantity" value="1" min="0" class="form-input-bare" oninput="calcPreview()"/>
         </div>
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Unit Price (₱)</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (₱)</label>
           <input type="number" name="unitPrice" placeholder="0.00" min="0" step="0.01" id="add-unit-price" oninput="calcPreview()" class="form-input-bare"/>
         </div>
       </div>
@@ -343,7 +343,7 @@
         <span id="add-total-preview" class="font-extrabold text-base" style="color:#6ee7b7">₱0.00</span>
       </div>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Attachment <span class="font-normal text-[10px] normal-case" style="color:#374151">optional</span></label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Attachment <span class="font-normal text-[10px] normal-case" style="color:var(--text-faint)">optional</span></label>
         <div id="inv-photo-dropzone" onclick="document.getElementById('inv-photo-file').click()"
           class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer border-2 border-dashed transition"
           style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.06)"
@@ -351,7 +351,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           <div>
             <div class="text-xs font-semibold" style="color:#6ee7b7">Upload receipt / QR</div>
-            <div class="text-[10px]" style="color:#64748b">PNG/JPG Â· max 2MB</div>
+            <div class="text-[10px]" style="color:var(--text-muted)">PNG/JPG Â· max 2MB</div>
           </div>
         </div>
         <input type="file" id="inv-photo-file" accept="image/*" class="hidden" onchange="handleInvPhoto(this)"/>
@@ -362,7 +362,7 @@
         </div>
       </div>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Notes</label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Notes</label>
         <textarea name="notes" rows="2" placeholder="e.g. Sold at gate, online pre-sale…" class="form-input-bare resize-none"></textarea>
       </div>
       <div class="flex gap-3 pt-1">
@@ -380,9 +380,9 @@
 <!-- â•â• EDIT MODAL â•â• -->
 <div id="edit-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(4px)">
   <div class="card-flat w-full max-w-md mx-4 shadow-2xl">
-    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom:1px solid rgba(255,255,255,0.07)">
-      <h3 class="font-bold" style="color:#e2e8f0">Edit Record</h3>
-      <button onclick="closeEditModal()" class="transition" style="color:#64748b">
+    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom:1px solid var(--border)">
+      <h3 class="font-bold" style="color:var(--text-primary)">Edit Record</h3>
+      <button onclick="closeEditModal()" class="transition" style="color:var(--text-muted)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -391,25 +391,25 @@
       <input type="hidden" name="eventId" id="edit-eventId"/>
       <input type="hidden" name="photo"   id="edit-photo-b64"/>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Type <span class="text-red-500">*</span></label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Type <span class="text-red-500">*</span></label>
         <input type="text" name="ticketType" id="edit-ticketType" required class="form-input-bare"/>
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Quantity</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Quantity</label>
           <input type="number" name="quantity" id="edit-quantity" min="0" class="form-input-bare"/>
         </div>
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Unit Price (₱)</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (₱)</label>
           <input type="number" name="unitPrice" id="edit-unitPrice" min="0" step="0.01" class="form-input-bare"/>
         </div>
       </div>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Notes</label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Notes</label>
         <textarea name="notes" id="edit-notes" rows="2" class="form-input-bare resize-none"></textarea>
       </div>
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Attachment</label>
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Attachment</label>
         <div id="edit-photo-existing" class="hidden mb-2">
           <img id="edit-photo-img" src="" alt="" class="w-12 h-12 rounded-lg object-cover" style="border:1px solid rgba(255,255,255,0.1)"/>
         </div>
@@ -527,10 +527,10 @@ if (donutCtx && ITEMS.length) {
         <div class="flex items-center justify-between text-xs">
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:${COLORS[i%COLORS.length]}"></span>
-            <span class="font-semibold truncate max-w-[110px]" style="color:#94a3b8">${lbl}</span>
+            <span class="font-semibold truncate max-w-[110px]" style="color:var(--text-secondary)">${lbl}</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="font-bold" style="color:#e2e8f0">₱${values[i].toLocaleString('en-PH',{minimumFractionDigits:2})}</span>
+            <span class="font-bold" style="color:var(--text-primary)">₱${values[i].toLocaleString('en-PH',{minimumFractionDigits:2})}</span>
             <span class="text-slate-400">${pct}%</span>
           </div>
         </div>`;
