@@ -363,8 +363,30 @@
   {{#if (eq event.status 'ongoing')}}
   {{#unless isEncoder}}
   <div class="animate-fadeup-1">
-    {{> countdown_timer }}
+    <!-- Timer toggle button -->
+    <button type="button" id="timer-toggle-btn" onclick="toggleStageTimer()"
+      class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition mb-3"
+      style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.25)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="timer-toggle-label">Show Stage Timer</span>
+      <svg id="timer-toggle-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <!-- Timer body — hidden by default -->
+    <div id="stage-timer-wrapper" class="hidden">
+      {{> countdown_timer }}
+    </div>
   </div>
+  <script>
+    function toggleStageTimer() {
+      const wrapper  = document.getElementById('stage-timer-wrapper');
+      const label    = document.getElementById('timer-toggle-label');
+      const chevron  = document.getElementById('timer-toggle-chevron');
+      const isHidden = wrapper.classList.contains('hidden');
+      wrapper.classList.toggle('hidden', !isHidden);
+      label.textContent   = isHidden ? 'Hide Stage Timer' : 'Show Stage Timer';
+      chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+    }
+  </script>
   {{/unless}}
   {{/if}}
 
