@@ -9,16 +9,16 @@
   <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06)">
 
     <!-- Row 1: Event + judge info + ring -->
-    <div class="px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
-      <div class="min-w-0">
+    <div class="judge-top-row px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
+      <div class="judge-top-info min-w-0">
         <div class="font-extrabold text-sm truncate" style="color:#e2e8f0">{{event.name}}</div>
-        <div class="text-xs" style="color:#475569">
-          Judge: <span style="color:#818cf8">{{userName}}</span>
-          &bull; Contestant <span id="hdr-pos" style="color:#e2e8f0">1</span> of {{contestants.length}}
-          &bull; <span id="hdr-scored" style="color:#6ee7b7">0</span> of {{contestants.length}} scored
+        <div class="judge-top-meta text-xs">
+          <span>{{#if isTabulator}}Tabulator{{else}}Judge{{/if}}: <span class="judge-top-name">{{userName}}</span></span>
+          <span>Contestant <span id="hdr-pos">1</span> of {{contestants.length}}</span>
+          <span><span id="hdr-scored">0</span> of {{contestants.length}} scored</span>
         </div>
       </div>
-      <div class="flex items-center gap-2 flex-shrink-0">
+      <div class="judge-top-actions flex items-center gap-2 flex-shrink-0">
         <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)">
           <svg id="completion-ring" width="28" height="28" viewBox="0 0 28 28">
             <circle cx="14" cy="14" r="10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
@@ -54,7 +54,7 @@
 
   {{#if readOnly}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 no-print" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25)">
-  <div class="text-xs" style="color:#bfdbfe">Event completed. Scores are available in read-only mode.</div>
+  <div class="text-xs" style="color:#bfdbfe">{{#if isTabulator}}Scoring is locked. Scores are available in read-only mode.{{else}}Event completed. Scores are available in read-only mode.{{/if}}</div>
     <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results →</a>
   </div>
   {{/if}}
@@ -219,20 +219,20 @@
 </div>
 
 <!-- Sticky bottom nav bar (Prev / Next contestant) -->
-<div class="fixed bottom-0 left-0 right-0 z-30 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,0.06);box-shadow:0 -4px 32px rgba(0,0,0,0.5)">
-  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+<div class="judge-bottom-nav fixed bottom-0 left-0 right-0 z-30 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,0.06);box-shadow:0 -4px 32px rgba(0,0,0,0.5)">
+  <div class="judge-bottom-nav-inner max-w-screen-xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
     <button type="button" id="btn-prev-contestant"
-      class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition disabled:opacity-30"
+      class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition disabled:opacity-30"
       style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)"
       onclick="goToContestant(window._currentIdx - 1)">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       Previous
     </button>
-    <div class="flex-1 text-center text-xs font-bold" style="color:#374151">
-      Contestant <span id="bottom-pos" style="color:#c9a227">1</span> / {{contestants.length}}
+    <div class="judge-bottom-position flex-1 text-center text-xs font-bold" style="color:#94a3b8">
+      Contestant <span id="bottom-pos" style="color:#e5c45a">1</span> / {{contestants.length}}
     </div>
     <button type="button" id="btn-next-contestant"
-      class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm transition active:scale-[0.98]"
+      class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm transition active:scale-[0.98]"
       style="background:linear-gradient(135deg,#8b6914,#c9a227);color:#0a1628;box-shadow:0 4px 16px rgba(201,162,39,0.3)"
       onclick="goToContestant(window._currentIdx + 1)">
       Next →
@@ -249,6 +249,29 @@
   border-radius: 18px;
   background: linear-gradient(145deg,#101c30 0%,#0b1424 100%);
   box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+}
+.judge-top-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 2px;
+  margin-top: 2px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+.judge-top-meta > span {
+  min-width: 0;
+}
+.judge-top-name {
+  color: #a5b4fc;
+  overflow-wrap: anywhere;
+}
+#hdr-pos {
+  color: #e2e8f0;
+}
+#hdr-scored {
+  color: #6ee7b7;
 }
 .judge-card-inner {
   display: grid;
@@ -526,7 +549,23 @@
 }
 
 /* Mobile: stack photo on top */
+@media (max-width: 767px) {
+  #scoring-main {
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom)) !important;
+  }
+}
 @media (max-width: 640px) {
+  .judge-top-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .judge-top-info {
+    flex: 1 1 100%;
+  }
+  .judge-top-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
   .judge-card-inner {
     grid-template-columns: 1fr;
   }
@@ -551,6 +590,36 @@
   }
   .judge-score-entry input {
     width: 68px;
+  }
+  .judge-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .judge-bottom-nav-inner {
+    gap: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .judge-bottom-button {
+    flex-shrink: 0;
+    gap: 6px;
+    padding: 9px 10px;
+    font-size: 0.75rem;
+  }
+  .judge-bottom-position {
+    min-width: 0;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 380px) {
+  .judge-bottom-nav-inner {
+    gap: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .judge-bottom-button {
+    gap: 4px;
+    padding: 8px;
   }
 }
 
@@ -734,7 +803,15 @@ main::-webkit-scrollbar { display:none; }
     const cp = document.querySelector('.contestant-panel[data-idx="' + panelIdx + '"]');
     const inputs = cp ? cp.querySelectorAll('.score-input') : [];
     const empty = [...inputs].filter(n => !n.value || parseFloat(n.value) < 0);
-    if (empty.length && !confirm(empty.length + ' score(s) empty. Submit anyway?')) return;
+    if (empty.length > 0) {
+      // Highlight empty fields
+      empty.forEach(n => {
+        const panel = n.closest('.criteria-panel');
+        const entryEl = panel ? panel.querySelector('.score-entry-input') : null;
+        if (entryEl) entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
+      });
+      if (!confirm(empty.length + ' score(s) are empty. Submit anyway? Empty scores will count as 0.')) return;
+    }
     try { localStorage.removeItem(storeKey); } catch(e) {}
     document.getElementById('scoringForm').submit();
   };

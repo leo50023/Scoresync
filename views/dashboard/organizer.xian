@@ -217,6 +217,17 @@
             </div>
             {{/each}}
           </div>
+
+          <!-- Judge scoring progress for this event (loaded live) -->
+          <div class="mt-3" id="judge-progress-{{id}}" data-event-id="{{id}}">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider" style="color:#475569">Scoring Progress</span>
+              <span class="text-[10px] font-bold judge-progress-pct" style="color:#6ee7b7">Loading...</span>
+            </div>
+            <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full transition-all duration-700 judge-progress-bar" style="width:0%;background:linear-gradient(90deg,#059669,#10b981)"></div>
+            </div>
+          </div>
           {{else}}
           <p class="text-[11px]" style="color:#374151">No judges assigned yet.</p>
           {{/if}}
@@ -386,5 +397,41 @@
 </main>
 </div>
 {{> footer }}
+<script>
+// Load judge scoring progress for each ongoing event card
+(function() {
+  const cards = document.querySelectorAll('[data-event-id]');
+  cards.forEach(function(card) {
+    const eventId = card.getAttribute('data-event-id');
+    if (!eventId) return;
+    fetch('/events/' + eventId + '/scoring-progress', { cache: 'no-store' })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+          const pctEl = card.querySelector('.judge-progress-pct');
+          const barEl = card.querySelector('.judge-progress-bar');
+          if (pctEl) pctEl.textContent = 'No scores yet';
+          if (barEl) barEl.style.width = '0%';
+          return;
+        }
+        const total = data.reduce(function(sum, j) { return sum + j.completionPct; }, 0);
+        const avg   = Math.round(total / data.length);
+        const pctEl = card.querySelector('.judge-progress-pct');
+        const barEl = card.querySelector('.judge-progress-bar');
+        if (pctEl) pctEl.textContent = avg + '% avg';
+        if (barEl) {
+          barEl.style.width = avg + '%';
+          barEl.style.background = avg >= 100
+            ? 'linear-gradient(90deg,#059669,#10b981)'
+            : 'linear-gradient(90deg,#d97706,#fbbf24)';
+        }
+      })
+      .catch(function() {
+        const pctEl = card.querySelector('.judge-progress-pct');
+        if (pctEl) pctEl.textContent = '';
+      });
+  });
+})();
+</script>
 </body>
 </html>

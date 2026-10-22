@@ -122,7 +122,7 @@ import {
   scoringPage, submitScores, resultsPage, scoresJson, announcePage,
   displayBoard, publicResults, toggleScoreLock,
   exportResults, getScoringProgress, reportPage, confirmSignature,
-  tabulatorScoringPage, tabulatorUpdateScore,
+  tabulatorScoringPage, tabulatorUpdateScore, exportAuditLog,
 } from "../controllers/scoringController.js";
 
 router.get( "/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
@@ -142,8 +142,9 @@ router.get( "/events/:eventId/report",      requireAuth, reportPage);
 router.post("/events/:eventId/report/sign", requireAuth, confirmSignature);
 
 // ─── Tabulator Score Review & Edit ────────────────────────────────────────────
-router.get( "/events/:eventId/tabulator",        requireAuth, requireRole("admin","tabulator"), tabulatorScoringPage);
-router.post("/events/:eventId/tabulator/update", requireAuth, requireRole("admin","tabulator"), tabulatorUpdateScore);
+router.get( "/events/:eventId/tabulator",             requireAuth, requireRole("admin","tabulator"), tabulatorScoringPage);
+router.post("/events/:eventId/tabulator/update",      requireAuth, requireRole("admin","tabulator"), tabulatorUpdateScore);
+router.get( "/events/:eventId/tabulator/audit-export",requireAuth, requireRole("admin","tabulator"), exportAuditLog);
 
 // ─── AI Score Analytics (admin only) ──────────────────────────────────────────
 import {

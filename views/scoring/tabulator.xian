@@ -46,6 +46,11 @@
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           View Results
         </a>
+        <a href="/events/{{event.id}}/tabulator/audit-export" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
+          style="background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Audit Log
+        </a>
       </div>
     </div>
   </div>
@@ -58,17 +63,29 @@
   </div>
   {{/if}}
 
-  <!-- ── Judge legend ── -->
+  <!-- ── Judge legend with completion status ── -->
   {{#if judges.length}}
   <div class="rounded-2xl p-4 animate-fadeup-1" style="background:#0d1424;border:1px solid rgba(255,255,255,0.07)">
-    <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:#64748b">Judges in this event</div>
-    <div class="flex flex-wrap gap-2">
+    <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:#64748b">Judge Scoring Status</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {{#each judges}}
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold"
-        style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#cbd5e1">
-        <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white"
+      <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl"
+        style="background:rgba(255,255,255,0.04);border:1px solid {{#if done}}rgba(16,185,129,0.3){{else}}rgba(255,255,255,0.08){{/if}}">
+        <span class="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black text-white flex-shrink-0"
           style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">{{num}}</span>
-        {{alias}}: <span style="color:#94a3b8">{{name}}</span>
+        <div class="flex-1 min-w-0">
+          <div class="text-xs font-bold truncate" style="color:#e2e8f0">{{alias}}</div>
+          <div class="text-[10px] truncate" style="color:#64748b">{{name}}</div>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <div class="text-xs font-extrabold" style="color:{{#if done}}#6ee7b7{{else}}#fde047{{/if}}">{{completionPct}}%</div>
+          <div class="text-[10px]" style="color:#475569">{{scoredCount}}/{{totalCount}}</div>
+        </div>
+        {{#if done}}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+        {{else}}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        {{/if}}
       </div>
       {{/each}}
     </div>
@@ -110,7 +127,7 @@
 
         <!-- Weighted total score -->
         <div class="text-right flex-shrink-0 mr-2">
-          <div class="text-lg font-black" style="color:#fde047">{{lookup ../totals id}}%</div>
+          <div class="text-lg font-black" style="color:#fde047">{{weightedTotal}}%</div>
           <div class="text-[10px] font-bold uppercase tracking-wide" style="color:#64748b">Weighted</div>
         </div>
 

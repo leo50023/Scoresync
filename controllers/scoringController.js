@@ -1,4 +1,4 @@
-import { db } from "../models/firebaseConfig.js";
+﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
   setDoc, updateDoc, addDoc, serverTimestamp,
@@ -52,7 +52,7 @@ export const scoringPage = async (req, res) => {
     }
 
     // Block judge if not assigned to this event
-    // Empty assignedJudges means no one assigned yet � block everyone until assigned
+    // Empty assignedJudges means no one assigned yet � block everyone until assigned
     if (req.session.userRole === 'judge') {
       const assignedJudges = ev.assignedJudges || [];
       if (!assignedJudges.includes(judgeId)) {
@@ -94,7 +94,7 @@ export const scoringPage = async (req, res) => {
     }));
 
     res.render("scoring/judge", {
-      title:       `Score Entry � ${ev.name}`,
+      title:       `Score Entry � ${ev.name}`,
       event:       ev,
       contestants: matrix,
       criteria,
@@ -419,7 +419,7 @@ export const resultsPage = async (req, res) => {
     });
 
     res.render("scoring/results", {
-      title:       `Results � ${ev.name}`,
+      title:       `Results � ${ev.name}`,
       event:       ev,
       ranked,
       criteria,
@@ -444,7 +444,7 @@ export const resultsPage = async (req, res) => {
   }
 };
 
-// --- Live Display Board (no auth required � public scoreboard) ----------------
+// --- Live Display Board (no auth required � public scoreboard) ----------------
 export const displayBoard = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -478,7 +478,7 @@ export const displayBoard = async (req, res) => {
     const topScore = ranked.length ? parseFloat(ranked[0].finalScore) : 0;
     ranked.forEach((c, i) => { c.rank = i + 1; c.gapToFirst = (topScore - parseFloat(c.finalScore)).toFixed(2); });
     res.render("scoring/display", {
-      title: `Live � ${ev.name}`,
+      title: `Live � ${ev.name}`,
       event: ev, ranked, criteria,
       judgeCount: Object.keys(judgeMap).length || 0,
     });
@@ -521,7 +521,7 @@ export const publicResults = async (req, res) => {
     // Apply tie-breaking before rank assignment
     applyTieBreaking(ranked, criteria);
     ranked.forEach((c, i) => { c.rank = i + 1; });
-    res.render("scoring/public", { title: `Results � ${ev.name}`, event: ev, ranked, criteria, judgeCount: Object.keys(judgeMap).length });
+    res.render("scoring/public", { title: `Results � ${ev.name}`, event: ev, ranked, criteria, judgeCount: Object.keys(judgeMap).length });
   } catch (err) {
     console.error(err);
     res.status(500).send("Could not load results.");
@@ -727,7 +727,7 @@ export const reportPage = async (req, res) => {
     });
 
     res.render("scoring/report", {
-      title:        `Report � ${ev.name}`,
+      title:        `Report � ${ev.name}`,
       event:        ev,
       ranked,
       criteria,
@@ -931,7 +931,7 @@ export const announcePage = async (req, res) => {
     })));
 
     res.render("scoring/announce", {
-      title:       `Announce � ${ev.name}`,
+      title:       `Announce � ${ev.name}`,
       event:       ev,
       placementsJson,
       userName:    req.session.userName,
@@ -1032,7 +1032,7 @@ export const tabulatorScoringPage = async (req, res) => {
       num: String(idx + 1),
     }));
 
-    // Build matrix: contestants � criteria � judges
+    // Build matrix: contestants � criteria � judges
     // matrix[contestant][criteria] = { judgeId, value, docId }[]
     const matrix = contestants.map(c => ({
       ...c,
@@ -1073,7 +1073,8 @@ export const tabulatorScoringPage = async (req, res) => {
     }));
 
     // Compute weighted totals per contestant for the summary header
-    const totals = {};
+    // Pass as array so Handlebars can access by index without lookup issues
+    const totalsMap = {};
     contestants.forEach(c => {
       let total = 0;
       criteria.forEach(cr => {
@@ -1083,16 +1084,37 @@ export const tabulatorScoringPage = async (req, res) => {
           : 0;
         total += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
       });
-      totals[c.id] = total.toFixed(2);
+      totalsMap[c.id] = total.toFixed(2);
     });
 
+    // Build judge completion status
+    const judgeStatus = judges.map(j => {
+      const judgeScores = allScores.filter(s => s.judgeId === j.id);
+      const scoredContestants = new Set(judgeScores.map(s => s.contestantId)).size;
+      const completionPct = contestants.length
+        ? Math.round((scoredContestants / contestants.length) * 100)
+        : 0;
+      return {
+        ...j,
+        scoredCount:  scoredContestants,
+        totalCount:   contestants.length,
+        completionPct,
+        done:         completionPct === 100,
+      };
+    });
+
+    // Embed total into each contestant so no lookup needed in template
+    const matrixWithTotals = matrix.map(c => ({
+      ...c,
+      weightedTotal: totalsMap[c.id] || "0.00",
+    }));
+
     res.render("scoring/tabulator", {
-      title:       `Tabulator Review � ${ev.name}`,
+      title:       `Tabulator Review � ${ev.name}`,
       event:       ev,
-      contestants: matrix,
+      contestants: matrixWithTotals,
       criteria,
-      judges,
-      totals,
+      judges:      judgeStatus,
       locked,
       userName:    req.session.userName,
       userRole:    req.session.userRole,
@@ -1138,7 +1160,7 @@ export const tabulatorUpdateScore = async (req, res) => {
     const existingSnap = await getDoc(scoreRef);
     const previousScore = existingSnap.exists() ? existingSnap.data().score : null;
 
-    // Upsert the score � preserve original judgeId/judgeName so averages stay correct
+    // Upsert the score � preserve original judgeId/judgeName so averages stay correct
     const judgeSnap = existingSnap.exists() ? existingSnap.data() : null;
     await setDoc(scoreRef, {
       judgeId,
@@ -1171,5 +1193,55 @@ export const tabulatorUpdateScore = async (req, res) => {
     console.error(err);
     req.flash("error_msg", "Failed to update score.");
     res.redirect(`/events/${eventId}/tabulator`);
+  }
+};
+
+// ─── Export Tabulator Audit Log as CSV ───────────────────────────────────────
+export const exportAuditLog = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const [eSnap, auditSnap, cSnap, crSnap] = await Promise.all([
+      getDoc(doc(db, "events", eventId)),
+      getDocs(collection(db, "events", eventId, "audit_log")),
+      getDocs(collection(db, "events", eventId, "contestants")),
+      getDocs(collection(db, "events", eventId, "criteria")),
+    ]);
+    if (!eSnap.exists()) return res.status(404).send("Event not found.");
+
+    const ev = { id: eSnap.id, ...eSnap.data() };
+    const contestantMap = {};
+    cSnap.docs.forEach(d => { contestantMap[d.id] = d.data().name || d.id; });
+    const criteriaMap = {};
+    crSnap.docs.forEach(d => { criteriaMap[d.id] = d.data().name || d.id; });
+
+    const entries = auditSnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => {
+        const ta = a.timestamp?.toMillis?.() || 0;
+        const tb = b.timestamp?.toMillis?.() || 0;
+        return ta - tb;
+      });
+
+    function q(val) { return `"${String(val ?? "").replace(/"/g, '""')}"`; }
+
+    const header = ["Timestamp", "Action", "Tabulator / Judge", "Contestant", "Criterion", "Previous Score", "New Score"].map(q).join(",");
+    const rows = entries.map(e => {
+      const ts = e.timestamp?.toDate?.()?.toLocaleString("en-PH", { timeZone: "Asia/Manila" }) || "—";
+      const actor = e.tabulatorName || e.judgeName || "—";
+      const contestant = e.contestantId ? (contestantMap[e.contestantId] || e.contestantId) : "—";
+      const criterion  = e.criteriaId   ? (criteriaMap[e.criteriaId]    || e.criteriaId)   : "—";
+      return [ts, e.action || "—", actor, contestant, criterion,
+        e.previousScore !== undefined ? e.previousScore : "—",
+        e.newScore      !== undefined ? e.newScore      : "—",
+      ].map(q).join(",");
+    });
+
+    const csv = [header, ...rows].join("\r\n");
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="audit-log-${eventId}.csv"`);
+    return res.status(200).send(csv);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Could not export audit log.");
   }
 };

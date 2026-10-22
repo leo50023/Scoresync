@@ -197,6 +197,11 @@
         <!-- Name -->
         <div class="display-rank-name flex-1 min-w-0">
           <div class="font-bold text-sm" style="color:#e2e8f0">{{name}}</div>
+          {{#if tieDetected}}
+          <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold" style="background:rgba(220,38,38,0.15);color:#fca5a5">
+            ⚖ {{#if tieBroken}}Tie Broken{{else}}Tie{{/if}}
+          </span>
+          {{/if}}
           {{#if barangay}}<div class="text-xs" style="color:#475569">Brgy. {{barangay}}</div>{{/if}}
         </div>
 
