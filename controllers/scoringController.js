@@ -1,4 +1,4 @@
-﻿import { db } from "../models/firebaseConfig.js";
+import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
   setDoc, updateDoc, addDoc, serverTimestamp,
@@ -12,7 +12,7 @@ const CRITERIA_COLORS = [
   "#d97706","#0891b2","#be185d","#65a30d",
 ];
 
-// ─── Judge scoring panel ──────────────────────────────────────────────────────
+// --- Judge scoring panel ------------------------------------------------------
 export const scoringPage = async (req, res) => {
   const { eventId } = req.params;
   const judgeId     = req.session.userId;
@@ -52,7 +52,7 @@ export const scoringPage = async (req, res) => {
     }
 
     // Block judge if not assigned to this event
-    // Empty assignedJudges means no one assigned yet — block everyone until assigned
+    // Empty assignedJudges means no one assigned yet � block everyone until assigned
     if (req.session.userRole === 'judge') {
       const assignedJudges = ev.assignedJudges || [];
       if (!assignedJudges.includes(judgeId)) {
@@ -94,7 +94,7 @@ export const scoringPage = async (req, res) => {
     }));
 
     res.render("scoring/judge", {
-      title:       `Score Entry — ${ev.name}`,
+      title:       `Score Entry � ${ev.name}`,
       event:       ev,
       contestants: matrix,
       criteria,
@@ -118,7 +118,7 @@ export const scoringPage = async (req, res) => {
   }
 };
 
-// ─── Submit scores ────────────────────────────────────────────────────────────
+// --- Submit scores ------------------------------------------------------------
 export const submitScores = async (req, res) => {
   const { eventId } = req.params;
   const judgeId     = req.session.userId;
@@ -239,7 +239,7 @@ export const submitScores = async (req, res) => {
   }
 };
 
-// ─── Shared tie-breaking helper ───────────────────────────────────────────────
+// --- Shared tie-breaking helper -----------------------------------------------
 function applyTieBreaking(ranked, criteria) {
   // Sort criteria by weight descending for tiebreaker priority
   const criteriaByWeightDesc = [...criteria].sort((a, b) => Number(b.weight) - Number(a.weight));
@@ -282,7 +282,7 @@ function applyTieBreaking(ranked, criteria) {
   }
 }
 
-// ─── Results / Leaderboard ────────────────────────────────────────────────────
+// --- Results / Leaderboard ----------------------------------------------------
 export const resultsPage = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -419,7 +419,7 @@ export const resultsPage = async (req, res) => {
     });
 
     res.render("scoring/results", {
-      title:       `Results — ${ev.name}`,
+      title:       `Results � ${ev.name}`,
       event:       ev,
       ranked,
       criteria,
@@ -435,6 +435,7 @@ export const resultsPage = async (req, res) => {
       isJudge:     req.session.userRole === "judge",
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
     console.error(err);
@@ -443,7 +444,7 @@ export const resultsPage = async (req, res) => {
   }
 };
 
-// ─── Live Display Board (no auth required — public scoreboard) ────────────────
+// --- Live Display Board (no auth required � public scoreboard) ----------------
 export const displayBoard = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -477,7 +478,7 @@ export const displayBoard = async (req, res) => {
     const topScore = ranked.length ? parseFloat(ranked[0].finalScore) : 0;
     ranked.forEach((c, i) => { c.rank = i + 1; c.gapToFirst = (topScore - parseFloat(c.finalScore)).toFixed(2); });
     res.render("scoring/display", {
-      title: `Live — ${ev.name}`,
+      title: `Live � ${ev.name}`,
       event: ev, ranked, criteria,
       judgeCount: Object.keys(judgeMap).length || 0,
     });
@@ -487,7 +488,7 @@ export const displayBoard = async (req, res) => {
   }
 };
 
-// ─── Public Results (no login required) ──────────────────────────────────────
+// --- Public Results (no login required) --------------------------------------
 export const publicResults = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -520,14 +521,14 @@ export const publicResults = async (req, res) => {
     // Apply tie-breaking before rank assignment
     applyTieBreaking(ranked, criteria);
     ranked.forEach((c, i) => { c.rank = i + 1; });
-    res.render("scoring/public", { title: `Results — ${ev.name}`, event: ev, ranked, criteria, judgeCount: Object.keys(judgeMap).length });
+    res.render("scoring/public", { title: `Results � ${ev.name}`, event: ev, ranked, criteria, judgeCount: Object.keys(judgeMap).length });
   } catch (err) {
     console.error(err);
     res.status(500).send("Could not load results.");
   }
 };
 
-// ─── Score Lock / Unlock ──────────────────────────────────────────────────────
+// --- Score Lock / Unlock ------------------------------------------------------
 export const toggleScoreLock = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -544,7 +545,7 @@ export const toggleScoreLock = async (req, res) => {
   }
 };
 
-// ─── CSV Export of Results ────────────────────────────────────────────────────
+// --- CSV Export of Results ----------------------------------------------------
 export const exportResults = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -631,7 +632,7 @@ export const exportResults = async (req, res) => {
   }
 };
 
-// ─── Report Page ──────────────────────────────────────────────────────────────
+// --- Report Page --------------------------------------------------------------
 export const reportPage = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -726,7 +727,7 @@ export const reportPage = async (req, res) => {
     });
 
     res.render("scoring/report", {
-      title:        `Report — ${ev.name}`,
+      title:        `Report � ${ev.name}`,
       event:        ev,
       ranked,
       criteria,
@@ -739,6 +740,7 @@ export const reportPage = async (req, res) => {
       isAdmin:      req.session.userRole === "admin",
       isJudge:      req.session.userRole === "judge",
       isOrganizer:  req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
       currentUserId: req.session.userId,
     });
   } catch (err) {
@@ -748,7 +750,7 @@ export const reportPage = async (req, res) => {
   }
 };
 
-// ─── Confirm Signature ────────────────────────────────────────────────────────
+// --- Confirm Signature --------------------------------------------------------
 export const confirmSignature = async (req, res) => {
   const { eventId } = req.params;
   const judgeId     = req.session.userId;
@@ -769,7 +771,7 @@ export const confirmSignature = async (req, res) => {
   }
 };
 
-// ─── Scores JSON (polling endpoint for live results) ─────────────────────────
+// --- Scores JSON (polling endpoint for live results) -------------------------
 export const scoresJson = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -854,7 +856,7 @@ export const scoresJson = async (req, res) => {
   }
 };
 
-// ─── Announce / Reveal Page ───────────────────────────────────────────────────
+// --- Announce / Reveal Page ---------------------------------------------------
 export const announcePage = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -915,7 +917,7 @@ export const announcePage = async (req, res) => {
       c.gapToFirst = (topScore - parseFloat(c.finalScore)).toFixed(2);
     });
 
-    // Top 3 (or all if fewer than 3), reversed for reveal order (lowest → champion)
+    // Top 3 (or all if fewer than 3), reversed for reveal order (lowest ? champion)
     const top = ranked.slice(0, Math.min(ranked.length, 3));
     top.reverse();
 
@@ -929,7 +931,7 @@ export const announcePage = async (req, res) => {
     })));
 
     res.render("scoring/announce", {
-      title:       `Announce — ${ev.name}`,
+      title:       `Announce � ${ev.name}`,
       event:       ev,
       placementsJson,
       userName:    req.session.userName,
@@ -944,7 +946,7 @@ export const announcePage = async (req, res) => {
   }
 };
 
-// ─── Judge Scoring Progress (JSON endpoint) ───────────────────────────────────
+// --- Judge Scoring Progress (JSON endpoint) -----------------------------------
 export const getScoringProgress = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -990,7 +992,7 @@ export const getScoringProgress = async (req, res) => {
   }
 };
 
-// ─── Tabulator: All-Scores Review Page ───────────────────────────────────────
+// --- Tabulator: All-Scores Review Page ---------------------------------------
 // Shows every judge's individual scores for every contestant & criterion.
 // The tabulator can edit or override any individual score entry.
 export const tabulatorScoringPage = async (req, res) => {
@@ -1030,7 +1032,7 @@ export const tabulatorScoringPage = async (req, res) => {
       num: String(idx + 1),
     }));
 
-    // Build matrix: contestants × criteria × judges
+    // Build matrix: contestants � criteria � judges
     // matrix[contestant][criteria] = { judgeId, value, docId }[]
     const matrix = contestants.map(c => ({
       ...c,
@@ -1085,7 +1087,7 @@ export const tabulatorScoringPage = async (req, res) => {
     });
 
     res.render("scoring/tabulator", {
-      title:       `Tabulator Review — ${ev.name}`,
+      title:       `Tabulator Review � ${ev.name}`,
       event:       ev,
       contestants: matrix,
       criteria,
@@ -1105,7 +1107,7 @@ export const tabulatorScoringPage = async (req, res) => {
   }
 };
 
-// ─── Tabulator: Update a single score entry ───────────────────────────────────
+// --- Tabulator: Update a single score entry -----------------------------------
 // POST body: { judgeId, contestantId, criteriaId, score }
 export const tabulatorUpdateScore = async (req, res) => {
   const { eventId } = req.params;
@@ -1136,7 +1138,7 @@ export const tabulatorUpdateScore = async (req, res) => {
     const existingSnap = await getDoc(scoreRef);
     const previousScore = existingSnap.exists() ? existingSnap.data().score : null;
 
-    // Upsert the score — preserve original judgeId/judgeName so averages stay correct
+    // Upsert the score � preserve original judgeId/judgeName so averages stay correct
     const judgeSnap = existingSnap.exists() ? existingSnap.data() : null;
     await setDoc(scoreRef, {
       judgeId,

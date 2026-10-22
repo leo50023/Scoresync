@@ -28,6 +28,7 @@ export const addCriteriaPage = async (req, res) => {
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
     req.flash("error_msg", "Could not load criteria.");

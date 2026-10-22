@@ -35,6 +35,7 @@ export const addContestantPage = async (req, res) => {
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
       isPaymentType: PAYMENT_TYPES.includes(ev.type),
     });
   } catch (err) {
@@ -115,6 +116,7 @@ export const editContestantPage = async (req, res) => {
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
       isPaymentType: PAYMENT_TYPES.includes(eSnap.data().type),
     });
   } catch (err) {

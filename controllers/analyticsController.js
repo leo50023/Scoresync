@@ -89,6 +89,7 @@ export const analyticsDashboard = async (req, res) => {
       isJudge: req.session.userRole === "judge",
       isEncoder: req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
     console.error("Analytics dashboard error:", err);
