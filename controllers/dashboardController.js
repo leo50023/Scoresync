@@ -5,14 +5,25 @@ import {
 import { applyAutoStatus } from "../utils/autoStatus.js";
 
 export const dashboardPage = async (req, res) => {
-  const role = req.session.userRole;
+  let role = req.session.userRole;
   // Prevent browser from caching dashboard — back button after logout must not show it
   res.setHeader('Cache-Control', 'no-store, private');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
   try {
+    // Re-sync role from Firestore in case session is stale
+    if (req.session.userId) {
+      const freshSnap = await getDoc(doc(db, "users", req.session.userId));
+      if (freshSnap.exists()) {
+        const freshRole = freshSnap.data().role;
+        if (freshRole && freshRole !== role) {
+          req.session.userRole = freshRole;
+          role = freshRole;
+        }
+      }
+    }
     // Load all events for judges, but only recent events for other roles.
-    const eventsQuery = role === "judge"
+    const eventsQuery = role === "judge" || role === "tabulator"
       ? query(collection(db, "events"), orderBy("createdAt", "desc"))
       : query(collection(db, "events"), orderBy("createdAt", "desc"), limit(5));
     const snap = await getDocs(eventsQuery);
@@ -98,6 +109,7 @@ export const dashboardPage = async (req, res) => {
       isJudge:     role === "judge",
       isEncoder:   role === "encoder",
       isOrganizer: role === "organizer",
+      isTabulator: role === "tabulator",
       recentEvents,
       totalEvents,
       totalUsers,
@@ -109,7 +121,7 @@ export const dashboardPage = async (req, res) => {
     };
 
     if (role === "admin")     return res.render("dashboard/admin",     viewData);
-    if (role === "judge") {
+    if (role === "judge" || role === "tabulator") {
       // Show all events to judges so they can find ongoing scoring assignments.
       await Promise.all(
         recentEvents
@@ -129,7 +141,8 @@ export const dashboardPage = async (req, res) => {
             // Check if this judge is assigned to this event
             // Empty assignedJudges means no one is assigned yet — block everyone
             const assignedJudges = ev.assignedJudges || [];
-            const isAssigned = assignedJudges.length > 0 && assignedJudges.includes(req.session.userId);
+            const isAssigned = role === "tabulator"
+              || (assignedJudges.length > 0 && assignedJudges.includes(req.session.userId));
             return {
               ...ev,
               contestantCount: cSnap.size,
@@ -166,6 +179,7 @@ export const dashboardPage = async (req, res) => {
       isJudge:     role === "judge",
       isEncoder:   role === "encoder",
       isOrganizer: role === "organizer",
+      isTabulator: role === "tabulator",
       recentEvents: [],
       totalEvents: 0,
       totalUsers: 0,

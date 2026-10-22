@@ -129,8 +129,13 @@ export const loginUser = async (req, res) => {
 
     setCachedUserAvatar(uid, profile.avatar || profile.photoURL || profile.photo || "");
     req.session.userId    = uid;
-    req.session.userName  = profile.name   || email;
-    req.session.userRole  = profile.role   || "encoder";
+    req.session.userName  = profile.name  || email;
+    req.session.userRole  = profile.role  || "judge";
+
+    const allowedRoles = ["admin", "judge", "encoder", "organizer", "tabulator"];
+    if (!allowedRoles.includes(req.session.userRole)) {
+      req.session.userRole = "judge";
+    }
 
     res.redirect("/dashboard");
   } catch (err) {
@@ -146,7 +151,7 @@ export const registerUser = async (req, res) => {
   const name     = sanitizeText(req.body.name, 100);
   const email    = sanitizeEmail(req.body.email);
   const password = req.body.password || "";
-  const role     = sanitizeRole(req.body.role, ["judge", "encoder", "organizer"]);
+  const role     = sanitizeRole(req.body.role, ["judge", "encoder", "organizer", "tabulator"]);
 
   if (!name || !email) {
     req.flash("error_msg", "Please provide a valid name and email address.");
