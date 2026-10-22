@@ -209,13 +209,14 @@
           {{/if}}
           {{#if barangay}}<div class="text-xs mt-0.5" style="color:#64748b">Brgy. {{barangay}}{{#if age}} &bull; {{age}} yrs{{/if}}</div>{{/if}}
           <!-- Mini criteria bars -->
-          <div class="flex gap-1 mt-2 flex-wrap">
+          <div class="flex gap-2 mt-2 flex-wrap">
             {{#each breakdown}}
-            <div class="flex items-center gap-1" title="{{name}}: {{avg}} pts ({{weighted}}%)">
-              <div class="h-1.5 rounded-full overflow-hidden" style="width:48px;background:rgba(255,255,255,0.08)">
+            <div class="flex items-center gap-1.5" title="{{name}}: {{avg}} pts ({{weighted}}%)">
+              <span class="text-[10px] font-bold flex-shrink-0" style="color:{{color}}">{{name}}</span>
+              <div class="h-1.5 rounded-full overflow-hidden" style="width:40px;background:rgba(255,255,255,0.08)">
                 <div class="h-full rounded-full transition-all duration-700" style="width:{{barPct}}%;background:{{color}}"></div>
               </div>
-              <span class="text-[10px] font-medium" style="color:#64748b">{{weighted}}%</span>
+              <span class="text-[10px] font-semibold" style="color:#64748b">{{weighted}}%</span>
             </div>
             {{/each}}
           </div>

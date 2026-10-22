@@ -363,8 +363,6 @@
       </div>
       {{#if signed}}
       <span class="signed-badge">✓ Digitally Signed</span>
-      {{else}}
-      <span class="unsigned-badge">Pending Signature</span>
       {{/if}}
     </div>
     {{#if contestantScores.length}}
