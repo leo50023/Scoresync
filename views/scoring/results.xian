@@ -95,13 +95,11 @@
           <div class="rounded-2xl p-4 border-2 shadow-sm hover:shadow-md transition" style="border-color:rgba(100,116,139,0.4);background:#1a2035">
             <div class="text-[10px] uppercase font-black tracking-widest mb-1" style="color:#94a3b8">2nd Place</div>
             <div class="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 shadow-lg" style="border:2px solid rgba(148,163,184,0.5)">
-              {{#if photo2}}
-              <img src="{{photo2}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
-              {{else}}{{#if photo}}
+              {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#64748b,#94a3b8)">{{number}}</div>
-              {{/if}}{{/if}}
+              {{/if}}
             </div>
             <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
             {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:#94a3b8">Brgy. {{barangay}}</div>{{/if}}
@@ -121,13 +119,11 @@
           <div class="rounded-2xl p-5 border-2 border-yellow-300 shadow-xl hover:shadow-2xl transition" style="background:linear-gradient(160deg,#fffbeb,#fef3c7)">
             <div class="text-[10px] text-yellow-600 uppercase font-black tracking-widest mb-1">Champion</div>
             <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-2 shadow-xl" style="border:3px solid #f59e0b">
-              {{#if photo2}}
-              <img src="{{photo2}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
-              {{else}}{{#if photo}}
+              {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-base font-extrabold" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>
-              {{/if}}{{/if}}
+              {{/if}}
             </div>
             <div class="font-extrabold text-base leading-tight" style="color:#713f12;overflow-wrap:anywhere">{{name}}</div>
             {{#if barangay}}<div class="text-slate-500 text-xs mt-0.5">Brgy. {{barangay}}</div>{{/if}}
@@ -147,13 +143,11 @@
           <div class="rounded-2xl p-4 border-2 shadow-sm hover:shadow-md transition" style="border-color:rgba(249,115,22,0.4);background:#1c1408">
             <div class="text-[10px] text-orange-400 uppercase font-black tracking-widest mb-1">3rd Place</div>
             <div class="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 shadow-lg" style="border:2px solid rgba(249,115,22,0.6)">
-              {{#if photo2}}
-              <img src="{{photo2}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
-              {{else}}{{#if photo}}
+              {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#92400e,#f97316)">{{number}}</div>
-              {{/if}}{{/if}}
+              {{/if}}
             </div>
             <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
             {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:#94a3b8">Brgy. {{barangay}}</div>{{/if}}

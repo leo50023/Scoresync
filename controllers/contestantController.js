@@ -53,7 +53,6 @@ export const storeContestant = async (req, res) => {
   const gender          = sanitizeText(req.body.gender, 20);
   const description     = sanitizeText(req.body.description, 500);
   const photo           = req.body.photo  || "";
-  const photo2          = req.body.photo2 || "";
   const platform        = sanitizeText(req.body.platform, 500);
   const registrationFee = req.body.registrationFee || "";
   const { eventId } = req.params;
@@ -80,7 +79,6 @@ export const storeContestant = async (req, res) => {
       description:     description     || "",
       platform:        platform        || "",
       photo:           photo           || "",
-      photo2:          photo2          || "",
       registrationFee: Number(registrationFee) || 0,
       createdAt:       serverTimestamp(),
     });
@@ -135,7 +133,6 @@ export const updateContestant = async (req, res) => {
   const gender      = sanitizeText(req.body.gender, 20);
   const description = sanitizeText(req.body.description, 500);
   const photo       = req.body.photo  || "";
-  const photo2      = req.body.photo2 || "";
   const platform    = sanitizeText(req.body.platform, 500);
   try {
     await updateDoc(doc(db, "events", eventId, "contestants", id), {
@@ -147,7 +144,6 @@ export const updateContestant = async (req, res) => {
       description: description || "",
       platform:    platform    || "",
       photo:       photo       || "",
-      photo2:      photo2      || "",
     });
     req.flash("success_msg", "Contestant updated.");
     res.redirect(`/events/${eventId}`);

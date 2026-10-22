@@ -186,10 +186,6 @@
               {{status}}
             </span>
               {{#if @root.isTabulator}}
-              <a href="/events/{{id}}/tabulator" class="btn-sm btn-sm-blue text-xs inline-flex items-center gap-1.5">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
-                {{#if scoringLocked}}View Scores{{else}}Review / Edit Scores{{/if}}
-              </a>
               <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs">View Results</a>
               {{else}}{{#if (eq status 'ongoing')}}
             {{#if isAssigned}}
