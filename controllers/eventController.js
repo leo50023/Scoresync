@@ -1,4 +1,4 @@
-﻿import { db } from "../models/firebaseConfig.js";
+import { db } from "../models/firebaseConfig.js";
 import { getFinanceSummary } from "./financeController.js";
 import {
   collection, addDoc, getDocs, getDoc, doc,
@@ -14,7 +14,7 @@ const EVENTS = "events";
 const PAYMENT_TYPES = ['cultural','choral','dance','culinary','booth','sports','academic','other'];
 const PRIZE_TYPES   = ['pageant','talent','choral','dance','culinary','academic'];
 
-// ─── List all events ──────────────────────────────────────────────────────────
+// --- List all events ----------------------------------------------------------
 export const listEvents = async (req, res) => {
   try {
     const q    = query(collection(db, EVENTS), orderBy("createdAt", "desc"));
@@ -37,6 +37,7 @@ export const listEvents = async (req, res) => {
       isJudge:     req.session.userRole === "judge",
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
     console.error(err);
@@ -45,7 +46,7 @@ export const listEvents = async (req, res) => {
   }
 };
 
-// ─── Create event form ────────────────────────────────────────────────────────
+// --- Create event form --------------------------------------------------------
 export const createEventPage = (req, res) => {
   res.render("events/create", {
     title:       "Create Event",
@@ -54,10 +55,11 @@ export const createEventPage = (req, res) => {
     userInitial: (req.session.userName || "U")[0].toUpperCase(),
     isAdmin:     req.session.userRole === "admin",
     isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
   });
 };
 
-// ─── Store new event ──────────────────────────────────────────────────────────
+// --- Store new event ----------------------------------------------------------
 export const storeEvent = async (req, res) => {
   const {
     name, description, date, time, endTime, venue, type, status,
@@ -92,7 +94,7 @@ export const storeEvent = async (req, res) => {
       createdAt:            serverTimestamp(),
     });
 
-    // ── Save inline criteria submitted from create form ──────────────────────
+    // -- Save inline criteria submitted from create form ----------------------
     const criteria = parseEventCriteria(req.body);
     await Promise.all(
       criteria.map(criterion => addDoc(collection(db, EVENTS, evRef.id, "criteria"), {
@@ -109,7 +111,7 @@ export const storeEvent = async (req, res) => {
   }
 };
 
-// ─── Event detail ─────────────────────────────────────────────────────────────
+// --- Event detail -------------------------------------------------------------
 export const showEvent = async (req, res) => {
   try {
     const snap = await getDoc(doc(db, EVENTS, req.params.id));
@@ -138,7 +140,7 @@ export const showEvent = async (req, res) => {
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    // Audit log — sorted newest first
+    // Audit log � sorted newest first
     const auditLog = auditSnap.docs
       .map(d => {
         const data = d.data();
@@ -148,7 +150,7 @@ export const showEvent = async (req, res) => {
           timestampStr: data.timestamp?.toDate?.()?.toLocaleString("en-PH", {
             month: "short", day: "numeric", year: "numeric",
             hour: "2-digit", minute: "2-digit", hour12: true,
-          }) || "—",
+          }) || "�",
         };
       })
       .sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
@@ -181,6 +183,7 @@ export const showEvent = async (req, res) => {
       isJudge:     req.session.userRole === "judge",
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
       canManageFinance: ['admin','organizer'].includes(req.session.userRole),
     });
   } catch (err) {
@@ -190,20 +193,21 @@ export const showEvent = async (req, res) => {
   }
 };
 
-// ─── Edit event form ──────────────────────────────────────────────────────────
+// --- Edit event form ----------------------------------------------------------
 export const editEventPage = async (req, res) => {
   try {
     const snap = await getDoc(doc(db, EVENTS, req.params.id));
     if (!snap.exists()) return res.redirect("/events");
     const ev = { id: snap.id, ...snap.data() };
     res.render("events/edit", {
-      title:         `Edit — ${ev.name}`,
+      title:         `Edit � ${ev.name}`,
       event:         ev,
       userName:      req.session.userName,
       userRole:      req.session.userRole,
       userInitial:   (req.session.userName || "U")[0].toUpperCase(),
       isAdmin:       req.session.userRole === "admin",
       isOrganizer:   req.session.userRole === "organizer",
+      isTabulator: req.session.userRole === "tabulator",
       isPaymentType: PAYMENT_TYPES.includes(ev.type),
       isPrizeType:   PRIZE_TYPES.includes(ev.type),
     });
@@ -213,7 +217,7 @@ export const editEventPage = async (req, res) => {
   }
 };
 
-// ─── Update event ─────────────────────────────────────────────────────────────
+// --- Update event -------------------------------------------------------------
 export const updateEvent = async (req, res) => {
   const {
     name, description, date, time, endTime, venue, type, status,
@@ -260,7 +264,7 @@ export const updateEvent = async (req, res) => {
   }
 };
 
-// ─── Delete event ─────────────────────────────────────────────────────────────
+// --- Delete event -------------------------------------------------------------
 export const deleteEvent = async (req, res) => {
   try {
     await deleteDoc(doc(db, EVENTS, req.params.id));
@@ -272,7 +276,7 @@ export const deleteEvent = async (req, res) => {
   }
 };
 
-// ─── Update event status ──────────────────────────────────────────────────────
+// --- Update event status ------------------------------------------------------
 export const updateEventStatus = async (req, res) => {
   const { status } = req.body;
   const { id }     = req.params;
@@ -297,7 +301,7 @@ export const updateEventStatus = async (req, res) => {
   }
 };
 
-// ─── Assign judge to event ────────────────────────────────────────────────────
+// --- Assign judge to event ----------------------------------------------------
 export const assignJudge = async (req, res) => {
   const { id } = req.params;
   const { judgeId } = req.body;
@@ -325,7 +329,7 @@ export const assignJudge = async (req, res) => {
       const ev     = evSnap.data();
       const judge  = judgeSnap.data();
 
-      // Send email automatically — fire-and-forget (don't block the response)
+      // Send email automatically � fire-and-forget (don't block the response)
       sendJudgeAssignedEmail({
         judgeName:  judge.name  || judge.displayName || 'Judge',
         judgeEmail: judge.email || '',
@@ -346,7 +350,7 @@ export const assignJudge = async (req, res) => {
   }
 };
 
-// ─── Remove judge from event ──────────────────────────────────────────────────
+// --- Remove judge from event --------------------------------------------------
 export const removeJudge = async (req, res) => {
   const { id, judgeId } = req.params;
   try {
