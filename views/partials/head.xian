@@ -22,8 +22,13 @@
     /* 80ms = ~1.5 frames at 120fps — instant-feel, no perceptible lag */
     a, button { transition: background-color 80ms ease, color 80ms ease, border-color 80ms ease,
                              opacity 80ms ease, box-shadow 80ms ease, transform 80ms ease; }
-    /* Larger tap targets on mobile — 44px minimum per WCAG 2.5.5 */
-    button, a, [role="button"], label, select { min-height: 44px; }
+    /* Larger tap targets on mobile — 44px minimum per WCAG 2.5.5
+       Exclude absolutely-positioned utility buttons (eye toggle, collapse btn) */
+    button:not(.no-min-h):not(#eyeBtn):not(#sidebar-collapse-btn):not([data-no-min]),
+    a:not(.no-min-h),
+    [role="button"]:not(.no-min-h),
+    label:not(.no-min-h),
+    select:not(.no-min-h) { min-height: 44px; }
     /* Remove iOS button styling */
     button, [role="button"], a, label, select {
       -webkit-appearance: none;
@@ -51,8 +56,11 @@
     }
     /* Prevent horizontal scroll at content level (not body — breaks mobile vertical scroll) */
     main { overflow-x: hidden; }
-    /* Active press feedback on ALL buttons */
-    button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-sm:active {
+    /* Active press feedback — only on nav/action buttons, not utility buttons */
+    button:not(#eyeBtn):not(#sidebar-collapse-btn):not([data-no-scale]):active,
+    a.btn-primary:active,
+    a.btn-secondary:active,
+    a.btn-sm:active {
       transform: scale(0.97) !important;
       opacity: 0.9 !important;
     }
