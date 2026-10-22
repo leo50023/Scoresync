@@ -656,26 +656,29 @@
     [data-theme="light"] div[style*="background:#"],
     [data-theme="light"] section[style*="background:#"],
     [data-theme="light"] aside[style*="background:#"],
-    [data-theme="light"] header[style*="background:#"],
     [data-theme="light"] main[style*="background:#"] {
       background: #ffffff !important;
       color: #0f172a !important;
     }
-    /* Keep gradient hero/banner cards — only override pure dark hex */
+    /* Override dark gradient hero panels to a clean light version */
     [data-theme="light"] div[style*="background:linear-gradient"] {
-      background: unset !important;
+      background: #f8fafc !important;
+      color: #0f172a !important;
     }
-    /* Keep colored gradient cards (event themes, CTAs) */
+    /* KEEP colored branded gradient cards — event themes, CTAs, badges */
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#064e3b"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#052e16"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#1e3a8a"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#4c1d95"],
-    [data-theme="light"] div[style*="background:linear-gradient(135deg,#052e16"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#b45309"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#92400e"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#881337"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#1e40af"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#0f2156"],
-    [data-theme="light"] div[style*="background:linear-gradient(135deg,#0d1117"] {
-      background: revert !important;
-    }
+    [data-theme="light"] div[style*="background:linear-gradient(90deg,#fbbf24"],
+    [data-theme="light"] div[style*="background:linear-gradient(90deg,#f59e0b"],
+    [data-theme="light"] div[style*="background:linear-gradient(180deg,#060e22"],
+    [data-theme="light"] div[style*="background:linear-gradient(180deg,#1e3a8a"] { background: revert !important; color: revert !important; }
     /* Table head */
     [data-theme="light"] th[style*="background:#"] {
       background: #f1f5f9 !important;
@@ -698,11 +701,20 @@
     [data-theme="light"] *[style*="color:#f1f5f9"],
     [data-theme="light"] *[style*="color:#cbd5e1"],
     [data-theme="light"] *[style*="color:#f0fdf4"],
-    [data-theme="light"] *[style*="color:#d1fae5"] { color: #0f172a !important; }
+    [data-theme="light"] *[style*="color:#d1fae5"],
+    [data-theme="light"] *[style*="color:#fef3c7"],
+    [data-theme="light"] *[style*="color:#f8fafc"],
+    [data-theme="light"] *[style*="color:#fff"],
+    [data-theme="light"] *[style*="color: #fff"],
+    [data-theme="light"] *[style*="color:white"] { color: #0f172a !important; }
     [data-theme="light"] *[style*="color:#94a3b8"],
     [data-theme="light"] *[style*="color:#64748b"],
     [data-theme="light"] *[style*="color:#374151"],
     [data-theme="light"] *[style*="color:#475569"] { color: #64748b !important; }
+    /* Table rows */
+    [data-theme="light"] tr[style*="background"],
+    [data-theme="light"] tr:hover { background: rgba(0,0,0,0.02) !important; }
+    [data-theme="light"] td[style*="color"] { color: #0f172a !important; }
     /* White rgba borders → dark rgba */
     [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.08)"],
     [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.07)"],
