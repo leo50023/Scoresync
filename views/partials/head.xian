@@ -590,6 +590,67 @@
       border: 1px solid rgba(0,0,0,0.1) !important;
     }
 
+    /* ── Light mode: override all hardcoded dark inline backgrounds ── */
+    [data-theme="light"] [style*="background:#111827"],
+    [data-theme="light"] [style*="background: #111827"] {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.08) !important;
+    }
+    [data-theme="light"] [style*="background:#0d1424"],
+    [data-theme="light"] [style*="background: #0d1424"] {
+      background: #f8fafc !important;
+    }
+    [data-theme="light"] [style*="background:#0f1623"],
+    [data-theme="light"] [style*="background: #0f1623"],
+    [data-theme="light"] [style*="background:#0a0f1e"],
+    [data-theme="light"] [style*="background: #0a0f1e"],
+    [data-theme="light"] [style*="background:#060b18"],
+    [data-theme="light"] [style*="background: #060b18"],
+    [data-theme="light"] [style*="background:#111827;"],
+    [data-theme="light"] [style*="background:#0d1117"] {
+      background: #f8fafc !important;
+    }
+    /* Card-style elements with rgba dark backgrounds */
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.03)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.04)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.05)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.07)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.02)"] {
+      background: rgba(0,0,0,0.02) !important;
+    }
+    /* Borders: white rgba → black rgba */
+    [data-theme="light"] [style*="border:1px solid rgba(255,255,255,0.08)"],
+    [data-theme="light"] [style*="border:1px solid rgba(255,255,255,0.07)"],
+    [data-theme="light"] [style*="border:1px solid rgba(255,255,255,0.06)"],
+    [data-theme="light"] [style*="border:1px solid rgba(255,255,255,0.1)"] {
+      border-color: rgba(0,0,0,0.08) !important;
+    }
+    /* Text overrides */
+    [data-theme="light"] [style*="color:#e2e8f0"],
+    [data-theme="light"] [style*="color: #e2e8f0"],
+    [data-theme="light"] [style*="color:#f1f5f9"],
+    [data-theme="light"] [style*="color:#cbd5e1"],
+    [data-theme="light"] [style*="color:#f0fdf4"] {
+      color: #0f172a !important;
+    }
+    [data-theme="light"] [style*="color:#94a3b8"],
+    [data-theme="light"] [style*="color:#64748b"],
+    [data-theme="light"] [style*="color:#475569"] {
+      color: #64748b !important;
+    }
+    [data-theme="light"] [style*="color:#374151"] {
+      color: #6b7280 !important;
+    }
+    /* Section headers / card headers with dark bg */
+    [data-theme="light"] [style*="border-bottom:1px solid rgba(255,255,255,0.07)"],
+    [data-theme="light"] [style*="border-bottom:1px solid rgba(255,255,255,0.06)"],
+    [data-theme="light"] [style*="border-bottom:1px solid rgba(255,255,255,0.05)"] {
+      border-bottom-color: rgba(0,0,0,0.07) !important;
+    }
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.02);border-bottom"] {
+      background: rgba(0,0,0,0.015) !important;
+    }
+
     /* ── Auth page eye toggle + sidebar collapse btn — must not shift layout ── */
     #eyeBtn,
     #sidebar-collapse-btn {
