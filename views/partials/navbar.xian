@@ -1,7 +1,7 @@
 <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden transition-opacity" aria-hidden="true"></div>
 
 <nav class="h-14 border-b flex items-center px-3 sm:px-5 gap-2.5 sticky top-0 left-0 right-0 z-30"
-  style="background:#0d1424;border-bottom-color:rgba(255,255,255,0.06);box-shadow:0 1px 0 rgba(255,255,255,0.04),0 4px 24px rgba(0,0,0,0.4)">
+  style="background:var(--bg-navbar);border-bottom-color:var(--border);box-shadow:0 1px 0 var(--border-subtle),0 4px 24px rgba(0,0,0,0.2)">
 
   <!-- Mobile Hamburger -->
   <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none rounded-xl hover:bg-white/10 transition flex-shrink-0" aria-label="Toggle Navigation Menu">
@@ -51,8 +51,17 @@
     {{/if}}{{/if}}{{/if}}{{/if}}
   </div>
 
-  <!-- Right: Profile Pill -->
+  <!-- Right: Theme toggle + Profile Pill -->
   <div class="flex items-center gap-2 flex-shrink-0" style="min-width:0">
+    <!-- Theme Toggle -->
+    <button type="button" id="theme-toggle-btn" onclick="toggleTheme()" data-no-min
+      title="Toggle light/dark mode"
+      style="width:34px;height:34px;min-height:unset;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#94a3b8;cursor:pointer;flex-shrink:0;transition:background 120ms ease">
+      <!-- Sun icon (shown in dark mode = click to go light) -->
+      <svg id="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <!-- Moon icon (shown in light mode = click to go dark) -->
+      <svg id="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
     <a id="navbar-profile-pill" href="/settings" class="flex items-center gap-2 pl-1 py-1 rounded-full border transition group"
       style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);padding-right:12px;min-width:0;max-width:160px;flex-wrap:wrap">
       <div class="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 shadow" style="border:1.5px solid rgba(255,255,255,0.2)">
@@ -70,6 +79,27 @@
 
 <script>
 (function() {
+  // Sync theme toggle icon on load
+  function syncThemeIcon() {
+    var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    var sun  = document.getElementById('theme-icon-sun');
+    var moon = document.getElementById('theme-icon-moon');
+    if (sun)  sun.style.display  = isDark ? '' : 'none';
+    if (moon) moon.style.display = isDark ? 'none' : '';
+  }
+  syncThemeIcon();
+
+  window.toggleTheme = function() {
+    var html    = document.documentElement;
+    var isDark  = html.getAttribute('data-theme') !== 'light';
+    var newTheme = isDark ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('ss-theme', newTheme);
+    syncThemeIcon();
+    // Update body background for views that use inline style="background:#0a0f1e"
+    document.body.style.setProperty('background', 'var(--bg-page)', 'important');
+  };
+
   function applyNavbarLayout() {
     var usernameLabel = document.getElementById('navbar-username-label');
     var profilePill   = document.getElementById('navbar-profile-pill');
