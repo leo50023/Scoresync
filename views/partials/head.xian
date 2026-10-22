@@ -225,7 +225,7 @@
         display: flex;
         flex-direction: column;
       }
-      /* Collapsed icon-only state */
+      /* Collapsed icon-only state — desktop only */
       .sidebar.collapsed {
         width: 60px !important;
       }
@@ -244,6 +244,18 @@
         height: 20px;
       }
       .sidebar.collapsed nav { overflow: visible !important; }
+    }
+    /* On mobile, collapsed class must NEVER apply */
+    @media (max-width: 767px) {
+      .sidebar.collapsed {
+        width: 260px !important;
+      }
+      .sidebar.collapsed .sidebar-label-text,
+      .sidebar.collapsed .sidebar-link span,
+      .sidebar.collapsed .sidebar-section,
+      .sidebar.collapsed .sidebar-brand-content > div {
+        display: unset !important;
+      }
     }
     /* Sidebar nav scrolls, footer pinned */
     .sidebar > nav { flex: 1 !important; overflow-y: auto !important; min-height: 0 !important; }
@@ -626,6 +638,7 @@
 
     /* ── Desktop sidebar collapse (icon-only mode) ── */
     function toggleSidebarCollapse() {
+      if (window.innerWidth < 768) return; // never collapse on mobile
       const sidebar = document.getElementById('main-sidebar');
       if (!sidebar) return;
       const isCollapsed = sidebar.classList.contains('collapsed');
@@ -638,11 +651,16 @@
       }
     }
 
-    /* Restore collapse state on load */
+    /* Restore collapse state on load — desktop only */
     (function() {
       if (window.innerWidth >= 768 && localStorage.getItem('sidebarCollapsed') === '1') {
         const sidebar = document.getElementById('main-sidebar');
         if (sidebar) sidebar.classList.add('collapsed');
+      }
+      // Always remove collapsed on mobile regardless of localStorage
+      if (window.innerWidth < 768) {
+        const sidebar = document.getElementById('main-sidebar');
+        if (sidebar) sidebar.classList.remove('collapsed');
       }
     })();
     // ── Page loading indicator ──

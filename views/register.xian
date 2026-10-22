@@ -342,7 +342,7 @@
             </span>
             <input type="password" name="password" id="passwordInput" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr"/>
             <button type="button" id="eyeBtn" onclick="togglePwd()"
-              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#475569;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 60ms ease">
+              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#475569;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 60ms ease;min-height:unset;height:28px;width:28px">
               <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
