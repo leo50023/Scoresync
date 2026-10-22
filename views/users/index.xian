@@ -54,7 +54,7 @@
   {{/if}}
 
   <!-- Stats -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fadeup-1">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 animate-fadeup-1">
     <div class="card-flat px-5 py-4 flex items-center gap-4">
       <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
       <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Total</p><p class="text-2xl font-black text-slate-800">{{totalUsers}}</p></div>
@@ -68,8 +68,16 @@
       <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Judges</p><p class="text-2xl font-black text-purple-700">{{judgeCount}}</p></div>
     </div>
     <div class="card-flat px-5 py-4 flex items-center gap-4">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#92400e,#d97706)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg></div>
+      <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Tabulators</p><p class="text-2xl font-black text-amber-700">{{tabulatorCount}}</p></div>
+    </div>
+    <div class="card-flat px-5 py-4 flex items-center gap-4">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#78350f,#f59e0b)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div>
+      <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Organizers</p><p class="text-2xl font-black text-yellow-600">{{organizerCount}}</p></div>
+    </div>
+    <div class="card-flat px-5 py-4 flex items-center gap-4">
       <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#064e3b,#059669)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-      <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Participants</p><p class="text-2xl font-black text-emerald-700">{{encoderCount}}</p></div>
+      <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Encoders</p><p class="text-2xl font-black text-emerald-700">{{encoderCount}}</p></div>
     </div>
   </div>
 
@@ -187,6 +195,7 @@
                   <option value="judge"     {{#if (eq role 'judge')}}selected{{/if}}>Judge</option>
                   <option value="encoder"   {{#if (eq role 'encoder')}}selected{{/if}}>Participant</option>
                   <option value="organizer" {{#if (eq role 'organizer')}}selected{{/if}}>Organizer</option>
+                  <option value="tabulator" {{#if (eq role 'tabulator')}}selected{{/if}}>Tabulator</option>
                 </select>
                 <button type="submit" class="btn-sm btn-sm-blue text-xs px-2.5 py-1.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></button>
               </form>
@@ -264,6 +273,7 @@
           <option value="judge">Judge — Can enter scores &amp; view results</option>
           <option value="encoder">Participant — Can manage contestants</option>
           <option value="organizer">Organizer — Can manage &amp; oversee events</option>
+          <option value="tabulator">Tabulator — Can enter and review all event scores</option>
         </select>
       </div>
       <div class="pt-3 flex items-center justify-end gap-2">
