@@ -522,7 +522,62 @@
 
     /* ── Print ── */
     @media print { .sidebar, nav, .no-print { display:none !important; } main { padding:0 !important; } body { background:#fff !important; color:#000 !important; } }
+
+    /* ── Global Page Loading Indicator ── */
+    #page-loader {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #page-loader-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed, #06b6d4);
+      background-size: 200% 100%;
+      border-radius: 0 3px 3px 0;
+      transition: width 0.2s ease;
+      animation: loaderShimmer 1.4s linear infinite;
+      box-shadow: 0 0 10px rgba(99,102,241,0.6);
+    }
+    #page-loader-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9998;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    #page-loader-spinner .spinner-ring {
+      width: 44px; height: 44px;
+      border: 3px solid rgba(99,102,241,0.2);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    #page-loader-spinner span {
+      font-size: 12px; font-weight: 700;
+      color: #6366f1; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    @keyframes loaderShimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
+  <!-- ── Global Page Loading Indicator ── -->
+  <div id="page-loader" aria-hidden="true"><div id="page-loader-bar"></div></div>
+  <div id="page-loader-spinner" aria-hidden="true" aria-live="polite" aria-label="Loading">
+    <div class="spinner-ring"></div>
+    <span>Loading…</span>
+  </div>
   <script>
     function toggleMobileSidebar() {
       const sidebar = document.querySelector('.sidebar');
@@ -537,6 +592,61 @@
         overlay.classList.toggle('hidden');
       }
     }
+    // ── Page loading indicator ──
+    (function() {
+      const bar     = document.getElementById('page-loader-bar');
+      const spinner = document.getElementById('page-loader-spinner');
+      let timer, spinnerTimer;
+
+      function startLoader() {
+        if (bar) { bar.style.width = '0%'; bar.style.transition = 'none'; }
+        // Animate to 85% quickly, hold there until page loads
+        requestAnimationFrame(() => {
+          if (bar) { bar.style.transition = 'width 8s cubic-bezier(0.1,0.05,0.01,1)'; bar.style.width = '85%'; }
+        });
+        // Show spinner after 400ms for slow navigations
+        spinnerTimer = setTimeout(() => {
+          if (spinner) spinner.style.display = 'flex';
+        }, 400);
+      }
+
+      function stopLoader() {
+        clearTimeout(spinnerTimer);
+        if (bar) { bar.style.transition = 'width 0.2s ease'; bar.style.width = '100%'; }
+        if (spinner) spinner.style.display = 'none';
+        setTimeout(() => {
+          if (bar) { bar.style.transition = 'opacity 0.3s ease'; bar.style.opacity = '0'; }
+          setTimeout(() => {
+            if (bar) { bar.style.width = '0%'; bar.style.opacity = '1'; bar.style.transition = ''; }
+          }, 300);
+        }, 200);
+      }
+
+      // Start on any link click (except anchors, external, download, target=_blank)
+      document.addEventListener('click', function(e) {
+        const a = e.target.closest('a');
+        if (!a) return;
+        if (a.getAttribute('target') === '_blank') return;
+        if (a.hasAttribute('download')) return;
+        const href = a.getAttribute('href') || '';
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (href.startsWith('http') && !href.startsWith(location.origin)) return;
+        startLoader();
+      }, true);
+
+      // Start on form submit
+      document.addEventListener('submit', function() {
+        startLoader();
+      }, true);
+
+      // Stop when page fully loads
+      window.addEventListener('load', stopLoader);
+      // Also stop on pageshow (bfcache restore)
+      window.addEventListener('pageshow', stopLoader);
+      // If DOMContentLoaded already fired, stop now
+      if (document.readyState !== 'loading') stopLoader();
+    })();
+
     // Keep Vercel serverless function warm — ping every 25s to avoid cold starts
     (function keepWarm() {
       fetch('/_health', { method: 'GET', cache: 'no-store' }).catch(() => {});
