@@ -651,6 +651,68 @@
       background: rgba(0,0,0,0.015) !important;
     }
 
+    /* ── LIGHT MODE: Universal card/panel override ──
+       Targets ALL divs/sections with common dark hardcoded backgrounds */
+    [data-theme="light"] div[style*="background:#"],
+    [data-theme="light"] section[style*="background:#"],
+    [data-theme="light"] aside[style*="background:#"],
+    [data-theme="light"] header[style*="background:#"],
+    [data-theme="light"] main[style*="background:#"] {
+      background: #ffffff !important;
+      color: #0f172a !important;
+    }
+    /* Keep gradient hero/banner cards — only override pure dark hex */
+    [data-theme="light"] div[style*="background:linear-gradient"] {
+      background: unset !important;
+    }
+    /* Keep colored gradient cards (event themes, CTAs) */
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#064e3b"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#1e3a8a"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#4c1d95"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#052e16"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#b45309"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#92400e"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#0f2156"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#0d1117"] {
+      background: revert !important;
+    }
+    /* Table head */
+    [data-theme="light"] th[style*="background:#"] {
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+    }
+    /* Override dark rgba card backgrounds */
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.03)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.04)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.02)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.05)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.06)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.07)"],
+    [data-theme="light"] div[style*="background:rgba(255,255,255,0.08)"],
+    [data-theme="light"] div[style*="background: rgba(255,255,255,0.03)"],
+    [data-theme="light"] div[style*="background: rgba(255,255,255,0.04)"] {
+      background: rgba(0,0,0,0.02) !important;
+    }
+    /* Dark text colors → light text */
+    [data-theme="light"] *[style*="color:#e2e8f0"],
+    [data-theme="light"] *[style*="color:#f1f5f9"],
+    [data-theme="light"] *[style*="color:#cbd5e1"],
+    [data-theme="light"] *[style*="color:#f0fdf4"],
+    [data-theme="light"] *[style*="color:#d1fae5"] { color: #0f172a !important; }
+    [data-theme="light"] *[style*="color:#94a3b8"],
+    [data-theme="light"] *[style*="color:#64748b"],
+    [data-theme="light"] *[style*="color:#374151"],
+    [data-theme="light"] *[style*="color:#475569"] { color: #64748b !important; }
+    /* White rgba borders → dark rgba */
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.08)"],
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.07)"],
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.06)"],
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.1)"],
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.12)"],
+    [data-theme="light"] *[style*="border:1px solid rgba(255,255,255,0.15)"] {
+      border-color: rgba(0,0,0,0.09) !important;
+    }
+
     /* ── Auth page eye toggle + sidebar collapse btn — must not shift layout ── */
     #eyeBtn,
     #sidebar-collapse-btn {
