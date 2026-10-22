@@ -177,19 +177,23 @@
     .sidebar {
       width: 260px;
       background: linear-gradient(180deg, #060e22 0%, #0b1a45 50%, #0f2462 100%);
-      transition: transform 80ms ease;
+      transition: transform 200ms ease, width 200ms ease;
       will-change: transform;
       z-index: 50;
     }
     @media (max-width: 767px) {
-      .sidebar { position: fixed; top: 0; bottom: 0; left: 0; height: 100vh; transform: translateX(-100%); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+      .sidebar {
+        position: fixed;
+        top: 0; bottom: 0; left: 0;
+        height: 100vh; height: 100dvh;
+        width: 260px !important;
+        transform: translateX(-100%);
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        z-index: 50;
+      }
       .sidebar.open { transform: translateX(0); }
       /* Full viewport main content on mobile */
       main { padding: 12px !important; }
-      /* Stack flex rows on mobile */
-      .flex-col-mobile { flex-direction: column !important; }
-      /* Hide non-essential columns on mobile */
-      .hide-mobile { display: none !important; }
     }
     @media (min-width: 768px) {
       body:has(.sidebar) {
@@ -216,6 +220,25 @@
         display: flex;
         flex-direction: column;
       }
+      /* Collapsed icon-only state */
+      .sidebar.collapsed {
+        width: 60px !important;
+      }
+      .sidebar.collapsed .sidebar-label-text,
+      .sidebar.collapsed .sidebar-link span,
+      .sidebar.collapsed .sidebar-section,
+      .sidebar.collapsed .sidebar-brand-content > div {
+        display: none !important;
+      }
+      .sidebar.collapsed .sidebar-link {
+        justify-content: center;
+        padding: 10px;
+      }
+      .sidebar.collapsed .sidebar-icon {
+        width: 20px;
+        height: 20px;
+      }
+      .sidebar.collapsed nav { overflow: visible !important; }
     }
     /* Sidebar nav scrolls, footer pinned */
     .sidebar > nav { flex: 1 !important; overflow-y: auto !important; min-height: 0 !important; }
@@ -579,19 +602,44 @@
     <span>Loading…</span>
   </div>
   <script>
+    /* ── Mobile sidebar toggle ── */
     function toggleMobileSidebar() {
-      const sidebar = document.querySelector('.sidebar');
+      const sidebar = document.getElementById('main-sidebar');
       const overlay = document.getElementById('sidebar-overlay');
-      if (sidebar) {
-        // Always strip collapsed on mobile before opening
-        sidebar.classList.remove('collapsed');
-        sidebar.style.removeProperty('width');
-        sidebar.classList.toggle('open');
-      }
-      if (overlay) {
-        overlay.classList.toggle('hidden');
+      if (!sidebar) return;
+      const isOpen = sidebar.classList.contains('open');
+      if (isOpen) {
+        sidebar.classList.remove('open');
+        if (overlay) overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      } else {
+        sidebar.classList.add('open');
+        if (overlay) overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
       }
     }
+
+    /* ── Desktop sidebar collapse (icon-only mode) ── */
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('main-sidebar');
+      if (!sidebar) return;
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebarCollapsed', '0');
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebarCollapsed', '1');
+      }
+    }
+
+    /* Restore collapse state on load */
+    (function() {
+      if (window.innerWidth >= 768 && localStorage.getItem('sidebarCollapsed') === '1') {
+        const sidebar = document.getElementById('main-sidebar');
+        if (sidebar) sidebar.classList.add('collapsed');
+      }
+    })();
     // ── Page loading indicator ──
     (function() {
       const bar     = document.getElementById('page-loader-bar');
