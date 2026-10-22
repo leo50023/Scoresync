@@ -251,8 +251,8 @@
           <!-- Column headers -->
           <div class="px-5 flex items-center gap-2 mb-1">
             <span class="flex-1 text-[10px] font-bold uppercase tracking-wider" style="color:var(--text-faint)">Criteria Name</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:62px;min-width:62px;color:#374151">Weight%</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:68px;min-width:68px;color:#374151">Max Pts</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:62px;min-width:62px;color:var(--text-faint)">Weight%</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:68px;min-width:68px;color:var(--text-faint)">Max Pts</span>
             <span style="width:28px"></span>
           </div>
 

@@ -1,5 +1,5 @@
 ﻿{{> head }}
-<body class="min-h-screen" style="background:radial-gradient(ellipse at 50% -15%,rgba(37,99,235,0.28),transparent 48%),#080d19;color:#e2e8f0">
+<body class="min-h-screen" style="background:radial-gradient(ellipse at 50% -15%,rgba(37,99,235,0.28),transparent 48%),#080d19;color:var(--text-primary)">
 <header class="border-b" style="background:rgba(8,13,25,0.86);border-color:rgba(255,255,255,0.08)">
   <div class="max-w-6xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2.5" aria-label="ScoreSync home">

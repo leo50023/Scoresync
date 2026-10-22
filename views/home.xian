@@ -124,20 +124,20 @@
         </div>
         <div class="relative mt-5 rounded-2xl p-4 sm:p-5" style="background:rgba(5,10,21,0.58);border:1px solid rgba(148,163,184,0.12)">
           <div class="flex items-center justify-between mb-5">
-            <div class="text-xs font-semibold" style="color:#cbd5e1">Weighted criteria</div>
-            <div class="text-[10px] font-semibold" style="color:#64748b">SCORING OVERVIEW</div>
+            <div class="text-xs font-semibold" style="color:var(--text-secondary)">Weighted criteria</div>
+            <div class="text-[10px] font-semibold" style="color:var(--text-muted)">SCORING OVERVIEW</div>
           </div>
           <div class="space-y-4">
             <div>
-              <div class="flex justify-between text-xs mb-2"><span style="color:#cbd5e1">Performance</span><span class="font-semibold" style="color:#e2e8f0">40%</span></div>
+              <div class="flex justify-between text-xs mb-2"><span style="color:var(--text-secondary)">Performance</span><span class="font-semibold" style="color:var(--text-primary)">40%</span></div>
               <div class="h-1.5 rounded-full overflow-hidden" style="background:#1e293b"><div class="h-full rounded-full" style="width:78%;background:linear-gradient(90deg,#2563eb,#60a5fa)"></div></div>
             </div>
             <div>
-              <div class="flex justify-between text-xs mb-2"><span style="color:#cbd5e1">Presentation</span><span class="font-semibold" style="color:#e2e8f0">35%</span></div>
+              <div class="flex justify-between text-xs mb-2"><span style="color:var(--text-secondary)">Presentation</span><span class="font-semibold" style="color:var(--text-primary)">35%</span></div>
               <div class="h-1.5 rounded-full overflow-hidden" style="background:#1e293b"><div class="h-full rounded-full" style="width:65%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
             </div>
             <div>
-              <div class="flex justify-between text-xs mb-2"><span style="color:#cbd5e1">Creativity</span><span class="font-semibold" style="color:#e2e8f0">25%</span></div>
+              <div class="flex justify-between text-xs mb-2"><span style="color:var(--text-secondary)">Creativity</span><span class="font-semibold" style="color:var(--text-primary)">25%</span></div>
               <div class="h-1.5 rounded-full overflow-hidden" style="background:#1e293b"><div class="h-full rounded-full" style="width:52%;background:linear-gradient(90deg,#0d9488,#5eead4)"></div></div>
             </div>
           </div>
@@ -147,7 +147,7 @@
               <span class="w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white" style="background:#6644a6;border:2px solid #111a2b">J2</span>
               <span class="w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white" style="background:#147b78;border:2px solid #111a2b">J3</span>
             </div>
-            <div class="text-[11px] leading-snug" style="color:#94a3b8">Judges score independently.<br/><span style="color:#e2e8f0">Results stay organized.</span></div>
+            <div class="text-[11px] leading-snug" style="color:var(--text-secondary)">Judges score independently.<br/><span style="color:var(--text-primary)">Results stay organized.</span></div>
           </div>
         </div>
         <div class="relative grid grid-cols-3 gap-2 mt-4 text-center">
@@ -165,15 +165,15 @@
     <div class="mt-16 grid grid-cols-3 rounded-2xl overflow-hidden" style="background:rgba(255,255,255,0.035);border:1px solid rgba(148,163,184,0.15)">
       <div class="p-4 sm:p-5 text-center" style="border-right:1px solid rgba(148,163,184,0.12)">
         <div class="text-2xl sm:text-3xl font-black text-blue-200">100%</div>
-        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:#94a3b8">Digital Scoring</div>
+        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:var(--text-secondary)">Digital Scoring</div>
       </div>
       <div class="p-4 sm:p-5 text-center" style="border-right:1px solid rgba(148,163,184,0.12)">
         <div class="text-2xl sm:text-3xl font-black text-emerald-200">Live</div>
-        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:#94a3b8">Real-time Results</div>
+        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:var(--text-secondary)">Real-time Results</div>
       </div>
       <div class="p-4 sm:p-5 text-center">
         <div class="text-2xl sm:text-3xl font-black text-purple-200">3</div>
-        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:#94a3b8">User Roles</div>
+        <div class="text-[10px] sm:text-xs mt-1 font-medium" style="color:var(--text-secondary)">User Roles</div>
       </div>
     </div>
   </div>
@@ -194,7 +194,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Event Management</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Event Management</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Create multiple competition events with categories, schedules, venues, prizes, and contestant rosters.</p>
       </div>
 
@@ -202,7 +202,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Custom Scoring Criteria</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Custom Scoring Criteria</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Define weighted criteria per event — beauty, talent, intelligence, and any custom category.</p>
       </div>
 
@@ -210,7 +210,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#064e3b,#059669)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Live Tabulation</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Live Tabulation</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Scores aggregated and ranked in real-time as judges submit. No manual tallying needed.</p>
       </div>
 
@@ -218,7 +218,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#1e40af,#3b82f6)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Role-Based Access</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Role-Based Access</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Separate portals for Administrators, Judges, and Participants with the right permissions.</p>
       </div>
 
@@ -226,7 +226,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#92400e,#d97706)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Leaderboard &amp; Results</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Leaderboard &amp; Results</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Official rankings with podium display and printable tabulation sheets.</p>
       </div>
 
@@ -234,7 +234,7 @@
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shadow-md" style="background:linear-gradient(135deg,#134e4a,#0d9488)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
         </div>
-        <h3 class="font-bold mb-2" style="color:#e2e8f0">Cloud-Powered</h3>
+        <h3 class="font-bold mb-2" style="color:var(--text-primary)">Cloud-Powered</h3>
         <p class="text-sm leading-relaxed" style="color:#a3b1c5">Built on Firebase — secure, synced across devices, always available during events.</p>
       </div>
 
@@ -255,21 +255,21 @@
       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-xl" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">
         <span class="text-white font-black text-xl">1</span>
       </div>
-      <h3 class="font-bold mb-2" style="color:#e2e8f0">Create an Event</h3>
+      <h3 class="font-bold mb-2" style="color:var(--text-primary)">Create an Event</h3>
       <p class="text-sm leading-relaxed" style="color:#a3b1c5">Admin sets up the event, adds contestants, defines scoring criteria with weights.</p>
     </div>
     <div class="home-step-card rounded-2xl p-6 sm:p-7 text-center">
       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-xl" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
         <span class="text-white font-black text-xl">2</span>
       </div>
-      <h3 class="font-bold mb-2" style="color:#e2e8f0">Judges Score</h3>
+      <h3 class="font-bold mb-2" style="color:var(--text-primary)">Judges Score</h3>
       <p class="text-sm leading-relaxed" style="color:#a3b1c5">Judges log in and enter scores per contestant per criteria from any device.</p>
     </div>
     <div class="home-step-card rounded-2xl p-6 sm:p-7 text-center">
       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-xl" style="background:linear-gradient(135deg,#92400e,#d97706)">
         <span class="text-white font-black text-xl">3</span>
       </div>
-      <h3 class="font-bold mb-2" style="color:#e2e8f0">Results Instantly</h3>
+      <h3 class="font-bold mb-2" style="color:var(--text-primary)">Results Instantly</h3>
       <p class="text-sm leading-relaxed" style="color:#a3b1c5">ScoreSync computes weighted averages, ranks contestants, shows official results.</p>
     </div>
   </div>

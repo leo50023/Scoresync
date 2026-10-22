@@ -86,7 +86,7 @@
           <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input id="judge-event-search" type="search" autocomplete="off" placeholder="Search by event, venue, or type"
             class="w-full rounded-xl pl-10 pr-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
-            style="background:#0a0f1e;border:1px solid rgba(255,255,255,0.1);color:#e2e8f0">
+            style="background:#0a0f1e;border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)">
         </label>
         <div class="flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter events">
           <button type="button" data-event-filter="all" aria-pressed="true" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
@@ -94,15 +94,15 @@
             All <span data-filter-count="all">{{recentEvents.length}}</span>
           </button>
           <button type="button" data-event-filter="ready" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:#94a3b8">
+            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
             Ready to score <span data-filter-count="ready">{{readyEventCount}}</span>
           </button>
           <button type="button" data-event-filter="ongoing" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:#94a3b8">
+            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
             Ongoing <span data-filter-count="ongoing">{{ongoingCount}}</span>
           </button>
           <button type="button" data-event-filter="completed" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:#94a3b8">
+            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
             Completed <span data-filter-count="completed">{{completedEventCount}}</span>
           </button>
         </div>
@@ -137,7 +137,7 @@
               <div class="flex flex-wrap items-center gap-2 text-xs" style="color:var(--text-muted)">
                 {{#if venue}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>{{venue}}</span>{{/if}}
                 {{#if date}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{{date}}{{#if time}} at {{time}}{{/if}}</span>{{/if}}
-                <span class="capitalize px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:#94a3b8">{{#if (eq type 'other')}}{{#if otherType}}{{otherType}}{{else}}Other{{/if}}{{else}}{{type}}{{/if}}</span>
+                <span class="capitalize px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:var(--text-secondary)">{{#if (eq type 'other')}}{{#if otherType}}{{otherType}}{{else}}Other{{/if}}{{else}}{{type}}{{/if}}</span>
               </div>
 
               <!-- Stats row -->

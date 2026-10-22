@@ -93,14 +93,14 @@
 
     <!-- Total Events -->
     <div class="rounded-2xl p-4 sm:p-5 relative overflow-hidden"
-      style="background:var(--bg-card-sub);border:1px solid var(--border)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-3">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
       </div>
-      <p class="text-3xl font-black" class="kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{totalEvents}}</p>
+      <p class="text-3xl font-black kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{totalEvents}}</p>
       <p class="text-xs font-semibold mt-1" style="color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Total Events</p>
       <a href="/events" class="text-xs font-bold mt-2 inline-flex items-center gap-1" style="color:#34d399">
         View all <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -109,14 +109,14 @@
 
     <!-- Active Users -->
     <div class="rounded-2xl p-4 sm:p-5 relative overflow-hidden"
-      style="background:var(--bg-card-sub);border:1px solid var(--border)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-3">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.2)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
       </div>
-      <p class="text-3xl font-black" class="kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{totalUsers}}</p>
+      <p class="text-3xl font-black kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{totalUsers}}</p>
       <p class="text-xs font-semibold mt-1" style="color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Active Users</p>
       <a href="/users" class="text-xs font-bold mt-2 inline-flex items-center gap-1" style="color:#60a5fa">
         Manage <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -125,7 +125,7 @@
 
     <!-- Ongoing -->
     <div class="rounded-2xl p-4 sm:p-5 relative overflow-hidden"
-      style="background:var(--bg-card-sub);border:1px solid var(--border)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-3">
         <div class="w-9 h-9 rounded-xl flex items-center justify-center"
           style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2)">
@@ -133,7 +133,7 @@
         </div>
         <span class="w-2 h-2 rounded-full bg-emerald-400" style="box-shadow:0 0 6px #10b981"></span>
       </div>
-      <p class="text-3xl font-black" class="kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ongoingCount}}</p>
+      <p class="text-3xl font-black kpi-number" style="color:var(--text-bright);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ongoingCount}}</p>
       <p class="text-xs font-semibold mt-1" style="color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Live Now</p>
       <a href="/events" class="text-xs font-bold mt-2 inline-flex items-center gap-1" style="color:#a78bfa">
         Open events <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -165,7 +165,7 @@
 
     <!-- Recent Events -->
     <div class="lg:col-span-2 rounded-2xl overflow-hidden"
-      style="background:var(--bg-card-sub);border:1px solid var(--border)">
+      style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="px-5 py-3.5 flex items-center justify-between"
         style="border-bottom:1px solid var(--border-subtle)">
         <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
@@ -222,7 +222,7 @@
                   <a href="/events/{{id}}" class="dashboard-event-action rounded-lg" style="background:rgba(16,185,129,0.10);color:#34d399" title="View" aria-label="View event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   </a>
-                  <a href="/events/{{id}}/edit" class="dashboard-event-action rounded-lg hidden sm:inline-flex" style="background:rgba(255,255,255,0.06);color:#94a3b8" title="Edit" aria-label="Edit event">
+                  <a href="/events/{{id}}/edit" class="dashboard-event-action rounded-lg hidden sm:inline-flex" style="background:rgba(255,255,255,0.06);color:var(--text-secondary)" title="Edit" aria-label="Edit event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                   </a>
                   <a href="/events/{{id}}/results" class="dashboard-event-action rounded-lg" style="background:rgba(59,130,246,0.10);color:#60a5fa" title="Results" aria-label="View event results">
@@ -253,7 +253,7 @@
 
       <!-- Quick Actions -->
       <div class="rounded-2xl overflow-hidden"
-        style="background:var(--bg-card-sub);border:1px solid var(--border)">
+        style="background:var(--bg-card);border:1px solid var(--border)">
         <div class="px-5 py-3.5" style="border-bottom:1px solid var(--border-subtle)">
           <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">Quick Actions</h2>
         </div>
@@ -344,7 +344,7 @@
 
       <!-- System Info -->
       <div class="rounded-2xl overflow-hidden"
-        style="background:var(--bg-card-sub);border:1px solid var(--border)">
+        style="background:var(--bg-card);border:1px solid var(--border)">
         <div class="px-5 py-3.5" style="border-bottom:1px solid var(--border-subtle)">
           <h2 class="text-sm font-extrabold" style="color:var(--text-primary)">System Info</h2>
         </div>

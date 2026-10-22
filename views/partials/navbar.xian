@@ -1,4 +1,4 @@
-<div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden transition-opacity" aria-hidden="true"></div>
+﻿<div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden transition-opacity" aria-hidden="true"></div>
 
 <nav class="h-14 border-b flex items-center px-3 sm:px-5 gap-2.5 sticky top-0 left-0 right-0 z-30"
   style="background:var(--bg-navbar);border-bottom-color:var(--border);box-shadow:0 1px 0 var(--border-subtle),0 4px 24px rgba(0,0,0,0.2)">
@@ -56,7 +56,7 @@
     <!-- Theme Toggle -->
     <button type="button" id="theme-toggle-btn" onclick="toggleTheme()" data-no-min
       title="Toggle light/dark mode"
-      style="width:34px;height:34px;min-height:unset;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#94a3b8;cursor:pointer;flex-shrink:0;transition:background 120ms ease">
+      style="width:34px;height:34px;min-height:unset;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:var(--text-secondary);cursor:pointer;flex-shrink:0;transition:background 120ms ease">
       <!-- Sun icon (shown in dark mode = click to go light) -->
       <svg id="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       <!-- Moon icon (shown in light mode = click to go dark) -->

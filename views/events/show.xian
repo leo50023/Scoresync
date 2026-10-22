@@ -275,7 +275,7 @@
             </div>
             <div class="flex items-center gap-2 flex-shrink-0">
               <span class="text-xs font-black px-2.5 py-1 rounded-full" style="background:rgba(139,92,246,0.15);color:#c4b5fd;border:1px solid rgba(139,92,246,0.25)">{{weight}}%</span>
-              <span class="text-[10px] font-semibold px-2 py-1 rounded-full" style="background:rgba(255,255,255,0.05);color:#64748b;border:1px solid var(--border)">max {{maxScore}}</span>
+              <span class="text-[10px] font-semibold px-2 py-1 rounded-full" style="background:rgba(255,255,255,0.05);color:var(--text-muted);border:1px solid var(--border)">max {{maxScore}}</span>
             </div>
           </div>
           <!-- Weight bar -->
@@ -488,7 +488,7 @@
       <div class="flex-1 space-y-2 text-center sm:text-left">
         <p class="font-bold text-sm" style="color:var(--text-primary)">{{event.name}}</p>
         <p class="text-xs leading-relaxed" style="color:var(--text-muted)">Scan this QR code to open the event page directly. Share it with judges, encoders, and participants for instant access.</p>
-        <div class="mt-2 px-3 py-2 rounded-lg text-xs font-mono break-all" id="qr-url-display" style="background:rgba(255,255,255,0.04);border:1px solid var(--border);color:#94a3b8"></div>
+        <div class="mt-2 px-3 py-2 rounded-lg text-xs font-mono break-all" id="qr-url-display" style="background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-secondary)"></div>
         <div class="flex gap-2 pt-1 justify-center sm:justify-start flex-wrap">
           <button onclick="copyEventUrl()" class="btn-sm btn-sm-gray text-xs">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -596,7 +596,7 @@
                 </button>
                 <button type="button" id="fin-expense-btn" onclick="setFinType('expense')"
                   class="py-2 rounded-xl text-xs font-extrabold transition"
-                  style="background:rgba(255,255,255,0.05);color:#64748b;border:2px solid rgba(255,255,255,0.08)">
+                  style="background:rgba(255,255,255,0.05);color:var(--text-muted);border:2px solid rgba(255,255,255,0.08)">
                   ↓ Expense
                 </button>
               </div>
@@ -864,10 +864,10 @@ function setFinType(type) {
   const expBtn = document.getElementById('fin-expense-btn');
   if (type === 'income') {
     incBtn.style.cssText = 'background:rgba(16,185,129,0.2);color:#6ee7b7;border:2px solid rgba(16,185,129,0.4);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
-    expBtn.style.cssText = 'background:rgba(255,255,255,0.05);color:#64748b;border:2px solid rgba(255,255,255,0.08);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
+    expBtn.style.cssText = 'background:rgba(255,255,255,0.05);color:var(--text-muted);border:2px solid rgba(255,255,255,0.08);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
   } else {
     expBtn.style.cssText = 'background:rgba(239,68,68,0.2);color:#fca5a5;border:2px solid rgba(239,68,68,0.4);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
-    incBtn.style.cssText = 'background:rgba(255,255,255,0.05);color:#64748b;border:2px solid rgba(255,255,255,0.08);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
+    incBtn.style.cssText = 'background:rgba(255,255,255,0.05);color:var(--text-muted);border:2px solid rgba(255,255,255,0.08);padding:8px;border-radius:12px;font-size:0.75rem;font-weight:800;transition:background 80ms ease,color 80ms ease,border-color 80ms ease';
   }
 }
 
@@ -1006,7 +1006,7 @@ window._onTimerEventEnd = function() {
           Assign Judge
         </button>
         <button type="button" onclick="closeAddJudgeModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm transition"
-          style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">Cancel</button>
+          style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">Cancel</button>
       </div>
       {{else}}
       <div class="py-4 text-center text-xs" style="color:var(--text-faint)">
@@ -1015,7 +1015,7 @@ window._onTimerEventEnd = function() {
       </div>
       <div class="flex justify-end pb-2">
         <button type="button" onclick="closeAddJudgeModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm transition"
-          style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">Close</button>
+          style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">Close</button>
       </div>
       {{/if}}
     </form>

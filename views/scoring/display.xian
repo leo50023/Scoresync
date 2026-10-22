@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -77,7 +77,7 @@
       <div>
         <div class="text-xs font-bold uppercase tracking-widest" style="color:#34d399">Live Scoreboard</div>
         <h1 class="text-2xl font-black tracking-tight text-white">{{event.name}}</h1>
-        <div class="text-xs mt-0.5" style="color:#475569">{{event.venue}} {{#if event.date}}&bull; {{event.date}}{{/if}}</div>
+        <div class="text-xs mt-0.5" style="color:var(--text-faint)">{{event.venue}} {{#if event.date}}&bull; {{event.date}}{{/if}}</div>
       </div>
     </div>
     <div class="flex items-center gap-3">
@@ -107,7 +107,7 @@
       </div>
       <!-- Manual refresh button -->
       <button onclick="window.location.reload()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition"
-        style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)"
+        style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)"
         onmouseover="this.style.background='rgba(16,185,129,0.12)';this.style.color='#34d399'"
         onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='#94a3b8'">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
@@ -133,8 +133,8 @@
           {{#if photo}}<img src="{{photo}}" alt="{{name}}" class="w-16 h-16 rounded-full object-cover mx-auto mb-2 shadow-lg" style="border:2px solid #94a3b8;object-position:center top"/>
           {{else}}<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-black text-lg mx-auto mb-2" style="background:linear-gradient(135deg,#475569,#94a3b8)">{{number}}</div>{{/if}}
           <div class="text-base font-extrabold text-white" style="overflow-wrap:anywhere">{{name}}</div>
-          {{#if barangay}}<div class="text-xs mt-0.5" style="color:#94a3b8">Brgy. {{barangay}}</div>{{/if}}
-          <div class="text-2xl font-black mt-2" style="color:#e2e8f0">{{finalScoreDisplay}}<span class="text-sm font-normal" style="color:#64748b">%</span></div>
+          {{#if barangay}}<div class="text-xs mt-0.5" style="color:var(--text-secondary)">Brgy. {{barangay}}</div>{{/if}}
+          <div class="text-2xl font-black mt-2" style="color:var(--text-primary)">{{finalScoreDisplay}}<span class="text-sm font-normal" style="color:var(--text-muted)">%</span></div>
         </div>
         <div class="h-12 mt-2 rounded-t-xl mx-6" style="background:rgba(100,116,139,0.3)"></div>
       </div>
@@ -196,13 +196,13 @@
 
         <!-- Name -->
         <div class="display-rank-name flex-1 min-w-0">
-          <div class="font-bold text-sm" style="color:#e2e8f0">{{name}}</div>
+          <div class="font-bold text-sm" style="color:var(--text-primary)">{{name}}</div>
           {{#if tieDetected}}
           <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold" style="background:rgba(220,38,38,0.15);color:#fca5a5">
             ⚖ {{#if tieBroken}}Tie Broken{{else}}Tie{{/if}}
           </span>
           {{/if}}
-          {{#if barangay}}<div class="text-xs" style="color:#475569">Brgy. {{barangay}}</div>{{/if}}
+          {{#if barangay}}<div class="text-xs" style="color:var(--text-faint)">Brgy. {{barangay}}</div>{{/if}}
         </div>
 
         <!-- Score bar -->
@@ -217,7 +217,7 @@
         <!-- Score -->
         <div class="display-rank-score text-right flex-shrink-0 min-w-[80px]">
           <div class="text-lg font-black {{#if (eq rank 1)}}gold-text{{/if}}" style="{{#unless (eq rank 1)}}color:#e2e8f0{{/unless}}">{{finalScoreDisplay}}%</div>
-          {{#if gapToFirst}}{{#unless (eq rank 1)}}<div class="text-[10px]" style="color:#374151">-{{gapToFirst}}%</div>{{/unless}}{{/if}}
+          {{#if gapToFirst}}{{#unless (eq rank 1)}}<div class="text-[10px]" style="color:var(--text-faint)">-{{gapToFirst}}%</div>{{/unless}}{{/if}}
         </div>
 
       </div>
@@ -228,14 +228,14 @@
     <div class="flex flex-col items-center justify-center h-64 text-center">
       <div class="text-6xl mb-4">⏳</div>
       <h2 class="text-2xl font-black text-white mb-2">Waiting for scores...</h2>
-      <p style="color:#475569">Judges are currently submitting scores. Results will appear here.</p>
+      <p style="color:var(--text-faint)">Judges are currently submitting scores. Results will appear here.</p>
     </div>
     {{/if}}
 
   </div>
 
   <!-- Footer -->
-  <div class="flex-shrink-0 px-8 py-3 flex items-center justify-between text-xs" style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);color:#374151">
+  <div class="flex-shrink-0 px-8 py-3 flex items-center justify-between text-xs" style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);color:var(--text-faint)">
     <span>ScoreSync — Official Tabulation System · Gloria, Oriental Mindoro</span>
     <span>{{criteria.length}} criteria · {{judgeCount}} judge(s)</span>
   </div>

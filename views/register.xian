@@ -343,7 +343,7 @@
             </span>
             <input type="password" name="password" id="passwordInput" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr"/>
             <button type="button" id="eyeBtn" onclick="togglePwd()"
-              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#475569;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 60ms ease;min-height:unset;height:28px;width:28px">
+              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 60ms ease;min-height:unset;height:28px;width:28px">
               <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
@@ -361,7 +361,7 @@
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
                 <div class="font-bold text-xs text-white">Judge</div>
-                <div class="text-[10px] mt-0.5" style="color:#475569">Score contestants</div>
+                <div class="text-[10px] mt-0.5" style="color:var(--text-faint)">Score contestants</div>
               </div>
             </label>
 
@@ -372,7 +372,7 @@
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
                 </div>
                 <div class="font-bold text-xs text-white">Tabulator</div>
-                <div class="text-[10px] mt-0.5" style="color:#475569">Review scores</div>
+                <div class="text-[10px] mt-0.5" style="color:var(--text-faint)">Review scores</div>
               </div>
             </label>
 
@@ -384,7 +384,7 @@
                 </div>
                 <div class="flex-1">
                   <div class="font-bold text-xs text-white">Organizer</div>
-                  <div class="text-[10px]" style="color:#475569">Create & manage events</div>
+                  <div class="text-[10px]" style="color:var(--text-faint)">Create & manage events</div>
                 </div>
                 <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.25)">NEW</span>
               </div>

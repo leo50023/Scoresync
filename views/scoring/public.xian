@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -26,8 +26,8 @@
     <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-16 h-16 rounded-full mx-auto mb-4 shadow-xl" style="border:3px solid rgba(16,185,129,0.5)"/>
     <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#34d399">Official Competition Results</div>
     <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{event.name}}</h1>
-    {{#if event.venue}}<p class="mt-2 text-sm" style="color:#64748b">{{event.venue}}</p>{{/if}}
-    {{#if event.date}}<p class="text-xs mt-1" style="color:#374151">{{event.date}}</p>{{/if}}
+    {{#if event.venue}}<p class="mt-2 text-sm" style="color:var(--text-muted)">{{event.venue}}</p>{{/if}}
+    {{#if event.date}}<p class="text-xs mt-1" style="color:var(--text-faint)">{{event.date}}</p>{{/if}}
     <div class="flex items-center justify-center gap-4 mt-4">
       <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.25)">{{ranked.length}} Contestants</span>
       <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.25)">{{criteria.length}} Criteria</span>
@@ -63,12 +63,12 @@
 
       <!-- Info -->
       <div class="flex-1 min-w-0">
-        <div class="font-extrabold text-sm" style="color:#e2e8f0">{{name}}</div>
-        {{#if barangay}}<div class="text-xs" style="color:#475569">Brgy. {{barangay}}</div>{{/if}}
+        <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{name}}</div>
+        {{#if barangay}}<div class="text-xs" style="color:var(--text-faint)">Brgy. {{barangay}}</div>{{/if}}
         <!-- Criteria breakdown -->
         <div class="flex flex-wrap gap-1 mt-1.5">
           {{#each breakdown}}
-          <span class="text-[10px] px-1.5 py-0.5 rounded font-semibold" style="background:rgba(255,255,255,0.05);color:#64748b">{{name}}: {{avg}}</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded font-semibold" style="background:rgba(255,255,255,0.05);color:var(--text-muted)">{{name}}: {{avg}}</span>
           {{/each}}
         </div>
       </div>
@@ -76,7 +76,7 @@
       <!-- Score -->
       <div class="text-right flex-shrink-0">
         <div class="text-2xl font-black {{#if (eq rank 1)}}gold{{/if}}" style="{{#unless (eq rank 1)}}color:#e2e8f0{{/unless}}">
-          {{finalScoreDisplay}}<span class="text-sm font-normal" style="color:#64748b">%</span>
+          {{finalScoreDisplay}}<span class="text-sm font-normal" style="color:var(--text-muted)">%</span>
         </div>
         {{#if (eq rank 1)}}<div class="text-[10px] font-black" style="color:#fbbf24">🏆 CHAMPION</div>{{/if}}
         {{#if (eq rank 2)}}<div class="text-[10px] font-bold" style="color:#9ca3af">🥈 2nd Place</div>{{/if}}
@@ -89,7 +89,7 @@
   </div>
 
   <!-- Footer -->
-  <div class="text-center py-8 px-4 text-xs" style="color:#374151">
+  <div class="text-center py-8 px-4 text-xs" style="color:var(--text-faint)">
     <p>Powered by <strong style="color:#34d399">ScoreSync</strong> — Official Tabulation System</p>
     <p class="mt-1">Municipality of Gloria, Oriental Mindoro</p>
   </div>

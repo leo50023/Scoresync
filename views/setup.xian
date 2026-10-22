@@ -31,7 +31,7 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h1 class="text-2xl font-black mb-2" style="color:#f1f5f9">Setup Already Complete</h1>
-        <p class="text-sm mb-6" style="color:#475569">An admin account already exists. Please sign in normally.</p>
+        <p class="text-sm mb-6" style="color:var(--text-faint)">An admin account already exists. Please sign in normally.</p>
         <a href="/login" class="btn-primary text-sm">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
           Go to Login
@@ -44,7 +44,7 @@
         </div>
         <div>
           <div class="font-black text-xl text-white tracking-tight">ScoreSync</div>
-          <div class="text-xs" style="color:#475569">First-time Setup</div>
+          <div class="text-xs" style="color:var(--text-faint)">First-time Setup</div>
         </div>
       </div>
       <div class="rounded-2xl overflow-hidden shadow-2xl" style="background:#111827;border:1px solid rgba(255,255,255,0.10)">
@@ -56,7 +56,7 @@
             </div>
             <div>
               <h1 class="text-xl font-black tracking-tight" style="color:#f1f5f9">Create Admin Account</h1>
-              <p class="text-xs mt-0.5" style="color:#475569">This account will have full access to ScoreSync.</p>
+              <p class="text-xs mt-0.5" style="color:var(--text-faint)">This account will have full access to ScoreSync.</p>
             </div>
           </div>
           {{#if error_msg}}<div class="alert-error mb-5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/></svg><span>{{error_msg}}</span></div>{{/if}}
@@ -65,9 +65,9 @@
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Full Name</label>
               <div class="relative">
-                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:#374151"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-faint)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
                 <input type="text" name="name" placeholder="e.g. Juan dela Cruz" required autocomplete="name" class="w-full"
-                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:#e2e8f0;outline:none;background:#1e293b;"
+                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:var(--text-primary);outline:none;background:#1e293b;"
                   onfocus="this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.20)'"
                   onblur="this.style.borderColor='rgba(255,255,255,0.10)';this.style.boxShadow='none'"/>
               </div>
@@ -75,9 +75,9 @@
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Email Address</label>
               <div class="relative">
-                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:#374151"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-faint)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
                 <input type="email" name="email" placeholder="admin@yourdomain.com" required autocomplete="email" class="w-full"
-                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:#e2e8f0;outline:none;background:#1e293b;"
+                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:var(--text-primary);outline:none;background:#1e293b;"
                   onfocus="this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.20)'"
                   onblur="this.style.borderColor='rgba(255,255,255,0.10)';this.style.boxShadow='none'"/>
               </div>
@@ -85,9 +85,9 @@
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widests mb-1.5" style="color:#4b5563">Password</label>
               <div class="relative">
-                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:#374151"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-faint)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
                 <input type="password" name="password" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="w-full"
-                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:#e2e8f0;outline:none;background:#1e293b;"
+                  style="padding:11px 14px 11px 40px;border:1.5px solid rgba(255,255,255,0.10);border-radius:10px;font-size:0.875rem;color:var(--text-primary);outline:none;background:#1e293b;"
                   onfocus="this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.20)'"
                   onblur="this.style.borderColor='rgba(255,255,255,0.10)';this.style.boxShadow='none'"/>
               </div>
@@ -96,7 +96,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <div>
                 <div class="text-sm font-semibold" style="color:#93c5fd">Role: Administrator</div>
-                <div class="text-xs" style="color:#374151">Automatically assigned for first account</div>
+                <div class="text-xs" style="color:var(--text-faint)">Automatically assigned for first account</div>
               </div>
             </div>
             <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition hover:opacity-90 active:scale-95"
@@ -107,7 +107,7 @@
           </form>
         </div>
       </div>
-      <p class="text-center text-sm mt-5" style="color:#374151">
+      <p class="text-center text-sm mt-5" style="color:var(--text-faint)">
         Already have an account? <a href="/login" class="font-semibold hover:underline" style="color:#60a5fa">Sign in</a>
       </p>
       {{/if}}

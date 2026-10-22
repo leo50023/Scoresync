@@ -43,7 +43,7 @@
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number…"
           class="w-full rounded-xl pl-9 pr-3 py-2 text-xs outline-none"
-          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#e2e8f0"
+          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)"
           oninput="filterContestants(this.value)"
         />
       </div>
@@ -54,7 +54,7 @@
         <button type="button"
           class="nav-dot flex-shrink-0 min-w-[32px] h-8 px-2 rounded-full text-[11px] font-extrabold transition-all border"
           data-idx="{{@index}}" data-name="{{name}}" data-number="{{number}}"
-          style="background:rgba(255,255,255,0.05);color:#475569;border-color:rgba(255,255,255,0.08)"
+          style="background:rgba(255,255,255,0.05);color:var(--text-faint);border-color:rgba(255,255,255,0.08)"
           onclick="goToContestant({{@index}})">{{number}}</button>
         {{/each}}
       </div>
@@ -102,9 +102,9 @@
               <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/><path d="M4 4.5 5.5 6M20 4.5 18.5 6"/></svg>
             </div>
             <div class="text-center px-3">
-              <div style="font-size:0.9rem;font-weight:800;color:#e2e8f0">{{name}}</div>
-              <div style="font-size:0.68rem;font-weight:700;color:#94a3b8;margin-top:4px">Contestant #{{number}}</div>
-              <div style="font-size:0.6rem;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:0.12em;margin-top:12px">Photo not uploaded</div>
+              <div style="font-size:0.9rem;font-weight:800;color:var(--text-primary)">{{name}}</div>
+              <div style="font-size:0.68rem;font-weight:700;color:var(--text-secondary);margin-top:4px">Contestant #{{number}}</div>
+              <div style="font-size:0.6rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:12px">Photo not uploaded</div>
             </div>
           </div>
           {{/if}}
@@ -209,7 +209,7 @@
             Submit scores
           </button>
           {{else}}
-          <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:#94a3b8;border:1px solid var(--border)">Read-only score review</div>
+          <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:var(--text-secondary);border:1px solid var(--border)">Read-only score review</div>
           {{/unless}}
 
         </div><!-- /.judge-scoring-col -->
@@ -235,7 +235,7 @@
   <div class="judge-bottom-nav-inner max-w-screen-xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
     <button type="button" id="btn-prev-contestant"
       class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition disabled:opacity-30"
-      style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)"
+      style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)"
       onclick="goToContestant(window._currentIdx - 1)">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       Previous

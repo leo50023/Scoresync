@@ -46,12 +46,12 @@
           </form>
           <div class="flex items-center gap-2">
             <a href="/analytics/export?type=flags" class="text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap"
-              style="background:rgba(255,255,255,0.07);color:#e2e8f0;border:1px solid rgba(255,255,255,0.1)">
+              style="background:rgba(255,255,255,0.07);color:var(--text-primary);border:1px solid rgba(255,255,255,0.1)">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Export Logs CSV
             </a>
             <a href="/analytics/export?type=report" class="text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap"
-              style="background:rgba(255,255,255,0.07);color:#e2e8f0;border:1px solid rgba(255,255,255,0.1)">
+              style="background:rgba(255,255,255,0.07);color:var(--text-primary);border:1px solid rgba(255,255,255,0.1)">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               Report CSV
             </a>
@@ -166,7 +166,7 @@
                   style="{{#if (eq severity 'CRITICAL')}}background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25){{else}}{{#if (eq severity 'HIGH')}}background:rgba(249,115,22,0.15);color:#fdba74;border:1px solid rgba(249,115,22,0.25){{else}}{{#if (eq severity 'MEDIUM')}}background:rgba(245,158,11,0.15);color:#fcd34d;border:1px solid rgba(245,158,11,0.25){{else}}background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25){{/if}}{{/if}}{{/if}}">
                   {{severity}} SEVERITY
                 </span>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">
                   {{type}}
                 </span>
                 <span class="text-xs font-bold" style="color:var(--text-primary)">Event: {{eventName}}</span>
@@ -176,7 +176,7 @@
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">
                   <input type="hidden" name="status" value="reviewed">
                   <button type="submit" class="text-[11px] font-bold px-2.5 py-1 rounded-lg transition"
-                    style="background:rgba(255,255,255,0.07);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)">Mark Reviewed</button>
+                    style="background:rgba(255,255,255,0.07);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">Mark Reviewed</button>
                 </form>
                 <form method="POST" action="/analytics/flags/{{id}}/status" class="inline">
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">

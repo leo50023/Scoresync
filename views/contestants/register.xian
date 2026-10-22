@@ -26,7 +26,7 @@
       <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-14 h-14 rounded-full mx-auto mb-3 shadow-xl" style="border:2.5px solid rgba(16,185,129,0.5)"/>
       <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#34d399">Contestant Registration</div>
       <h1 class="text-xl font-black text-white">{{event.name}}</h1>
-      {{#if event.date}}<p class="text-xs mt-1" style="color:#475569">{{event.date}} · {{event.venue}}</p>{{/if}}
+      {{#if event.date}}<p class="text-xs mt-1" style="color:var(--text-faint)">{{event.date}} · {{event.venue}}</p>{{/if}}
     </div>
 
     {{#if success_msg}}
@@ -47,28 +47,28 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:#475569">Full Name *</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-faint)">Full Name *</label>
           <input type="text" name="name" placeholder="Your full name" required class="auth-input"/>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:#475569">Barangay</label>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-faint)">Barangay</label>
             <input type="text" name="barangay" placeholder="e.g. Poblacion" class="auth-input"/>
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:#475569">Age</label>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-faint)">Age</label>
             <input type="number" name="age" placeholder="e.g. 21" min="1" max="100" class="auth-input"/>
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:#475569">Platform / Advocacy</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-faint)">Platform / Advocacy</label>
           <textarea name="platform" rows="2" placeholder="What is your platform or advocacy?" class="auth-input"></textarea>
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:#475569">Contact Number</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-faint)">Contact Number</label>
           <input type="tel" name="contact" placeholder="e.g. 09XX-XXX-XXXX" class="auth-input"/>
         </div>
 
@@ -82,7 +82,7 @@
       </form>
     </div>
 
-    <p class="text-center text-xs mt-4" style="color:#374151">
+    <p class="text-center text-xs mt-4" style="color:var(--text-faint)">
       Powered by <span style="color:#34d399;font-weight:700">ScoreSync</span> · Gloria, Oriental Mindoro
     </p>
   </div>
