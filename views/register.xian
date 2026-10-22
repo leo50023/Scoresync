@@ -366,13 +366,13 @@
             </label>
 
             <label class="cursor-pointer">
-              <input type="radio" name="role" value="encoder" class="sr-only peer"/>
-              <div class="role-card peer-checked:!border-emerald-500 peer-checked:!bg-emerald-500/10 text-center">
-                <div class="w-8 h-8 grad-green rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <input type="radio" name="role" value="tabulator" class="sr-only peer"/>
+              <div class="role-card peer-checked:!border-yellow-500 peer-checked:!bg-yellow-500/10 text-center">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center mx-auto mb-2" style="background:linear-gradient(135deg,#92400e,#d97706)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
                 </div>
-                <div class="font-bold text-xs text-white">Participant</div>
-                <div class="text-[10px] mt-0.5" style="color:#475569">Manage data</div>
+                <div class="font-bold text-xs text-white">Tabulator</div>
+                <div class="text-[10px] mt-0.5" style="color:#475569">Review scores</div>
               </div>
             </label>
 
@@ -422,4 +422,3 @@ function togglePwd(){
 </script>
 </body>
 </html>
-
