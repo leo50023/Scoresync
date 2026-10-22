@@ -636,14 +636,22 @@ export const exportResults = async (req, res) => {
 export const reportPage = async (req, res) => {
   const { eventId } = req.params;
   try {
-    const [eSnap, cSnap, crSnap, sSnap, sigSnap, tabulatorSnap] = await Promise.all([
+    const [eSnap, cSnap, crSnap, sSnap, sigSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
       getDocs(collection(db, "events", eventId, "criteria")),
       getDocs(collection(db, "events", eventId, "scores")),
       getDocs(collection(db, "events", eventId, "report_signatures")),
-      getDocs(collection(db, "users")),
     ]);
+
+    // Fetch tabulators separately with fallback
+    let tabulatorDocs = [];
+    try {
+      const uSnap = await getDocs(collection(db, "users"));
+      tabulatorDocs = uSnap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .filter(u => u.role === 'tabulator' && (u.status === 'approved' || u.status === 'active'));
+    } catch (_) { tabulatorDocs = []; }
 
     if (!eSnap.exists()) return res.redirect("/events");
 
@@ -728,10 +736,7 @@ export const reportPage = async (req, res) => {
     });
 
     // Build tabulator breakdown for signature section
-    const tabulators = tabulatorSnap.docs
-      .map(d => ({ id: d.id, ...d.data() }))
-      .filter(u => u.role === 'tabulator' && (u.status === 'approved' || u.status === 'active'))
-      .map((u, idx) => {
+    const tabulators = tabulatorDocs.map((u, idx) => {
         const sig = sigMap[u.id];
         return {
           tabulatorId:   u.id,
