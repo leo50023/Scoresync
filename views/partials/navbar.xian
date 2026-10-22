@@ -96,9 +96,69 @@
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('ss-theme', newTheme);
     syncThemeIcon();
-    // Update body background for views that use inline style="background:#0a0f1e"
-    document.body.style.setProperty('background', 'var(--bg-page)', 'important');
+    applyThemeToInlineStyles(newTheme);
   };
+
+  // Override all inline hardcoded dark backgrounds/colors when switching themes
+  function applyThemeToInlineStyles(theme) {
+    var isLight = theme === 'light';
+    // Map of dark values → light replacements
+    var bgMap = {
+      '#111827':  isLight ? '#ffffff' : '#111827',
+      '#0d1424':  isLight ? '#f8fafc' : '#0d1424',
+      '#0a0f1e':  isLight ? '#f0f4f8' : '#0a0f1e',
+      '#060b18':  isLight ? '#e8edf5' : '#060b18',
+      '#0f1623':  isLight ? '#f8fafc' : '#0f1623',
+      '#0d1117':  isLight ? '#f8fafc' : '#0d1117',
+      '#1a1a2e':  isLight ? '#f0f4f8' : '#1a1a2e',
+      '#16213e':  isLight ? '#f0f4f8' : '#16213e',
+      '#0f3460':  isLight ? '#e8edf5' : '#0f3460',
+    };
+    var textMap = {
+      '#e2e8f0': isLight ? '#0f172a' : '#e2e8f0',
+      '#f1f5f9': isLight ? '#020617' : '#f1f5f9',
+      '#f0fdf4': isLight ? '#0f172a' : '#f0fdf4',
+      '#cbd5e1': isLight ? '#334155' : '#cbd5e1',
+      '#94a3b8': isLight ? '#475569' : '#94a3b8',
+      '#374151': isLight ? '#6b7280' : '#374151',
+      '#475569': isLight ? '#6b7280' : '#475569',
+      '#64748b': isLight ? '#64748b' : '#64748b',
+    };
+    // Walk all elements with style attributes
+    var all = document.querySelectorAll('[style]');
+    all.forEach(function(el) {
+      var s = el.getAttribute('style') || '';
+      // Replace background colors
+      Object.keys(bgMap).forEach(function(dark) {
+        if (s.indexOf(dark) !== -1) {
+          el.style.setProperty('background', bgMap[dark], 'important');
+        }
+      });
+      // Replace text colors
+      Object.keys(textMap).forEach(function(dark) {
+        if (s.indexOf('color:' + dark) !== -1 || s.indexOf('color: ' + dark) !== -1) {
+          el.style.setProperty('color', textMap[dark], 'important');
+        }
+      });
+      // Fix white rgba borders for light mode
+      if (isLight && (s.indexOf('rgba(255,255,255,0.0') !== -1 || s.indexOf('rgba(255,255,255,0.1') !== -1)) {
+        if (s.indexOf('border') !== -1) {
+          var cur = el.style.borderColor;
+          if (!cur || cur.indexOf('rgba(255') !== -1) {
+            el.style.setProperty('border-color', 'rgba(0,0,0,0.09)', 'important');
+          }
+        }
+      }
+    });
+    // Force body background
+    document.body.style.setProperty('background', isLight ? '#f0f4f8' : '#0a0f1e', 'important');
+  }
+
+  // Apply on load too if light mode is active
+  (function(){
+    var t = document.documentElement.getAttribute('data-theme');
+    if (t === 'light') applyThemeToInlineStyles('light');
+  })();
 
   function applyNavbarLayout() {
     var usernameLabel = document.getElementById('navbar-username-label');
