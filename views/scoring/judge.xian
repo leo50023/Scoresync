@@ -36,16 +36,28 @@
       </div>
     </div>
 
-    <!-- Row 2: Contestant nav dots -->
-    <div class="px-4 sm:px-6 py-2 flex items-center gap-1.5 overflow-x-auto" style="border-top:1px solid rgba(255,255,255,0.04)">
-      <span class="text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0 mr-1" style="color:#374151">Go to:</span>
-      {{#each contestants}}
-      <button type="button"
-        class="nav-dot flex-shrink-0 min-w-[32px] h-8 px-2 rounded-full text-[11px] font-extrabold transition-all border"
-        data-idx="{{@index}}"
-        style="background:rgba(255,255,255,0.05);color:#475569;border-color:rgba(255,255,255,0.08)"
-        onclick="goToContestant({{@index}})">{{number}}</button>
-      {{/each}}
+    <!-- Row 2: Search + Contestant nav dots -->
+    <div class="px-4 sm:px-6 py-2 space-y-2" style="border-top:1px solid rgba(255,255,255,0.04)">
+      <!-- Search bar -->
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number…"
+          class="w-full rounded-xl pl-9 pr-3 py-2 text-xs outline-none"
+          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#e2e8f0"
+          oninput="filterContestants(this.value)"
+        />
+      </div>
+      <!-- Nav dots -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0 mr-1" style="color:#374151">Go to:</span>
+        {{#each contestants}}
+        <button type="button"
+          class="nav-dot flex-shrink-0 min-w-[32px] h-8 px-2 rounded-full text-[11px] font-extrabold transition-all border"
+          data-idx="{{@index}}" data-name="{{name}}" data-number="{{number}}"
+          style="background:rgba(255,255,255,0.05);color:#475569;border-color:rgba(255,255,255,0.08)"
+          onclick="goToContestant({{@index}})">{{number}}</button>
+        {{/each}}
+      </div>
     </div>
   </div>
 
@@ -777,6 +789,26 @@ main::-webkit-scrollbar { display:none; }
     const el = document.getElementById('overall-pct');
     if (el) el.textContent = Math.round(pct) + '%';
   }
+
+  /* ══ Search / filter contestants ══ */
+  window.filterContestants = function(query) {
+    const q = query.trim().toLowerCase();
+    const dots = document.querySelectorAll('.nav-dot');
+    if (!q) {
+      // Show current contestant, restore all dots
+      dots.forEach(d => { d.style.display = ''; });
+      return;
+    }
+    let firstMatch = -1;
+    dots.forEach(d => {
+      const name   = (d.dataset.name   || '').toLowerCase();
+      const number = (d.dataset.number || '').toLowerCase();
+      const matches = name.includes(q) || number.includes(q);
+      d.style.display = matches ? '' : 'none';
+      if (matches && firstMatch < 0) firstMatch = parseInt(d.dataset.idx);
+    });
+    if (firstMatch >= 0) goToContestant(firstMatch);
+  };
 
   /* ══ Navigate contestants ══ */
   window.goToContestant = function(idx) {
