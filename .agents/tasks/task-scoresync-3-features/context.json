@@ -1,0 +1,24 @@
+{
+  "project_type": "Node.js/Express server-side rendered app with Handlebars (.xian = hbs templates), Firebase Firestore backend",
+  "language": "JavaScript (ESM, type:module)",
+  "build_system": "No build step. Run with: node index.js (prod) or nodemon index.js (dev). No compilation needed.",
+  "test_framework": "None defined in package.json. Verification = start server and manual smoke test, OR node --check <file> for syntax.",
+  "build_command": "node index.js",
+  "test_command": "node --check controllers/scoringController.js && node --check routes/index.js",
+  "verification_instructions": "1. Run: node --check <changed file> to verify no syntax errors. 2. Start server with: node index.js and hit the new routes. 3. Check browser console and server stdout for errors.",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Firebase credentials in process.env or hardcoded fallback. Windows workspace. .xian files are Handlebars templates processed by hbs. Template partials: {{> head }}, {{> navbar }}, {{> sidebar }}, {{> footer }}.",
+  "contribution_requirements": "Use ESM imports (import/export). Match existing code style in controllers (async/await, try/catch, req.flash for errors, res.render or res.redirect). All routes go in routes/index.js. Firebase accessed via db from models/firebaseConfig.js using firebase/firestore functions (collection, getDocs, getDoc, doc, etc.).",
+  "key_patterns": "Controllers export named async functions. Routes use requireAuth and requireRole middleware from middleware/auth.js. Views use Handlebars with partials. The CRITERIA_COLORS array and applyTieBreaking() function in scoringController.js are shared across scoring functions. Existing JSON endpoint pattern: getScoringProgress() at /events/:eventId/scoring-progress returns res.json(). Existing scoring computation is repeated verbatim across resultsPage, displayBoard, publicResults, exportResults — extract same pattern for new scoresJson endpoint. DOM manipulation uses document.createElement (not innerHTML) to avoid XSS, as seen in the judgeProgressList updater in results.xian.",
+  "relevant_files": [
+    "controllers/scoringController.js",
+    "routes/index.js",
+    "views/scoring/results.xian",
+    "views/dashboard/admin.xian",
+    "views/scoring/display.xian",
+    "views/partials/head.xian",
+    "middleware/auth.js",
+    "models/firebaseConfig.js"
+  ],
+  "directory_structure": "Root: index.js (Express entry), routes/index.js (all routes), controllers/*.js (named exports), models/firebaseConfig.js (db/auth), middleware/auth.js (requireAuth, requireRole, injectUser), views/**/*.xian (Handlebars templates), public/ (static assets). No views/partials/footer.xian needed — {{> footer }} already exists."
+}

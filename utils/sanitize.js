@@ -27,7 +27,7 @@ export function sanitizeEmail(value) {
 /**
  * Sanitize a role string — only allow known values.
  */
-export function sanitizeRole(value, allowed = ["admin", "judge", "encoder", "organizer"]) {
+export function sanitizeRole(value, allowed = ["admin", "judge", "encoder", "organizer", "tabulator"]) {
   if (!value || typeof value !== "string") return "";
   return allowed.includes(value.trim().toLowerCase()) ? value.trim().toLowerCase() : "";
 }

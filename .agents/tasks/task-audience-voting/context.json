@@ -1,0 +1,25 @@
+{
+  "project_type": "Node.js/Express server-side rendered app with Handlebars (.xian = hbs templates), Firebase Firestore backend",
+  "language": "JavaScript (ESM, type:module)",
+  "build_system": "No build step. node index.js (prod) or nodemon index.js (dev). No compilation needed.",
+  "test_framework": "None defined in package.json. Verification = node --check <file> for syntax, then manual smoke test.",
+  "build_command": "node index.js",
+  "test_command": "node --check controllers/votingController.js && node --check routes/index.js",
+  "verification_instructions": "1. Run: node --check <changed file> for every modified/created file. 2. Start server with node index.js, navigate to /events/:eventId/vote (without login) to verify public page renders. 3. POST /events/:eventId/vote to verify vote submission. 4. Check /events/:eventId/vote/counts returns JSON. 5. Check that show.xian shows voting badge and new dropdown items. 6. Check results.xian shows People's Choice section.",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Windows workspace. .xian = Handlebars (hbs). Template partials: {{> head }}, {{> navbar }}, {{> sidebar }}. The voting page is standalone (no sidebar). Firebase accessed via db from models/firebaseConfig.js using firebase/firestore ESM functions. CSRF token available as {{csrfToken}} in all authenticated views. Public routes do NOT get csrfToken automatically — voting POST must either skip CSRF or the controller must handle it. Check existing public POST routes (selfRegister at /events/:eventId/self-register) for precedent.",
+  "contribution_requirements": "Use ESM imports. Match controller pattern: named async exports, try/catch, req.flash for errors, res.render or res.redirect. All routes in routes/index.js. requireAuth and requireRole from middleware/auth.js. Firestore: import { db } from '../models/firebaseConfig.js' + named firebase/firestore imports.",
+  "key_patterns": "Dropdown content divs live at the BOTTOM of show.xian, around line 1031, as hidden divs with id='admin-more-content' and id='org-more-content'. Each item uses class='dropdown-item'. Toggle forms inside dropdowns follow: <form method='POST' action='...'><input type='hidden' name='_csrf' value='{{csrfToken}}'><button type='submit' class='dropdown-item w-full text-left'>...</button></form>. Voting status badge in hero follows existing badge pattern: <span class='badge badge-green'>Voting Open</span> or <span class='badge badge-gray'>Voting Off</span>. The resultsPage controller in scoringController.js uses Promise.all to fetch 4 collections and passes ranked+criteria+judgeCount to render. New votesByContestant map should be added to that same Promise.all and passed to the template. Public route without CSRF: look at selfRegisterPage / selfRegister — they are registered without requireAuth and do work without CSRF in current code (self-register uses its own CSRF or skips). For voting POST (public), use doubleCsrf or simply disable CSRF for that route by checking the index.js CSRF setup. The actual CSRF middleware is set up in index.js — check how selfRegister handles it.",
+  "relevant_files": [
+    "routes/index.js",
+    "controllers/scoringController.js",
+    "controllers/contestantController.js",
+    "views/events/show.xian",
+    "views/scoring/results.xian",
+    "views/partials/head.xian",
+    "middleware/auth.js",
+    "models/firebaseConfig.js",
+    "index.js"
+  ],
+  "directory_structure": "Root: index.js (Express entry, CSRF setup), routes/index.js (all routes), controllers/*.js (named exports), models/firebaseConfig.js (db export), middleware/auth.js (requireAuth, requireRole), views/**/*.xian (Handlebars templates), views/voting/ (NEW — create this directory). Dropdown content in show.xian: lines ~1031-1059 (two hidden divs: admin-more-content and org-more-content)."
+}

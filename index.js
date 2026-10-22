@@ -190,9 +190,33 @@ app.use((err, req, res, next) => {
 
 export default app;
 
+function startServer(port, attempt = 1) {
+  const server = app.listen(port, () => {
+    process.env.PORT = String(port);
+    console.log(`🏆 ScoreSync running at http://localhost:${port}`);
+  });
+
+  server.on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      const nextPort = port + 1;
+      const maxAttempts = 20;
+
+      if (attempt < maxAttempts) {
+        console.warn(`Port ${port} is already in use. Retrying on ${nextPort}...`);
+        startServer(nextPort, attempt + 1);
+        return;
+      }
+
+      console.error(`Unable to start ScoreSync: ports ${port} through ${nextPort - 1} are all occupied.`);
+      process.exit(1);
+    }
+
+    console.error("Failed to start ScoreSync server:", err);
+    process.exit(1);
+  });
+}
+
 // Only start the HTTP server when NOT running on Vercel (Vercel uses the export)
 if (!process.env.ELECTRON && !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`🏆 ScoreSync running at http://localhost:${PORT}`);
-  });
+  startServer(PORT);
 }

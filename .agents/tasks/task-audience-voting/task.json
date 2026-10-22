@@ -1,0 +1,7 @@
+{
+  "task_id": "task-audience-voting",
+  "task_description": "Add Audience Voting (People's Choice Award) to ScoreSync: new votingController.js, public voting page (views/voting/index.xian), 5 new routes, QR code overlay, live vote refresh, voting status badge on show.xian, Toggle Voting + Audience Voting links in admin/organizer More dropdowns, and People's Choice section in results.xian.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}

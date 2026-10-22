@@ -37,6 +37,7 @@ export const injectUser = async (req, res, next) => {
   res.locals.isJudge       = req.session?.userRole === "judge";
   res.locals.isEncoder     = req.session?.userRole === "encoder";
   res.locals.isOrganizer   = req.session?.userRole === "organizer";
+  res.locals.isTabulator   = req.session?.userRole === "tabulator";
 
   res.locals.userAvatar = "";
   if (req.session?.userId) {
