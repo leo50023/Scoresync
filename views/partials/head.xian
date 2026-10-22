@@ -181,6 +181,11 @@
       will-change: transform;
       z-index: 50;
     }
+    /* Hide desktop collapse btn on mobile */
+    #sidebar-collapse-btn { display: none !important; }
+    @media (min-width: 768px) {
+      #sidebar-collapse-btn { display: flex !important; }
+    }
     @media (max-width: 767px) {
       .sidebar {
         position: fixed;
