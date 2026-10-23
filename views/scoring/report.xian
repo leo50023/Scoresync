@@ -322,9 +322,35 @@
       </div>
       <div>
         <div class="section-title">Scoring Criteria</div>
-        <div class="section-sub">{{criteria.length}} criteria — weights must total 100%</div>
+        <div class="section-sub">{{criteria.length}} criteria — weights must total 100% per category</div>
       </div>
     </div>
+    {{#if isMultiCatReport}}
+    {{#each groupedCriteria}}
+    <!-- Category group header -->
+    <div style="padding:8px 20px;background:linear-gradient(135deg,rgba(79,70,229,0.08),rgba(99,102,241,0.04));border-bottom:1px solid rgba(99,102,241,0.15);border-top:1px solid rgba(99,102,241,0.1)">
+      <span style="font-size:11px;font-weight:800;color:#6366f1;text-transform:uppercase;letter-spacing:.08em">{{add1 @index}}. {{name}}</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th class="center" style="width:36px">#</th>
+        <th>Criteria Name</th>
+        <th class="right">Weight</th>
+        <th class="right">Max Score</th>
+      </tr></thead>
+      <tbody>
+        {{#each criteria}}
+        <tr>
+          <td class="center" style="color:#94a3b8;font-size:11px">{{add1 @index}}</td>
+          <td style="font-weight:600;color:#1e293b">{{name}}</td>
+          <td class="right"><span style="font-weight:700;color:#6366f1">{{weight}}%</span><span class="weight-bar-wrap"><span class="weight-bar" style="width:{{weight}}%"></span></span></td>
+          <td class="right" style="color:#94a3b8">{{maxScore}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{/each}}
+    {{else}}
     <table>
       <thead><tr>
         <th class="center" style="width:40px">#</th>
@@ -347,6 +373,7 @@
       </tbody>
     </table>
     {{/if}}
+    {{/if}}
 
     <!-- Official Ranked Results -->
     {{#if ranked.length}}
@@ -362,35 +389,37 @@
     <div style="overflow-x:auto">
       <table style="table-layout:fixed;min-width:600px">
         <colgroup>
-          <col style="width:44px"/>
-          <col style="width:34px"/>
-          <col style="width:120px"/>
-          <col style="width:70px"/>
+          <col style="width:44px"/><col style="width:34px"/><col style="width:120px"/><col style="width:70px"/>
+          {{#if isMultiCatReport}}
+          {{#each groupedCriteria}}<col style="width:72px"/>{{/each}}
+          {{else}}
           {{#each criteria}}<col style="width:58px"/>{{/each}}
-          <col style="width:72px"/>
-          <col style="width:48px"/>
+          {{/if}}
+          <col style="width:72px"/><col style="width:48px"/>
         </colgroup>
         <thead><tr>
-          <th class="center">Rank</th>
-          <th class="center">No.</th>
-          <th>Name</th>
-          <th>Barangay</th>
+          <th class="center">Rank</th><th class="center">No.</th><th>Name</th><th>Barangay</th>
+          {{#if isMultiCatReport}}
+          {{#each groupedCriteria}}<th class="right" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px" title="{{name}}">{{name}}</th>{{/each}}
+          {{else}}
           {{#each criteria}}<th class="right" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{name}}">{{name}}</th>{{/each}}
-          <th class="right">Final Score</th>
-          <th class="right">Gap</th>
+          {{/if}}
+          <th class="right">Final Score</th><th class="right">Gap</th>
         </tr></thead>
         <tbody>
           {{#each ranked}}
           <tr style="{{#if (eq rank 1)}}background:#fffbeb;{{/if}}">
-            <td class="center">
-              <span class="rank-badge {{#if (eq rank 1)}}rank-1{{else}}{{#if (eq rank 2)}}rank-2{{else}}{{#if (eq rank 3)}}rank-3{{else}}rank-other{{/if}}{{/if}}{{/if}}">{{rank}}</span>
-            </td>
+            <td class="center"><span class="rank-badge {{#if (eq rank 1)}}rank-1{{else}}{{#if (eq rank 2)}}rank-2{{else}}{{#if (eq rank 3)}}rank-3{{else}}rank-other{{/if}}{{/if}}{{/if}}">{{rank}}</span></td>
             <td class="center" style="font-weight:700;color:var(--text-muted);font-size:11px">{{number}}</td>
             <td style="font-weight:700;color:#1e293b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-              {{name}}
-              {{#if tieBroken}}<span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;background:#fef3c7;color:#92400e;margin-left:4px">⚖ Tie Broken</span>{{/if}}
+              {{name}}{{#if tieBroken}}<span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;background:#fef3c7;color:#92400e;margin-left:4px">⚖ Tie Broken</span>{{/if}}
             </td>
+            <td style="font-size:11px;color:var(--text-muted)">{{barangay}}</td>
+            {{#if @root.isMultiCatReport}}
+            {{#each categoryScores}}<td class="right score-val">{{score}}%</td>{{/each}}
+            {{else}}
             {{#each breakdown}}<td class="right score-val">{{avg}}</td>{{/each}}
+            {{/if}}
             <td class="right final-score">{{finalScoreDisplay}}%</td>
             <td class="right gap-val" style="font-size:11px">{{#if (eq rank 1)}}—{{else}}-{{gapToFirst}}{{/if}}</td>
           </tr>

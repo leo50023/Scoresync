@@ -705,20 +705,33 @@ export const reportPage = async (req, res) => {
       }
     });
 
-    // Build ranked results (same logic as resultsPage)
-    const COLORS = ["#2563eb","#7c3aed","#059669","#dc2626","#d97706","#0891b2","#be185d","#65a30d"];
-    const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
-        const avg = judgeScores.length
-          ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length
-          : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        totalWeighted += weighted;
-        return { name: cr.name, weight: cr.weight, avg: avg.toFixed(2), weighted: weighted.toFixed(2), color: COLORS[i % 8] };
+    // Detect multi-category + build grouped criteria
+    const isMultiCatReport = criteria.some(cr => cr.categoryId);
+    const groupedCriteria = [];
+    if (isMultiCatReport) {
+      const catMap = {};
+      criteria.forEach(cr => {
+        if (!cr.categoryId) return;
+        if (!catMap[cr.categoryId]) catMap[cr.categoryId] = { id: cr.categoryId, name: cr.categoryName, criteria: [] };
+        catMap[cr.categoryId].criteria.push(cr);
       });
-      return { ...c, breakdown, finalScore: totalWeighted.toFixed(4), finalScoreDisplay: totalWeighted.toFixed(2) };
+      Object.values(catMap).forEach(cat => groupedCriteria.push(cat));
+    }
+
+    // Build ranked results using computeFinalScore
+    const ranked = contestants.map(c => {
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      // Also build per-category scores for the ranked table
+      const categoryScores = groupedCriteria.map(cat => {
+        let t = 0;
+        cat.criteria.forEach(cr => {
+          const js = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+          const avg = js.length ? js.reduce((sum, s) => sum + s.score, 0) / js.length : 0;
+          t += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+        });
+        return { categoryId: cat.id, categoryName: cat.name, score: t.toFixed(2) };
+      });
+      return { ...c, breakdown, finalScore, finalScoreDisplay, categoryScores };
     });
     ranked.sort((a, b) => b.finalScore - a.finalScore);
 
@@ -867,6 +880,8 @@ export const reportPage = async (req, res) => {
       tabulators,
       isMultiCategory,
       categoriesReport,
+      isMultiCatReport,
+      groupedCriteria,
     });
   } catch (err) {
     console.error(err);
