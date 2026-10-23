@@ -437,8 +437,6 @@
   </div>
   {{/if}}
 
-</div>
-
   <!-- ── Tabulator Certificate & Signature ── -->
   {{#if tabulators.length}}
   <div class="paper sig-section">
@@ -537,7 +535,11 @@
       ScoreSync Official Tabulation Certificate &bull; {{event.name}} &bull; {{generatedAt}}
     </div>
   </div>
-  {{/if}}<div style="position:fixed;bottom:20px;right:20px;background:#065f46;color:#6ee7b7;border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:12px 18px;font-size:12px;font-weight:700;z-index:200;font-family:Inter,sans-serif">{{success_msg}}</div>{{/if}}
+  {{/if}}
+
+</div>
+
+{{#if success_msg}}<div style="position:fixed;bottom:20px;right:20px;background:#065f46;color:#6ee7b7;border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:12px 18px;font-size:12px;font-weight:700;z-index:200;font-family:Inter,sans-serif">{{success_msg}}</div>{{/if}}
 {{#if error_msg}}<div style="position:fixed;bottom:20px;right:20px;background:#7f1d1d;color:#fca5a5;border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px 18px;font-size:12px;font-weight:700;z-index:200;font-family:Inter,sans-serif">{{error_msg}}</div>{{/if}}
 
 </body>
