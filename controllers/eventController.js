@@ -95,12 +95,31 @@ export const storeEvent = async (req, res) => {
     });
 
     // -- Save inline criteria submitted from create form ----------------------
-    const criteria = parseEventCriteria(req.body);
-    await Promise.all(
-      criteria.map(criterion => addDoc(collection(db, EVENTS, evRef.id, "criteria"), {
-        ...criterion, createdAt: serverTimestamp(),
-      }))
-    );
+    const useMultiCategory = req.body.useMultiCategory;
+    if (useMultiCategory) {
+      // Multi-category template â€” create categories + per-category criteria
+      try {
+        const template = JSON.parse(useMultiCategory);
+        for (const cat of template) {
+          const catRef = await addDoc(collection(db, EVENTS, evRef.id, "categories"), {
+            name: cat.name, order: cat.order, createdAt: serverTimestamp(),
+          });
+          for (const cr of (cat.criteria || [])) {
+            await addDoc(collection(db, EVENTS, evRef.id, "categories", catRef.id, "criteria"), {
+              name: cr.name, weight: cr.weight, maxScore: cr.maxScore,
+              description: "", createdAt: serverTimestamp(),
+            });
+          }
+        }
+      } catch (e) { console.error("Multi-category template error:", e); }
+    } else {
+      const criteria = parseEventCriteria(req.body);
+      await Promise.all(
+        criteria.map(criterion => addDoc(collection(db, EVENTS, evRef.id, "criteria"), {
+          ...criterion, createdAt: serverTimestamp(),
+        }))
+      );
+    }
 
     req.flash("success_msg", `Event "${name}" created successfully.`);
     res.redirect(`/events/${evRef.id}`);
@@ -140,7 +159,7 @@ export const showEvent = async (req, res) => {
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    // Audit log — sorted newest first
+    // Audit log ï¿½ sorted newest first
     const auditLog = auditSnap.docs
       .map(d => {
         const data = d.data();
@@ -150,7 +169,7 @@ export const showEvent = async (req, res) => {
           timestampStr: data.timestamp?.toDate?.()?.toLocaleString("en-PH", {
             month: "short", day: "numeric", year: "numeric",
             hour: "2-digit", minute: "2-digit", hour12: true,
-          }) || "—",
+          }) || "ï¿½",
         };
       })
       .sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
@@ -200,7 +219,7 @@ export const editEventPage = async (req, res) => {
     if (!snap.exists()) return res.redirect("/events");
     const ev = { id: snap.id, ...snap.data() };
     res.render("events/edit", {
-      title:         `Edit — ${ev.name}`,
+      title:         `Edit ï¿½ ${ev.name}`,
       event:         ev,
       userName:      req.session.userName,
       userRole:      req.session.userRole,
@@ -329,7 +348,7 @@ export const assignJudge = async (req, res) => {
       const ev     = evSnap.data();
       const judge  = judgeSnap.data();
 
-      // Send email automatically — fire-and-forget (don't block the response)
+      // Send email automatically ï¿½ fire-and-forget (don't block the response)
       sendJudgeAssignedEmail({
         judgeName:  judge.name  || judge.displayName || 'Judge',
         judgeEmail: judge.email || '',

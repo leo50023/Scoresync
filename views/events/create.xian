@@ -245,27 +245,58 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2.5"/><circle cx="6.5" cy="17" r="2.5"/></svg>
               Scoring Criteria
             </h2>
-            <span id="criteria-weight-badge" class="text-xs font-extrabold px-2 py-0.5 rounded-full" style="background:rgba(139,92,246,0.15);color:#c4b5fd;border:1px solid rgba(139,92,246,0.3)">0 / 100%</span>
-          </div>
-          <div class="px-5 py-2 text-xs" style="color:var(--text-muted)">Auto-filled from event type. Edit, remove, or add rows. Weights must total <strong style="color:#c4b5fd">100%</strong>. Audience Impact is scored by judges; public votes remain a separate People's Choice award.</div>
-          <!-- Column headers -->
-          <div class="px-5 flex items-center gap-2 mb-1">
-            <span class="flex-1 text-[10px] font-bold uppercase tracking-wider" style="color:var(--text-faint)">Criteria Name</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:62px;min-width:62px;color:var(--text-faint)">Weight%</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:68px;min-width:68px;color:var(--text-faint)">Max Pts</span>
-            <span style="width:28px"></span>
+            <div class="flex items-center gap-2">
+              <span id="criteria-weight-badge" class="text-xs font-extrabold px-2 py-0.5 rounded-full" style="background:rgba(139,92,246,0.15);color:#c4b5fd;border:1px solid rgba(139,92,246,0.3)">0 / 100%</span>
+            </div>
           </div>
 
-          <!-- Criteria rows -->
-          <div id="criteria-rows" class="px-5 space-y-2 pb-2"></div>
-
-          <!-- Add row button -->
-          <div class="px-5 py-3">
-            <button type="button" onclick="addCriteriaRow()" class="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition"
-              style="background:rgba(139,92,246,0.08);color:#a78bfa;border:1.5px dashed rgba(139,92,246,0.3)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add Criteria Row
+          <!-- Multi-category toggle -->
+          <div class="px-5 py-3 flex items-center gap-3" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+            <div class="flex-1">
+              <div class="text-xs font-bold" style="color:var(--text-primary)">Use Multi-Category Template</div>
+              <div class="text-[11px]" style="color:var(--text-muted)">Auto-fill 5 categories with preset criteria (Production Number, Festival Headdress, etc.)</div>
+            </div>
+            <button type="button" id="multi-cat-btn" onclick="toggleMultiCategory()"
+              class="flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition"
+              style="background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3)">
+              Enable
             </button>
+          </div>
+
+          <!-- Multi-category preview (hidden by default) -->
+          <div id="multi-cat-preview" class="hidden px-5 py-3 space-y-3">
+            <div class="rounded-xl p-3" style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15)">
+              <p class="text-xs font-bold mb-2" style="color:#a5b4fc">5 categories will be created after saving:</p>
+              <div class="space-y-1.5 text-[11px]" style="color:var(--text-secondary)">
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style="background:#4f46e5">1</span> Production Number (5 criteria)</div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style="background:#4f46e5">2</span> Festival Headdress (4 criteria)</div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style="background:#4f46e5">3</span> Denim Attire (5 criteria)</div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style="background:#4f46e5">4</span> Casual Wear (5 criteria)</div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style="background:#4f46e5">5</span> Long Gown (5 criteria)</div>
+              </div>
+            </div>
+            <input type="hidden" name="useMultiCategory" id="use-multi-cat" value=""/>
+          </div>
+
+          <div id="flat-criteria-section">
+            <div class="px-5 py-2 text-xs" style="color:var(--text-muted)">Auto-filled from event type. Edit, remove, or add rows. Weights must total <strong style="color:#c4b5fd">100%</strong>.</div>
+            <!-- Column headers -->
+            <div class="px-5 flex items-center gap-2 mb-1">
+              <span class="flex-1 text-[10px] font-bold uppercase tracking-wider" style="color:var(--text-faint)">Criteria Name</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:76px;min-width:76px;color:var(--text-faint)">Weight%</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-center" style="width:76px;min-width:76px;color:var(--text-faint)">Max Pts</span>
+              <span style="width:28px"></span>
+            </div>
+            <!-- Criteria rows -->
+            <div id="criteria-rows" class="px-5 space-y-2 pb-2"></div>
+            <!-- Add row button -->
+            <div class="px-5 py-3">
+              <button type="button" onclick="addCriteriaRow()" class="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition"
+                style="background:rgba(139,92,246,0.08);color:#a78bfa;border:1.5px dashed rgba(139,92,246,0.3)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add Criteria Row
+              </button>
+            </div>
           </div>
         </div>
 
@@ -600,11 +631,11 @@ function renderCriteriaRows() {
       <input type="number" name="criteria[weight]" value="${row.weight}"
         min="1" max="100" placeholder="%" required
         oninput="_criteriaRows[${i}].weight=Number(this.value)||0;updateWeightBadge()"
-        class="form-input-bare text-xs py-2 text-center" style="width:62px;min-width:62px;border-radius:12px"/>
+        class="form-input-bare text-xs py-2 text-center" style="width:76px;min-width:76px;border-radius:12px"/>
       <input type="number" name="criteria[max]" value="${row.max}"
         min="1" placeholder="Max" required
         oninput="_criteriaRows[${i}].max=Number(this.value)||100"
-        class="form-input-bare text-xs py-2 text-center" style="width:68px;min-width:68px;border-radius:12px"/>
+        class="form-input-bare text-xs py-2 text-center" style="width:76px;min-width:76px;border-radius:12px"/>
       <input type="hidden" name="criteria[desc]" value=""/>
       <button type="button" onclick="removeCriteriaRow(${i})"
         class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-xs transition"
@@ -626,6 +657,87 @@ function updateWeightBadge() {
   badge.style.color         = ok ? '#6ee7b7'               : '#c4b5fd';
   badge.style.borderColor   = ok ? 'rgba(16,185,129,0.3)'  : 'rgba(139,92,246,0.3)';
 }
+
+// ── Multi-category template toggle ──────────────────────────────────────────
+const MULTI_CATEGORY_TEMPLATE = [
+  {
+    name: "Production Number", order: 1,
+    criteria: [
+      { name: "Stage Presence and Projection",     weight: 30, maxScore: 100 },
+      { name: "Dance Performance and Execution",   weight: 25, maxScore: 100 },
+      { name: "Energy and Audience Impact",        weight: 20, maxScore: 100 },
+      { name: "Coordination and Synchronization",  weight: 15, maxScore: 100 },
+      { name: "Overall Performance",               weight: 10, maxScore: 100 },
+    ]
+  },
+  {
+    name: "Festival Headdress", order: 2,
+    criteria: [
+      { name: "Creativity and Originality",              weight: 30, maxScore: 100 },
+      { name: "Craftsmanship and Quality",               weight: 25, maxScore: 100 },
+      { name: "Relevance to Festival Theme and Culture", weight: 25, maxScore: 100 },
+      { name: "Overall Appearance and Impact",           weight: 20, maxScore: 100 },
+    ]
+  },
+  {
+    name: "Denim Attire", order: 3,
+    criteria: [
+      { name: "Style and Fashion Sense",       weight: 30, maxScore: 100 },
+      { name: "Confidence and Stage Presence", weight: 25, maxScore: 100 },
+      { name: "Appropriateness of Attire",     weight: 20, maxScore: 100 },
+      { name: "Poise and Catwalk",             weight: 15, maxScore: 100 },
+      { name: "Overall Appearance",            weight: 10, maxScore: 100 },
+    ]
+  },
+  {
+    name: "Casual Wear", order: 4,
+    criteria: [
+      { name: "Style and Fashion Sense",       weight: 30, maxScore: 100 },
+      { name: "Confidence and Stage Presence", weight: 25, maxScore: 100 },
+      { name: "Appropriateness of Attire",     weight: 20, maxScore: 100 },
+      { name: "Poise and Catwalk",             weight: 15, maxScore: 100 },
+      { name: "Overall Appearance",            weight: 10, maxScore: 100 },
+    ]
+  },
+  {
+    name: "Long Gown", order: 5,
+    criteria: [
+      { name: "Elegance and Sophistication",     weight: 30, maxScore: 100 },
+      { name: "Beauty and Overall Appearance",   weight: 25, maxScore: 100 },
+      { name: "Stage Presence and Confidence",   weight: 20, maxScore: 100 },
+      { name: "Poise and Catwalk",               weight: 15, maxScore: 100 },
+      { name: "Gown Design and Styling",         weight: 10, maxScore: 100 },
+    ]
+  }
+];
+
+let _multiCategoryEnabled = false;
+
+window.toggleMultiCategory = function() {
+  _multiCategoryEnabled = !_multiCategoryEnabled;
+  const preview = document.getElementById('multi-cat-preview');
+  const flatSection = document.getElementById('flat-criteria-section');
+  const btn = document.getElementById('multi-cat-btn');
+  const hiddenInput = document.getElementById('use-multi-cat');
+
+  if (_multiCategoryEnabled) {
+    preview.classList.remove('hidden');
+    flatSection.classList.add('hidden');
+    btn.textContent = 'Disable';
+    btn.style.background = 'rgba(239,68,68,0.12)';
+    btn.style.color = '#fca5a5';
+    btn.style.borderColor = 'rgba(239,68,68,0.3)';
+    hiddenInput.value = JSON.stringify(MULTI_CATEGORY_TEMPLATE);
+  } else {
+    preview.classList.add('hidden');
+    flatSection.classList.remove('hidden');
+    btn.textContent = 'Enable';
+    btn.style.background = 'rgba(99,102,241,0.12)';
+    btn.style.color = '#a5b4fc';
+    btn.style.borderColor = 'rgba(99,102,241,0.3)';
+    hiddenInput.value = '';
+  }
+};
 
 window.addCriteriaRow = function() {
   _criteriaRows.push({ name: '', weight: 0, max: 100 });
