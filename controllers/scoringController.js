@@ -14,8 +14,11 @@ const CRITERIA_COLORS = [
 
 // ── Helper: load criteria for an event (flat or multi-category) ──────────────
 async function loadCriteria(eventId) {
-  // criteria loaded via loadCriteria
-  let criteria    = crSnap;
+  const crSnap = await getDocs(collection(db, "events", eventId, "criteria"));
+  let criteria = crSnap.docs.map((d, i) => ({
+    id: d.id, ...d.data(),
+    color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
+  }));
   if (criteria.length === 0) {
     try {
       const catSnap = await getDocs(collection(db, "events", eventId, "categories"));
@@ -24,13 +27,13 @@ async function loadCriteria(eventId) {
       for (const cat of cats) {
         const cs = await getDocs(collection(db, "events", eventId, "categories", cat.id, "criteria"));
         cs.docs.forEach(d => {
-            criteria.push({
-              id: d.id, ...d.data(),
-              categoryId:   cat.id,
-              categoryName: cat.name,
-              color: CRITERIA_COLORS[ci++ % CRITERIA_COLORS.length],
-            });
+          criteria.push({
+            id: d.id, ...d.data(),
+            categoryId:   cat.id,
+            categoryName: cat.name,
+            color: CRITERIA_COLORS[ci++ % CRITERIA_COLORS.length],
           });
+        });
       }
     } catch (_) {}
   }
@@ -324,32 +327,8 @@ export const resultsPage = async (req, res) => {
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
 
-    // ── Load criteria: flat OR from all categories ────────────────────────
-    let criteria    = crSnap;
-
-    // If no flat criteria, load from categories (multi-category event)
-    if (criteria.length === 0) {
-      try {
-        const catSnap = await getDocs(collection(db, "events", eventId, "categories"));
-        const allCatCriteria = [];
-        let colorIdx = 0;
-        const catDocs = catSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b)=>(a.order||0)-(b.order||0));
-        for (const cat of catDocs) {
-          const catCrSnap = await getDocs(
-            collection(db, "events", eventId, "categories", cat.id, "criteria")
-          );
-          catCrSnap.docs.forEach(d => {
-            allCatCriteria.push({
-              id: d.id, ...d.data(),
-              categoryId: cat.id,
-              categoryName: cat.name,
-              color: CRITERIA_COLORS[colorIdx++ % CRITERIA_COLORS.length],
-            });
-          });
-        }
-        criteria = allCatCriteria;
-      } catch (_) {}
-    }
+    // ── criteria already loaded via loadCriteria (handles flat + multi-category)
+    const criteria = crSnap;
     const allScores = sSnap.docs.map(d => d.data());
 
     const allVotes = vSnap.docs.map(d => d.data());
