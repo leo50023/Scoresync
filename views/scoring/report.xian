@@ -34,8 +34,6 @@
     .btn-print { background: linear-gradient(135deg,#2563eb,#7c3aed); color: #fff; border-color: transparent; }
     .nav-title { color: #e2e8f0; font-size: 13px; font-weight: 700; margin-left: auto; margin-right: auto; }
 
-    .page-wrap { max-width: 850px; margin: 80px auto 40px; padding: 0 16px; }
-
     /* ── Paper card ── */
     .paper {
       background: #fff;
@@ -190,13 +188,19 @@
       body { background: #fff !important; }
       .screen-nav { display: none !important; }
       .page-wrap { margin-top: 0 !important; padding: 0 !important; max-width: 100% !important; }
-      .paper { border-radius: 0 !important; box-shadow: none !important; margin-bottom: 0 !important; page-break-inside: avoid; }
-      .judge-sheet { page-break-before: always; }
+      .paper { border-radius: 0 !important; box-shadow: none !important; margin-bottom: 0 !important; page-break-inside: avoid; page-break-after: always; }
+      .paper:last-child { page-break-after: auto; }
+      .judge-sheet { page-break-before: always; page-break-inside: avoid; }
       .sig-section { page-break-before: always; }
       .no-print { display: none !important; }
       tbody tr:hover { background: transparent !important; }
       .sign-btn { display: none !important; }
     }
+
+    /* ── Screen: tighten spacing between pages ── */
+    .page-wrap { max-width: 850px; margin: 80px auto 20px; padding: 0 16px; }
+    .paper { margin-bottom: 12px; }
+    .judge-sheet { margin-bottom: 12px; }
   </style>
 </head>
 <body>
