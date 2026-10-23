@@ -310,6 +310,43 @@ function applyTieBreaking(ranked, criteria) {
   }
 }
 
+// ── Helper: compute final score (flat = sum of weighted, multi-cat = average of category scores)
+function computeFinalScore(c, criteria, allScores) {
+  const isMultiCat = criteria.some(cr => cr.categoryId);
+  const breakdown = criteria.map((cr, i) => {
+    const js = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+    const avg = js.length ? js.reduce((sum, s) => sum + s.score, 0) / js.length : 0;
+    const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+    const barPct = Math.min((avg / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1);
+    return { name: cr.name, weight: cr.weight, color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
+             avg: avg.toFixed(2), weighted: weighted.toFixed(2), barPct, categoryId: cr.categoryId || null };
+  });
+
+  let finalScore;
+  if (isMultiCat) {
+    // Group by category, compute per-category score (0-100%), then average them
+    const catMap = {};
+    criteria.forEach(cr => {
+      if (!cr.categoryId) return;
+      if (!catMap[cr.categoryId]) catMap[cr.categoryId] = [];
+      catMap[cr.categoryId].push(cr);
+    });
+    const catScores = Object.values(catMap).map(catCriteria => {
+      let t = 0;
+      catCriteria.forEach(cr => {
+        const js2 = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+        const avg2 = js2.length ? js2.reduce((s, x) => s + x.score, 0) / js2.length : 0;
+        t += (avg2 / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+      });
+      return t;
+    });
+    finalScore = catScores.length ? catScores.reduce((a, b) => a + b, 0) / catScores.length : 0;
+  } else {
+    finalScore = breakdown.reduce((sum, b) => sum + parseFloat(b.weighted), 0);
+  }
+  return { breakdown, finalScore: finalScore.toFixed(4), finalScoreDisplay: finalScore.toFixed(2) };
+}
+
 // --- Results / Leaderboard ----------------------------------------------------
 export const resultsPage = async (req, res) => {
   const { eventId } = req.params;
@@ -347,32 +384,8 @@ export const resultsPage = async (req, res) => {
     const judgeCount = Object.keys(judgeMap).length || 1;
 
     const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(
-          s => s.contestantId === c.id && s.criteriaId === cr.id
-        );
-        const avg = judgeScores.length
-          ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length
-          : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        const barPct   = Math.min((avg / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1);
-        totalWeighted += weighted;
-        return {
-          name:     cr.name,
-          weight:   cr.weight,
-          color:    CRITERIA_COLORS[i % CRITERIA_COLORS.length],
-          avg:      avg.toFixed(2),
-          weighted: weighted.toFixed(2),
-          barPct,
-        };
-      });
-      return {
-        ...c,
-        breakdown,
-        finalScore:        totalWeighted.toFixed(4),
-        finalScoreDisplay: totalWeighted.toFixed(2),
-      };
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      return { ...c, breakdown, finalScore, finalScoreDisplay };
     });
 
     ranked.sort((a, b) => b.finalScore - a.finalScore);
