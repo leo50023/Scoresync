@@ -102,7 +102,7 @@ export const scoringPage = async (req, res) => {
     }
 
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = crSnap.docs ? crSnap.docs.map((d,i) => ({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]})) : crSnap;
 
     const scoreMap = {};
     sSnap.docs.forEach(d => {
@@ -328,7 +328,7 @@ export const resultsPage = async (req, res) => {
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
 
     // ── criteria already loaded via loadCriteria (handles flat + multi-category)
-    const criteria = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores = sSnap.docs.map(d => d.data());
 
     const allVotes = vSnap.docs.map(d => d.data());
@@ -483,7 +483,7 @@ export const displayBoard = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/");
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId) judgeMap[s.judgeId] = true; });
@@ -528,7 +528,7 @@ export const publicResults = async (req, res) => {
     const ev = { id: eSnap.id, ...eSnap.data() };
     // Only public if completed or organizer made it public
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId && !judgeMap[s.judgeId]) judgeMap[s.judgeId] = s.judgeName || "Judge"; });
@@ -585,7 +585,7 @@ export const exportResults = async (req, res) => {
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
 
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores = sSnap.docs.map(d => d.data());
 
     const ranked = contestants.map(c => {
@@ -679,7 +679,7 @@ export const reportPage = async (req, res) => {
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores   = sSnap.docs.map(d => d.data());
     const sigMap      = {};
     sigSnap.docs.forEach(d => { sigMap[d.id] = d.data(); });
@@ -898,7 +898,7 @@ export const scoresJson = async (req, res) => {
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores = sSnap.docs.map(d => d.data());
 
     const judgeMap = {};
@@ -979,7 +979,7 @@ export const announcePage = async (req, res) => {
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores = sSnap.docs.map(d => d.data());
 
     const ranked = contestants.map(c => {
@@ -1115,7 +1115,7 @@ export const tabulatorScoringPage = async (req, res) => {
     const locked = ev.scoringLocked || false;
 
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap;
+    const criteria = Array.isArray(crSnap) ? crSnap : crSnap.docs.map((d,i)=>({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]}));
     const allScores = sSnap.docs.map(d => ({ docId: d.id, ...d.data() }));
 
     // Build a map of judgeId -> judgeName (from submitted scores)
