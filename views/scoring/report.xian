@@ -40,7 +40,9 @@
       border-radius: 16px;
       box-shadow: 0 4px 32px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+      height: auto !important;
+      min-height: 0 !important;
     }
 
     /* ── Report header / letterhead ── */
@@ -188,8 +190,7 @@
       body { background: #fff !important; }
       .screen-nav { display: none !important; }
       .page-wrap { margin-top: 0 !important; padding: 0 !important; max-width: 100% !important; }
-      .paper { border-radius: 0 !important; box-shadow: none !important; margin-bottom: 0 !important; page-break-inside: avoid; page-break-after: always; }
-      .paper:last-child { page-break-after: auto; }
+      .paper { border-radius: 0 !important; box-shadow: none !important; margin-bottom: 16px !important; page-break-inside: avoid; }
       .judge-sheet { page-break-before: always; page-break-inside: avoid; }
       .sig-section { page-break-before: always; }
       .no-print { display: none !important; }
