@@ -159,6 +159,17 @@ export const showEvent = async (req, res) => {
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     const criteria    = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
+    // Load categories for multi-category events
+    let categories = [];
+    try {
+      const catSnap = await getDocs(collection(db, EVENTS, req.params.id, "categories"));
+      const catDocs = catSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b)=>(a.order||0)-(b.order||0));
+      categories = await Promise.all(catDocs.map(async cat => {
+        const crSnap2 = await getDocs(collection(db, EVENTS, req.params.id, "categories", cat.id, "criteria"));
+        return { ...cat, criteria: crSnap2.docs.map(d => ({ id: d.id, ...d.data() })) };
+      }));
+    } catch (_) { categories = []; }
+
     // Audit log � sorted newest first
     const auditLog = auditSnap.docs
       .map(d => {
@@ -190,6 +201,7 @@ export const showEvent = async (req, res) => {
       event:       ev,
       contestants,
       criteria,
+      categories,
       finance,
       auditLog,
       allJudges,
