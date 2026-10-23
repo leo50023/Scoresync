@@ -25,6 +25,10 @@
     })();
   </script>
   <style>
+    /* ── Fix 300ms tap delay on all mobile browsers ── */
+    html { touch-action: manipulation; }
+    * { -webkit-tap-highlight-color: transparent; }
+
     /* ── Theme CSS Variables ── */
     :root, [data-theme="dark"] {
       --bg-page:        #0a0f1e;
@@ -894,10 +898,10 @@
       if (document.readyState !== 'loading') stopLoader();
     })();
 
-    // Keep Vercel serverless function warm — ping every 25s to avoid cold starts
+    // Keep Vercel serverless function warm — ping every 15s to avoid cold starts
     (function keepWarm() {
       fetch('/_health', { method: 'GET', cache: 'no-store' }).catch(() => {});
-      setTimeout(keepWarm, 25000);
+      setTimeout(keepWarm, 15000);
     })();
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {

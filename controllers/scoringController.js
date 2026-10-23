@@ -753,6 +753,74 @@ export const reportPage = async (req, res) => {
       };
     });
 
+    // ── Per-category report data (for multi-category events) ─────────────────
+    const isMultiCategory = criteria.some(cr => cr.categoryId);
+    let categoriesReport = [];
+    if (isMultiCategory) {
+      // Group criteria by category
+      const catMap = {};
+      criteria.forEach(cr => {
+        if (!cr.categoryId) return;
+        if (!catMap[cr.categoryId]) catMap[cr.categoryId] = { id: cr.categoryId, name: cr.categoryName, criteria: [] };
+        catMap[cr.categoryId].criteria.push(cr);
+      });
+      categoriesReport = Object.values(catMap);
+
+      // For each category: build ranked contestants + per-judge sheets
+      categoriesReport = categoriesReport.map(cat => {
+        const catCriteria = cat.criteria;
+
+        // Ranked within this category
+        const catRanked = contestants.map(c => {
+          let total = 0;
+          const breakdown = catCriteria.map(cr => {
+            const judgeScores = allScores.filter(s =>
+              s.contestantId === c.id && s.criteriaId === cr.id
+            );
+            const avg = judgeScores.length
+              ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length : 0;
+            const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+            total += weighted;
+            return { name: cr.name, weight: cr.weight, avg: avg.toFixed(2), weighted: weighted.toFixed(2) };
+          });
+          return { ...c, breakdown, finalScore: total.toFixed(4), finalScoreDisplay: total.toFixed(2) };
+        });
+        catRanked.sort((a, b) => parseFloat(b.finalScore) - parseFloat(a.finalScore));
+        const catTop = catRanked.length ? parseFloat(catRanked[0].finalScore) : 0;
+        catRanked.forEach((c, i) => { c.rank = i + 1; c.gapToFirst = (catTop - parseFloat(c.finalScore)).toFixed(2); });
+
+        // Per-judge sheets for this category
+        const catJudgeBreakdown = judgeEntries.map(([jId, jName], idx) => {
+          const catScores = allScores.filter(s => s.judgeId === jId && (s.categoryId === cat.id || catCriteria.some(cr => cr.id === s.criteriaId)));
+          const scoredCount = new Set(catScores.map(s => s.contestantId)).size;
+          const contestantScores = catRanked.map(c => ({
+            name: c.name, number: c.number,
+            scores: catCriteria.map(cr => {
+              const s = allScores.find(sc => sc.judgeId === jId && sc.contestantId === c.id && sc.criteriaId === cr.id);
+              return { criteriaName: cr.name, value: s ? s.score : null };
+            }),
+            total: (() => {
+              let t = 0;
+              catCriteria.forEach(cr => {
+                const s = allScores.find(sc => sc.judgeId === jId && sc.contestantId === c.id && sc.criteriaId === cr.id);
+                if (s) t += (s.score / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+              });
+              return t.toFixed(2);
+            })(),
+          }));
+          return {
+            judgeId: jId, judgeName: jName, alias: `Judge ${idx + 1}`,
+            scoredCount, totalContestants: contestants.length,
+            completionPct: contestants.length ? Math.round((scoredCount / contestants.length) * 100) : 0,
+            signed: !!sigMap[jId], signedAt: sigMap[jId] ? sigMap[jId].signedAt : null,
+            contestantScores, isSelf: jId === req.session.userId,
+          };
+        });
+
+        return { ...cat, ranked: catRanked, judgeBreakdown: catJudgeBreakdown };
+      });
+    }
+
     // Build tabulator breakdown for signature section
     const tabulators = tabulatorDocs.map((u, idx) => {
         const sig = sigMap[u.id];
@@ -784,6 +852,8 @@ export const reportPage = async (req, res) => {
       isTabulator: req.session.userRole === "tabulator",
       currentUserId: req.session.userId,
       tabulators,
+      isMultiCategory,
+      categoriesReport,
     });
   } catch (err) {
     console.error(err);
