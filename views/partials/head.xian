@@ -667,10 +667,10 @@
     }
     /* Override dark gradient hero panels to a clean light version */
     [data-theme="light"] div[style*="background:linear-gradient"] {
-      background: #f8fafc !important;
+      background: #f0f4f8 !important;
       color: #0f172a !important;
     }
-    /* KEEP colored branded gradient cards — use higher specificity */
+    /* KEEP only explicitly colored branded gradients */
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#064e3b"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#052e16"],
     [data-theme="light"] div[style*="background:linear-gradient(135deg,#1e3a8a"],
