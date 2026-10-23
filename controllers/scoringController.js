@@ -12,6 +12,34 @@ const CRITERIA_COLORS = [
   "#d97706","#0891b2","#be185d","#65a30d",
 ];
 
+// ── Helper: load criteria for an event (flat or multi-category) ──────────────
+async function loadCriteria(eventId) {
+  // criteria loaded via loadCriteria
+  let criteria = crSnap.docs.map((d, i) => ({
+    id: d.id, ...d.data(),
+    color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
+  }));
+  if (criteria.length === 0) {
+    try {
+      const catSnap = await getDocs(collection(db, "events", eventId, "categories"));
+      const cats = catSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b)=>(a.order||0)-(b.order||0));
+      let ci = 0;
+      for (const cat of cats) {
+        const cs = await getDocs(collection(db, "events", eventId, "categories", cat.id, "criteria"));
+        cs.docs.forEach(d => {
+          criteria.push({
+            id: d.id, ...d.data(),
+            categoryId:   cat.id,
+            categoryName: cat.name,
+            color: CRITERIA_COLORS[ci++ % CRITERIA_COLORS.length],
+          });
+        });
+      }
+    } catch (_) {}
+  }
+  return criteria;
+}
+
 // --- Judge scoring panel ------------------------------------------------------
 export const scoringPage = async (req, res) => {
   const { eventId, categoryId } = req.params;
@@ -289,7 +317,7 @@ export const resultsPage = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap, vSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
       getDocs(collection(db, "events", eventId, "votes")),
     ]);
@@ -298,11 +326,36 @@ export const resultsPage = async (req, res) => {
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap.docs.map((d, i) => ({
-      id: d.id,
-      ...d.data(),
+
+    // ── Load criteria: flat OR from all categories ────────────────────────
+    let criteria = crSnap.docs.map((d, i) => ({
+      id: d.id, ...d.data(),
       color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
     }));
+
+    // If no flat criteria, load from categories (multi-category event)
+    if (criteria.length === 0) {
+      try {
+        const catSnap = await getDocs(collection(db, "events", eventId, "categories"));
+        const allCatCriteria = [];
+        let colorIdx = 0;
+        const catDocs = catSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b)=>(a.order||0)-(b.order||0));
+        for (const cat of catDocs) {
+          const catCrSnap = await getDocs(
+            collection(db, "events", eventId, "categories", cat.id, "criteria")
+          );
+          catCrSnap.docs.forEach(d => {
+            allCatCriteria.push({
+              id: d.id, ...d.data(),
+              categoryId: cat.id,
+              categoryName: cat.name,
+              color: CRITERIA_COLORS[colorIdx++ % CRITERIA_COLORS.length],
+            });
+          });
+        }
+        criteria = allCatCriteria;
+      } catch (_) {}
+    }
     const allScores = sSnap.docs.map(d => d.data());
 
     const allVotes = vSnap.docs.map(d => d.data());
@@ -451,13 +504,13 @@ export const displayBoard = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
     if (!eSnap.exists()) return res.redirect("/");
     const ev          = { id: eSnap.id, ...eSnap.data() };
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap.docs.map((d, i) => ({ id: d.id, ...d.data(), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] }));
+    const criteria    = crSnap;
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId) judgeMap[s.judgeId] = true; });
@@ -495,14 +548,14 @@ export const publicResults = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
     const ev = { id: eSnap.id, ...eSnap.data() };
     // Only public if completed or organizer made it public
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap.docs.map((d, i) => ({ id: d.id, ...d.data(), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] }));
+    const criteria    = crSnap;
     const allScores   = sSnap.docs.map(d => d.data());
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId && !judgeMap[s.judgeId]) judgeMap[s.judgeId] = s.judgeName || "Judge"; });
@@ -552,7 +605,7 @@ export const exportResults = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
 
@@ -639,7 +692,7 @@ export const reportPage = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap, sigSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
       getDocs(collection(db, "events", eventId, "report_signatures")),
     ]);
@@ -802,7 +855,7 @@ export const scoresJson = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
 
@@ -887,7 +940,7 @@ export const announcePage = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
 
@@ -1025,7 +1078,7 @@ export const tabulatorScoringPage = async (req, res) => {
     const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
       getDocs(collection(db, "events", eventId, "scores")),
     ]);
 
@@ -1228,7 +1281,7 @@ export const exportAuditLog = async (req, res) => {
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "audit_log")),
       getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
+      loadCriteria(eventId),
     ]);
     if (!eSnap.exists()) return res.status(404).send("Event not found.");
 
