@@ -1,6 +1,5 @@
 ﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
-{{> navbar }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
@@ -223,7 +222,20 @@
             {{/if}}
           {{/if}}
           {{#if barangay}}<div class="text-xs mt-0.5" style="color:var(--text-muted)">Brgy. {{barangay}}{{#if age}} &bull; {{age}} yrs{{/if}}</div>{{/if}}
-          <!-- Mini criteria bars -->
+          <!-- Mini criteria bars / category scores -->
+          {{#if @root.isMultiCategory}}
+          <!-- Multi-category: show big category score pills -->
+          <div class="flex gap-2 mt-2 flex-wrap">
+            {{#each categoryScores}}
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
+              style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25)">
+              <span style="color:#94a3b8;font-size:10px">{{categoryName}}</span>
+              <span style="color:#c7d2fe;font-weight:800">{{score}}%</span>
+            </div>
+            {{/each}}
+          </div>
+          {{else}}
+          <!-- Single-category: show mini criteria bars -->
           <div class="flex gap-2 mt-2 flex-wrap">
             {{#each breakdown}}
             <div class="flex items-center gap-1.5" title="{{name}}: {{avg}} pts ({{weighted}}%)">
@@ -235,6 +247,7 @@
             </div>
             {{/each}}
           </div>
+          {{/if}}
         </div>
 
         <!-- Final score -->

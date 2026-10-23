@@ -383,9 +383,31 @@ export const resultsPage = async (req, res) => {
     });
     const judgeCount = Object.keys(judgeMap).length || 1;
 
+    // Detect multi-category
+    const isMultiCategory = criteria.some(cr => cr.categoryId);
+    const catGroupMap = {};
+    if (isMultiCategory) {
+      criteria.forEach(cr => {
+        if (!cr.categoryId) return;
+        if (!catGroupMap[cr.categoryId]) catGroupMap[cr.categoryId] = { id: cr.categoryId, name: cr.categoryName, criteria: [] };
+        catGroupMap[cr.categoryId].criteria.push(cr);
+      });
+    }
+    const categoryGroups = Object.values(catGroupMap);
+
     const ranked = contestants.map(c => {
       const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
-      return { ...c, breakdown, finalScore, finalScoreDisplay };
+      // Build per-category scores for display pills
+      const categoryScores = categoryGroups.map(cat => {
+        let t = 0;
+        cat.criteria.forEach(cr => {
+          const js = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+          const avg = js.length ? js.reduce((sum, s) => sum + s.score, 0) / js.length : 0;
+          t += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+        });
+        return { categoryId: cat.id, categoryName: cat.name, score: t.toFixed(2) };
+      });
+      return { ...c, breakdown, finalScore, finalScoreDisplay, categoryScores };
     });
 
     ranked.sort((a, b) => b.finalScore - a.finalScore);
@@ -475,6 +497,7 @@ export const resultsPage = async (req, res) => {
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
+      isMultiCategory,
     });
   } catch (err) {
     console.error(err);
