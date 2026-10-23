@@ -183,19 +183,46 @@
     .sign-btn:hover { opacity: 0.9; }
 
     /* ── Footer ── */
-    .report-footer { text-align: center; padding: 16px; font-size: 10px; color: #94a3b8; border-top: 1px solid #f1f5f9; }
+    .report-footer { text-align: center; padding: 8px 16px; font-size: 9px; color: #94a3b8; border-top: 1px solid #f1f5f9; }
 
     /* ── Print styles ── */
     @media print {
-      body { background: #fff !important; }
+      @page { margin: 10mm 12mm; size: A4 portrait; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { background: #fff !important; font-size: 11px !important; }
       .screen-nav { display: none !important; }
-      .page-wrap { margin-top: 0 !important; padding: 0 !important; max-width: 100% !important; }
-      .paper { border-radius: 0 !important; box-shadow: none !important; margin-bottom: 16px !important; page-break-inside: avoid; }
-      .judge-sheet { page-break-before: always; page-break-inside: avoid; }
-      .sig-section { page-break-before: always; }
+      .page-wrap {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      /* All papers flow together — no forced page breaks between them */
+      .paper {
+        border-radius: 6px !important;
+        box-shadow: 0 0 0 1px #e2e8f0 !important;
+        margin-bottom: 8px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Judge sheets start on new page only if they don't fit */
+      .judge-sheet {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Signature sections avoid breaking mid-card */
+      .sig-section { page-break-inside: avoid; break-inside: avoid; }
+      .sig-grid { gap: 10px !important; }
+      .sig-card { padding: 10px !important; }
       .no-print { display: none !important; }
       tbody tr:hover { background: transparent !important; }
       .sign-btn { display: none !important; }
+      /* Tighter padding in print */
+      .report-header { padding: 16px 20px 12px !important; }
+      thead th { padding: 6px 10px !important; }
+      tbody td { padding: 6px 10px !important; }
+      .section-head { padding: 8px 14px !important; }
+      .judge-header { padding: 8px 14px !important; }
+      .report-footer { padding: 6px 14px !important; }
     }
 
     /* ── Screen: tighten spacing between pages ── */
