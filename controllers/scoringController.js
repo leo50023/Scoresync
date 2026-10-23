@@ -747,7 +747,7 @@ export const reportPage = async (req, res) => {
         totalContestants: contestants.length,
         completionPct,
         signed:           !!sig,
-        signedAt:         sig ? sig.signedAt : null,
+        signedAt:         sig ? (sig.signedAt?.toDate?.()?.toLocaleString('en-PH',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}) || '') : null,
         contestantScores,
         isSelf:           jId === req.session.userId,
       };
@@ -812,7 +812,7 @@ export const reportPage = async (req, res) => {
             judgeId: jId, judgeName: jName, alias: `Judge ${idx + 1}`,
             scoredCount, totalContestants: contestants.length,
             completionPct: contestants.length ? Math.round((scoredCount / contestants.length) * 100) : 0,
-            signed: !!sigMap[jId], signedAt: sigMap[jId] ? sigMap[jId].signedAt : null,
+            signed: !!sigMap[jId], signedAt: sigMap[jId] ? (sigMap[jId].signedAt?.toDate?.()?.toLocaleString('en-PH',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}) || '') : null,
             contestantScores, isSelf: jId === req.session.userId,
           };
         });
@@ -830,7 +830,7 @@ export const reportPage = async (req, res) => {
           alias:         `Chief Tabulator ${idx + 1}`,
           initial:       String(idx + 1),
           signed:        !!sig,
-          signedAt:      sig ? sig.signedAt : null,
+          signedAt:      sig ? (sig.signedAt?.toDate?.()?.toLocaleString('en-PH',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}) || '') : null,
           isSelf:        u.id === req.session.userId,
         };
       });
