@@ -1,7 +1,7 @@
 ﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
-  setDoc, updateDoc, addDoc, serverTimestamp,
+  setDoc, updateDoc, addDoc, serverTimestamp, orderBy, query,
 } from "firebase/firestore";
 import { sanitizeText } from "../utils/sanitize.js";
 import { applyAutoStatus } from "../utils/autoStatus.js";
@@ -14,101 +14,102 @@ const CRITERIA_COLORS = [
 
 // --- Judge scoring panel ------------------------------------------------------
 export const scoringPage = async (req, res) => {
-  const { eventId } = req.params;
-  const judgeId     = req.session.userId;
+  const { eventId, categoryId } = req.params;
+  const judgeId = req.session.userId;
   try {
-    const [eSnap, cSnap, crSnap, sSnap] = await Promise.all([
-      getDoc(doc(db, "events", eventId)),
-      getDocs(collection(db, "events", eventId, "contestants")),
-      getDocs(collection(db, "events", eventId, "criteria")),
-      getDocs(collection(db, "events", eventId, "scores")),
-    ]);
-
+    const eSnap = await getDoc(doc(db, "events", eventId));
     if (!eSnap.exists()) return res.redirect("/events");
-
     const ev = { id: eSnap.id, ...eSnap.data() };
 
-    if (req.session.userRole === 'judge') {
-      await applyAutoStatus(eventId, ev);
+    if (req.session.userRole === 'judge') { await applyAutoStatus(eventId, ev); }
+
+    // Load categories for multi-category events
+    let categories = [];
+    let activeCategoryId = categoryId || null;
+    let activeCategory = null;
+    try {
+      const catSnap = await getDocs(collection(db, "events", eventId, "categories"));
+      categories = catSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (a.order||0)-(b.order||0));
+      if (categories.length > 0) {
+        if (!activeCategoryId) activeCategoryId = categories[0].id;
+        activeCategory = categories.find(c => c.id === activeCategoryId) || categories[0];
+        activeCategoryId = activeCategory.id;
+      }
+    } catch (_) {}
+    const isMultiCategory = categories.length > 0;
+
+    // Load criteria from category or flat event criteria
+    let crSnap;
+    if (isMultiCategory && activeCategoryId) {
+      crSnap = await getDocs(collection(db, "events", eventId, "categories", activeCategoryId, "criteria"));
+    } else {
+      crSnap = await getDocs(collection(db, "events", eventId, "criteria"));
     }
+
+    const [cSnap, sSnap] = await Promise.all([
+      getDocs(collection(db, "events", eventId, "contestants")),
+      getDocs(collection(db, "events", eventId, "scores")),
+    ]);
 
     const readOnly = (req.session.userRole === 'judge' && ev.status === 'completed')
       || (req.session.userRole === 'tabulator' && ev.scoringLocked);
 
-    // Judges may review their submitted scores after completion, but cannot edit them.
     if (req.session.userRole === 'judge' && ev.status !== 'ongoing' && !readOnly) {
-      req.flash("error_msg",
-        ev.status === 'upcoming'
-          ? `"${ev.name}" has not started yet. Scoring opens when the event goes live.`
-          : `"${ev.name}" is no longer available for scoring.`
-      );
+      req.flash("error_msg", ev.status === 'upcoming'
+        ? `"${ev.name}" has not started yet.` : `"${ev.name}" is no longer available for scoring.`);
       return res.redirect("/dashboard");
     }
-
-    // Block if scoring is locked
     if (ev.scoringLocked && req.session.userRole === 'judge' && !readOnly) {
-      req.flash("error_msg", "Scoring has been locked by the administrator. Please contact the event organizer.");
+      req.flash("error_msg", "Scoring has been locked by the administrator.");
       return res.redirect("/dashboard");
     }
-
-    // Block judge if not assigned to this event
-    // Empty assignedJudges means no one assigned yet � block everyone until assigned
     if (req.session.userRole === 'judge') {
       const assignedJudges = ev.assignedJudges || [];
       if (!assignedJudges.includes(judgeId)) {
         req.flash("error_msg", assignedJudges.length === 0
-          ? `No judges have been assigned to "${ev.name}" yet. Please contact the organizer or admin.`
-          : `You are not assigned to "${ev.name}". Please ask the organizer or admin to assign you to this event.`
-        );
+          ? `No judges have been assigned to "${ev.name}" yet.`
+          : `You are not assigned to "${ev.name}".`);
         return res.redirect("/dashboard");
       }
     }
 
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
-    const criteria    = crSnap.docs.map((d, i) => ({
-      id: d.id,
-      ...d.data(),
-      color: CRITERIA_COLORS[i % CRITERIA_COLORS.length],
-    }));
+    const criteria = crSnap.docs.map((d, i) => ({ id: d.id, ...d.data(), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] }));
 
     const scoreMap = {};
     sSnap.docs.forEach(d => {
       const s = d.data();
       if (s.judgeId === judgeId) {
-        scoreMap[`${s.contestantId}|${s.criteriaId}`] = s.score;
+        if (!isMultiCategory || s.categoryId === activeCategoryId) {
+          scoreMap[`${s.contestantId}|${s.criteriaId}`] = s.score;
+        }
       }
     });
 
     const hasExistingScores = Object.keys(scoreMap).length > 0;
-
     const matrix = contestants.map(c => ({
       ...c,
       scores: criteria.map(cr => ({
-        criteriaId:   cr.id,
-        criteriaName: cr.name,
-        weight:       cr.weight,
-        maxScore:     cr.maxScore,
-        color:        cr.color,
-        value:        scoreMap[`${c.id}|${cr.id}`] ?? "",
+        criteriaId: cr.id, criteriaName: cr.name,
+        weight: cr.weight, maxScore: cr.maxScore, color: cr.color,
+        value: scoreMap[`${c.id}|${cr.id}`] ?? "",
       })),
     }));
 
+    const categoryProgress = categories.map(cat => {
+      const catScores = sSnap.docs.filter(d => d.data().judgeId === judgeId && d.data().categoryId === cat.id);
+      return { ...cat, scoreCount: catScores.length };
+    });
+
     res.render("scoring/judge", {
-      title:       `Score Entry � ${ev.name}`,
-      event:       ev,
-      contestants: matrix,
-      criteria,
-      judgeId,
-      scoringLocked: ev.scoringLocked || false,
-      readOnly,
-      hasExistingScores,
-      userName:    req.session.userName,
-      userRole:    req.session.userRole,
+      title: `Score Entry — ${ev.name}${activeCategory ? ` · ${activeCategory.name}` : ""}`,
+      event: ev, contestants: matrix, criteria, judgeId,
+      scoringLocked: ev.scoringLocked || false, readOnly, hasExistingScores,
+      isMultiCategory, categories: categoryProgress, activeCategoryId, activeCategory,
+      userName: req.session.userName, userRole: req.session.userRole,
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
-      isAdmin:     req.session.userRole === "admin",
-      isJudge:     req.session.userRole === "judge",
-      isEncoder:   req.session.userRole === "encoder",
-      isOrganizer: req.session.userRole === "organizer",
+      isAdmin: req.session.userRole === "admin", isJudge: req.session.userRole === "judge",
+      isEncoder: req.session.userRole === "encoder", isOrganizer: req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
     });
   } catch (err) {
@@ -117,12 +118,10 @@ export const scoringPage = async (req, res) => {
     res.redirect("/events");
   }
 };
-
-// --- Submit scores ------------------------------------------------------------
 export const submitScores = async (req, res) => {
-  const { eventId } = req.params;
-  const judgeId     = req.session.userId;
-  const { scores }  = req.body;
+  const { eventId, categoryId } = req.params;
+  const judgeId = req.session.userId;
+  const { scores } = req.body;
 
   // Block submit if event is not ongoing (judges only)
   try {
@@ -180,6 +179,7 @@ export const submitScores = async (req, res) => {
           judgeName:   req.session.userName || "Unknown",
           contestantId,
           criteriaId,
+          categoryId: categoryId || null,
           score,
           submittedAt: isEdit ? (existingScoresSnap.docs.find(d => d.id === docId)?.data()?.submittedAt ?? serverTimestamp()) : serverTimestamp(),
         };

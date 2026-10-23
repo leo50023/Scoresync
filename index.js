@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import path from "path";
 import cookieSession from "cookie-session";
 import router from "./routes/index.js";
@@ -16,8 +16,8 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ─── Body / Static ────────────────────────────────────────────────────────────
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // ─── Static files with aggressive cache headers ───────────────────────────────
 // NOTE: Vercel handles gzip/brotli at the CDN edge — no manual compression needed

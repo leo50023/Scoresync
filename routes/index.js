@@ -94,6 +94,18 @@ router.post("/events/:eventId/contestants/:id/delete",       requireAuth, requir
 router.get( "/events/:eventId/self-register",  selfRegisterPage);
 router.post("/events/:eventId/self-register",  selfRegister);
 
+// ─── Categories (admin & organizer) ──────────────────────────────────────────
+import {
+  categoriesPage, storeCategory, deleteCategory,
+  storeCategorycriterion, deleteCategorycriterion,
+} from "../controllers/categoryController.js";
+
+router.get(  "/events/:eventId/categories",                                    requireAuth, requireRole("admin","organizer"), categoriesPage);
+router.post( "/events/:eventId/categories",                                    requireAuth, requireRole("admin","organizer"), storeCategory);
+router.post( "/events/:eventId/categories/:categoryId/delete",                 requireAuth, requireRole("admin","organizer"), deleteCategory);
+router.post( "/events/:eventId/categories/:categoryId/criteria",               requireAuth, requireRole("admin","organizer"), storeCategorycriterion);
+router.post( "/events/:eventId/categories/:categoryId/criteria/:criterionId/delete", requireAuth, requireRole("admin","organizer"), deleteCategorycriterion);
+
 // ─── Criteria (admin & organizer) ────────────────────────────────────────────
 import {
   addCriteriaPage, storeCriteria, deleteCriteria,
@@ -127,6 +139,9 @@ import {
 
 router.get( "/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
 router.post("/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), submitScores);
+// Category-scoped scoring (when event has multiple categories)
+router.get( "/events/:eventId/scoring/:categoryId", requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
+router.post("/events/:eventId/scoring/:categoryId", requireAuth, requireRole("admin","judge","organizer","tabulator"), submitScores);
 router.get( "/events/:eventId/results",          requireAuth,                               resultsPage);
 router.get( "/events/:eventId/announce",         requireAuth,                               announcePage);
 router.get( "/events/:eventId/scores-json",      requireAuth,                               scoresJson);

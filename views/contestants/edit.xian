@@ -55,7 +55,7 @@
           <input type="file" id="photo-file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" onchange="handlePhotoUpload(this)"/>
 
           <div class="text-center mt-6 pt-2">
-            <p class="text-[11px] text-slate-400 leading-relaxed">Portrait orientation recommended.<br/>PNG or JPG, max 3MB.</p>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Portrait orientation recommended.<br/>PNG or JPG, Max 10MB.</p>
           </div>
 
           <div id="remove-photo-wrap" class="{{#unless contestant.photo}}hidden{{/unless}}">
@@ -157,7 +157,7 @@
 function handlePhotoUpload(input) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 3 * 1024 * 1024) { alert('Image too large. Max 3MB.'); input.value=''; return; }
+  if (file.size > 10 * 1024 * 1024) { alert('Image too large. Max 10MB.'); input.value=''; return; }
   const reader = new FileReader();
   reader.onload = function(e) {
     const b64 = e.target.result;

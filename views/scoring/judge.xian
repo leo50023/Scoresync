@@ -38,6 +38,21 @@
 
     <!-- Row 2: Search + Contestant nav dots -->
     <div class="px-4 sm:px-6 py-2 space-y-2" style="border-top:1px solid rgba(255,255,255,0.04)">
+
+      {{#if isMultiCategory}}
+      <!-- Category tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider flex-shrink-0" style="color:#374151">Category:</span>
+        {{#each categories}}
+        <a href="/events/{{../event.id}}/scoring/{{id}}"
+          class="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold transition"
+          style="{{#if (eq id ../activeCategoryId)}}background:rgba(99,102,241,0.3);color:#c7d2fe;border:1px solid rgba(99,102,241,0.5){{else}}background:rgba(255,255,255,0.06);color:#64748b;border:1px solid rgba(255,255,255,0.1){{/if}}">
+          {{name}}
+          {{#if scoreCount}}<span class="ml-1 text-[9px] font-black" style="color:#6ee7b7">✓</span>{{/if}}
+        </a>
+        {{/each}}
+      </div>
+      {{/if}}
       <!-- Search bar -->
       <div class="relative">
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -79,7 +94,7 @@
   {{/if}}
 
   {{#if contestants.length}}
-  <form id="scoringForm" method="POST" action="/events/{{event.id}}/scoring">
+  <form id="scoringForm" method="POST" action="/events/{{event.id}}/scoring{{#if activeCategoryId}}/{{activeCategoryId}}{{/if}}">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
     {{#each contestants}}

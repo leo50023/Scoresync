@@ -1,0 +1,175 @@
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
+{{> navbar }}
+<div class="flex flex-1 overflow-hidden">
+{{> sidebar }}
+<main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+
+  {{#if success_msg}}<div class="alert-success animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>{{success_msg}}</div>{{/if}}
+  {{#if error_msg}}<div class="alert-error animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/></svg>{{error_msg}}</div>{{/if}}
+
+  <!-- Header -->
+  <div class="animate-fadeup">
+    <div class="breadcrumb"><a href="/events/{{event.id}}">{{event.name}}</a> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> Categories</div>
+    <h1 class="page-header" style="margin-bottom:4px">Event Categories</h1>
+    <p style="color:var(--text-muted);font-size:0.875rem">Each category has its own set of scoring criteria that judges score separately.</p>
+  </div>
+
+  <!-- Add Category Form -->
+  {{#if isAdmin}}{{#unless false}}
+  <div class="section-card animate-fadeup-1">
+    <div class="section-header">
+      <h2><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Category</h2>
+    </div>
+    <form method="POST" action="/events/{{event.id}}/categories" class="px-5 py-4 flex flex-wrap gap-3 items-end">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <div class="flex-1 min-w-[200px]">
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Category Name *</label>
+        <input type="text" name="name" placeholder="e.g. Production Number" required class="form-input-bare w-full"/>
+      </div>
+      <div style="width:90px">
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Order</label>
+        <input type="number" name="order" placeholder="1" min="1" value="{{categories.length}}" class="form-input-bare w-full"/>
+      </div>
+      <button type="submit" class="btn-primary text-sm px-5 py-2.5">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Category
+      </button>
+    </form>
+  </div>
+  {{/unless}}{{/if}}
+  {{#if isOrganizer}}
+  <div class="section-card animate-fadeup-1">
+    <div class="section-header">
+      <h2><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Category</h2>
+    </div>
+    <form method="POST" action="/events/{{event.id}}/categories" class="px-5 py-4 flex flex-wrap gap-3 items-end">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <div class="flex-1 min-w-[200px]">
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Category Name *</label>
+        <input type="text" name="name" placeholder="e.g. Production Number" required class="form-input-bare w-full"/>
+      </div>
+      <div style="width:90px">
+        <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Order</label>
+        <input type="number" name="order" placeholder="1" min="1" value="{{categories.length}}" class="form-input-bare w-full"/>
+      </div>
+      <button type="submit" class="btn-primary text-sm px-5 py-2.5">Add Category</button>
+    </form>
+  </div>
+  {{/if}}
+
+  <!-- Categories List -->
+  {{#if categories.length}}
+  <div class="space-y-4 animate-fadeup-2">
+    {{#each categories}}
+    <div class="section-card">
+      <!-- Category Header -->
+      <div class="section-header" style="background:rgba(99,102,241,0.06)">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center text-white font-black text-sm"
+            style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">{{order}}</div>
+          <div>
+            <h2 style="color:var(--text-primary)">{{name}}</h2>
+            <p class="text-xs mt-0.5" style="color:var(--text-muted)">{{criteria.length}} criteria · {{totalWeight}}% / 100%</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Add Criteria toggle -->
+          <button type="button" onclick="toggleCriteriaForm('{{id}}')"
+            class="btn-sm btn-sm-blue text-xs">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Criteria
+          </button>
+          {{#if ../isAdmin}}
+          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return confirm('Delete this category and all its criteria?')" class="inline">
+            <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+            <button class="btn-sm btn-sm-red text-xs"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+          </form>
+          {{/if}}
+          {{#if ../isOrganizer}}
+          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return confirm('Delete this category and all its criteria?')" class="inline">
+            <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+            <button class="btn-sm btn-sm-red text-xs"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+      <!-- Add Criteria Form (hidden by default) -->
+      <div id="criteria-form-{{id}}" class="hidden px-5 py-4" style="border-bottom:1px solid var(--border)">
+        <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/criteria" class="flex flex-wrap gap-3 items-end">
+          <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+          <div class="flex-1 min-w-[160px]">
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:var(--text-muted)">Criteria Name *</label>
+            <input type="text" name="name" placeholder="e.g. Stage Presence" required class="form-input-bare w-full"/>
+          </div>
+          <div style="width:80px">
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:var(--text-muted)">Weight %</label>
+            <input type="number" name="weight" placeholder="30" min="1" max="100" required class="form-input-bare w-full"/>
+          </div>
+          <div style="width:80px">
+            <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:var(--text-muted)">Max Score</label>
+            <input type="number" name="maxScore" placeholder="100" min="1" value="100" class="form-input-bare w-full"/>
+          </div>
+          <div class="flex gap-2">
+            <button type="submit" class="btn-sm btn-sm-blue text-xs px-3 py-2">Save</button>
+            <button type="button" onclick="toggleCriteriaForm('{{id}}')" class="btn-sm btn-sm-gray text-xs px-3 py-2">Cancel</button>
+          </div>
+        </form>
+        <p class="text-xs mt-2" style="color:var(--text-muted)">Used: <strong>{{totalWeight}}%</strong> / 100%</p>
+      </div>
+
+      <!-- Criteria List -->
+      {{#if criteria.length}}
+      <div class="divide-y" style="border-color:var(--border-subtle)">
+        {{#each criteria}}
+        <div class="px-5 py-3 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0"
+            style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">{{weight}}<span style="font-size:9px">%</span></div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-sm" style="color:var(--text-primary)">{{name}}</div>
+            {{#if description}}<div class="text-xs" style="color:var(--text-muted)">{{description}}</div>{{/if}}
+            <div class="text-xs mt-0.5" style="color:var(--text-muted)">Max: {{maxScore}} pts</div>
+          </div>
+          {{#if ../../isAdmin}}
+          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criterion?')" class="inline">
+            <input type="hidden" name="_csrf" value="{{../../csrfToken}}">
+            <button class="btn-sm btn-sm-red text-xs px-2"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </form>
+          {{/if}}
+          {{#if ../../isOrganizer}}
+          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criterion?')" class="inline">
+            <input type="hidden" name="_csrf" value="{{../../csrfToken}}">
+            <button class="btn-sm btn-sm-red text-xs px-2"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </form>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <div class="px-5 py-6 text-center text-sm" style="color:var(--text-muted)">No criteria yet. Click "Add Criteria" to add scoring criteria for this category.</div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <div class="section-card py-16 text-center animate-fadeup-1">
+    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:rgba(99,102,241,0.1)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    </div>
+    <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No categories yet</h3>
+    <p class="text-xs max-w-xs mx-auto" style="color:var(--text-muted)">Add categories like "Production Number", "Festival Headdress" etc. Each category has its own criteria set.</p>
+  </div>
+  {{/if}}
+
+</main>
+</div>
+{{> footer }}
+<script>
+function toggleCriteriaForm(categoryId) {
+  const form = document.getElementById('criteria-form-' + categoryId);
+  if (form) form.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
