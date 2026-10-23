@@ -113,23 +113,35 @@
     .section-sub   { font-size: 11px; color: #94a3b8; margin-top: 1px; }
 
     /* ── Table base ── */
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
     thead th {
-      padding: 10px 14px;
+      padding: 8px 10px;
       background: #f8fafc;
-      color: #64748b; font-size: 10px; font-weight: 700;
+      color: #64748b; font-size: 9px; font-weight: 700;
       text-transform: uppercase; letter-spacing: .06em;
       text-align: left;
       border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80px;
     }
     thead th.right { text-align: right; }
     thead th.center { text-align: center; }
     tbody tr { border-bottom: 1px solid #f1f5f9; transition: background .1s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: #f8fafc; }
-    tbody td { padding: 10px 14px; color: #334155; vertical-align: middle; }
+    tbody td { padding: 8px 10px; color: #334155; vertical-align: middle; font-size: 11px; }
     tbody td.right { text-align: right; }
     tbody td.center { text-align: center; }
+    /* Make criteria columns compact */
+    .criteria-col { max-width: 70px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Remove horizontal scroll — let table compress */
+    .paper { overflow: hidden; }
+    div[style*="overflow-x:auto"] { overflow-x: visible !important; }
+    @media (max-width: 700px) {
+      div[style*="overflow-x:auto"] { overflow-x: auto !important; }
+    }
 
     /* ── Rank badges ── */
     .rank-1 { background: linear-gradient(135deg,#b45309,#f59e0b); color: #fff; }
@@ -187,16 +199,11 @@
 
     /* ── Print styles ── */
     @media print {
-      @page { margin: 10mm 12mm; size: A4 portrait; }
+      @page { margin: 8mm 10mm; size: A4 portrait; }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      body { background: #fff !important; font-size: 11px !important; }
+      body { background: #fff !important; font-size: 10px !important; }
       .screen-nav { display: none !important; }
-      .page-wrap {
-        margin: 0 !important;
-        padding: 0 !important;
-        max-width: 100% !important;
-      }
-      /* All papers flow together — no forced page breaks between them */
+      .page-wrap { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
       .paper {
         border-radius: 6px !important;
         box-shadow: 0 0 0 1px #e2e8f0 !important;
@@ -204,25 +211,33 @@
         page-break-inside: avoid;
         break-inside: avoid;
       }
-      /* Judge sheets start on new page only if they don't fit */
-      .judge-sheet {
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-      /* Signature sections avoid breaking mid-card */
+      .judge-sheet { page-break-inside: avoid; break-inside: avoid; }
       .sig-section { page-break-inside: avoid; break-inside: avoid; }
-      .sig-grid { gap: 10px !important; }
-      .sig-card { padding: 10px !important; }
+      .sig-grid { gap: 8px !important; }
+      .sig-card { padding: 8px !important; }
       .no-print { display: none !important; }
       tbody tr:hover { background: transparent !important; }
       .sign-btn { display: none !important; }
-      /* Tighter padding in print */
-      .report-header { padding: 16px 20px 12px !important; }
-      thead th { padding: 6px 10px !important; }
-      tbody td { padding: 6px 10px !important; }
-      .section-head { padding: 8px 14px !important; }
-      .judge-header { padding: 8px 14px !important; }
-      .report-footer { padding: 6px 14px !important; }
+      /* Compact paddings */
+      .report-header { padding: 14px 18px 10px !important; }
+      thead th { padding: 5px 7px !important; font-size: 8px !important; }
+      tbody td { padding: 5px 7px !important; font-size: 10px !important; }
+      .section-head { padding: 7px 12px !important; }
+      .judge-header { padding: 7px 12px !important; }
+      .report-footer { padding: 5px 12px !important; font-size: 8px !important; }
+      /* Prevent horizontal overflow in print */
+      div[style*="overflow-x:auto"] { overflow: visible !important; }
+      table { width: 100% !important; table-layout: auto !important; font-size: 10px !important; }
+      /* Criteria columns compact in print */
+      thead th[title] { max-width: 55px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+      /* Report header smaller */
+      .report-event-name { font-size: 18px !important; }
+      .header-meta-item { font-size: 10px !important; }
+      /* Sig attestation smaller */
+      .sig-attestation { font-size: 9px !important; }
+      .sig-card-name { font-size: 11px !important; }
+      /* Rank badge smaller */
+      .rank-badge { width: 20px !important; height: 20px !important; font-size: 9px !important; }
     }
 
     /* ── Screen: tighten spacing between pages ── */
@@ -345,15 +360,15 @@
       </div>
     </div>
     <div style="overflow-x:auto">
-      <table>
+      <table style="table-layout:auto">
         <thead><tr>
-          <th class="center">Rank</th>
-          <th class="center">No.</th>
-          <th>Name</th>
-          <th>Barangay</th>
-          {{#each criteria}}<th class="right" style="max-width:80px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{name}}</th>{{/each}}
-          <th class="right">Final Score</th>
-          <th class="right">Gap</th>
+          <th class="center" style="width:44px">Rank</th>
+          <th class="center" style="width:36px">No.</th>
+          <th style="width:130px">Name</th>
+          <th style="width:80px">Barangay</th>
+          {{#each criteria}}<th class="right" style="width:60px;max-width:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{name}}">{{name}}</th>{{/each}}
+          <th class="right" style="width:70px">Final Score</th>
+          <th class="right" style="width:50px">Gap</th>
         </tr></thead>
         <tbody>
           {{#each ranked}}
@@ -399,13 +414,13 @@
     </div>
     {{#if contestantScores.length}}
     <div style="overflow-x:auto">
-      <table>
+      <table style="table-layout:auto">
         <thead><tr>
-          <th class="center">No.</th>
-          <th>Contestant Name</th>
-          <th>Barangay</th>
-          {{#each ../criteria}}<th class="right">{{name}}</th>{{/each}}
-          <th class="right">Weighted Total</th>
+          <th class="center" style="width:36px">No.</th>
+          <th style="width:130px">Contestant Name</th>
+          <th style="width:80px">Barangay</th>
+          {{#each ../criteria}}<th class="right" style="width:60px;max-width:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{name}}">{{name}}</th>{{/each}}
+          <th class="right" style="width:80px">Weighted Total</th>
         </tr></thead>
         <tbody>
           {{#each contestantScores}}
