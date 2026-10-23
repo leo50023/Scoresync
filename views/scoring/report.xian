@@ -362,17 +362,19 @@
     <div style="overflow-x:auto">
       <table style="table-layout:fixed;min-width:600px">
         <colgroup>
+          <col style="width:44px"/>
+          <col style="width:34px"/>
+          <col style="width:120px"/>
+          <col style="width:70px"/>
+          {{#each criteria}}<col style="width:58px"/>{{/each}}
+          <col style="width:72px"/>
           <col style="width:48px"/>
-          <col style="width:36px"/>
-          <col style="width:140px"/>
-          {{#each criteria}}<col style="width:62px"/>{{/each}}
-          <col style="width:76px"/>
-          <col style="width:54px"/>
         </colgroup>
         <thead><tr>
           <th class="center">Rank</th>
           <th class="center">No.</th>
           <th>Name</th>
+          <th>Barangay</th>
           {{#each criteria}}<th class="right" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{name}}">{{name}}</th>{{/each}}
           <th class="right">Final Score</th>
           <th class="right">Gap</th>
