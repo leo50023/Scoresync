@@ -800,15 +800,26 @@
   }
   .section-header h2 { color: #1e293b !important; font-size: 12px !important; }
 
-  /* ── Podium — hide on print, table is enough ── */
+  /* ── Podium — hide on print ── */
   .animate-fadeup { display: none !important; }
   .animate-fadeup-1 { display: block !important; }
 
-  /* ── Full standings table — show centered ── */
-  .overflow-x-auto { overflow: visible !important; }
+  /* ── PAGE 1: Compact leaderboard (All Participants by Rank) ── */
+  #standings-container {
+    display: block !important;
+    page-break-after: always;
+    break-after: always;
+  }
+  /* Make standings table compact for page 1 */
+  #standings-container .card-flat { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-radius: 8px !important; }
+  .results-standing-row { padding: 6px 12px !important; }
+  .results-standing-name .font-extrabold { font-size: 11px !important; }
+  .results-standing-score .font-black { font-size: 14px !important; }
 
-  /* Keep every criterion and score column within the printable page width. */
+  /* ── PAGE 2: Full tabulation sheet ── */
   .print-tabulation-sheet {
+    page-break-before: always;
+    break-before: always;
     page-break-inside: auto !important;
     break-inside: auto !important;
   }

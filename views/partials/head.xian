@@ -684,7 +684,10 @@
     [data-theme="light"] div[style*="background:linear-gradient(90deg,#f59e0b"],
     [data-theme="light"] div[style*="background:linear-gradient(180deg,#060e22"],
     [data-theme="light"] div[style*="background:linear-gradient(180deg,#1e3a8a"],
-    [data-theme="light"] div[style*="background:linear-gradient(135deg,#065f46"] { background: revert !important; color: revert !important; }
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#065f46"],
+    [data-theme="light"] div[style*="background:linear-gradient(160deg,#052e16"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#0f172a"],
+    [data-theme="light"] div[style*="background:linear-gradient(135deg,#111827"] { background: revert !important; color: revert !important; }
     /* Table head */
     [data-theme="light"] th[style*="background:#"] {
       background: #f1f5f9 !important;
