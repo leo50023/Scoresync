@@ -169,7 +169,7 @@ export const submitScores = async (req, res) => {
   } catch (err) {
     console.error("Could not verify event status before score submission:", err);
     req.flash("error_msg", "Could not verify the event status. Please try again.");
-    return res.redirect(`/events/${eventId}/scoring`);
+    return res.redirect(categoryId ? `/events/${eventId}/scoring/${categoryId}` : `/events/${eventId}/scoring`);
   }
 
   try {
@@ -177,7 +177,7 @@ export const submitScores = async (req, res) => {
     const evSnap2 = await getDoc(doc(db, "events", eventId));
     if (evSnap2.exists() && evSnap2.data().scoringLocked) {
       req.flash("error_msg", "Scoring has been locked by the administrator. No more score submissions are allowed.");
-      return res.redirect(`/events/${eventId}/scoring`);
+      return res.redirect(categoryId ? `/events/${eventId}/scoring/${categoryId}` : `/events/${eventId}/scoring`);
     }
 
     // Fetch existing score docs for this judge+event to detect edits vs initial submissions
@@ -259,11 +259,11 @@ export const submitScores = async (req, res) => {
     await Promise.all(auditWrites);
 
     req.flash("success_msg", "Scores submitted successfully.");
-    res.redirect(`/events/${eventId}/scoring`);
+    res.redirect(categoryId ? `/events/${eventId}/scoring/${categoryId}` : `/events/${eventId}/scoring`);
   } catch (err) {
     console.error(err);
     req.flash("error_msg", "Failed to save scores.");
-    res.redirect(`/events/${eventId}/scoring`);
+    res.redirect(categoryId ? `/events/${eventId}/scoring/${categoryId}` : `/events/${eventId}/scoring`);
   }
 };
 
