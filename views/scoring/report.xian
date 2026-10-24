@@ -505,10 +505,10 @@
         <div class="sig-card-sub" style="margin-top:4px">{{scoredCount}}/{{totalContestants}} contestants &bull; {{completionPct}}%</div>
         <p class="sig-attestation">"I certify that the above scores are accurate and reflect my honest evaluation of each contestant."</p>
         {{#if signed}}
-        <div class="sig-confirmed">✓ Digitally confirmed{{#if signedAt}} — {{signedAt}}{{/if}}</div>
+        <div class="sig-confirmed">✓ Signature{{#if signedAt}} — {{signedAt}}{{/if}}</div>
         {{else}}
         <div class="sig-line"></div>
-        <div class="sig-label">Signature / Digital Confirmation</div>
+        <div class="sig-label">Signature</div>
         {{#if isSelf}}
         <form method="POST" action="/events/{{../event.id}}/report/sign" class="no-print">
           <input type="hidden" name="_csrf" value="{{../csrfToken}}">
@@ -728,10 +728,10 @@
         <div class="sig-card-sub" style="margin-bottom:4px">Chief Tabulator · Certified Tabulation Board</div>
         <p class="sig-attestation">"I certify that all scores have been accurately tabulated and the rankings are correct."</p>
         {{#if signed}}
-        <div class="sig-confirmed" style="color:#b45309">✓ Digitally confirmed{{#if signedAt}} — {{signedAt}}{{/if}}</div>
+        <div class="sig-confirmed" style="color:#b45309">✓ Signature{{#if signedAt}} — {{signedAt}}{{/if}}</div>
         {{else}}
         <div class="sig-line"></div>
-        <div class="sig-label">Tabulator Signature / Digital Confirmation</div>
+        <div class="sig-label">Tabulator Signature</div>
         {{#if isSelf}}
         <form method="POST" action="/events/{{../event.id}}/report/sign" class="no-print">
           <input type="hidden" name="_csrf" value="{{../csrfToken}}">
