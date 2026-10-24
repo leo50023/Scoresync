@@ -498,6 +498,7 @@ export const resultsPage = async (req, res) => {
       isOrganizer: req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
       isMultiCategory,
+      categoryGroups,
     });
   } catch (err) {
     console.error(err);

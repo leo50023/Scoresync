@@ -308,12 +308,21 @@
           <th scope="col" class="tabulation-sticky-number">No.</th>
           <th scope="col" class="tabulation-sticky-contestant">Contestant</th>
           <th scope="col" class="hidden sm:table-cell">Barangay</th>
+          {{#if @root.isMultiCategory}}
+          {{#each @root.categoryGroups}}
+          <th scope="col" class="text-center text-xs px-3 print-criterion-col">
+            <div class="font-bold">{{name}}</div>
+            <div class="font-normal text-slate-400 text-[10px]">Category Score</div>
+          </th>
+          {{/each}}
+          {{else}}
           {{#each criteria}}
           <th scope="col" class="text-center text-xs px-3 print-criterion-col">
             <div class="font-bold">{{name}}</div>
             <div class="font-normal text-slate-400 text-[10px]">{{weight}}% &bull; max {{maxScore}}</div>
           </th>
           {{/each}}
+          {{/if}}
           <th scope="col" class="text-center text-blue-700 font-extrabold print-final-score">Final Score</th>
           <th scope="col" class="text-center text-slate-500 text-xs no-print">Gap to 1st</th>
         </tr>
@@ -342,6 +351,13 @@
             {{#if age}}<div class="text-xs" style="color:var(--text-muted)">{{age}} yrs</div>{{/if}}
           </td>
           <td class="text-sm hidden sm:table-cell" style="color:var(--text-muted)">{{barangay}}</td>
+          {{#if @root.isMultiCategory}}
+          {{#each categoryScores}}
+          <td class="text-center px-3 print-criterion-col">
+            <div class="font-extrabold text-lg" style="color:#2563eb">{{score}}%</div>
+          </td>
+          {{/each}}
+          {{else}}
           {{#each breakdown}}
           <td class="text-center px-3 print-criterion-col">
             <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{avg}}<span class="tabulation-unit"> avg</span></div>
@@ -351,6 +367,7 @@
             </div>
           </td>
           {{/each}}
+          {{/if}}
           <td class="text-center print-final-score">
             <span class="tabulation-score font-extrabold text-lg
               {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
