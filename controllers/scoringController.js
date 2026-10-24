@@ -871,6 +871,36 @@ export const reportPage = async (req, res) => {
       });
     }
 
+    // ── Build category winners (Best in [Category]) ──────────────────────────
+    const categoryWinners = [];
+    if (isMultiCatReport && groupedCriteria.length > 0) {
+      groupedCriteria.forEach(cat => {
+        const catCriteria = cat.criteria;
+        // Score each contestant in this category
+        const catRanked = contestants.map(c => {
+          let t = 0;
+          catCriteria.forEach(cr => {
+            const js = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
+            const avg = js.length ? js.reduce((sum, s) => sum + s.score, 0) / js.length : 0;
+            t += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
+          });
+          return { id: c.id, name: c.name, number: c.number, barangay: c.barangay, score: t };
+        });
+        catRanked.sort((a, b) => b.score - a.score);
+        const winner = catRanked[0] || null;
+        categoryWinners.push({
+          categoryId:   cat.id,
+          categoryName: cat.name,
+          winner:       winner ? {
+            name:     winner.name,
+            number:   winner.number,
+            barangay: winner.barangay,
+            score:    winner.score.toFixed(2),
+          } : null,
+        });
+      });
+    }
+
     // Build tabulator breakdown for signature section
     const tabulators = tabulatorDocs.map((u, idx) => {
         const sig = sigMap[u.id];
@@ -906,6 +936,7 @@ export const reportPage = async (req, res) => {
       categoriesReport,
       isMultiCatReport,
       groupedCriteria,
+      categoryWinners,
     });
   } catch (err) {
     console.error(err);

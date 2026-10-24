@@ -860,6 +860,11 @@ main::-webkit-scrollbar { display:none; }
       if (!confirm(empty.length + ' score(s) are empty. Submit anyway? Empty scores will count as 0.')) return;
     }
     try { localStorage.removeItem(storeKey); } catch(e) {}
+    // Save next contestant index so we auto-jump after page reload
+    const nextIdx = panelIdx + 1;
+    if (nextIdx < totalContestants) {
+      try { localStorage.setItem('ss_next_contestant_' + '{{event.id}}', nextIdx); } catch(e) {}
+    }
     document.getElementById('scoringForm').submit();
   };
 
@@ -911,6 +916,22 @@ main::-webkit-scrollbar { display:none; }
     updateBox(p);
   });
   goToContestant(0);
+
+  // Auto-jump to next contestant after submit
+  (function() {
+    var nextKey = 'ss_next_contestant_' + '{{event.id}}';
+    try {
+      var nextIdx = localStorage.getItem(nextKey);
+      if (nextIdx !== null) {
+        localStorage.removeItem(nextKey);
+        var idx = parseInt(nextIdx);
+        if (!isNaN(idx) && idx > 0 && idx < totalContestants) {
+          goToContestant(idx);
+          return;
+        }
+      }
+    } catch(e) {}
+  })();
 
   // Auto-close sidebar on mobile
   if (window.innerWidth < 768) {
