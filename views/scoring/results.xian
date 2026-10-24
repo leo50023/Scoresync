@@ -833,14 +833,20 @@
   /* ── Podium — hide on print ── */
   .animate-fadeup { display: none !important; }
   .animate-fadeup-1 { display: block !important; }
+  .animate-fadeup-2 { display: block !important; }
+  .animate-fadeup-3 { display: block !important; }
 
   /* ── PAGE 1: Compact leaderboard (All Participants by Rank) ── */
   #standings-container {
     display: block !important;
-    page-break-after: always;
-    break-after: always;
+    page-break-after: always !important;
+    break-after: always !important;
   }
-  /* Make standings table compact for page 1 */
+  /* Hide everything between leaderboard and tabulation sheet on print */
+  .no-print { display: none !important; }
+  /* Hide judge progress / polling sections */
+  .animate-fadeup-2:not(.print-tabulation-sheet) { display: none !important; }
+  /* Make standings compact for page 1 */
   #standings-container .card-flat { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-radius: 8px !important; }
   .results-standing-row { padding: 6px 12px !important; }
   .results-standing-name .font-extrabold { font-size: 11px !important; }
