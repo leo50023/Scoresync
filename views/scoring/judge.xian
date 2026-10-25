@@ -1118,6 +1118,25 @@ main::-webkit-scrollbar { display:none; }
     }
     updateBox(p);
   });
+
+  // Mark all nav dots that are fully scored on initial load
+  document.querySelectorAll('.contestant-panel').forEach(cp => {
+    const panels = cp.querySelectorAll('.criteria-panel');
+    if (!panels.length) return;
+    const filled = [...panels].filter(p => {
+      const n = p.querySelector('.score-input');
+      return n && parseFloat(n.value) > 0;
+    }).length;
+    const dot = document.querySelector('.nav-dot[data-idx="' + cp.dataset.idx + '"]');
+    if (dot) {
+      if (filled === panels.length) {
+        dot.classList.add('scored');
+      } else if (filled > 0) {
+        dot.style.borderColor = 'rgba(245,158,11,0.5)';
+        dot.style.color = '#fcd34d';
+      }
+    }
+  });
   goToContestant(0);
 
   // Auto-jump to next contestant after submit
