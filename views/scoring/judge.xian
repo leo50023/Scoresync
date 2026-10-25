@@ -10,13 +10,21 @@
 
     <!-- Row 1: Event + judge info + ring -->
     <div class="judge-top-row px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
-      <div class="judge-top-info min-w-0">
+      <div class="judge-top-info min-w-0 flex items-center gap-3">
+        <!-- Back button -->
+        <a href="/dashboard" class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl transition"
+          style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)"
+          title="Back to Dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+        <div class="min-w-0">
         <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">{{event.name}}</div>
         <div class="judge-top-meta text-xs">
           <span>{{#if isTabulator}}Tabulator{{else}}Judge{{/if}}: <span class="judge-top-name">{{userName}}</span></span>
           <span>Contestant <span id="hdr-pos">1</span> of {{contestants.length}}</span>
           <span><span id="hdr-scored">0</span> of {{contestants.length}} scored</span>
         </div>
+        </div><!-- /.min-w-0 -->
       </div>
       <div class="judge-top-actions flex items-center gap-2 flex-shrink-0">
         <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
@@ -109,6 +117,11 @@
           {{#if photo}}
           <div class="judge-photo-frame">
             <img src="{{photo}}" alt="{{name}}"/>
+            <!-- Name overlay at bottom -->
+            <div class="judge-photo-overlay">
+              <div class="judge-photo-overlay-name">{{name}}</div>
+              <div class="judge-photo-overlay-num">#{{number}}</div>
+            </div>
           </div>
           {{else}}
           <div class="judge-photo-frame judge-photo-placeholder">
@@ -301,48 +314,75 @@
 }
 .judge-card-inner {
   display: grid;
-  grid-template-columns: 260px minmax(0,1fr);
+  grid-template-columns: 240px minmax(0,1fr);
   align-items: start;
   overflow: hidden;
 }
 .judge-photo-col {
-  width: 260px;
-  max-width: 260px;
+  width: 240px;
+  max-width: 240px;
   flex-shrink: 0;
   padding: 20px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: rgba(4,10,20,0.24);
+  background: rgba(4,10,20,0.3);
   border-right: 1px solid rgba(255,255,255,0.06);
   overflow: hidden;
   box-sizing: border-box;
 }
 .judge-photo-col img {
-  /* Never let the raw img rule in head.xian compete */
   display: block !important;
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
   max-width: 100% !important;
 }
 .judge-photo-frame {
-  width: 100%;
-  max-width: 220px;
+  position: relative;
+  width: 200px;
+  height: 270px;
+  flex-shrink: 0;
   overflow: hidden;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  border: 2px solid rgba(201,162,39,0.4);
   background: #101827;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  /* No height / aspect-ratio — let the image define the height naturally */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,162,39,0.1);
 }
 .judge-photo-frame img {
   display: block !important;
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
   max-width: 100% !important;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center top;
   border: 0;
+}
+/* Name overlay at bottom of photo */
+.judge-photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 10px 10px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+  border-radius: 0 0 14px 14px;
+}
+.judge-photo-overlay-name {
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  overflow-wrap: break-word;
+}
+.judge-photo-overlay-num {
+  color: #e5c45a;
+  font-size: 0.68rem;
+  font-weight: 800;
+  margin-top: 2px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 .judge-photo-placeholder {
   flex-direction: column;
@@ -353,7 +393,8 @@
   align-items: center;
   justify-content: center;
   padding: 24px 12px;
-  min-height: 200px;
+  width: 200px;
+  height: 270px;
 }
 .judge-photo-placeholder > .text-center {
   width: 100%;
@@ -613,19 +654,25 @@
   .judge-photo-col {
     width: 100%;
     max-width: 100%;
-    padding: 14px 16px;
+    padding: 16px;
     border-right: 0;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     overflow: hidden;
-    max-height: 200px;
     align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 14px;
   }
   .judge-photo-frame {
-    max-width: 140px;
-    margin: 0 auto;
+    width: 100px;
+    height: 130px;
+    flex-shrink: 0;
+    border-radius: 12px;
   }
   .judge-photo-placeholder {
-    min-height: 140px;
+    width: 100px;
+    height: 130px;
+    min-height: unset;
   }
   .judge-scoring-col {
     padding: 18px 16px;
