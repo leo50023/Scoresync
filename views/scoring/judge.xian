@@ -535,7 +535,10 @@
 /* .judge-photo-frame img is defined above in the main block */
 .judge-scoring-col {
   min-width: 0;
-  padding: 24px 26px;
+  padding: 22px 24px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 .judge-card-eyebrow {
   display: flex;
@@ -754,7 +757,7 @@
     padding: 0 0 calc(88px + env(safe-area-inset-bottom)) !important;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .judge-top-row {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -766,14 +769,14 @@
     width: 100%;
     justify-content: flex-end;
   }
-  /* Stack photo above scoring column on smaller screens */
+  /* Stack photo on top on true mobile */
   .judge-card-inner {
     grid-template-columns: 1fr;
   }
   .judge-photo-col {
     width: 100%;
     max-width: 100%;
-    padding: 16px;
+    padding: 14px 16px;
     border-right: 0;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     overflow: hidden;
@@ -783,25 +786,34 @@
     gap: 14px;
   }
   .judge-photo-frame {
-    width: 100px;
-    height: 130px;
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    height: 120px !important;
+    min-height: 120px !important;
+    max-height: 120px !important;
     flex-shrink: 0;
-    border-radius: 12px;
+    border-radius: 10px;
+  }
+  .judge-photo-frame img {
+    width: 90px !important;
+    height: 120px !important;
+    max-width: 90px !important;
   }
   .judge-photo-placeholder {
-    width: 100px;
-    height: 130px;
+    width: 90px !important;
+    height: 120px !important;
     min-height: unset;
   }
   .judge-scoring-col {
-    padding: 18px 16px;
+    padding: 16px 14px;
   }
   .contestant-panel {
-    margin: 12px 10px;
-    border-radius: 15px;
+    margin: 10px 8px;
+    border-radius: 14px;
   }
   .judge-score-entry input {
-    width: 68px;
+    width: 60px;
   }
   .judge-bottom-nav {
     padding-bottom: env(safe-area-inset-bottom);
@@ -822,7 +834,6 @@
     font-size: 0.7rem;
     white-space: nowrap;
   }
-}
 @media (max-width: 480px) {
   .judge-score-entry input {
     width: 60px;
