@@ -122,6 +122,10 @@
               <div class="judge-photo-overlay-name">{{name}}</div>
               <div class="judge-photo-overlay-num">#{{number}}</div>
             </div>
+            <!-- Expand button -->
+            <button type="button" class="photo-expand-btn" onclick="openPhotoModal('{{photo}}','{{name}}','{{number}}')" title="View full photo" aria-label="View full photo">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
           </div>
           {{else}}
           <div class="judge-photo-frame judge-photo-placeholder">
@@ -383,6 +387,115 @@
   font-weight: 800;
   margin-top: 2px;
   text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+/* Expand button on photo */
+.photo-expand-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+.judge-photo-frame:hover .photo-expand-btn {
+  opacity: 1;
+}
+.photo-expand-btn:hover {
+  background: rgba(201,162,39,0.7);
+  border-color: rgba(201,162,39,0.6);
+}
+/* Photo lightbox modal */
+#photo-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#photo-modal.open {
+  display: flex;
+}
+#photo-modal-inner {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(201,162,39,0.35);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  background: #0b1424;
+  animation: modalIn 0.22s ease;
+}
+@keyframes modalIn {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+#photo-modal-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+}
+#photo-modal-caption {
+  padding: 12px 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#photo-modal-caption-name {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+#photo-modal-caption-num {
+  color: #e5c45a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+#photo-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s;
+  z-index: 3;
+}
+#photo-modal-close:hover {
+  background: rgba(239,68,68,0.6);
+  border-color: rgba(239,68,68,0.4);
 }
 .judge-photo-placeholder {
   flex-direction: column;
@@ -1013,9 +1126,46 @@ main::-webkit-scrollbar { display:none; }
     if (sidebar) { sidebar.classList.remove('open'); }
     if (overlay) { overlay.classList.add('hidden'); }
   }
+
+  /* ══ Photo modal ══ */
+  window.openPhotoModal = function(src, name, number) {
+    var modal = document.getElementById('photo-modal');
+    var img   = document.getElementById('photo-modal-img');
+    var capName = document.getElementById('photo-modal-caption-name');
+    var capNum  = document.getElementById('photo-modal-caption-num');
+    if (!modal || !img) return;
+    img.src = src;
+    img.alt = name;
+    if (capName) capName.textContent = name;
+    if (capNum)  capNum.textContent  = '#' + number;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closePhotoModal = function(e) {
+    if (e && e.target !== document.getElementById('photo-modal') && e.target !== document.getElementById('photo-modal-close')) return;
+    var modal = document.getElementById('photo-modal');
+    if (modal) modal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') window.closePhotoModal();
+  });
 })();
 </script>
 
 {{> footer }}
 </body>
+
+<!-- ── Photo Fullscreen Modal ── -->
+<div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" onclick="closePhotoModal(event)">
+  <div id="photo-modal-inner">
+    <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close">✕</button>
+    <img id="photo-modal-img" src="" alt=""/>
+    <div id="photo-modal-caption">
+      <div id="photo-modal-caption-name"></div>
+      <div id="photo-modal-caption-num"></div>
+    </div>
+  </div>
+</div>
+
 </html>
