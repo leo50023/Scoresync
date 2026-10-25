@@ -303,25 +303,31 @@
 .judge-card-inner {
   display: grid;
   grid-template-columns: 260px minmax(0,1fr);
-  align-items: stretch;
+  align-items: start;
+  overflow: hidden;
 }
 .judge-photo-col {
   min-width: 0;
+  width: 260px;
+  max-width: 260px;
   padding: 22px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: rgba(4,10,20,0.24);
   border-right: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
 }
 .judge-photo-col img {
   width: 100%;
+  height: auto;
+  display: block;
 }
 .judge-photo-frame {
   width: 100%;
-  aspect-ratio: 4/5;
-  max-height: 390px;
-  max-width: 100%;
+  max-width: 216px;
+  height: 270px;
+  max-height: 270px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -355,10 +361,12 @@
   background: rgba(148,163,184,0.08);
 }
 .judge-photo-frame img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
   border: 0;
+  display: block;
 }
 .judge-scoring-col {
   min-width: 0;
