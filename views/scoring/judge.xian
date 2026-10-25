@@ -3,7 +3,7 @@
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
-<main class="flex-1 overflow-y-auto overflow-x-hidden pb-32" id="scoring-main" style="min-width:0">
+<main class="flex-1 overflow-y-auto overflow-x-hidden pb-32" id="scoring-main" style="min-width:0;opacity:0;transition:opacity 0.15s">
 
   <!-- ══ TOP BAR ══ -->
   <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-subtle)">
@@ -913,6 +913,8 @@ main::-webkit-scrollbar { display:none; }
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
+/* Reveal main after CSS loads — prevents FOUC (photo flash) */
+#scoring-main { opacity: 1 !important; }
 </style>
 
 <script>
