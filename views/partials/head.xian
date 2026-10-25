@@ -26,7 +26,8 @@
   </script>
   <style>
     /* ── Fix 300ms tap delay on all mobile browsers ── */
-    html { touch-action: manipulation; }
+    html { touch-action: manipulation; margin: 0; padding: 0; }
+    body { margin: 0 !important; padding: 0 !important; }
     * { -webkit-tap-highlight-color: transparent; }
 
     /* ── Theme CSS Variables ── */
