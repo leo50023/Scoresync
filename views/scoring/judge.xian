@@ -115,7 +115,7 @@
         <div class="judge-photo-col">
           {{#if photo}}
           <div class="judge-photo-frame">
-            <img src="{{photo}}" alt="{{name}}" style="display:block;width:200px;height:270px;max-width:200px;object-fit:cover;object-position:center top;border:0"/>
+            <img src="{{photo}}" alt="{{name}}" style="display:block;width:168px;height:224px;max-width:168px;object-fit:cover;object-position:center top;border:0"/>
             <!-- Name overlay at bottom -->
             <div class="judge-photo-overlay">
               <div class="judge-photo-overlay-name">{{name}}</div>
@@ -318,16 +318,16 @@
 }
 .judge-card-inner {
   display: grid;
-  grid-template-columns: 240px minmax(0,1fr);
+  grid-template-columns: 200px minmax(0,1fr);
   align-items: start;
   min-width: 0;
 }
 .judge-photo-col {
-  width: 240px;
-  min-width: 240px;
-  max-width: 240px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
   flex-shrink: 0;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -338,30 +338,30 @@
 }
 .judge-photo-col img {
   display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
+  width: 168px !important;
+  height: 224px !important;
+  max-width: 168px !important;
 }
 .judge-photo-frame {
   position: relative;
-  width: 200px;
-  min-width: 200px;
-  max-width: 200px;
-  height: 270px;
-  min-height: 270px;
-  max-height: 270px;
+  width: 168px;
+  min-width: 168px;
+  max-width: 168px;
+  height: 224px;
+  min-height: 224px;
+  max-height: 224px;
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 14px;
   border: 2px solid rgba(201,162,39,0.4);
   background: #101827;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,162,39,0.1);
 }
 .judge-photo-frame img {
   display: block !important;
-  width: 200px !important;
-  height: 270px !important;
-  max-width: 200px !important;
+  width: 168px !important;
+  height: 224px !important;
+  max-width: 168px !important;
   object-fit: cover;
   object-position: center top;
   border: 0;
