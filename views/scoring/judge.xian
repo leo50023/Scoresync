@@ -115,7 +115,7 @@
         <div class="judge-photo-col">
           {{#if photo}}
           <div class="judge-photo-frame">
-            <img src="{{photo}}" alt="{{name}}"/>
+            <img src="{{photo}}" alt="{{name}}" style="display:block;width:200px;height:270px;max-width:200px;object-fit:cover;object-position:center top;border:0"/>
             <!-- Name overlay at bottom -->
             <div class="judge-photo-overlay">
               <div class="judge-photo-overlay-name">{{name}}</div>
@@ -1210,17 +1210,21 @@ main::-webkit-scrollbar { display:none; }
     img.alt = name;
     if (capName) capName.textContent = name;
     if (capNum)  capNum.textContent  = '#' + number;
-    modal.classList.add('open');
+    modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   };
   window.closePhotoModal = function(e) {
     if (e && e.target !== document.getElementById('photo-modal') && e.target !== document.getElementById('photo-modal-close')) return;
     var modal = document.getElementById('photo-modal');
-    if (modal) modal.classList.remove('open');
+    if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
   };
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') window.closePhotoModal();
+    if (e.key === 'Escape') {
+      var modal = document.getElementById('photo-modal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   });
 })();
 </script>
@@ -1229,7 +1233,7 @@ main::-webkit-scrollbar { display:none; }
 </body>
 
 <!-- ── Photo Fullscreen Modal ── -->
-<div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" onclick="closePhotoModal(event)">
+<div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" style="display:none" onclick="closePhotoModal(event)">
   <div id="photo-modal-inner">
     <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close">✕</button>
     <img id="photo-modal-img" src="" alt=""/>
