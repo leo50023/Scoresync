@@ -77,7 +77,6 @@
         <button type="button"
           class="nav-dot flex-shrink-0 min-w-[32px] h-8 px-2 rounded-full text-[11px] font-extrabold transition-all border"
           data-idx="{{@index}}" data-name="{{name}}" data-number="{{number}}"
-          style="background:rgba(255,255,255,0.05);color:var(--text-faint);border-color:rgba(255,255,255,0.08)"
           onclick="goToContestant({{@index}})">{{number}}</button>
         {{/each}}
       </div>
@@ -853,19 +852,34 @@
   }
 }
 
-.nav-dot.scored { background:rgba(16,185,129,0.25) !important;color:#6ee7b7 !important;border-color:rgba(16,185,129,0.5) !important; }
-.nav-dot.active-dot { background:rgba(201,162,39,0.25) !important;color:#f0c040 !important;border-color:rgba(201,162,39,0.6) !important; }
-
 /* Keep navigation feedback responsive without overriding control-specific transitions. */
 .nav-dot {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-faint);
+  border-color: rgba(255,255,255,0.08);
   transition: background 60ms ease, color 60ms ease, border-color 60ms ease;
   -webkit-tap-highlight-color: transparent;
+  will-change: background, transform;
+}
+.nav-dot.scored {
+  background: rgba(16,185,129,0.25) !important;
+  color: #6ee7b7 !important;
+  border-color: rgba(16,185,129,0.5) !important;
+}
+.nav-dot.active-dot {
+  background: rgba(201,162,39,0.25) !important;
+  color: #f0c040 !important;
+  border-color: rgba(201,162,39,0.6) !important;
+}
+.nav-dot.partial {
+  background: rgba(245,158,11,0.15) !important;
+  color: #fcd34d !important;
+  border-color: rgba(245,158,11,0.4) !important;
 }
 /* Hide scrollbars */
 main::-webkit-scrollbar { display:none; }
 
 /* GPU compositing hints */
-.nav-dot { will-change: background, transform; }
 #scoring-main { will-change: scroll-position; }
 
 /* Shimmer animation for progress bar fill */
@@ -1132,8 +1146,7 @@ main::-webkit-scrollbar { display:none; }
       if (filled === panels.length) {
         dot.classList.add('scored');
       } else if (filled > 0) {
-        dot.style.borderColor = 'rgba(245,158,11,0.5)';
-        dot.style.color = '#fcd34d';
+        dot.classList.add('partial');
       }
     }
   });
