@@ -27,11 +27,6 @@ router.post("/forgot-password", forgotPassword);
 router.get( "/logout",          logoutUser);
 router.post("/logout",          logoutUser);
 
-// Offline scoring standalone page (served from public, works without auth)
-router.get("/offline-scoring", (req, res) => {
-  res.sendFile("offline-scoring.html", { root: "./public" });
-});
-
 // One-time admin setup (works only when zero users exist)
 router.get( "/setup",           setupPage);
 router.post("/setup",           setupAdmin);

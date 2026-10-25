@@ -1,9 +1,8 @@
-// ScoreSync Service Worker — v10
-// Full offline support: caches scoring page + serves offline-scoring.html when no internet
+// ScoreSync Service Worker — v11
+// PWA support: caches static assets for fast loads
 
-const CACHE_STATIC = 'scoresync-static-v10';
-const CACHE_PAGES  = 'scoresync-pages-v7';
-const CACHE_FONTS  = 'scoresync-fonts-v7';
+const CACHE_STATIC = 'scoresync-static-v11';
+const CACHE_FONTS  = 'scoresync-fonts-v8';
 
 const STATIC_ASSETS = [
   '/tailwind.css',
@@ -13,8 +12,6 @@ const STATIC_ASSETS = [
   '/scoresync-logo.png',
   '/minsu-logo.png',
   '/icon.png',
-  '/offlineScores.js',
-  '/offline-scoring.html',           // pre-cache the offline scoring page
   '/webfonts/fa-solid-900.woff2',
   '/webfonts/fa-regular-400.woff2',
   '/webfonts/fa-brands-400.woff2',
@@ -35,7 +32,7 @@ self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
-        keys.filter(k => k !== CACHE_STATIC && k !== CACHE_PAGES && k !== CACHE_FONTS)
+        keys.filter(k => k !== CACHE_STATIC && k !== CACHE_FONTS)
             .map(k => caches.delete(k))
       ))
       .then(() => self.clients.claim())
@@ -96,44 +93,5 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // 4. Scoring page — network first, fallback to cached page
-  //    When offline: redirect to /offline-scoring.html (pre-cached, works 100% locally)
-  const isScoringPage = url.pathname.endsWith('/scoring');
-
-  if (isScoringPage) {
-    e.respondWith(
-      fetch(e.request.clone())
-        .then(res => {
-          // Online — cache it fresh for next time
-          if (res.ok) {
-            caches.open(CACHE_PAGES).then(c => c.put(e.request, res.clone()));
-          }
-          return res;
-        })
-        .catch(() => {
-          // Offline — try cached scoring page first, then fall back to offline-scoring.html
-          return caches.match(e.request).then(cached => {
-            if (cached) return cached;
-            // No cached scoring page — serve the offline standalone app
-            return caches.match('/offline-scoring.html');
-          });
-        })
-    );
-    return;
-  }
-
-  // 5. /offline-scoring direct access — always serve from cache
-  if (url.pathname === '/offline-scoring.html' || url.pathname === '/offline-scoring') {
-    e.respondWith(
-      caches.match('/offline-scoring.html').then(cached =>
-        cached || fetch(e.request).then(res => {
-          if (res.ok) caches.open(CACHE_STATIC).then(c => c.put(e.request, res.clone()));
-          return res;
-        })
-      )
-    );
-    return;
-  }
-
-  // 6. Everything else — network only (always fresh)
+  // 4. Everything else — network only (always fresh)
 });
