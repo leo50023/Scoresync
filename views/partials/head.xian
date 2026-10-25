@@ -796,12 +796,6 @@
       to { transform: rotate(360deg); }
     }
   </style>
-  <!-- ── Global Page Loading Indicator ── -->
-  <div id="page-loader" aria-hidden="true"><div id="page-loader-bar"></div></div>
-  <div id="page-loader-spinner" aria-hidden="true" aria-live="polite" aria-label="Loading">
-    <div class="spinner-ring"></div>
-    <span>Loading…</span>
-  </div>
   <script>
     /* ── Mobile sidebar toggle ── */
     function toggleMobileSidebar() {
