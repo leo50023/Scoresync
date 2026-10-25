@@ -26,8 +26,8 @@
   </script>
   <style>
     /* ── Fix 300ms tap delay on all mobile browsers ── */
-    html { touch-action: manipulation; margin: 0; padding: 0; }
-    body { margin: 0 !important; padding: 0 !important; }
+    html { touch-action: manipulation; margin: 0; padding: 0; background: #0a0f1e; }
+    body { margin: 0 !important; padding: 0 !important; background: #0a0f1e !important; }
     * { -webkit-tap-highlight-color: transparent; }
 
     /* ── Theme CSS Variables ── */
@@ -107,7 +107,8 @@
     :focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; border-radius: 6px; }
 
     /* ── Smooth scrolling + touch ── */
-    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; background: #0a0f1e; }
+    [data-theme="light"] html { background: #f0f4f8; }
     body, .ss-page-bg { background: var(--bg-page) !important; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
     /* GPU compositing for smooth animations */
     .card, .card-flat, .section-card, .kpi-card, .btn-primary, .btn-secondary, .btn-danger {
