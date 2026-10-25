@@ -205,7 +205,7 @@
             {{/if}}
             {{else}}{{#if (eq status 'completed')}}
             <div class="flex flex-wrap items-center justify-end gap-2">
-              {{#if isAssigned}}
+              {{#if hasScored}}
               <a href="/events/{{id}}/scoring" class="btn-sm btn-sm-gray text-xs">
                 Review Scores
               </a>

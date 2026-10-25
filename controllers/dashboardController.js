@@ -131,25 +131,43 @@ export const dashboardPage = async (req, res) => {
       const judgeEvents = await Promise.all(
         recentEvents.map(async (ev) => {
           try {
-            const [cSnap, crSnap, sSnap] = await Promise.all([
+            const [cSnap, crSnap, catSnap, sSnap] = await Promise.all([
               getDocs(collection(db, "events", ev.id, "contestants")),
               getDocs(collection(db, "events", ev.id, "criteria")),
+              getDocs(collection(db, "events", ev.id, "categories")),
               getDocs(collection(db, "events", ev.id, "scores")),
             ]);
+
+            // Criteria count: flat criteria OR sum across all categories
+            let criteriaCount = crSnap.size;
+            if (catSnap.size > 0 && crSnap.size === 0) {
+              // Multi-category event — count criteria across all categories
+              const catCrSnaps = await Promise.all(
+                catSnap.docs.map(cd =>
+                  getDocs(collection(db, "events", ev.id, "categories", cd.id, "criteria"))
+                )
+              );
+              criteriaCount = catCrSnaps.reduce((sum, s) => sum + s.size, 0);
+            }
+
             const myScores = sSnap.docs.filter(d => d.data().judgeId === req.session.userId);
+            // For completion: count unique contestants this judge has scored at least one criterion for
             const scoredIds = new Set(myScores.map(d => d.data().contestantId));
             // Check if this judge is assigned to this event
             // Empty assignedJudges means no one is assigned yet — block everyone
             const assignedJudges = ev.assignedJudges || [];
             const isAssigned = role === "tabulator"
               || (assignedJudges.length > 0 && assignedJudges.includes(req.session.userId));
+            // hasScored: true if this judge submitted any scores (used to show Review Scores even if not currently assigned)
+            const hasScored = myScores.length > 0;
             return {
               ...ev,
               contestantCount: cSnap.size,
-              criteriaCount:   crSnap.size,
+              criteriaCount,
               myScoreCount:    scoredIds.size,
-              completionPct:   cSnap.size > 0 ? Math.round((scoredIds.size / cSnap.size) * 100) : 0,
+              completionPct:   cSnap.size > 0 ? Math.min(100, Math.round((scoredIds.size / cSnap.size) * 100)) : 0,
               isAssigned,
+              hasScored,
             };
           } catch (_) { return ev; }
         })

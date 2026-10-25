@@ -93,7 +93,8 @@ export const scoringPage = async (req, res) => {
     }
     if (req.session.userRole === 'judge') {
       const assignedJudges = ev.assignedJudges || [];
-      if (!assignedJudges.includes(judgeId)) {
+      // Allow read-only review even if not currently assigned (e.g. completed events)
+      if (!readOnly && !assignedJudges.includes(judgeId)) {
         req.flash("error_msg", assignedJudges.length === 0
           ? `No judges have been assigned to "${ev.name}" yet.`
           : `You are not assigned to "${ev.name}".`);
