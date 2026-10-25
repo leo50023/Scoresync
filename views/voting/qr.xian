@@ -1,5 +1,5 @@
-ï»¿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
   <header class="h-14 border-b flex items-center justify-between px-4 sm:px-6" style="background:#0d1424;border-bottom-color:rgba(255,255,255,0.06)">
     <a href="/" class="flex items-center gap-2">
       <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-8 h-8 object-cover rounded-full" style="border:1.5px solid rgba(255,255,255,0.15)"/>
@@ -29,13 +29,13 @@
       {{#if peopleChoiceCriterionMissing}}
       <div class="mt-6 rounded-2xl p-5 text-left" style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.18)" role="status">
         <p class="text-sm font-bold" style="color:#fecaca">Audience voting is unavailable</p>
-        <p class="mt-1 text-sm leading-relaxed" style="color:var(--text-secondary)">Add a <strong class="text-white">Peopleâ€™s Choice</strong> criterion in the event settings before opening audience voting.</p>
+        <p class="mt-1 text-sm leading-relaxed" style="color:var(--text-secondary)">Add a <strong class="text-white">People’s Choice</strong> criterion in the event settings before opening audience voting.</p>
       </div>
       {{else}}
         {{#if votingOpen}}
         <div class="inline-flex items-center gap-2 mt-5 badge badge-green">
           <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-          Voting Open â€” ready to share
+          Voting Open — ready to share
         </div>
         <div class="mt-6 inline-flex items-center justify-center rounded-2xl p-4" style="background:#fff;min-width:296px;min-height:296px">
           <canvas id="vote-qr" aria-label="QR code linking to the public audience voting page"></canvas>

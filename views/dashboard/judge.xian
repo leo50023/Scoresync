@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -8,7 +8,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Hero Header ── -->
+  <!-- -- Hero Header -- -->
   <div class="relative rounded-2xl overflow-hidden animate-fadeup"
     style="background:linear-gradient(135deg,#1e1b4b 0%,#2e1065 40%,#1e3a8a 100%);border:1px solid rgba(139,92,246,0.25)">
     <!-- Glow orbs -->
@@ -25,9 +25,9 @@
         </div>
         <!-- Welcome -->
         <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-          Welcome back, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> 👋
+          Welcome back, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> ??
         </h1>
-        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants — one at a time, in order.{{/if}}</p>
+        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants � one at a time, in order.{{/if}}</p>
       </div>
 
       <!-- Stats mini row -->
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <!-- ── Scoring Guideline Banner ── -->
+  <!-- -- Scoring Guideline Banner -- -->
   <div class="rounded-2xl p-4 sm:p-5 flex items-start gap-4 animate-fadeup-1"
     style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2)">
     <div class="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 text-white shadow"
@@ -58,20 +58,20 @@
       <p class="text-xs font-medium mt-1 leading-relaxed" style="color:#6366f1">
         {{#if isTabulator}}
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">Review / Edit Scores</span> on any event to see all judges' scores.
-        You can correct any score entry — all edits are logged in the audit trail.
+        You can correct any score entry � all edits are logged in the audit trail.
         Locked events are <strong style="color:#a5b4fc">read-only</strong>.
         {{else}}
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">
           <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Score Now
         </span> on <strong style="color:#a5b4fc">Ongoing</strong> events only.
-        Scores are saved per contestant — one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
+        Scores are saved per contestant � one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
         Your scores are <strong style="color:#a5b4fc">anonymous</strong> to participants.
         {{/if}}
       </p>
     </div>
   </div>
 
-  <!-- ── Events List ── -->
+  <!-- -- Events List -- -->
   <div class="space-y-4 animate-fadeup-2">
     <div class="flex items-center justify-between px-1">
       <h2 class="font-extrabold text-base" style="color:var(--text-primary)">{{#if isTabulator}}All Event Scores{{else}}Events Available for Scoring{{/if}}</h2>
@@ -256,7 +256,7 @@
     {{/if}}
   </div>
 
-  <!-- ── Quick Tips ── -->
+  <!-- -- Quick Tips -- -->
   {{#if isTabulator}}
   <div class="grid sm:grid-cols-3 gap-3 animate-fadeup-2">
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.15)">
@@ -283,7 +283,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fca5a5">Locked Events</div>
-        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only � no edits allowed.</p>
       </div>
     </div>
   </div>

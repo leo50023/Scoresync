@@ -1,5 +1,5 @@
-ï»¿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -183,7 +183,7 @@
             <td class="text-slate-400 text-xs">{{createdAt}}</td>
             <td>
               {{#if (eq role 'admin')}}
-              <!-- Admin role is protected â€” cannot be changed -->
+              <!-- Admin role is protected — cannot be changed -->
               <span class="text-xs font-bold px-3 py-1.5 rounded-lg" style="background:rgba(37,99,235,0.10);color:#93c5fd;border:1px solid rgba(37,99,235,0.2)">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;margin-right:4px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Protected
@@ -270,10 +270,10 @@
       <div>
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Assign System Role</label>
         <select name="role" required class="form-input-bare">
-          <option value="judge">Judge â€” Can enter scores &amp; view results</option>
-          <option value="encoder">Participant â€” Can manage contestants</option>
-          <option value="organizer">Organizer â€” Can manage &amp; oversee events</option>
-          <option value="tabulator">Tabulator â€” Can enter and review all event scores</option>
+          <option value="judge">Judge — Can enter scores &amp; view results</option>
+          <option value="encoder">Participant — Can manage contestants</option>
+          <option value="organizer">Organizer — Can manage &amp; oversee events</option>
+          <option value="tabulator">Tabulator — Can enter and review all event scores</option>
         </select>
       </div>
       <div class="pt-3 flex items-center justify-end gap-2">

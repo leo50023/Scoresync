@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -32,7 +32,7 @@
             {{#if event.description}}<p class="text-blue-100 text-sm mt-3 max-w-2xl leading-relaxed">{{event.description}}</p>{{/if}}
           </div>
           <span class="badge flex-shrink-0 mt-1 {{#if (eq event.status 'ongoing')}}badge-green{{else}}{{#if (eq event.status 'completed')}}badge-blue{{else}}{{#if (eq event.status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}}">{{event.status}}</span>
-          {{#if event.votingOpen}}<span class="badge badge-green flex-shrink-0 mt-1 ml-1">♥ Voting Open</span>{{else}}<span class="badge badge-gray flex-shrink-0 mt-1 ml-1">Voting Off</span>{{/if}}
+          {{#if event.votingOpen}}<span class="badge badge-green flex-shrink-0 mt-1 ml-1">? Voting Open</span>{{else}}<span class="badge badge-gray flex-shrink-0 mt-1 ml-1">Voting Off</span>{{/if}}
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
     <div class="px-4 py-3 flex flex-wrap items-center gap-2" style="border-top:1px solid var(--border);background:rgba(255,255,255,0.03);position:relative;overflow:visible;z-index:20">
       {{#if isAdmin}}
 
-      <!-- Primary actions — always visible -->
+      <!-- Primary actions � always visible -->
       {{#if (eq event.status 'upcoming')}}
       <form method="POST" action="/events/{{event.id}}/status" class="inline">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -231,7 +231,7 @@
             {{/if}}
             {{#if registrationFee}}
             <div class="mt-1">
-              <span class="inline-flex items-center gap-0.5 text-[10px] font-extrabold px-2 py-0.5 rounded-full" style="background:rgba(16,185,129,0.55);color:#fff">₱{{registrationFee}}</span>
+              <span class="inline-flex items-center gap-0.5 text-[10px] font-extrabold px-2 py-0.5 rounded-full" style="background:rgba(16,185,129,0.55);color:#fff">?{{registrationFee}}</span>
             </div>
             {{/if}}
           </div>
@@ -262,7 +262,7 @@
       </div>
 
       {{#if categories.length}}
-      <!-- ── Multi-category tabs ── -->
+      <!-- -- Multi-category tabs -- -->
       <div class="px-4 pt-3 pb-1 flex gap-1.5 overflow-x-auto" style="border-bottom:1px solid var(--border-subtle)">
         {{#each categories}}
         <button type="button" onclick="showCategory('cat-{{id}}')"
@@ -359,15 +359,15 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
         <p class="text-sm font-semibold mb-1" style="color:var(--text-primary)">No criteria defined</p>
-        {{#if isAdmin}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria →</a>{{/if}}
-        {{#if isOrganizer}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria →</a>{{/if}}
+        {{#if isAdmin}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria ?</a>{{/if}}
+        {{#if isOrganizer}}<a href="/events/{{event.id}}/criteria" class="text-xs font-bold" style="color:#a78bfa">Set up scoring criteria ?</a>{{/if}}
       </div>
       {{/if}}
       {{/if}}
     </div>
   </div>
 
-  <!-- ══ Audit Trail — admin/organizer only ══ -->
+  <!-- -- Audit Trail � admin/organizer only -- -->
   {{#if isAdmin}}
   {{#if auditLog.length}}
   <div class="section-card animate-fadeup-2">
@@ -416,7 +416,7 @@
   {{/if}}
   {{/if}}
 
-  <!-- ══ Stage Timer — only visible when event is ongoing ══ -->
+  <!-- -- Stage Timer � only visible when event is ongoing -- -->
   <div id="event-meta"
     data-event-id="{{event.id}}"
     data-event-date="{{event.date}}"
@@ -435,7 +435,7 @@
       <span id="timer-toggle-label">Show Stage Timer</span>
       <svg id="timer-toggle-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>
     </button>
-    <!-- Timer body — hidden by default -->
+    <!-- Timer body � hidden by default -->
     <div id="stage-timer-wrapper" class="hidden">
       {{> countdown_timer }}
     </div>
@@ -478,7 +478,7 @@
   </div>
   {{/if}}
 
-  <!-- Payment QR Code Card — only for paid event types that have a QR uploaded -->
+  <!-- Payment QR Code Card � only for paid event types that have a QR uploaded -->
   {{#if event.paymentQR}}
   {{#if event.isPaymentType}}
   <div class="section-card animate-fadeup-2" style="border-color:rgba(16,185,129,0.3)">
@@ -530,7 +530,7 @@
   {{/if}}
   {{/if}}
 
-  <!-- Event URL QR Code Card — only show when a payment QR has been uploaded -->
+  <!-- Event URL QR Code Card � only show when a payment QR has been uploaded -->
   {{#if event.paymentQR}}
   {{#if event.isPaymentType}}
   {{#if canManageFinance}}
@@ -570,9 +570,9 @@
   {{/if}}{{!-- /event.isPaymentType --}}
   {{/if}}{{!-- /event.paymentQR --}}
 
-  <!-- ═══════════════════════════════════════════════
+  <!-- -----------------------------------------------
        EVENT INCOME & EXPENSE TRACKER
-       ═══════════════════════════════════════════════ -->
+       ----------------------------------------------- -->
   {{#if canManageFinance}}
   {{#if event.isPaymentType}}
   {{#if finance.entries.length}}
@@ -587,7 +587,7 @@
         <div class="absolute -right-4 -bottom-4 w-20 h-20 rounded-full" style="background:rgba(255,255,255,0.06)"></div>
         <div class="relative">
           <div class="text-[10px] font-extrabold uppercase tracking-widest mb-1" style="color:rgba(110,231,183,0.7)">Total Income</div>
-          <div class="text-2xl font-black text-white">₱{{finance.totalIncome}}</div>
+          <div class="text-2xl font-black text-white">?{{finance.totalIncome}}</div>
           <div class="text-xs mt-1" style="color:rgba(110,231,183,0.6)">All income entries</div>
         </div>
       </div>
@@ -598,7 +598,7 @@
         <div class="absolute -right-4 -bottom-4 w-20 h-20 rounded-full" style="background:rgba(255,255,255,0.06)"></div>
         <div class="relative">
           <div class="text-[10px] font-extrabold uppercase tracking-widest mb-1" style="color:rgba(252,165,165,0.7)">Total Expenses</div>
-          <div class="text-2xl font-black text-white">₱{{finance.totalExpense}}</div>
+          <div class="text-2xl font-black text-white">?{{finance.totalExpense}}</div>
           <div class="text-xs mt-1" style="color:rgba(252,165,165,0.6)">All expense entries</div>
         </div>
       </div>
@@ -615,7 +615,7 @@
             {{else}}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
             {{/if}}
-            ₱{{finance.netBalance}}
+            ?{{finance.netBalance}}
           </div>
           <div class="text-xs mt-1" style="color:rgba(165,180,252,0.6)">{{#if finance.isProfit}}Surplus / Profit{{else}}Deficit / Loss{{/if}}</div>
         </div>
@@ -656,12 +656,12 @@
                 <button type="button" id="fin-income-btn" onclick="setFinType('income')"
                   class="py-2 rounded-xl text-xs font-extrabold transition"
                   style="background:rgba(16,185,129,0.2);color:#6ee7b7;border:2px solid rgba(16,185,129,0.4)">
-                  ↑ Income
+                  ? Income
                 </button>
                 <button type="button" id="fin-expense-btn" onclick="setFinType('expense')"
                   class="py-2 rounded-xl text-xs font-extrabold transition"
                   style="background:rgba(255,255,255,0.05);color:var(--text-muted);border:2px solid rgba(255,255,255,0.08)">
-                  ↓ Expense
+                  ? Expense
                 </button>
               </div>
             </div>
@@ -694,14 +694,14 @@
 
             <!-- Amount -->
             <div>
-              <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-2" style="color:#4b5563">Amount (₱) <span style="color:#ef4444">*</span></label>
+              <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-2" style="color:#4b5563">Amount (?) <span style="color:#ef4444">*</span></label>
               <input type="number" name="amount" placeholder="0.00" min="0.01" step="0.01" required class="form-input-bare w-full"/>
             </div>
 
             <!-- Description -->
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-2" style="color:#4b5563">Description</label>
-              <input type="text" name="description" placeholder="e.g. 10 teams × ₱500" class="form-input-bare w-full"/>
+              <input type="text" name="description" placeholder="e.g. 10 teams � ?500" class="form-input-bare w-full"/>
             </div>
 
           </div>
@@ -746,9 +746,9 @@
                 {{/if}}
               </td>
               <td><span class="badge badge-gray capitalize text-[11px]">{{category}}</span></td>
-              <td class="text-sm" style="color:var(--text-secondary)">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">—</span>{{/if}}</td>
+              <td class="text-sm" style="color:var(--text-secondary)">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">�</span>{{/if}}</td>
               <td class="text-right font-extrabold text-sm" style="color:{{#if (eq type 'income')}}#6ee7b7{{else}}#fca5a5{{/if}}">
-                {{#if (eq type 'income')}}+{{else}}−{{/if}}₱{{amount}}
+                {{#if (eq type 'income')}}+{{else}}-{{/if}}?{{amount}}
               </td>
               {{#if ../isAdmin}}
               <td class="text-right">
@@ -767,18 +767,18 @@
           <tfoot>
             <tr style="border-top:2px solid rgba(16,185,129,0.2)">
               <td colspan="3" class="px-5 py-3 text-xs font-extrabold uppercase tracking-widest text-right" style="color:#4b5563">Total Income</td>
-              <td class="px-5 py-3 text-right font-black text-sm" style="color:#6ee7b7">+₱{{finance.totalIncome}}</td>
+              <td class="px-5 py-3 text-right font-black text-sm" style="color:#6ee7b7">+?{{finance.totalIncome}}</td>
               {{#if isAdmin}}<td></td>{{/if}}
             </tr>
             <tr style="border-top:1px solid rgba(239,68,68,0.15)">
               <td colspan="3" class="px-5 py-3 text-xs font-extrabold uppercase tracking-widest text-right" style="color:#4b5563">Total Expenses</td>
-              <td class="px-5 py-3 text-right font-black text-sm" style="color:#fca5a5">−₱{{finance.totalExpense}}</td>
+              <td class="px-5 py-3 text-right font-black text-sm" style="color:#fca5a5">-?{{finance.totalExpense}}</td>
               {{#if isAdmin}}<td></td>{{/if}}
             </tr>
             <tr style="border-top:2px solid rgba(99,102,241,0.25)">
               <td colspan="3" class="px-5 py-3 text-xs font-extrabold uppercase tracking-widest text-right" style="color:#4b5563">Net Balance</td>
               <td class="px-5 py-3 text-right font-black text-base" style="color:{{#if finance.isProfit}}#a5b4fc{{else}}#f9a8d4{{/if}}">
-                {{#if finance.isProfit}}+{{else}}−{{/if}}₱{{finance.netBalance}}
+                {{#if finance.isProfit}}+{{else}}-{{/if}}?{{finance.netBalance}}
               </td>
               {{#if isAdmin}}<td></td>{{/if}}
             </tr>
@@ -836,7 +836,7 @@
 }
 </style>
 <script>
-// Shared dropdown portal — appended to body so overflow:hidden never clips it
+// Shared dropdown portal � appended to body so overflow:hidden never clips it
 var _portal = null;
 function getPortal() {
   if (!_portal) {
@@ -914,7 +914,7 @@ window.addEventListener('scroll', function() {
 }, true);
 </script>
 <script>
-/* ── Finance form toggle + type switcher ── */
+/* -- Finance form toggle + type switcher -- */
 function toggleFinanceForm() {
   const wrap = document.getElementById('finance-form-wrap');
   if (!wrap) return;
@@ -935,7 +935,7 @@ function setFinType(type) {
   }
 }
 
-/* ── Auto-open finance form if redirected with #finance hash ── */
+/* -- Auto-open finance form if redirected with #finance hash -- */
 if (window.location.hash === '#finance') {
   document.addEventListener('DOMContentLoaded', () => {
     const wrap = document.getElementById('finance-form-wrap');
@@ -984,7 +984,7 @@ if (window.location.hash === '#finance') {
 </script>
 
 <script>
-/* ── Timer-end finance auto-record ── */
+/* -- Timer-end finance auto-record -- */
 window._timerEndRecorded = false;
 window._onTimerEventEnd = function() {
   if (window._timerEndRecorded) return;
@@ -1005,8 +1005,8 @@ window._onTimerEventEnd = function() {
   }).catch(() => {});
 };
 </script>
-<!-- ── Add Judge Modal ── -->
-<!-- ── Assign Judge Modal ── -->
+<!-- -- Add Judge Modal -- -->
+<!-- -- Assign Judge Modal -- -->
 <div id="add-judge-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
   style="background:rgba(0,0,0,0.7);backdrop-filter:blur(4px)">
   <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
@@ -1059,7 +1059,7 @@ window._onTimerEventEnd = function() {
       {{#if availableJudges.length}}
       <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Add Judge</p>
       <select name="judgeId" required class="form-input-bare w-full">
-        <option value="">— Select a judge —</option>
+        <option value="">� Select a judge �</option>
         {{#each availableJudges}}
         <option value="{{id}}">{{name}} ({{email}})</option>
         {{/each}}
@@ -1075,7 +1075,7 @@ window._onTimerEventEnd = function() {
       {{else}}
       <div class="py-4 text-center text-xs" style="color:var(--text-faint)">
         All judges are already assigned, or no judge accounts exist yet.
-        <br><a href="/users" class="text-indigo-400 font-semibold mt-1 inline-block">Create judge accounts in Users →</a>
+        <br><a href="/users" class="text-indigo-400 font-semibold mt-1 inline-block">Create judge accounts in Users ?</a>
       </div>
       <div class="flex justify-end pb-2">
         <button type="button" onclick="closeAddJudgeModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm transition"
@@ -1086,7 +1086,7 @@ window._onTimerEventEnd = function() {
   </div>
 </div>
 
-<!-- ── Dropdown content (portaled to body via JS to avoid overflow clipping) ── -->
+<!-- -- Dropdown content (portaled to body via JS to avoid overflow clipping) -- -->
 <div id="admin-more-content" data-dropdown style="display:none;background:#111827;border:1px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;min-width:190px;box-shadow:0 12px 40px rgba(0,0,0,0.7)">
   <a href="/events/{{event.id}}/edit" class="dropdown-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Event</a>
   <button type="button" onclick="openAddJudgeModal();closeDropdown('admin-more')" class="dropdown-item w-full text-left"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Assign Judge</button>
@@ -1117,7 +1117,7 @@ window._onTimerEventEnd = function() {
         <h2 id="organizer-menu-title" class="text-base font-extrabold text-white">Organizer More menu</h2>
         <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-secondary)">Choose specific items to hide. The More menu itself will remain visible to organizers.</p>
       </div>
-      <button type="button" onclick="closeOrganizerMenuModal()" class="text-slate-400 hover:text-white" aria-label="Close menu settings">×</button>
+      <button type="button" onclick="closeOrganizerMenuModal()" class="text-slate-400 hover:text-white" aria-label="Close menu settings">�</button>
     </div>
     <form method="POST" action="/events/{{event.id}}/organizer-menu">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">

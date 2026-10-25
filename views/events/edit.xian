@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -57,12 +57,12 @@
               </div>
             </div>
 
-            <!-- Other LGU — auto-shows when type = other -->
+            <!-- Other LGU � auto-shows when type = other -->
             <div id="other-lgu-wrap" class="{{#unless (eq event.type 'other')}}hidden{{/unless}} animate-fadeup">
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Specify Competition Type</label>
               <input type="text" name="otherType" id="other-lgu-input"
                 value="{{event.otherType}}"
-                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest…"
+                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest�"
                 class="form-input-bare"/>
               <p class="text-[11px] mt-1.5 text-slate-400">Describe the type of LGU competition not listed above.</p>
             </div>
@@ -71,7 +71,7 @@
             <!-- Event Cover Photo -->
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
-                Event Cover Photo {{#if event.coverPhoto}}<span class="text-emerald-500 font-bold ml-1">✓ Uploaded</span>{{/if}}
+                Event Cover Photo {{#if event.coverPhoto}}<span class="text-emerald-500 font-bold ml-1">? Uploaded</span>{{/if}}
               </label>
               <div id="edit-cover-dropzone" onclick="document.getElementById('edit-cover-file').click()"
                 class="relative w-full rounded-xl border-2 border-dashed cursor-pointer overflow-hidden transition"
@@ -79,7 +79,7 @@
                 <div id="edit-cover-placeholder" class="flex flex-col items-center justify-center py-8 gap-2 {{#if event.coverPhoto}}hidden{{/if}}">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                   <p class="text-xs font-semibold" style="color:var(--text-muted)">Click to upload cover photo</p>
-                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP — max 3MB</p>
+                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP � max 3MB</p>
                 </div>
                 <img id="edit-cover-preview" src="{{event.coverPhoto}}" alt="Cover preview"
                   class="w-full h-40 object-cover rounded-xl {{#unless event.coverPhoto}}hidden{{/unless}}"/>
@@ -89,7 +89,7 @@
               <input type="hidden" name="coverPhoto" id="edit-cover-b64" value="{{event.coverPhoto}}"/>
               <button type="button" id="edit-cover-clear"
                 onclick="clearCover('edit-cover-preview','edit-cover-placeholder','edit-cover-b64','edit-cover-clear')"
-                class="mt-1.5 text-xs font-bold {{#unless event.coverPhoto}}hidden{{/unless}}" style="color:#f87171">✕ Remove photo</button>
+                class="mt-1.5 text-xs font-bold {{#unless event.coverPhoto}}hidden{{/unless}}" style="color:#f87171">? Remove photo</button>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">End Time</label>
                 <input type="time" name="endTime" id="event-end-time" value="{{event.endTime}}" onchange="autoSetStatus()" class="form-input-bare"/>
-                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends — auto-marks Completed.</p>
+                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends � auto-marks Completed.</p>
               </div>
             </div>
 
@@ -116,7 +116,7 @@
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Location</label>
               <select id="venue-select" name="venue" onchange="handleVenueSelect(this)" class="form-input-bare bg-white">
-                <option value="">— Select a venue —</option>
+                <option value="">� Select a venue �</option>
                 <optgroup label="Barangays in Gloria">
                   <option value="Brgy. Agsalin" {{#if (eq event.venue 'Brgy. Agsalin')}}selected{{/if}}>Brgy. Agsalin</option>
                   <option value="Brgy. Agos" {{#if (eq event.venue 'Brgy. Agos')}}selected{{/if}}>Brgy. Agos</option>
@@ -147,12 +147,12 @@
                   <option value="Brgy. Tambong" {{#if (eq event.venue 'Brgy. Tambong')}}selected{{/if}}>Brgy. Tambong</option>
                 </optgroup>
                 <optgroup label="Other">
-                  <option value="__custom__">Type a custom venue…</option>
+                  <option value="__custom__">Type a custom venue�</option>
                 </optgroup>
               </select>
-              <!-- Custom venue fallback — shown when saved venue doesn't match any preset -->
+              <!-- Custom venue fallback � shown when saved venue doesn't match any preset -->
               <div id="venue-custom-wrap" class="mt-2" id="venue-custom-wrap">
-                <input type="text" id="venue-custom-input" value="{{event.venue}}" placeholder="Enter venue name…" class="form-input-bare"/>
+                <input type="text" id="venue-custom-input" value="{{event.venue}}" placeholder="Enter venue name�" class="form-input-bare"/>
               </div>
             </div>
 
@@ -193,7 +193,7 @@
           </div>
         </div>
 
-        <!-- Add Payment QR toggle — only visible for payment-applicable types when no QR yet -->
+        <!-- Add Payment QR toggle � only visible for payment-applicable types when no QR yet -->
         <div id="payment-qr-toggle-wrap" style="{{#if event.paymentQR}}display:none{{/if}}{{#unless isPaymentType}}display:none{{/unless}}">
           <button type="button" id="show-payment-qr-btn"
             onclick="document.getElementById('payment-qr-edit-card').style.display='';document.getElementById('payment-qr-toggle-wrap').style.display='none'"
@@ -217,7 +217,7 @@
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Payment Method</label>
               <select name="paymentMethod" class="form-input-bare bg-white">
-                <option value="" {{#unless event.paymentMethod}}selected{{/unless}}>— None / Not Applicable —</option>
+                <option value="" {{#unless event.paymentMethod}}selected{{/unless}}>� None / Not Applicable �</option>
                 <option value="GCash"     {{#if (eq event.paymentMethod 'GCash')}}selected{{/if}}>GCash</option>
                 <option value="Maya"      {{#if (eq event.paymentMethod 'Maya')}}selected{{/if}}>Maya (PayMaya)</option>
                 <option value="BDO"       {{#if (eq event.paymentMethod 'BDO')}}selected{{/if}}>BDO</option>
@@ -240,14 +240,14 @@
 
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
-                QR Image {{#if event.paymentQR}}<span class="text-emerald-600 font-bold ml-1">✓ Uploaded</span>{{/if}}
+                QR Image {{#if event.paymentQR}}<span class="text-emerald-600 font-bold ml-1">? Uploaded</span>{{/if}}
               </label>
 
               {{#if event.paymentQR}}
               <!-- Existing QR preview -->
               <div id="edit-qr-existing" class="text-center space-y-2 mb-3">
                 <img src="{{event.paymentQR}}" alt="Current Payment QR" class="mx-auto rounded-xl border border-slate-200 shadow-sm" style="max-height:180px;max-width:180px;object-fit:contain"/>
-                <p class="text-[11px] text-slate-400">Current QR — upload a new one to replace it</p>
+                <p class="text-[11px] text-slate-400">Current QR � upload a new one to replace it</p>
               </div>
               {{/if}}
 
@@ -309,7 +309,7 @@
 </main>
 </div>
 <script>
-/* ── Auto-set status from date + time + endTime ── */
+/* -- Auto-set status from date + time + endTime -- */
 function autoSetStatus() {
   const statusSel = document.getElementById('event-status');
   const dateEl    = document.getElementById('event-date');
@@ -328,7 +328,7 @@ function autoSetStatus() {
   else                        statusSel.value = 'upcoming';
 }
 
-/* ── Venue dropdown ── */
+/* -- Venue dropdown -- */
 const PRESET_VENUES = [
   'Brgy. Agsalin','Brgy. Agos','Brgy. Alma Villa','Brgy. Andres Bonifacio',
   'Brgy. Balete','Brgy. Banus','Brgy. Banutan','Brgy. Buong Lupa',
@@ -353,7 +353,7 @@ function handleVenueSelect(sel) {
   }
 }
 
-/* ── Event type visibility ── */
+/* -- Event type visibility -- */
 const PRIZE_TYPES   = ['pageant','talent','choral','dance','culinary','academic'];
 const PAYMENT_TYPES = ['talent','cultural','choral','dance','culinary','booth','sports','academic','other'];
 
@@ -368,22 +368,22 @@ function handleEventType(sel) {
   const prizesCard = document.getElementById('prizes-rules-card');
   if (prizesCard) prizesCard.classList.toggle('hidden', !PRIZE_TYPES.includes(type));
 
-  // Payment QR card (right column) — only show toggle, not the card itself
+  // Payment QR card (right column) � only show toggle, not the card itself
   const paymentCard   = document.getElementById('payment-qr-edit-card');
   const paymentToggle = document.getElementById('payment-qr-toggle-wrap');
   const hasQR = !!(paymentCard && paymentCard.querySelector('#edit-qr-b64') && document.getElementById('edit-qr-b64')?.value);
   if (paymentToggle) paymentToggle.style.display = (!PAYMENT_TYPES.includes(type) || hasQR) ? 'none' : '';
-  // Only auto-hide the card if it has no QR — never forcibly hide it if user already opened it
+  // Only auto-hide the card if it has no QR � never forcibly hide it if user already opened it
   if (paymentCard && !hasQR) paymentCard.style.display = PAYMENT_TYPES.includes(type) ? 'none' : 'none';
 }
 
-/* ── Init on load ── */
+/* -- Init on load -- */
 document.addEventListener('DOMContentLoaded', () => {
   const typeSel  = document.getElementById('event-type-select');
   const venueSel = document.getElementById('venue-select');
   const venueInput = document.getElementById('venue-custom-input');
 
-  // Set venue select — if saved venue matches a preset, select it; else show custom
+  // Set venue select � if saved venue matches a preset, select it; else show custom
   if (venueSel && venueInput) {
     const saved = venueInput.value;
     if (saved && PRESET_VENUES.includes(saved)) {
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
       venueInput.removeAttribute('name');
       document.getElementById('venue-custom-wrap').style.display = 'none';
     } else if (saved) {
-      // Custom venue — show text input, hide select's name
+      // Custom venue � show text input, hide select's name
       venueSel.value = '__custom__';
       venueSel.removeAttribute('name');
       venueInput.setAttribute('name', 'venue');
@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeSel) handleEventType(typeSel);
 });
 
-/* ── Cover Photo ── */
+/* -- Cover Photo -- */
 function handleCoverUpload(input, previewId, placeholderId, b64Id) {
   const file = input.files[0];
   if (!file) return;

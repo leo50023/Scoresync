@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -38,7 +38,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Header ── -->
+  <!-- -- Header -- -->
   <div class="animate-fadeup rounded-2xl p-5 sm:p-6 relative overflow-hidden"
     style="background:linear-gradient(135deg,#071a0e 0%,#0a2a14 50%,#0d1f2d 100%);border:1px solid rgba(16,185,129,0.18)">
     <!-- subtle glow blobs -->
@@ -50,13 +50,13 @@
         <div class="flex items-center gap-2 mb-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400" style="box-shadow:0 0 6px #10b981"></span>
           <span class="text-xs font-bold uppercase tracking-widest" style="color:#34d399">System Online</span>
-          <span class="text-xs font-medium" style="color:#1f4037">·</span>
+          <span class="text-xs font-medium" style="color:#1f4037">�</span>
           <span id="today-date" class="text-xs font-medium" style="color:var(--text-faint)"></span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-black tracking-tight" style="color:var(--text-bright)">
           Welcome, <span style="color:#34d399">{{userName}}</span>
         </h1>
-        <p class="text-sm mt-1" style="color:#4b7a5e">ScoreSync — Competition Management for Gloria, Oriental Mindoro</p>
+        <p class="text-sm mt-1" style="color:#4b7a5e">ScoreSync � Competition Management for Gloria, Oriental Mindoro</p>
       </div>
       <a href="/events/create"
         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm flex-shrink-0"
@@ -88,7 +88,7 @@
   </div>
   {{/if}}
 
-  <!-- ── KPI Cards ── -->
+  <!-- -- KPI Cards -- -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 animate-fadeup-1">
 
     <!-- Total Events -->
@@ -160,7 +160,7 @@
 
   </div>
 
-  <!-- ── Main Grid ── -->
+  <!-- -- Main Grid -- -->
   <div class="grid lg:grid-cols-3 gap-5 animate-fadeup-2">
 
     <!-- Recent Events -->

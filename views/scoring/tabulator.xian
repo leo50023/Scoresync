@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -8,7 +8,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Header ── -->
+  <!-- -- Header -- -->
   <div class="relative rounded-2xl overflow-hidden animate-fadeup"
     style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border:1px solid rgba(234,179,8,0.2)">
     <div class="absolute -right-12 -top-12 w-56 h-56 rounded-full blur-3xl pointer-events-none" style="background:rgba(234,179,8,0.07)"></div>
@@ -58,7 +58,7 @@
         </a>
         <a href="/events/{{event.id}}/announce" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
           style="background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)">
-          🎉 Announce
+          ?? Announce
         </a>
         <button type="button" onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
           style="background:rgba(255,255,255,0.07);color:#94a3b8;border:1px solid rgba(255,255,255,0.12);min-height:unset">
@@ -82,7 +82,7 @@
   </div>
   {{/if}}
 
-  <!-- ── Judge legend with completion status ── -->
+  <!-- -- Judge legend with completion status -- -->
   {{#if judges.length}}
   <div class="rounded-2xl p-4 animate-fadeup-1" style="background:#0d1424;border:1px solid var(--border)">
     <div class="text-xs font-extrabold uppercase tracking-wider mb-3" style="color:var(--text-muted)">Judge Scoring Status</div>
@@ -112,7 +112,7 @@
   {{/if}}
 
   {{#if contestants.length}}
-  <!-- ── Contestant Accordion ── -->
+  <!-- -- Contestant Accordion -- -->
   <div class="space-y-3 animate-fadeup-2" id="tab-contestant-list">
     {{#each contestants}}
     <div class="rounded-2xl overflow-hidden tab-contestant-card"
@@ -157,7 +157,7 @@
         </svg>
       </button>
 
-      <!-- Expanded: criteria × judge score grid -->
+      <!-- Expanded: criteria � judge score grid -->
       <div class="tab-card-body hidden" id="body-{{id}}">
         <div class="px-5 pb-5 space-y-3">
           {{#each criteriaScores}}
@@ -213,7 +213,7 @@
                     <span class="text-[10px] flex-shrink-0" style="color:var(--text-faint)">/ {{../maxScore}}</span>
                   </div>
                   {{else}}
-                  <span class="text-xs font-semibold" style="color:var(--text-faint)">— not submitted</span>
+                  <span class="text-xs font-semibold" style="color:var(--text-faint)">� not submitted</span>
                   {{/if}}
                 </div>
 
@@ -273,7 +273,7 @@
   </div>
   {{/if}}
 
-  <!-- ── No judges state ── -->
+  <!-- -- No judges state -- -->
   {{#unless judges.length}}
   <div class="rounded-2xl p-5 flex items-start gap-3 animate-fadeup-2"
     style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2)">

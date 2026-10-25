@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -37,13 +37,13 @@
                 <div id="create-cover-placeholder" class="flex flex-col items-center justify-center py-8 gap-2">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                   <p class="text-xs font-semibold" style="color:var(--text-muted)">Click to upload cover photo</p>
-                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP — max 3MB</p>
+                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP � max 3MB</p>
                 </div>
                 <img id="create-cover-preview" src="" alt="Cover preview" class="hidden w-full h-40 object-cover rounded-xl"/>
               </div>
               <input type="file" id="create-cover-file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" onchange="handleCoverUpload(this,'create-cover-preview','create-cover-placeholder','create-cover-b64')"/>
               <input type="hidden" name="coverPhoto" id="create-cover-b64"/>
-              <button type="button" id="create-cover-clear" onclick="clearCover('create-cover-preview','create-cover-placeholder','create-cover-b64','create-cover-clear')" class="hidden mt-1.5 text-xs font-bold" style="color:#f87171">✕ Remove photo</button>
+              <button type="button" id="create-cover-clear" onclick="clearCover('create-cover-preview','create-cover-placeholder','create-cover-b64','create-cover-clear')" class="hidden mt-1.5 text-xs font-bold" style="color:#f87171">? Remove photo</button>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Type</label>
@@ -69,21 +69,21 @@
                   <option value="completed">Completed</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
-                <p class="text-[11px] mt-1" style="color:var(--text-faint)">Auto-set from date — you can override.</p>
+                <p class="text-[11px] mt-1" style="color:var(--text-faint)">Auto-set from date � you can override.</p>
               </div>
             </div>
 
-            <!-- Other LGU Competition — auto-shows when type = other -->
+            <!-- Other LGU Competition � auto-shows when type = other -->
             <div id="other-lgu-wrap" class="hidden animate-fadeup">
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
                 Specify Competition Type <span class="text-red-500">*</span>
               </label>
               <input type="text" name="otherType" id="other-lgu-input"
-                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest, Fiesta Parade…"
+                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest, Fiesta Parade�"
                 class="form-input-bare"/>
               <p class="text-[11px] mt-1.5" style="color:var(--text-faint)">Describe the type of LGU competition not listed above.</p>
             </div>
-            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Organizer</label><input type="text" name="organizer" placeholder="e.g. Municipality of Gloria — Tourism Office" class="form-input-bare"/></div>
+            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Organizer</label><input type="text" name="organizer" placeholder="e.g. Municipality of Gloria � Tourism Office" class="form-input-bare"/></div>
 
             <!-- Theme Color Picker -->
             <div>
@@ -155,7 +155,7 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">End Time</label>
                 <input type="time" name="endTime" id="event-end-time" onchange="autoSetStatus()" class="form-input-bare"/>
-                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends — auto-marks Completed.</p>
+                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends � auto-marks Completed.</p>
               </div>
             </div>
 
@@ -163,7 +163,7 @@
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Location</label>
               <select id="venue-select" name="venue" onchange="handleVenueSelect(this)" class="form-input-bare bg-white">
-                <option value="">— Select a venue —</option>
+                <option value="">� Select a venue �</option>
                 <optgroup label="Barangays in Gloria">
                   <option value="Brgy. Agsalin">Brgy. Agsalin</option>
                   <option value="Brgy. Agos">Brgy. Agos</option>
@@ -194,12 +194,12 @@
                   <option value="Brgy. Tambong">Brgy. Tambong</option>
                 </optgroup>
                 <optgroup label="Other">
-                  <option value="__custom__">Type a custom venue…</option>
+                  <option value="__custom__">Type a custom venue�</option>
                 </optgroup>
               </select>
               <!-- Free-text fallback (shown when custom is chosen) -->
               <div id="venue-custom-wrap" class="hidden mt-2">
-                <input type="text" id="venue-custom-input" placeholder="Enter venue name…" class="form-input-bare"
+                <input type="text" id="venue-custom-input" placeholder="Enter venue name�" class="form-input-bare"
                   oninput="document.getElementById('venue-select').value='__custom__'; this.form.querySelector('[name=venue]') && (document.getElementById('venue-select').name=''); this.setAttribute('name','venue')"/>
               </div>
             </div>
@@ -216,7 +216,7 @@
             <h2 class="font-bold text-slate-800">Prizes &amp; Rules</h2>
           </div>
           <div class="px-6 py-5 space-y-4">
-            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place — ₱10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
+            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place � ?10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Rules &amp; Mechanics</label><textarea name="rules" rows="4" placeholder="List the competition rules..." class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Additional Notes</label><textarea name="notes" rows="2" class="form-input-bare resize-none"></textarea></div>
           </div>
@@ -230,7 +230,7 @@
           <div class="px-6 py-4 space-y-2 text-sm text-slate-600">
             <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Saved to Firebase Firestore</div>
             <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Add contestants after creation</div>
-            <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Criteria auto-set below — edit before saving</div>
+            <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Criteria auto-set below � edit before saving</div>
           </div>
           <div class="px-6 pb-5 space-y-2">
             <button type="submit" class="btn-primary w-full py-3 text-sm justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>Create Event</button>
@@ -238,7 +238,7 @@
           </div>
         </div>
 
-        <!-- ── Inline Criteria Builder ── -->
+        <!-- -- Inline Criteria Builder -- -->
         <div class="card-flat" id="criteria-builder-card">
           <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
@@ -345,7 +345,7 @@
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Payment Method</label>
               <select name="paymentMethod" class="form-input-bare bg-white">
-                <option value="">— None / Not Applicable —</option>
+                <option value="">� None / Not Applicable �</option>
                 <option value="GCash">GCash</option>
                 <option value="Maya">Maya (PayMaya)</option>
                 <option value="BDO">BDO</option>
@@ -396,7 +396,7 @@
 </main>
 </div>
 <script>
-/* ── Auto-set status from date + time + endTime ── */
+/* -- Auto-set status from date + time + endTime -- */
 function autoSetStatus() {
   const statusSel = document.getElementById('event-status');
   const dateEl    = document.getElementById('event-date');
@@ -415,7 +415,7 @@ function autoSetStatus() {
   else                             statusSel.value = 'upcoming';
 }
 
-/* ── Set today as default date and auto-detect on load ── */
+/* -- Set today as default date and auto-detect on load -- */
 document.addEventListener('DOMContentLoaded', () => {
   const dateEl = document.getElementById('event-date');
   if (dateEl && !dateEl.value) {
@@ -440,7 +440,7 @@ function handleVenueSelect(sel) {
   }
 }
 
-/* ── Event type-based field visibility ── */
+/* -- Event type-based field visibility -- */
 // Types that need Prizes & Rules
 const PRIZE_TYPES   = ['pageant','talent','choral','dance','culinary','academic'];
 // Types that normally charge admission/registration (show Payment QR)
@@ -449,7 +449,7 @@ const PAYMENT_TYPES = ['talent','cultural','choral','dance','culinary','booth','
 function handleEventType(sel) {
   const type = sel.value;
 
-  // Other LGU — show specify field
+  // Other LGU � show specify field
   const otherWrap  = document.getElementById('other-lgu-wrap');
   const otherInput = document.getElementById('other-lgu-input');
   if (type === 'other') {
@@ -462,20 +462,20 @@ function handleEventType(sel) {
     otherInput.value = '';
   }
 
-  // Prizes & Rules — show only for prize-based event types
+  // Prizes & Rules � show only for prize-based event types
   const prizesCard = document.getElementById('prizes-rules-card');
   if (prizesCard) {
     prizesCard.classList.toggle('hidden', !PRIZE_TYPES.includes(type));
   }
 
-  // Payment QR — show toggle button for payment types, not the card directly
+  // Payment QR � show toggle button for payment types, not the card directly
   const paymentCard   = document.getElementById('payment-qr-card');
   const paymentToggle = document.getElementById('payment-qr-toggle-wrap');
   const isPayment = PAYMENT_TYPES.includes(type);
   if (paymentCard)   paymentCard.classList.add('hidden');       // always keep card hidden until toggled
   if (paymentToggle) paymentToggle.classList.toggle('hidden', !isPayment);
 
-  // Event QR placeholder — hide always (generated after save)
+  // Event QR placeholder � hide always (generated after save)
   const eventQrCard = document.getElementById('event-qr-card');
   if (eventQrCard) eventQrCard.classList.add('hidden');
 }
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sel = document.getElementById('event-type-select');
   if (sel) handleEventType(sel);
 });
-/* ── Cover Photo ── */
+/* -- Cover Photo -- */
 function handleCoverUpload(input, previewId, placeholderId, b64Id) {
   const file = input.files[0];
   if (!file) return;
@@ -511,7 +511,7 @@ function clearCover(previewId, placeholderId, b64Id, clearBtnId) {
   document.getElementById(clearBtnId).classList.add('hidden');
 }
 
-/* ── Payment QR ── */
+/* -- Payment QR -- */
 function handleCreateQRUpload(input) {
   const file = input.files[0];
   if (!file) return;
@@ -537,9 +537,9 @@ function clearCreateQR() {
   document.getElementById('create-qr-file').value = '';
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ------------------------------------------------------------
    INLINE CRITERIA BUILDER
-   ════════════════════════════════════════════════════════════ */
+   ------------------------------------------------------------ */
 const CRITERIA_PRESETS = {
   pageant: [
     { name: 'Beauty of Face',     weight: 22, max: 100 },
@@ -658,7 +658,7 @@ function updateWeightBadge() {
   badge.style.borderColor   = ok ? 'rgba(16,185,129,0.3)'  : 'rgba(139,92,246,0.3)';
 }
 
-// ── Multi-category template toggle ──────────────────────────────────────────
+// -- Multi-category template toggle ------------------------------------------
 const MULTI_CATEGORY_TEMPLATE = [
   {
     name: "Production Number", order: 1,

@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -8,7 +8,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Hero Header ── -->
+  <!-- -- Hero Header -- -->
   <div class="relative rounded-3xl overflow-hidden animate-fadeup"
     style="background:linear-gradient(135deg,#0d1117 0%,#111827 50%,#0d1117 100%);border:1px solid var(--border)">
     <!-- Ambient glow -->
@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <!-- ── KPI Row ── -->
+  <!-- -- KPI Row -- -->
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 animate-fadeup-1">
 
     <!-- My Events -->
@@ -94,13 +94,13 @@
       <a href="/events/create"
         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition"
         style="background:rgba(255,255,255,0.15);color:#fff">
-        Start →
+        Start ?
       </a>
     </div>
 
   </div>
 
-  <!-- ── Live / Ongoing Events ── -->
+  <!-- -- Live / Ongoing Events -- -->
   <div class="animate-fadeup-2 space-y-3">
 
     <div class="flex items-center justify-between px-0.5">
@@ -148,7 +148,7 @@
           {{#if date}}
           <div class="relative mt-2 text-[10px] flex items-center gap-1" style="color:rgba(255,255,255,0.4)">
             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            {{date}}{{#if time}} · {{time}}{{/if}}
+            {{date}}{{#if time}} � {{time}}{{/if}}
           </div>
           {{/if}}
         </div>
@@ -220,7 +220,7 @@
           <div id="judge-progress-{{id}}" data-event-id="{{id}}">
             <div class="flex items-center justify-between mb-1">
               <span class="text-[10px] font-bold" style="color:var(--text-faint)">Scoring Progress</span>
-              <span class="text-[10px] font-bold judge-progress-pct" style="color:#6ee7b7">—</span>
+              <span class="text-[10px] font-bold judge-progress-pct" style="color:#6ee7b7">�</span>
             </div>
             <div class="h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.06)">
               <div class="h-full rounded-full transition-all duration-700 judge-progress-bar" style="width:0%"></div>
@@ -255,7 +255,7 @@
     {{/if}}
   </div>
 
-  <!-- ── Quick Actions + Judges ── -->
+  <!-- -- Quick Actions + Judges -- -->
   <div class="grid lg:grid-cols-3 gap-4 animate-fadeup-2">
 
     <!-- Quick Actions -->
@@ -377,7 +377,7 @@
           </div>
           <div class="min-w-0">
             <div class="text-xs font-extrabold truncate" style="color:#fbbf24">{{userName}}</div>
-            <p class="text-[10px] leading-relaxed" style="color:var(--text-faint)">Organizer · Full event access</p>
+            <p class="text-[10px] leading-relaxed" style="color:var(--text-faint)">Organizer � Full event access</p>
           </div>
         </div>
       </div>

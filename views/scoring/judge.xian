@@ -1,11 +1,11 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto overflow-x-hidden pb-32" id="scoring-main" style="min-width:0;opacity:0;transition:opacity 0.15s">
 
-  <!-- ══ TOP BAR ══ -->
+  <!-- -- TOP BAR -- -->
   <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-subtle)">
 
     <!-- Row 1: Event + judge info + ring -->
@@ -56,7 +56,7 @@
           class="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold transition"
           style="{{#if (eq id ../activeCategoryId)}}background:rgba(99,102,241,0.3);color:#c7d2fe;border:1px solid rgba(99,102,241,0.5){{else}}background:rgba(255,255,255,0.06);color:#64748b;border:1px solid rgba(255,255,255,0.1){{/if}}">
           {{name}}
-          {{#if scoreCount}}<span class="ml-1 text-[9px] font-black" style="color:#6ee7b7">✓</span>{{/if}}
+          {{#if scoreCount}}<span class="ml-1 text-[9px] font-black" style="color:#6ee7b7">?</span>{{/if}}
         </a>
         {{/each}}
       </div>
@@ -64,7 +64,7 @@
       <!-- Search bar -->
       <div class="relative">
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number…"
+        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number�"
           class="w-full rounded-xl pl-9 pr-3 py-2 text-xs outline-none"
           style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)"
           oninput="filterContestants(this.value)"
@@ -89,14 +89,14 @@
   {{#if readOnly}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 no-print" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25)">
   <div class="text-xs" style="color:#bfdbfe">{{#if isTabulator}}Scoring is locked. Scores are available in read-only mode.{{else}}Event completed. Scores are available in read-only mode.{{/if}}</div>
-    <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results →</a>
+    <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results ?</a>
   </div>
   {{/if}}
 
   {{#if hasExistingScores}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex items-start gap-2.5 no-print" style="background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.25)">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below — you can update them and re-submit.{{/if}}</div>
+    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below � you can update them and re-submit.{{/if}}</div>
   </div>
   {{/if}}
 
@@ -105,13 +105,13 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
     {{#each contestants}}
-    <!-- ══ Contestant Panel ══ -->
+    <!-- -- Contestant Panel -- -->
     <div class="contestant-panel" data-idx="{{@index}}" data-contestant-id="{{id}}">
 
       <!-- Two-column layout: photo left, scoring right -->
       <div class="judge-card-inner">
 
-        <!-- ── Left column: Photo ── -->
+        <!-- -- Left column: Photo -- -->
         <div class="judge-photo-col">
           {{#if photo}}
           <div class="judge-photo-frame">
@@ -140,7 +140,7 @@
           {{/if}}
         </div>
 
-        <!-- ── Right column: Scoring ── -->
+        <!-- -- Right column: Scoring -- -->
         <div class="judge-scoring-col">
 
           <!-- Header: crown + judging system label -->
@@ -165,7 +165,7 @@
           <!-- Gold divider -->
           <div class="judge-card-divider"></div>
 
-          <!-- ── Criteria rows (all visible at once) ── -->
+          <!-- -- Criteria rows (all visible at once) -- -->
           {{#each scores}}
           <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
 
@@ -277,7 +277,7 @@
       class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm transition active:scale-[0.98]"
       style="background:linear-gradient(135deg,#8b6914,#c9a227);color:#0a1628;box-shadow:0 4px 16px rgba(201,162,39,0.3)"
       onclick="goToContestant(window._currentIdx + 1)">
-      Next →
+      Next ?
     </button>
   </div>
 </div>
@@ -913,13 +913,13 @@ main::-webkit-scrollbar { display:none; }
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-/* Reveal main after CSS loads — prevents FOUC (photo flash) */
+/* Reveal main after CSS loads � prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
 </style>
 
 <script>
 (function() {
-  const CIRC10 = 2 * Math.PI * 10; // r=10 → 62.83
+  const CIRC10 = 2 * Math.PI * 10; // r=10 ? 62.83
   const storeKey = "scoresync_draft_{{event.id}}_{{judgeId}}";
   let saveTimer;
   window._currentIdx = 0;
@@ -927,7 +927,7 @@ main::-webkit-scrollbar { display:none; }
   window._hasExistingScores = {{#if hasExistingScores}}true{{else}}false{{/if}};
   const totalContestants = {{contestants.length}};
 
-  /* ══ Pre-fill visible inputs from existing hidden values ══ */
+  /* -- Pre-fill visible inputs from existing hidden values -- */
   document.querySelectorAll('.criteria-panel').forEach(panel => {
     const input   = panel.querySelector('.score-input');
     const entryEl = panel.querySelector('.score-entry-input');
@@ -938,7 +938,7 @@ main::-webkit-scrollbar { display:none; }
     }
   });
 
-  /* ══ Handle score text input ══ */
+  /* -- Handle score text input -- */
   window.handleScoreInput = function(entryEl) {
     const panel  = entryEl.closest('.criteria-panel');
     const input  = panel.querySelector('.score-input');
@@ -965,7 +965,7 @@ main::-webkit-scrollbar { display:none; }
     schedSave();
   };
 
-  /* ══ updateBox: update progress bar + totals ══ */
+  /* -- updateBox: update progress bar + totals -- */
   function updateBox(panel) {
     const input  = panel.querySelector('.score-input');
     const val    = parseFloat(input.value) || 0;
@@ -983,7 +983,7 @@ main::-webkit-scrollbar { display:none; }
 
     // Hidden compat elements
     const disp = panel.querySelector('.score-display');
-    if (disp) disp.textContent = val > 0 ? val : '—';
+    if (disp) disp.textContent = val > 0 ? val : '�';
     const pctEl = panel.querySelector('.criteria-pct');
     if (pctEl) pctEl.textContent = Math.round(pct) + '%';
     const pctLbl = panel.querySelector('.criteria-pct-label');
@@ -995,7 +995,7 @@ main::-webkit-scrollbar { display:none; }
     updateOverallRing();
   }
 
-  /* ══ Contestant panel totals ══ */
+  /* -- Contestant panel totals -- */
   function updateContestantPanel(cp) {
     if (!cp) return;
     const panels = cp.querySelectorAll('.criteria-panel');
@@ -1038,7 +1038,7 @@ main::-webkit-scrollbar { display:none; }
     if (sc) sc.textContent = totalScored;
   }
 
-  /* ══ Overall ring ══ */
+  /* -- Overall ring -- */
   function updateOverallRing() {
     const all    = document.querySelectorAll('.score-input');
     const filled = [...all].filter(i => parseFloat(i.value) > 0).length;
@@ -1050,7 +1050,7 @@ main::-webkit-scrollbar { display:none; }
     if (el) el.textContent = Math.round(pct) + '%';
   }
 
-  /* ══ Search / filter contestants ══ */
+  /* -- Search / filter contestants -- */
   window.filterContestants = function(query) {
     const q = query.trim().toLowerCase();
     const dots = document.querySelectorAll('.nav-dot');
@@ -1070,7 +1070,7 @@ main::-webkit-scrollbar { display:none; }
     if (firstMatch >= 0) goToContestant(firstMatch);
   };
 
-  /* ══ Navigate contestants ══ */
+  /* -- Navigate contestants -- */
   window.goToContestant = function(idx) {
     idx = parseInt(idx);
     if (isNaN(idx) || idx < 0 || idx >= totalContestants) return;
@@ -1085,12 +1085,12 @@ main::-webkit-scrollbar { display:none; }
     updateOverallRing();
   };
 
-  /* ══ nextOrSave — kept for compatibility ══ */
+  /* -- nextOrSave � kept for compatibility -- */
   window.nextOrSave = function(cid, panelIdx, total) {
     submitContestant(panelIdx);
   };
 
-  /* ══ submitContestant ══ */
+  /* -- submitContestant -- */
   window.submitContestant = function(panelIdx) {
     const cp = document.querySelector('.contestant-panel[data-idx="' + panelIdx + '"]');
     const inputs = cp ? cp.querySelectorAll('.score-input') : [];
@@ -1115,7 +1115,7 @@ main::-webkit-scrollbar { display:none; }
 
   window.nextContestant = function(idx) { goToContestant(idx + 1); };
 
-  /* ══ Draft save/restore ══ */
+  /* -- Draft save/restore -- */
   function schedSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveDraft, 600); }
   function saveDraft() {
     const data = {};
@@ -1145,7 +1145,7 @@ main::-webkit-scrollbar { display:none; }
     } catch(e){}
   }
 
-  /* ══ Init ══ */
+  /* -- Init -- */
   restoreDraft();
   document.querySelectorAll('.criteria-panel').forEach(p => {
     // Sync: if score-entry-input has a pre-filled value from server, push it to score-input
@@ -1204,7 +1204,7 @@ main::-webkit-scrollbar { display:none; }
     if (overlay) { overlay.classList.add('hidden'); }
   }
 
-  /* ══ Photo modal ══ */
+  /* -- Photo modal -- */
   window.openPhotoModal = function(src, name, number) {
     var modal = document.getElementById('photo-modal');
     var img   = document.getElementById('photo-modal-img');
@@ -1237,10 +1237,10 @@ main::-webkit-scrollbar { display:none; }
 {{> footer }}
 </body>
 
-<!-- ── Photo Fullscreen Modal ── -->
+<!-- -- Photo Fullscreen Modal -- -->
 <div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" style="display:none" onclick="closePhotoModal(event)">
   <div id="photo-modal-inner">
-    <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close">✕</button>
+    <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close">?</button>
     <img id="photo-modal-img" src="" alt=""/>
     <div id="photo-modal-caption">
       <div id="photo-modal-caption-name"></div>

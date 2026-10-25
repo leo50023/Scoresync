@@ -1,5 +1,5 @@
-﻿{{> head }}
-<body class="min-h-screen flex flex-col" class="ss-page-bg">
+{{> head }}
+<body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
@@ -250,7 +250,7 @@
         <ul class="space-y-2 text-xs" style="color:var(--text-secondary)">
           {{#each latestReport.insights}}
           <li class="flex items-start gap-2 p-3 rounded-xl" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
-            <span style="color:#a855f7;font-weight:700">•</span>
+            <span style="color:#a855f7;font-weight:700">�</span>
             <span>{{this}}</span>
           </li>
           {{/each}}
