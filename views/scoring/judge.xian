@@ -857,7 +857,7 @@
   background: rgba(255,255,255,0.05);
   color: var(--text-faint);
   border-color: rgba(255,255,255,0.08);
-  transition: background 60ms ease, color 60ms ease, border-color 60ms ease;
+  transition: background 60ms ease, color 60ms ease, border-color 60ms ease, transform 100ms ease, box-shadow 100ms ease;
   -webkit-tap-highlight-color: transparent;
   will-change: background, transform;
 }
@@ -866,10 +866,13 @@
   color: #6ee7b7 !important;
   border-color: rgba(16,185,129,0.5) !important;
 }
+/* Active overrides scored when on the same dot */
 .nav-dot.active-dot {
-  background: rgba(201,162,39,0.25) !important;
+  background: rgba(201,162,39,0.35) !important;
   color: #f0c040 !important;
-  border-color: rgba(201,162,39,0.6) !important;
+  border-color: rgba(201,162,39,0.9) !important;
+  box-shadow: 0 0 0 2px rgba(201,162,39,0.4), 0 0 10px rgba(201,162,39,0.3) !important;
+  transform: scale(1.15);
 }
 .nav-dot.partial {
   background: rgba(245,158,11,0.15) !important;
