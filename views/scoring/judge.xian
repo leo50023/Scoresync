@@ -835,6 +835,7 @@
     font-size: 0.7rem;
     white-space: nowrap;
   }
+}
 @media (max-width: 480px) {
   .judge-score-entry input {
     width: 60px;
