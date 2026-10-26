@@ -755,6 +755,7 @@
       height: 3px;
       z-index: 9999;
       pointer-events: none;
+      display: none;
     }
     #page-loader-bar {
       height: 100%;
@@ -849,6 +850,8 @@
       let timer, spinnerTimer;
 
       function startLoader() {
+        const loader = document.getElementById('page-loader');
+        if (loader) { loader.style.display = 'block'; loader.style.opacity = '1'; }
         if (bar) { bar.style.width = '0%'; bar.style.transition = 'none'; }
         // Animate to 85% quickly, hold there until page loads
         requestAnimationFrame(() => {
