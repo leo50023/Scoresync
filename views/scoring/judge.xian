@@ -64,7 +64,7 @@
       <!-- Search bar -->
       <div class="relative">
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number…"
+        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or numberï¿½"
           class="w-full rounded-xl pl-9 pr-3 py-2 text-xs outline-none"
           style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)"
           oninput="filterContestants(this.value)"
@@ -96,7 +96,7 @@
   {{#if hasExistingScores}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex items-start gap-2.5 no-print" style="background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.25)">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below — you can update them and re-submit.{{/if}}</div>
+    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below ï¿½ you can update them and re-submit.{{/if}}</div>
   </div>
   {{/if}}
 
@@ -913,7 +913,7 @@ main::-webkit-scrollbar { display:none; }
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-/* Reveal main after CSS loads — prevents FOUC (photo flash) */
+/* Reveal main after CSS loads ï¿½ prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
 </style>
 
@@ -983,7 +983,7 @@ main::-webkit-scrollbar { display:none; }
 
     // Hidden compat elements
     const disp = panel.querySelector('.score-display');
-    if (disp) disp.textContent = val > 0 ? val : '—';
+    if (disp) disp.textContent = val > 0 ? val : 'ï¿½';
     const pctEl = panel.querySelector('.criteria-pct');
     if (pctEl) pctEl.textContent = Math.round(pct) + '%';
     const pctLbl = panel.querySelector('.criteria-pct-label');
@@ -1085,7 +1085,7 @@ main::-webkit-scrollbar { display:none; }
     updateOverallRing();
   };
 
-  /* -- nextOrSave — kept for compatibility -- */
+  /* -- nextOrSave ï¿½ kept for compatibility -- */
   window.nextOrSave = function(cid, panelIdx, total) {
     submitContestant(panelIdx);
   };
@@ -1248,5 +1248,49 @@ main::-webkit-scrollbar { display:none; }
     </div>
   </div>
 </div>
+
+<!-- â”€â”€ All Scores Complete Modal â”€â”€ -->
+{{#if showCompleteModal}}
+<div id="complete-modal" style="display:flex;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px" onclick="closeCompleteModal(event)">
+  <div style="position:relative;max-width:420px;width:100%;border-radius:24px;overflow:hidden;border:2px solid rgba(201,162,39,0.4);box-shadow:0 24px 80px rgba(0,0,0,0.7),0 0 40px rgba(201,162,39,0.15);background:linear-gradient(145deg,#101c30,#0b1424);animation:modalIn 0.3s ease;text-align:center;padding:40px 32px 32px" id="complete-modal-inner">
+    <!-- Floating orbs -->
+    <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+      <div style="position:absolute;width:8px;height:8px;border-radius:50%;background:#c9a227;top:12%;left:15%;animation:confetti1 2s ease infinite"></div>
+      <div style="position:absolute;width:6px;height:6px;border-radius:50%;background:#6ee7b7;top:20%;right:18%;animation:confetti2 2.4s ease infinite"></div>
+      <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#a78bfa;bottom:25%;left:12%;animation:confetti3 1.8s ease infinite"></div>
+      <div style="position:absolute;width:7px;height:7px;border-radius:50%;background:#f0c040;bottom:18%;right:14%;animation:confetti1 2.2s ease infinite 0.3s"></div>
+      <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#6ee7b7;top:35%;left:8%;animation:confetti2 1.9s ease infinite 0.5s"></div>
+      <div style="position:absolute;width:6px;height:6px;border-radius:50%;background:#c9a227;top:30%;right:10%;animation:confetti3 2.1s ease infinite 0.2s"></div>
+    </div>
+    <!-- Trophy -->
+    <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#92400e,#d97706);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 32px rgba(201,162,39,0.4)">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+    </div>
+    <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#c9a227;margin-bottom:8px">All Categories Completed</div>
+    <h2 style="font-size:1.6rem;font-weight:900;color:#f1f5f9;margin:0 0 10px;line-height:1.2">Scoring Complete! ðŸŽ‰</h2>
+    <p style="font-size:0.85rem;color:#94a3b8;margin:0 0 28px;line-height:1.6">You have successfully submitted scores for all categories and contestants. Your evaluation is now complete.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="/events/{{event.id}}/results" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;font-weight:800;font-size:0.85rem;text-decoration:none;box-shadow:0 4px 16px rgba(16,185,129,0.35)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        View Results
+      </a>
+      <button onclick="document.getElementById('complete-modal').style.display='none'" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:rgba(255,255,255,0.07);color:#94a3b8;font-weight:700;font-size:0.85rem;border:1px solid rgba(255,255,255,0.1);cursor:pointer">
+        Continue Scoring
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes confetti1 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-12px) scale(1.2)} }
+@keyframes confetti2 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-8px) rotate(180deg)} }
+@keyframes confetti3 { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.3) rotate(90deg)} }
+</style>
+<script>
+window.closeCompleteModal = function(e) {
+  if (e && e.target !== document.getElementById('complete-modal')) return;
+  document.getElementById('complete-modal').style.display = 'none';
+};
+</script>
+{{/if}}
 
 </html>

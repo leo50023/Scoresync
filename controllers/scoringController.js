@@ -130,11 +130,26 @@ export const scoringPage = async (req, res) => {
       return { ...cat, scoreCount: catScores.length };
     });
 
+    // Check if all categories are fully scored by this judge
+    const totalExpected = categories.length > 0
+      ? categories.reduce((sum, cat) => {
+          const catCriteria = criteria.length > 0 ? criteria : [];
+          return sum + (contestants.length * (catCriteria.length || 1));
+        }, 0)
+      : contestants.length * criteria.length;
+    const myScoreCount = sSnap.docs.filter(d => d.data().judgeId === judgeId).length;
+    const allComplete = !readOnly && myScoreCount > 0 && categories.length > 0
+      ? categoryProgress.every(cat => cat.scoreCount >= contestants.length)
+      : false;
+    // Flash flag so modal shows after redirect
+    const showCompleteModal = req.flash('show_complete_modal')[0] === '1';
+
     res.render("scoring/judge", {
       title: `Score Entry — ${ev.name}${activeCategory ? ` · ${activeCategory.name}` : ""}`,
       event: ev, contestants: matrix, criteria, judgeId,
       scoringLocked: ev.scoringLocked || false, readOnly, hasExistingScores,
       isMultiCategory, categories: categoryProgress, activeCategoryId, activeCategory,
+      showCompleteModal,
       userName: req.session.userName, userRole: req.session.userRole,
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin", isJudge: req.session.userRole === "judge",
@@ -258,6 +273,25 @@ export const submitScores = async (req, res) => {
       );
     }
     await Promise.all(auditWrites);
+
+    // Check if all categories are now fully scored — show completion modal
+    try {
+      const [allScoresSnap, catsSnap, consSnap] = await Promise.all([
+        getDocs(collection(db, "events", eventId, "scores")),
+        getDocs(collection(db, "events", eventId, "categories")),
+        getDocs(collection(db, "events", eventId, "contestants")),
+      ]);
+      const cats = catsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const contestantCount = consSnap.size;
+      if (cats.length > 0 && contestantCount > 0) {
+        const myScores = allScoresSnap.docs.filter(d => d.data().judgeId === judgeId);
+        const allDone = cats.every(cat => {
+          const catScores = new Set(myScores.filter(d => d.data().categoryId === cat.id).map(d => d.data().contestantId));
+          return catScores.size >= contestantCount;
+        });
+        if (allDone) req.flash('show_complete_modal', '1');
+      }
+    } catch (_) {}
 
     req.flash("success_msg", "Scores submitted successfully.");
     res.redirect(categoryId ? `/events/${eventId}/scoring/${categoryId}` : `/events/${eventId}/scoring`);
