@@ -764,8 +764,6 @@
       background-size: 200% 100%;
       border-radius: 0 3px 3px 0;
       transition: width 0.2s ease;
-      animation: loaderShimmer 1.4s linear infinite;
-      box-shadow: 0 0 10px rgba(99,102,241,0.6);
     }
     #page-loader-spinner {
       position: fixed;
