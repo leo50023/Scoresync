@@ -34,7 +34,7 @@
       <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(245,158,11,0.12);color:#fcd34d;border:1px solid rgba(245,158,11,0.25)">{{judgeCount}} Judge(s)</span>
     </div>
     <div class="mt-4 flex items-center justify-center gap-3 no-print">
-      <button onclick="window.print()" class="px-4 py-2 rounded-xl text-xs font-bold text-white" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15)">
+      <button onclick="window.print()" class="btn-sm btn-sm-gray text-xs no-print">
         🖨️ Print / Save PDF
       </button>
       <a href="/events/{{event.id}}/display" target="_blank" class="px-4 py-2 rounded-xl text-xs font-bold" style="background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.25)">

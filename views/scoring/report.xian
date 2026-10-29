@@ -735,7 +735,7 @@
         {{#if isSelf}}
         <form method="POST" action="/events/{{../event.id}}/report/sign" class="no-print">
           <input type="hidden" name="_csrf" value="{{../csrfToken}}">
-          <button type="submit" class="sign-btn" style="background:linear-gradient(135deg,#92400e,#d97706)">✍ Confirm &amp; Sign as Tabulator</button>
+          <button type="submit" class="sign-btn">✍ Confirm &amp; Sign as Tabulator</button>
         </form>
         {{/if}}
         {{/if}}

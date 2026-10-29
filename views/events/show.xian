@@ -40,12 +40,12 @@
     <div class="px-4 py-3 flex flex-wrap items-center gap-2" style="border-top:1px solid var(--border);background:rgba(255,255,255,0.03);position:relative;overflow:visible;z-index:20">
       {{#if isAdmin}}
 
-      <!-- Primary actions — always visible -->
+      <!-- Primary actions ï¿½ always visible -->
       {{#if (eq event.status 'upcoming')}}
       <form method="POST" action="/events/{{event.id}}/status" class="inline">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="ongoing">
-        <button type="submit" class="btn-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="submit" class="btn-sm btn-solid-green">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Start Event
         </button>
       </form>
@@ -54,7 +54,7 @@
       <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return confirm('Manually end this event?')">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
-        <button type="submit" class="btn-sm bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="submit" class="btn-sm btn-solid-blue">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event
         </button>
       </form>
@@ -64,22 +64,21 @@
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="ongoing">
       </form>
-      <button type="submit" form="reopen-event-form" class="btn-sm btn-sm-gray flex items-center gap-1.5" style="min-height:44px;padding:8px 12px;position:relative;top:8px!important">
+      <button type="submit" form="reopen-event-form" class="btn-sm btn-sm-gray">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Re-open
       </button>
       {{/if}}
 
-      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Contestant
       </a>
-      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
 
       <!-- More dropdown -->
       <div class="relative" id="admin-more-wrap">
-        <button type="button" onclick="toggleDropdown('admin-more', this)"
-          class="btn-sm btn-sm-gray flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="button" onclick="toggleDropdown('admin-more', this)" class="btn-sm btn-sm-gray">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
           More
           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -87,17 +86,17 @@
       </div>
 
       {{/if}}{{#if isJudge}}
-      <a href="/events/{{event.id}}/scoring" class="btn-sm btn-sm-purple flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/scoring" class="btn-sm btn-sm-purple">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Score This Event
       </a>
-      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
       {{/if}}{{#if isEncoder}}
-      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Contestant
       </a>
-      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
       {{/if}}{{#if isOrganizer}}
@@ -107,7 +106,7 @@
       <form method="POST" action="/events/{{event.id}}/status" class="inline">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="ongoing">
-        <button type="submit" class="btn-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="submit" class="btn-sm btn-solid-green">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Start Event
         </button>
       </form>
@@ -116,7 +115,7 @@
       <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return confirm('Are you sure you want to manually end this event?')">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
-        <button type="submit" class="btn-sm bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="submit" class="btn-sm btn-solid-blue">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event
         </button>
       </form>
@@ -125,23 +124,22 @@
       <form method="POST" action="/events/{{event.id}}/status" class="inline">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="ongoing">
-        <button type="submit" class="btn-sm btn-sm-gray flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="submit" class="btn-sm btn-sm-gray">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Re-open
         </button>
       </form>
       {{/if}}
 
-      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Contestant
       </a>
-      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+      <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
 
       <!-- Organizer More dropdown -->
       <div class="relative" id="org-more-wrap">
-        <button type="button" onclick="toggleDropdown('org-more', this)"
-          class="btn-sm btn-sm-gray flex items-center gap-1.5" style="min-height:44px;padding:8px 12px">
+        <button type="button" onclick="toggleDropdown('org-more', this)" class="btn-sm btn-sm-gray">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
           More
           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -188,14 +186,12 @@
           {{#if ../isAdmin}}
           <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <a href="/events/{{../event.id}}/contestants/{{id}}/edit"
-              class="w-7 h-7 rounded-full flex items-center justify-center shadow transition"
-              style="background:rgba(255,255,255,0.85);color:#1e293b"
-              onmouseover="this.style.background='rgba(255,255,255,0.95)'" onmouseout="this.style.background='rgba(255,255,255,0.85)'">
+              class="btn-icon no-min-h" title="Edit">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </a>
             <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return confirm('Remove contestant?')">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-              <button class="w-7 h-7 rounded-full flex items-center justify-center bg-red-500/90 hover:bg-red-500 text-white shadow transition">
+              <button class="btn-icon no-min-h" title="Delete">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
               </button>
             </form>
@@ -204,14 +200,12 @@
           {{#if ../isOrganizer}}
           <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <a href="/events/{{../event.id}}/contestants/{{id}}/edit"
-              class="w-7 h-7 rounded-full flex items-center justify-center shadow transition"
-              style="background:rgba(255,255,255,0.85);color:#1e293b"
-              onmouseover="this.style.background='rgba(255,255,255,0.95)'" onmouseout="this.style.background='rgba(255,255,255,0.85)'">
+              class="btn-icon no-min-h" title="Edit">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </a>
             <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return confirm('Remove contestant?')">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-              <button class="w-7 h-7 rounded-full flex items-center justify-center bg-red-500/90 hover:bg-red-500 text-white shadow transition">
+              <button class="btn-icon no-min-h" title="Delete">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
               </button>
             </form>
@@ -367,7 +361,7 @@
     </div>
   </div>
 
-  <!-- -- Audit Trail — admin/organizer only -- -->
+  <!-- -- Audit Trail ï¿½ admin/organizer only -- -->
   {{#if isAdmin}}
   {{#if auditLog.length}}
   <div class="section-card animate-fadeup-2">
@@ -416,7 +410,7 @@
   {{/if}}
   {{/if}}
 
-  <!-- -- Stage Timer — only visible when event is ongoing -- -->
+  <!-- -- Stage Timer ï¿½ only visible when event is ongoing -- -->
   <div id="event-meta"
     data-event-id="{{event.id}}"
     data-event-date="{{event.date}}"
@@ -435,7 +429,7 @@
       <span id="timer-toggle-label">Show Stage Timer</span>
       <svg id="timer-toggle-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>
     </button>
-    <!-- Timer body — hidden by default -->
+    <!-- Timer body ï¿½ hidden by default -->
     <div id="stage-timer-wrapper" class="hidden">
       {{> countdown_timer }}
     </div>
@@ -478,7 +472,7 @@
   </div>
   {{/if}}
 
-  <!-- Payment QR Code Card — only for paid event types that have a QR uploaded -->
+  <!-- Payment QR Code Card ï¿½ only for paid event types that have a QR uploaded -->
   {{#if event.paymentQR}}
   {{#if event.isPaymentType}}
   <div class="section-card animate-fadeup-2" style="border-color:rgba(16,185,129,0.3)">
@@ -530,7 +524,7 @@
   {{/if}}
   {{/if}}
 
-  <!-- Event URL QR Code Card — only show when a payment QR has been uploaded -->
+  <!-- Event URL QR Code Card ï¿½ only show when a payment QR has been uploaded -->
   {{#if event.paymentQR}}
   {{#if event.isPaymentType}}
   {{#if canManageFinance}}
@@ -701,7 +695,7 @@
             <!-- Description -->
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-2" style="color:#4b5563">Description</label>
-              <input type="text" name="description" placeholder="e.g. 10 teams × ?500" class="form-input-bare w-full"/>
+              <input type="text" name="description" placeholder="e.g. 10 teams ï¿½ ?500" class="form-input-bare w-full"/>
             </div>
 
           </div>
@@ -746,7 +740,7 @@
                 {{/if}}
               </td>
               <td><span class="badge badge-gray capitalize text-[11px]">{{category}}</span></td>
-              <td class="text-sm" style="color:var(--text-secondary)">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">—</span>{{/if}}</td>
+              <td class="text-sm" style="color:var(--text-secondary)">{{#if description}}{{description}}{{else}}<span style="color:#1f2937">ï¿½</span>{{/if}}</td>
               <td class="text-right font-extrabold text-sm" style="color:{{#if (eq type 'income')}}#6ee7b7{{else}}#fca5a5{{/if}}">
                 {{#if (eq type 'income')}}+{{else}}-{{/if}}?{{amount}}
               </td>
@@ -795,7 +789,7 @@
         <p class="font-bold text-sm mb-1" style="color:var(--text-primary)">No finance entries yet</p>
         <p class="text-xs mb-5" style="color:var(--text-faint)">Track registration fees, sponsorships, expenses, and more.</p>
         {{#if canManageFinance}}
-        <button onclick="toggleFinanceForm()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
+        <button onclick="toggleFinanceForm()" class="btn-sm btn-sm-green">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add First Entry
         </button>
@@ -836,7 +830,7 @@
 }
 </style>
 <script>
-// Shared dropdown portal — appended to body so overflow:hidden never clips it
+// Shared dropdown portal ï¿½ appended to body so overflow:hidden never clips it
 var _portal = null;
 function getPortal() {
   if (!_portal) {
@@ -1059,18 +1053,16 @@ window._onTimerEventEnd = function() {
       {{#if availableJudges.length}}
       <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Add Judge</p>
       <select name="judgeId" required class="form-input-bare w-full">
-        <option value="">— Select a judge —</option>
+        <option value="">ï¿½ Select a judge ï¿½</option>
         {{#each availableJudges}}
         <option value="{{id}}">{{name}} ({{email}})</option>
         {{/each}}
       </select>
       <div class="flex gap-3 pt-1">
-        <button type="submit" class="flex-1 py-2.5 rounded-xl font-bold text-sm text-white transition hover:opacity-90"
-          style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
+        <button type="submit" class="btn-primary flex-1 justify-center">
           Assign Judge
         </button>
-        <button type="button" onclick="closeAddJudgeModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm transition"
-          style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">Cancel</button>
+        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-5">Cancel</button>
       </div>
       {{else}}
       <div class="py-4 text-center text-xs" style="color:var(--text-faint)">
@@ -1078,8 +1070,7 @@ window._onTimerEventEnd = function() {
         <br><a href="/users" class="text-indigo-400 font-semibold mt-1 inline-block">Create judge accounts in Users ?</a>
       </div>
       <div class="flex justify-end pb-2">
-        <button type="button" onclick="closeAddJudgeModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm transition"
-          style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)">Close</button>
+        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-5">Close</button>
       </div>
       {{/if}}
     </form>
@@ -1117,7 +1108,7 @@ window._onTimerEventEnd = function() {
         <h2 id="organizer-menu-title" class="text-base font-extrabold text-white">Organizer More menu</h2>
         <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-secondary)">Choose specific items to hide. The More menu itself will remain visible to organizers.</p>
       </div>
-      <button type="button" onclick="closeOrganizerMenuModal()" class="text-slate-400 hover:text-white" aria-label="Close menu settings">×</button>
+      <button type="button" onclick="closeOrganizerMenuModal()" class="text-slate-400 hover:text-white" aria-label="Close menu settings">ï¿½</button>
     </div>
     <form method="POST" action="/events/{{event.id}}/organizer-menu">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
