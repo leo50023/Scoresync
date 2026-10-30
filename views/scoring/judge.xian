@@ -165,43 +165,69 @@
 
           <!-- -- Criteria rows (all visible at once) -- -->
           {{#each scores}}
-          <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
+               <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
 
-            <!-- Criteria name row -->
-            <div class="judge-criteria-heading">
-              <span>{{criteriaName}}</span>
-              <span class="judge-weight-badge">{{weight}}%</span>
-            
-            <!-- Rating scale legend -->
-            <div class="rating-legend">
-              <div class="rating-legend-item rating-poor"><span class="rating-legend-label">Poor</span><span class="rating-legend-range">0–59</span><div class="rating-legend-bar"></div></div>
-              <div class="rating-legend-item rating-fair"><span class="rating-legend-label">Fair</span><span class="rating-legend-range">60–74</span><div class="rating-legend-bar"></div></div>
-              <div class="rating-legend-item rating-good"><span class="rating-legend-label">Good</span><span class="rating-legend-range">75–84</span><div class="rating-legend-bar"></div></div>
-              <div class="rating-legend-item rating-vgood"><span class="rating-legend-label">Very Good</span><span class="rating-legend-range">85–92</span><div class="rating-legend-bar"></div></div>
-              <div class="rating-legend-item rating-excel"><span class="rating-legend-label">Excellent</span><span class="rating-legend-range">93–100</span><div class="rating-legend-bar"></div></div>
+              <!-- Criteria name row -->
+              <div class="judge-criteria-heading">
+                <span>{{criteriaName}}</span>
+                <span class="judge-weight-badge">{{weight}}%</span>
+              </div>
+
+              <!-- Progress bar + input row -->
+              <div class="judge-score-row">
+                <div class="judge-score-track">
+                  <div class="criteria-bar"></div>
+                </div>
+                <div class="judge-score-entry">
+                  <input type="number"
+                    class="score-entry-input"
+                    min="0" max="{{maxScore}}" step="0.01"
+                    placeholder="0"
+                    value="{{value}}"
+                    {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
+                    data-max="{{maxScore}}"
+                    oninput="handleScoreInput(this)"
+                  />
+                  <span>/ {{maxScore}}</span>
+                </div>
+              </div>
+
+              <!-- Validation error -->
+              <div class="score-error" style="display:none;color:#f87171;font-size:0.68rem;font-weight:700;margin-top:4px"></div>
+
+              <!-- Tier label + weighted contribution -->
+              <div class="score-meta-row" style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;min-height:18px">
+                <span class="rating-tier-label" style="font-size:0.7rem;font-weight:800;padding:2px 10px;border-radius:999px;border:1px solid currentColor;display:none"></span>
+                <span class="weighted-contrib" style="font-size:0.68rem;font-weight:700;color:#94a3b8"></span>
+              </div>
+
+              <!-- Rating scale legend (always visible) -->
+              <div class="rating-legend">
+                <div class="rating-legend-item rating-poor"><span class="rating-legend-label">Poor</span><span class="rating-legend-range">0–59</span><div class="rating-legend-bar"></div></div>
+                <div class="rating-legend-item rating-fair"><span class="rating-legend-label">Fair</span><span class="rating-legend-range">60–74</span><div class="rating-legend-bar"></div></div>
+                <div class="rating-legend-item rating-good"><span class="rating-legend-label">Good</span><span class="rating-legend-range">75–84</span><div class="rating-legend-bar"></div></div>
+                <div class="rating-legend-item rating-vgood"><span class="rating-legend-label">Very Good</span><span class="rating-legend-range">85–92</span><div class="rating-legend-bar"></div></div>
+                <div class="rating-legend-item rating-excel"><span class="rating-legend-label">Excellent</span><span class="rating-legend-range">93–100</span><div class="rating-legend-bar"></div></div>
+              </div>
+
+              <!-- Hidden elements for JS compatibility -->
+              <div style="display:none">
+                <span class="score-display"></span>
+                <span class="criteria-pct"></span>
+                <span class="criteria-pct-label"></span>
+                <span class="weighted-preview"></span>
+                <svg><circle class="criteria-ring" stroke-dasharray="163.36" stroke-dashoffset="163.36"/></svg>
+                <input type="number"
+                  name="scores[{{../id}}][{{criteriaId}}]"
+                  value="{{value}}"
+                  min="0" max="{{maxScore}}" step="0.01"
+                  class="score-input sr-only"
+                  {{#if ../../readOnly}}readonly{{/if}}
+                  data-weight="{{weight}}" data-max="{{maxScore}}"
+                  tabindex="-1"/>
+              </div>
+
             </div>
-
-            <!-- Hidden elements for JS compatibility (display:none wrapper) -->
-            <div style="display:none">
-              <span class="score-display"></span>
-              <span class="criteria-pct"></span>
-              <span class="criteria-pct-label"></span>
-              <span class="weighted-preview"></span>
-              <svg><circle class="criteria-ring" stroke-dasharray="163.36" stroke-dashoffset="163.36"/></svg>
-              <!-- Actual hidden form input -->
-              <input type="number"
-                name="scores[{{../id}}][{{criteriaId}}]"
-                value="{{value}}"
-                min="0" max="{{maxScore}}" step="0.01"
-                class="score-input sr-only"
-                {{#if ../../readOnly}}readonly{{/if}}
-                data-weight="{{weight}}" data-max="{{maxScore}}"
-                tabindex="-1"/>
-            </div>
-
-          </div>
-
-          </div>
           {{/each}}
 
           <!-- Live total display -->
