@@ -165,69 +165,69 @@
 
           <!-- -- Criteria rows (all visible at once) -- -->
           {{#each scores}}
-               <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
+          <div class="criteria-panel" data-contestant-id="{{../id}}" data-criteria-idx="{{@index}}">
 
-              <!-- Criteria name row -->
-              <div class="judge-criteria-heading">
-                <span>{{criteriaName}}</span>
-                <span class="judge-weight-badge">{{weight}}%</span>
-              </div>
-
-              <!-- Progress bar + input row -->
-              <div class="judge-score-row">
-                <div class="judge-score-track">
-                  <div class="criteria-bar"></div>
-                </div>
-                <div class="judge-score-entry">
-                  <input type="number"
-                    class="score-entry-input"
-                    min="0" max="{{maxScore}}" step="0.01"
-                    placeholder="0"
-                    value="{{value}}"
-                    {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
-                    data-max="{{maxScore}}"
-                    oninput="handleScoreInput(this)"
-                  />
-                  <span>/ {{maxScore}}</span>
-                </div>
-              </div>
-
-              <!-- Validation error -->
-              <div class="score-error" style="display:none;color:#f87171;font-size:0.68rem;font-weight:700;margin-top:4px"></div>
-
-              <!-- Tier label + weighted contribution -->
-              <div class="score-meta-row" style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;min-height:18px">
-                <span class="rating-tier-label" style="font-size:0.7rem;font-weight:800;padding:2px 10px;border-radius:999px;border:1px solid currentColor;display:none"></span>
-                <span class="weighted-contrib" style="font-size:0.68rem;font-weight:700;color:#94a3b8"></span>
-              </div>
-
-              <!-- Rating scale legend (always visible) -->
-              <div class="rating-legend">
-                <div class="rating-legend-item rating-poor"><span class="rating-legend-label">Poor</span><span class="rating-legend-range">0–59</span><div class="rating-legend-bar"></div></div>
-                <div class="rating-legend-item rating-fair"><span class="rating-legend-label">Fair</span><span class="rating-legend-range">60–74</span><div class="rating-legend-bar"></div></div>
-                <div class="rating-legend-item rating-good"><span class="rating-legend-label">Good</span><span class="rating-legend-range">75–84</span><div class="rating-legend-bar"></div></div>
-                <div class="rating-legend-item rating-vgood"><span class="rating-legend-label">Very Good</span><span class="rating-legend-range">85–92</span><div class="rating-legend-bar"></div></div>
-                <div class="rating-legend-item rating-excel"><span class="rating-legend-label">Excellent</span><span class="rating-legend-range">93–100</span><div class="rating-legend-bar"></div></div>
-              </div>
-
-              <!-- Hidden elements for JS compatibility -->
-              <div style="display:none">
-                <span class="score-display"></span>
-                <span class="criteria-pct"></span>
-                <span class="criteria-pct-label"></span>
-                <span class="weighted-preview"></span>
-                <svg><circle class="criteria-ring" stroke-dasharray="163.36" stroke-dashoffset="163.36"/></svg>
-                <input type="number"
-                  name="scores[{{../id}}][{{criteriaId}}]"
-                  value="{{value}}"
-                  min="0" max="{{maxScore}}" step="0.01"
-                  class="score-input sr-only"
-                  {{#if ../../readOnly}}readonly{{/if}}
-                  data-weight="{{weight}}" data-max="{{maxScore}}"
-                  tabindex="-1"/>
-              </div>
-
+            <!-- Criteria name row -->
+            <div class="judge-criteria-heading">
+              <span>{{criteriaName}}</span>
+              <span class="judge-weight-badge">{{weight}}%</span>
             </div>
+
+            <!-- Progress bar + input row -->
+            <div class="judge-score-row">
+              <!-- Progress bar -->
+              <div class="judge-score-track">
+                <div class="criteria-bar"></div>
+              </div>
+              <!-- Visible score input -->
+              <div class="judge-score-entry">
+                <input type="number"
+                  class="score-entry-input"
+                  min="0" max="{{maxScore}}" step="0.01"
+                  placeholder="0"
+                  value="{{value}}"
+                  {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
+                  data-max="{{maxScore}}"
+                  oninput="handleScoreInput(this)"
+                />
+                <span>/ {{maxScore}}</span>
+              </div>
+            </div>
+            <!-- Validation error -->
+            <div class="score-error" style="display:none;color:#f87171;font-size:0.68rem;font-weight:700;margin-top:4px"></div>
+            <!-- Rating tier + weighted preview -->
+            <div class="score-meta-row" style="display:none;margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span class="rating-tier-label" style="font-size:0.7rem;font-weight:800;padding:2px 10px;border-radius:999px;border:1px solid currentColor"></span>
+              <span class="weighted-contrib" style="font-size:0.68rem;font-weight:700;color:#94a3b8"></span>
+            </div>
+            <!-- Rating scale legend -->
+            <div class="rating-legend">
+              <div class="rating-legend-item rl-poor"><span class="rl-label">Poor</span><span class="rl-range">0–59</span><div class="rl-bar"></div></div>
+              <div class="rating-legend-item rl-fair"><span class="rl-label">Fair</span><span class="rl-range">60–74</span><div class="rl-bar"></div></div>
+              <div class="rating-legend-item rl-good"><span class="rl-label">Good</span><span class="rl-range">75–84</span><div class="rl-bar"></div></div>
+              <div class="rating-legend-item rl-vgood"><span class="rl-label">Very Good</span><span class="rl-range">85–92</span><div class="rl-bar"></div></div>
+              <div class="rating-legend-item rl-excel"><span class="rl-label">Excellent</span><span class="rl-range">93–100</span><div class="rl-bar"></div></div>
+            </div>
+
+            <!-- Hidden elements for JS compatibility (display:none wrapper) -->
+            <div style="display:none">
+              <span class="score-display"></span>
+              <span class="criteria-pct"></span>
+              <span class="criteria-pct-label"></span>
+              <span class="weighted-preview"></span>
+              <svg><circle class="criteria-ring" stroke-dasharray="163.36" stroke-dashoffset="163.36"/></svg>
+              <!-- Actual hidden form input -->
+              <input type="number"
+                name="scores[{{../id}}][{{criteriaId}}]"
+                value="{{value}}"
+                min="0" max="{{maxScore}}" step="0.01"
+                class="score-input sr-only"
+                {{#if ../../readOnly}}readonly{{/if}}
+                data-weight="{{weight}}" data-max="{{maxScore}}"
+                tabindex="-1"/>
+            </div>
+
+          </div>
           {{/each}}
 
           <!-- Live total display -->
@@ -672,8 +672,7 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg,#a17b1c,#d6b54a);
-  transition: width 0.4s ease;
-  will-change: width;
+  transition: width 0.35s ease;
 }
 .judge-score-entry {
   display: flex;
@@ -924,79 +923,6 @@ main::-webkit-scrollbar { display:none; }
   100% { background-position: -200% center; }
 }
 
-/* ── Rating scale legend ── */
-.rating-legend {
-  display: flex; gap: 3px; margin-top: 8px;
-  padding: 6px 8px; border-radius: 10px;
-  background: rgba(0,0,0,0.25);
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.rating-legend-item {
-  flex: 1; text-align: center; position: relative;
-  padding: 5px 3px 7px;
-  border-radius: 6px;
-  cursor: default;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-}
-/* Default text colours per tier */
-.rating-legend-item.rating-poor  { color: #f87171; }
-.rating-legend-item.rating-fair  { color: #fb923c; }
-.rating-legend-item.rating-good  { color: #facc15; }
-.rating-legend-item.rating-vgood { color: #34d399; }
-.rating-legend-item.rating-excel { color: #c9a227; }
-/* Labels */
-.rating-legend-label {
-  display: block; font-size: 0.6rem; font-weight: 800;
-  letter-spacing: 0.02em; line-height: 1.3;
-}
-.rating-legend-range {
-  display: block; font-size: 0.56rem; font-weight: 600;
-  opacity: 0.65; margin-top: 1px; line-height: 1.2;
-}
-/* Bottom bar per tier */
-.rating-legend-bar {
-  height: 3px; border-radius: 999px; margin-top: 5px; opacity: 0.45;
-}
-.rating-legend-item.rating-poor  .rating-legend-bar { background: #f87171; }
-.rating-legend-item.rating-fair  .rating-legend-bar { background: #fb923c; }
-.rating-legend-item.rating-good  .rating-legend-bar { background: #facc15; }
-.rating-legend-item.rating-vgood .rating-legend-bar { background: #34d399; }
-.rating-legend-item.rating-excel .rating-legend-bar { background: #c9a227; }
-
-/* ── ACTIVE TIER — high specificity ── */
-.rating-legend.has-active .rating-legend-item { opacity: 0.3; }
-.rating-legend.has-active .rating-legend-item.active-tier { opacity: 1 !important; }
-
-.rating-legend-item.rating-poor.active-tier  {
-  background: rgba(248,113,113,0.18) !important;
-  border-color: #f87171 !important;
-  box-shadow: 0 0 12px rgba(248,113,113,0.4), inset 0 0 8px rgba(248,113,113,0.08);
-}
-.rating-legend-item.rating-fair.active-tier  {
-  background: rgba(251,146,60,0.18) !important;
-  border-color: #fb923c !important;
-  box-shadow: 0 0 12px rgba(251,146,60,0.4), inset 0 0 8px rgba(251,146,60,0.08);
-}
-.rating-legend-item.rating-good.active-tier  {
-  background: rgba(250,204,21,0.15) !important;
-  border-color: #facc15 !important;
-  box-shadow: 0 0 12px rgba(250,204,21,0.35), inset 0 0 8px rgba(250,204,21,0.08);
-}
-.rating-legend-item.rating-vgood.active-tier {
-  background: rgba(52,211,153,0.15) !important;
-  border-color: #34d399 !important;
-  box-shadow: 0 0 12px rgba(52,211,153,0.35), inset 0 0 8px rgba(52,211,153,0.08);
-}
-.rating-legend-item.rating-excel.active-tier {
-  background: rgba(201,162,39,0.18) !important;
-  border-color: #c9a227 !important;
-  box-shadow: 0 0 12px rgba(201,162,39,0.4), inset 0 0 8px rgba(201,162,39,0.08);
-}
-.rating-legend-item.active-tier .rating-legend-label { font-size: 0.65rem; }
-.rating-legend-item.active-tier .rating-legend-range { opacity: 1; }
-.rating-legend-item.active-tier .rating-legend-bar   { opacity: 1; height: 4px; }
-
 /* ── Rating tier colours ── */
 .rating-poor  { color:#f87171; border-color:rgba(248,113,113,0.4)!important; background:rgba(248,113,113,0.08)!important; }
 .rating-fair  { color:#fb923c; border-color:rgba(251,146,60,0.4)!important;  background:rgba(251,146,60,0.08)!important;  }
@@ -1049,6 +975,29 @@ main::-webkit-scrollbar { display:none; }
 .nav-dot.flash-saved { animation: dotFlash 0.65s ease; }
 /* Reveal main after CSS loads � prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
+
+/* ── Rating legend ── */
+.rating-legend { display:flex; gap:3px; margin-top:8px; padding:6px 8px; border-radius:10px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); }
+.rating-legend-item { flex:1; text-align:center; padding:5px 3px 7px; border-radius:6px; border:1px solid transparent; transition:all 0.2s ease; }
+.rl-label { display:block; font-size:0.6rem; font-weight:800; line-height:1.3; }
+.rl-range { display:block; font-size:0.56rem; font-weight:600; opacity:0.65; margin-top:1px; }
+.rl-bar   { height:3px; border-radius:999px; margin-top:5px; opacity:0.5; }
+.rating-legend-item.rl-poor  { color:#f87171; } .rating-legend-item.rl-poor  .rl-bar { background:#f87171; }
+.rating-legend-item.rl-fair  { color:#fb923c; } .rating-legend-item.rl-fair  .rl-bar { background:#fb923c; }
+.rating-legend-item.rl-good  { color:#facc15; } .rating-legend-item.rl-good  .rl-bar { background:#facc15; }
+.rating-legend-item.rl-vgood { color:#34d399; } .rating-legend-item.rl-vgood .rl-bar { background:#34d399; }
+.rating-legend-item.rl-excel { color:#c9a227; } .rating-legend-item.rl-excel .rl-bar { background:#c9a227; }
+/* dim inactive when one is active */
+.rating-legend.rl-active .rating-legend-item           { opacity:0.28; }
+.rating-legend.rl-active .rating-legend-item.rl-lit    { opacity:1 !important; }
+.rating-legend-item.rl-poor.rl-lit  { background:rgba(248,113,113,0.18)!important; border-color:#f87171!important; box-shadow:0 0 10px rgba(248,113,113,0.4); }
+.rating-legend-item.rl-fair.rl-lit  { background:rgba(251,146,60,0.18)!important;  border-color:#fb923c!important; box-shadow:0 0 10px rgba(251,146,60,0.4);  }
+.rating-legend-item.rl-good.rl-lit  { background:rgba(250,204,21,0.15)!important;  border-color:#facc15!important; box-shadow:0 0 10px rgba(250,204,21,0.35); }
+.rating-legend-item.rl-vgood.rl-lit { background:rgba(52,211,153,0.15)!important;  border-color:#34d399!important; box-shadow:0 0 10px rgba(52,211,153,0.35); }
+.rating-legend-item.rl-excel.rl-lit { background:rgba(201,162,39,0.18)!important;  border-color:#c9a227!important; box-shadow:0 0 10px rgba(201,162,39,0.4);  }
+.rating-legend-item.rl-lit .rl-label { font-size:0.65rem; }
+.rating-legend-item.rl-lit .rl-range { opacity:1; }
+.rating-legend-item.rl-lit .rl-bar   { opacity:1; height:4px; }
 </style>
 
 <script>
@@ -1181,86 +1130,73 @@ main::-webkit-scrollbar { display:none; }
 
   /* -- updateBox: update progress bar + totals -- */
   function updateBox(panel) {
-    try {
-      const entryEl = panel.querySelector('.score-entry-input');
-      const hiddenEl = panel.querySelector('.score-input');
-      if (!entryEl) return;
+    const input  = panel.querySelector('.score-input');
+    const val    = parseFloat(input.value) || 0;
+    const max    = parseFloat(input.dataset.max) || 100;
+    const weight = parseFloat(input.dataset.weight) || 0;
+    const pct    = max > 0 ? (val / max) * 100 : 0;
+    const contrib = (val / max) * weight;
 
-      const rawVal = entryEl.value;
-      const val    = parseFloat(rawVal) || 0;
-      const max    = parseFloat(entryEl.dataset.max) || 100;
-      const weight = hiddenEl ? (parseFloat(hiddenEl.dataset.weight) || 0) : 0;
-      const pct    = max > 0 ? (val / max) * 100 : 0;
-      const contrib = weight > 0 ? (val / max) * weight : 0;
+    // Gold progress bar
+    const bar = panel.querySelector('.criteria-bar');
+    if (bar) { bar.style.width = pct.toFixed(1) + '%'; }
 
-      // Sync to hidden input
-      if (hiddenEl) hiddenEl.value = val > 0 ? val : '';
+    // Toggle filled state accent
+    panel.classList.toggle('has-score', val > 0);
 
-      // ── Progress bar ──
-      const bar = panel.querySelector('.criteria-bar');
-      if (bar) {
-        bar.style.width = pct.toFixed(1) + '%';
-        const barColors = {
-          poor:  'linear-gradient(90deg,#991b1b,#f87171)',
-          fair:  'linear-gradient(90deg,#9a3412,#fb923c)',
-          good:  'linear-gradient(90deg,#854d0e,#facc15)',
-          vgood: 'linear-gradient(90deg,#065f46,#34d399)',
-          excel: 'linear-gradient(90deg,#78350f,#c9a227)',
-        };
-        if (val > 0) {
-          const tier = pct >= 93 ? 'excel' : pct >= 85 ? 'vgood' : pct >= 75 ? 'good' : pct >= 60 ? 'fair' : 'poor';
-          bar.style.background = barColors[tier];
-        } else {
-          bar.style.background = 'linear-gradient(90deg,#a17b1c,#d6b54a)';
-        }
+    // Hidden compat elements
+    const disp = panel.querySelector('.score-display');
+    if (disp) disp.textContent = val > 0 ? val : '�';
+    const pctEl = panel.querySelector('.criteria-pct');
+    if (pctEl) pctEl.textContent = Math.round(pct) + '%';
+    const pctLbl = panel.querySelector('.criteria-pct-label');
+    if (pctLbl) pctLbl.textContent = Math.round(pct) + '%';
+    const wp = panel.querySelector('.weighted-preview');
+    if (wp) wp.textContent = contrib.toFixed(2) + '%';
+
+    // #3 — Rating tier + weighted contribution preview
+    const tierEl    = panel.querySelector('.rating-tier-label');
+    const contribEl = panel.querySelector('.weighted-contrib');
+    if (tierEl) {
+      if (val <= 0) {
+        tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none';
+      } else {
+        tierEl.style.display = '';
+        const t = getRatingTier(pct);
+        tierEl.textContent = t.label; tierEl.className = 'rating-tier-label ' + t.cls;
       }
-
-      // ── Has-score class ──
-      panel.classList.toggle('has-score', val > 0);
-
-      // ── Weighted contribution text ──
-      const contribEl = panel.querySelector('.weighted-contrib');
-      if (contribEl) {
-        contribEl.textContent = val > 0 && weight > 0
-          ? val + ' pts → contributes ' + contrib.toFixed(1) + '% to total'
-          : '';
-      }
-
-      // ── Hidden compat ──
-      const disp = panel.querySelector('.score-display');
-      if (disp) disp.textContent = val > 0 ? val : '';
-      const wp = panel.querySelector('.weighted-preview');
-      if (wp) wp.textContent = contrib.toFixed(2) + '%';
-
-      // ── Rating legend highlight ──
-      const tierName = pct >= 93 ? 'rating-excel'
-                     : pct >= 85 ? 'rating-vgood'
-                     : pct >= 75 ? 'rating-good'
-                     : pct >= 60 ? 'rating-fair'
-                     : 'rating-poor';
-      const legend = panel.querySelector('.rating-legend');
-      const items  = panel.querySelectorAll('.rating-legend-item');
-
-      if (legend && items.length > 0) {
-        if (val > 0) {
-          legend.classList.add('has-active');
-          items.forEach(function(item) {
-            item.classList.toggle('active-tier', item.classList.contains(tierName));
-          });
-        } else {
-          legend.classList.remove('has-active');
-          items.forEach(function(item) { item.classList.remove('active-tier'); });
-        }
-      }
-
-      updateContestantPanel(panel.closest('.contestant-panel'));
-      updateOverallRing();
-    } catch(err) {
-      console.error('updateBox error:', err);
     }
+    if (contribEl) {
+      contribEl.textContent = val > 0
+        ? val + ' pts → contributes ' + contrib.toFixed(1) + '% to total'
+        : '';
+    }
+
+
+    // ── Legend highlight ──
+    (function() {
+      var leg = panel.querySelector('.rating-legend');
+      if (!leg) return;
+      var inp = panel.querySelector('.score-entry-input');
+      var v   = inp ? parseFloat(inp.value) : 0;
+      var mx  = inp ? (parseFloat(inp.dataset.max) || 100) : 100;
+      var p   = mx > 0 ? (v / mx) * 100 : 0;
+      var tier = p >= 93 ? 'rl-excel' : p >= 85 ? 'rl-vgood' : p >= 75 ? 'rl-good' : p >= 60 ? 'rl-fair' : 'rl-poor';
+      if (v > 0) {
+        leg.classList.add('rl-active');
+        leg.querySelectorAll('.rating-legend-item').forEach(function(item) {
+          item.classList.toggle('rl-lit', item.classList.contains(tier));
+        });
+      } else {
+        leg.classList.remove('rl-active');
+        leg.querySelectorAll('.rating-legend-item').forEach(function(item) { item.classList.remove('rl-lit'); });
+      }
+    })();
+    updateContestantPanel(panel.closest('.contestant-panel'));
+    updateOverallRing();
   }
 
-    /* -- Contestant panel totals -- */
+  /* -- Contestant panel totals -- */
   function updateContestantPanel(cp) {
     if (!cp) return;
     const panels = cp.querySelectorAll('.criteria-panel');
@@ -1456,9 +1392,6 @@ main::-webkit-scrollbar { display:none; }
     }
     updateBox(p);
   });
-
-  // Re-run legend highlight on initial load (in case pre-filled scores exist)
-  document.querySelectorAll('.criteria-panel').forEach(p => updateBox(p));
 
   // Mark all nav dots that are fully scored on initial load
   document.querySelectorAll('.contestant-panel').forEach(cp => {
