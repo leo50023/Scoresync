@@ -1083,115 +1083,118 @@ main::-webkit-scrollbar { display:none; }
 
   /* -- Handle score text input -- */
   window.handleScoreInput = function(entryEl) {
-    const panel  = entryEl.closest('.criteria-panel');
-    const input  = panel.querySelector('.score-input');
-    const errEl  = panel.querySelector('.score-error');
-    const max    = parseFloat(entryEl.dataset.max) || 100;
-    let val      = parseFloat(entryEl.value);
-
-    // Mark contestant as dirty (unsaved changes)
-    const cp = panel.closest('.contestant-panel');
+    var scoreRow = entryEl.closest('.judge-score-row');
+    var panel    = scoreRow ? scoreRow.previousElementSibling : null;
+    if (!panel || !panel.classList.contains('criteria-panel')) return;
+    var sib = getSiblings(panel);
+    var max = parseFloat(entryEl.dataset.max) || 100;
+    var val = parseFloat(entryEl.value);
+    var cp  = panel.closest('.contestant-panel');
     if (cp) _dirtySet.add(cp.dataset.idx);
     updateNextWarning();
-
     if (isNaN(val) || entryEl.value === '') {
-      input.value = '';
+      if (sib.input) sib.input.value = '';
       entryEl.style.borderColor = 'rgba(201,162,39,0.4)';
       entryEl.style.boxShadow   = '';
-      if (errEl) { errEl.textContent = ''; errEl.classList.remove('visible'); }
-      updateBox(panel);
+      if (sib.err) { sib.err.textContent = ''; sib.err.classList.remove('visible'); }
+      updateBoxFrom(panel, sib, 0, max);
       schedSave();
       return;
     }
-
-    // #1 — Validation: over max
     if (val > max) {
       entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
       entryEl.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
-      if (errEl) {
-        errEl.textContent = 'Max score is ' + max + '. Enter ' + max + ' or below.';
-        errEl.classList.add('visible');
-      }
-      input.value = val; // keep raw so user can correct
-      updateBox(panel);
+      if (sib.err) { sib.err.textContent = 'Max is ' + max; sib.err.classList.add('visible'); }
+      if (sib.input) sib.input.value = val;
+      updateBoxFrom(panel, sib, val, max);
       schedSave();
       return;
     }
     if (val < 0) val = 0;
-
-    // Clear error
-    if (errEl) { errEl.textContent = ''; errEl.classList.remove('visible'); }
+    if (sib.err) { sib.err.textContent = ''; sib.err.classList.remove('visible'); }
     entryEl.style.borderColor = 'rgba(201,162,39,0.7)';
     entryEl.style.boxShadow   = '';
-    input.value = val;
-    updateBox(panel);
+    if (sib.input) sib.input.value = val;
+    updateBoxFrom(panel, sib, val, max);
     schedSave();
   };
 
-  /* -- updateBox: update progress bar + totals -- */
+  function getSiblings(panel) {
+    var r = { row:null, err:null, meta:null, legend:null, hidden:null, input:null };
+    var el = panel.nextElementSibling;
+    while (el) {
+      var cls = el.classList;
+      if (cls.contains('judge-score-row'))      r.row    = el;
+      else if (cls.contains('score-error'))     r.err    = el;
+      else if (cls.contains('score-meta-row'))  r.meta   = el;
+      else if (cls.contains('rating-legend'))   r.legend = el;
+      else if (el.style && el.style.display === 'none') {
+        r.hidden = el;
+        r.input  = el.querySelector('.score-input');
+      }
+      if (cls.contains('criteria-panel') || cls.contains('contestant-total-display')) break;
+      el = el.nextElementSibling;
+    }
+    return r;
+  }
+
+  /* -- updateBox (legacy wrapper) -- */
   function updateBox(panel) {
-    const input  = panel.querySelector('.score-input');
-    const val    = parseFloat(input.value) || 0;
-    const max    = parseFloat(input.dataset.max) || 100;
-    const weight = parseFloat(input.dataset.weight) || 0;
-    const pct    = max > 0 ? (val / max) * 100 : 0;
-    const contrib = (val / max) * weight;
+    var sib = getSiblings(panel);
+    var inp = sib.row ? sib.row.querySelector('.score-entry-input') : null;
+    var val = inp ? (parseFloat(inp.value) || 0) : 0;
+    var max = inp ? (parseFloat(inp.dataset.max) || 100) : 100;
+    updateBoxFrom(panel, sib, val, max);
+  }
 
-    // Gold progress bar
-    const bar = panel.querySelector('.criteria-bar');
-    if (bar) { bar.style.width = pct.toFixed(1) + '%'; }
+  function updateBoxFrom(panel, sib, val, max) {
+    var weight  = sib.input ? (parseFloat(sib.input.dataset.weight) || 0) : 0;
+    var pct     = max > 0 ? (val / max) * 100 : 0;
+    var contrib = weight > 0 ? (val / max) * weight : 0;
+    var tier    = pct >= 93 ? 'rl-excel' : pct >= 85 ? 'rl-vgood' : pct >= 75 ? 'rl-good' : pct >= 60 ? 'rl-fair' : 'rl-poor';
 
-    // Toggle filled state accent
+    // Progress bar
+    var bar = sib.row ? sib.row.querySelector('.criteria-bar') : null;
+    if (bar) {
+      bar.style.width = pct.toFixed(1) + '%';
+      var barColors = {'rl-poor':'linear-gradient(90deg,#991b1b,#f87171)','rl-fair':'linear-gradient(90deg,#9a3412,#fb923c)','rl-good':'linear-gradient(90deg,#854d0e,#facc15)','rl-vgood':'linear-gradient(90deg,#065f46,#34d399)','rl-excel':'linear-gradient(90deg,#78350f,#c9a227)'};
+      bar.style.background = val > 0 ? barColors[tier] : 'linear-gradient(90deg,#a17b1c,#d6b54a)';
+    }
+
+    // has-score
     panel.classList.toggle('has-score', val > 0);
 
-    // Hidden compat elements
-    const disp = panel.querySelector('.score-display');
-    if (disp) disp.textContent = val > 0 ? val : '�';
-    const pctEl = panel.querySelector('.criteria-pct');
-    if (pctEl) pctEl.textContent = Math.round(pct) + '%';
-    const pctLbl = panel.querySelector('.criteria-pct-label');
-    if (pctLbl) pctLbl.textContent = Math.round(pct) + '%';
-    const wp = panel.querySelector('.weighted-preview');
-    if (wp) wp.textContent = contrib.toFixed(2) + '%';
+    // Hidden compat
+    if (sib.hidden) {
+      var disp = sib.hidden.querySelector('.score-display');   if (disp) disp.textContent = val > 0 ? val : '';
+      var wp   = sib.hidden.querySelector('.weighted-preview'); if (wp)   wp.textContent   = contrib.toFixed(2) + '%';
+    }
 
-    // #3 — Rating tier + weighted contribution preview
-    const tierEl    = panel.querySelector('.rating-tier-label');
-    const contribEl = panel.querySelector('.weighted-contrib');
-    if (tierEl) {
-      if (val <= 0) {
-        tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none';
-      } else {
-        tierEl.style.display = '';
-        const t = getRatingTier(pct);
-        tierEl.textContent = t.label; tierEl.className = 'rating-tier-label ' + t.cls;
+    // Tier label + contrib hint
+    if (sib.meta) {
+      var tierLabels = {'rl-poor':'Poor','rl-fair':'Fair','rl-good':'Good','rl-vgood':'Very Good','rl-excel':'Excellent'};
+      var tierEl    = sib.meta.querySelector('.rating-tier-label');
+      var contribEl = sib.meta.querySelector('.weighted-contrib');
+      if (tierEl) {
+        if (val > 0) { tierEl.textContent = tierLabels[tier]; tierEl.className = 'rating-tier-label ' + tier; tierEl.style.display = 'inline-block'; }
+        else         { tierEl.textContent = ''; tierEl.style.display = 'none'; }
       }
-    }
-    if (contribEl) {
-      contribEl.textContent = val > 0
-        ? val + ' pts → contributes ' + contrib.toFixed(1) + '% to total'
-        : '';
+      if (contribEl) contribEl.textContent = (val > 0 && weight > 0) ? val + ' pts → ' + contrib.toFixed(1) + '% of total' : '';
     }
 
-
-    // ── Legend highlight ──
-    (function() {
-      var leg = panel.querySelector('.rating-legend');
-      if (!leg) return;
-      var inp = panel.querySelector('.score-entry-input');
-      var v   = inp ? parseFloat(inp.value) : 0;
-      var mx  = inp ? (parseFloat(inp.dataset.max) || 100) : 100;
-      var p   = mx > 0 ? (v / mx) * 100 : 0;
-      var tier = p >= 93 ? 'rl-excel' : p >= 85 ? 'rl-vgood' : p >= 75 ? 'rl-good' : p >= 60 ? 'rl-fair' : 'rl-poor';
-      if (v > 0) {
-        leg.classList.add('rl-active');
-        leg.querySelectorAll('.rating-legend-item').forEach(function(item) {
+    // Legend highlight
+    if (sib.legend) {
+      if (val > 0) {
+        sib.legend.classList.add('rl-active');
+        sib.legend.querySelectorAll('.rating-legend-item').forEach(function(item) {
           item.classList.toggle('rl-lit', item.classList.contains(tier));
         });
       } else {
-        leg.classList.remove('rl-active');
-        leg.querySelectorAll('.rating-legend-item').forEach(function(item) { item.classList.remove('rl-lit'); });
+        sib.legend.classList.remove('rl-active');
+        sib.legend.querySelectorAll('.rating-legend-item').forEach(function(item) { item.classList.remove('rl-lit'); });
       }
-    })();
+    }
+
     updateContestantPanel(panel.closest('.contestant-panel'));
     updateOverallRing();
   }
