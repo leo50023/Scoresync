@@ -673,7 +673,8 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg,#a17b1c,#d6b54a);
-  transition: width 0.35s ease;
+  transition: width 0.4s ease;
+  will-change: width;
 }
 .judge-score-entry {
   display: flex;
@@ -926,57 +927,76 @@ main::-webkit-scrollbar { display:none; }
 
 /* ── Rating scale legend ── */
 .rating-legend {
-  display: flex; gap: 4px; margin-top: 8px;
-  padding: 8px 10px; border-radius: 10px;
-  background: rgba(255,255,255,0.025);
+  display: flex; gap: 3px; margin-top: 8px;
+  padding: 6px 8px; border-radius: 10px;
+  background: rgba(0,0,0,0.25);
   border: 1px solid rgba(255,255,255,0.06);
 }
 .rating-legend-item {
   flex: 1; text-align: center; position: relative;
-  padding: 4px 2px 6px;
-  border-radius: 7px;
-  transition: background 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+  padding: 5px 3px 7px;
+  border-radius: 6px;
+  cursor: default;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
-.rating-legend-item.active-tier {
-  outline: none;
-}
-/* per-tier active glow */
-.rating-legend-item.rating-poor.active-tier   { background: rgba(248,113,113,0.22); box-shadow: 0 0 0 1.5px #f87171, 0 0 16px rgba(248,113,113,0.35); }
-.rating-legend-item.rating-fair.active-tier   { background: rgba(251,146,60,0.22);  box-shadow: 0 0 0 1.5px #fb923c, 0 0 16px rgba(251,146,60,0.35);  }
-.rating-legend-item.rating-good.active-tier   { background: rgba(250,204,21,0.18);  box-shadow: 0 0 0 1.5px #facc15, 0 0 16px rgba(250,204,21,0.3);   }
-.rating-legend-item.rating-vgood.active-tier  { background: rgba(52,211,153,0.18);  box-shadow: 0 0 0 1.5px #34d399, 0 0 16px rgba(52,211,153,0.3);   }
-.rating-legend-item.rating-excel.active-tier  { background: rgba(201,162,39,0.22);  box-shadow: 0 0 0 1.5px #c9a227, 0 0 16px rgba(201,162,39,0.35);  }
-/* dim inactive tiers when one is active */
-.rating-legend.has-active .rating-legend-item:not(.active-tier) {
-  opacity: 0.35;
-}
+/* Default text colours per tier */
+.rating-legend-item.rating-poor  { color: #f87171; }
+.rating-legend-item.rating-fair  { color: #fb923c; }
+.rating-legend-item.rating-good  { color: #facc15; }
+.rating-legend-item.rating-vgood { color: #34d399; }
+.rating-legend-item.rating-excel { color: #c9a227; }
+/* Labels */
 .rating-legend-label {
-  display: block; font-size: 0.62rem; font-weight: 800;
+  display: block; font-size: 0.6rem; font-weight: 800;
   letter-spacing: 0.02em; line-height: 1.3;
-  transition: font-size 0.15s;
-}
-.rating-legend-item.active-tier .rating-legend-label {
-  font-size: 0.68rem;
 }
 .rating-legend-range {
-  display: block; font-size: 0.58rem; font-weight: 600;
-  opacity: 0.7; margin-top: 1px; line-height: 1.2;
+  display: block; font-size: 0.56rem; font-weight: 600;
+  opacity: 0.65; margin-top: 1px; line-height: 1.2;
 }
-.rating-legend-item.active-tier .rating-legend-range {
-  opacity: 1;
-}
+/* Bottom bar per tier */
 .rating-legend-bar {
-  height: 3px; border-radius: 999px; margin-top: 5px;
-  opacity: 0.5;
+  height: 3px; border-radius: 999px; margin-top: 5px; opacity: 0.45;
 }
-/* tier-specific bar colours */
-.rating-legend-item.rating-poor   .rating-legend-bar { background: #f87171; }
-.rating-legend-item.rating-fair   .rating-legend-bar { background: #fb923c; }
-.rating-legend-item.rating-good   .rating-legend-bar { background: #facc15; }
-.rating-legend-item.rating-vgood  .rating-legend-bar { background: #34d399; }
-.rating-legend-item.rating-excel  .rating-legend-bar { background: #c9a227; }
-/* active tier bar full opacity + full width */
-.rating-legend-item.active-tier .rating-legend-bar { opacity: 1; height: 4px; }
+.rating-legend-item.rating-poor  .rating-legend-bar { background: #f87171; }
+.rating-legend-item.rating-fair  .rating-legend-bar { background: #fb923c; }
+.rating-legend-item.rating-good  .rating-legend-bar { background: #facc15; }
+.rating-legend-item.rating-vgood .rating-legend-bar { background: #34d399; }
+.rating-legend-item.rating-excel .rating-legend-bar { background: #c9a227; }
+
+/* ── ACTIVE TIER — high specificity ── */
+.rating-legend.has-active .rating-legend-item { opacity: 0.3; }
+.rating-legend.has-active .rating-legend-item.active-tier { opacity: 1 !important; }
+
+.rating-legend-item.rating-poor.active-tier  {
+  background: rgba(248,113,113,0.18) !important;
+  border-color: #f87171 !important;
+  box-shadow: 0 0 12px rgba(248,113,113,0.4), inset 0 0 8px rgba(248,113,113,0.08);
+}
+.rating-legend-item.rating-fair.active-tier  {
+  background: rgba(251,146,60,0.18) !important;
+  border-color: #fb923c !important;
+  box-shadow: 0 0 12px rgba(251,146,60,0.4), inset 0 0 8px rgba(251,146,60,0.08);
+}
+.rating-legend-item.rating-good.active-tier  {
+  background: rgba(250,204,21,0.15) !important;
+  border-color: #facc15 !important;
+  box-shadow: 0 0 12px rgba(250,204,21,0.35), inset 0 0 8px rgba(250,204,21,0.08);
+}
+.rating-legend-item.rating-vgood.active-tier {
+  background: rgba(52,211,153,0.15) !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 0 12px rgba(52,211,153,0.35), inset 0 0 8px rgba(52,211,153,0.08);
+}
+.rating-legend-item.rating-excel.active-tier {
+  background: rgba(201,162,39,0.18) !important;
+  border-color: #c9a227 !important;
+  box-shadow: 0 0 12px rgba(201,162,39,0.4), inset 0 0 8px rgba(201,162,39,0.08);
+}
+.rating-legend-item.active-tier .rating-legend-label { font-size: 0.65rem; }
+.rating-legend-item.active-tier .rating-legend-range { opacity: 1; }
+.rating-legend-item.active-tier .rating-legend-bar   { opacity: 1; height: 4px; }
 
 /* ── Rating tier colours ── */
 .rating-poor  { color:#f87171; border-color:rgba(248,113,113,0.4)!important; background:rgba(248,113,113,0.08)!important; }
@@ -1171,7 +1191,22 @@ main::-webkit-scrollbar { display:none; }
 
     // Gold progress bar
     const bar = panel.querySelector('.criteria-bar');
-    if (bar) { bar.style.width = pct.toFixed(1) + '%'; }
+    if (bar) {
+      bar.style.width = pct.toFixed(1) + '%';
+      if (val > 0) {
+        const bt = getRatingTier(pct);
+        const barColors = {
+          'rating-poor':  'linear-gradient(90deg,#991b1b,#f87171)',
+          'rating-fair':  'linear-gradient(90deg,#9a3412,#fb923c)',
+          'rating-good':  'linear-gradient(90deg,#854d0e,#facc15)',
+          'rating-vgood': 'linear-gradient(90deg,#065f46,#34d399)',
+          'rating-excel': 'linear-gradient(90deg,#78350f,#c9a227)',
+        };
+        bar.style.background = barColors[bt.cls] || 'linear-gradient(90deg,#a17b1c,#d6b54a)';
+      } else {
+        bar.style.background = '';
+      }
+    }
 
     // Toggle filled state accent
     panel.classList.toggle('has-score', val > 0);
