@@ -935,7 +935,7 @@ main::-webkit-scrollbar { display:none; }
   flex: 1; text-align: center; position: relative;
   padding: 4px 2px 6px;
   border-radius: 7px;
-  transition: background 0.2s;
+  transition: background 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
 }
 .rating-legend-item.active-tier {
   outline: none;
@@ -1186,31 +1186,38 @@ main::-webkit-scrollbar { display:none; }
     const wp = panel.querySelector('.weighted-preview');
     if (wp) wp.textContent = contrib.toFixed(2) + '%';
 
-    // #3 — Rating tier + weighted contribution preview
+    // #3 — Rating tier label + weighted contribution preview + legend highlight
     const tierEl    = panel.querySelector('.rating-tier-label');
     const contribEl = panel.querySelector('.weighted-contrib');
-    if (tierEl) {
-      if (val <= 0) {
-        tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none';
-        const leg = panel.querySelector('.rating-legend');
-        if (leg) { leg.classList.remove('has-active'); }
-        panel.querySelectorAll('.rating-legend-item').forEach(item => item.classList.remove('active-tier'));
-      } else {
+    const legend    = panel.querySelector('.rating-legend');
+
+    if (val <= 0) {
+      // Clear everything
+      if (tierEl)    { tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none'; }
+      if (contribEl) { contribEl.textContent = ''; }
+      if (legend)    { legend.classList.remove('has-active'); }
+      panel.querySelectorAll('.rating-legend-item').forEach(item => item.classList.remove('active-tier'));
+    } else {
+      const t = getRatingTier(pct);
+
+      // Tier label pill
+      if (tierEl) {
         tierEl.style.display = '';
-        const t = getRatingTier(pct);
-        tierEl.textContent = t.label; tierEl.className = 'rating-tier-label ' + t.cls;
-        // Highlight active tier in legend
-        const legend = panel.querySelector('.rating-legend');
-        if (legend) legend.classList.add('has-active');
-        panel.querySelectorAll('.rating-legend-item').forEach(item => {
-          item.classList.toggle('active-tier', item.classList.contains(t.cls));
-        });
+        tierEl.textContent   = t.label;
+        tierEl.className     = 'rating-tier-label ' + t.cls;
       }
-    }
-    if (contribEl) {
-      contribEl.textContent = val > 0
-        ? val + ' pts → contributes ' + contrib.toFixed(1) + '% to total'
-        : '';
+
+      // Weighted contribution hint
+      if (contribEl) {
+        contribEl.textContent = val + ' pts → contributes ' + contrib.toFixed(1) + '% to total';
+      }
+
+      // Legend highlight — independent of tierEl
+      if (legend) legend.classList.add('has-active');
+      panel.querySelectorAll('.rating-legend-item').forEach(item => {
+        const isActive = item.classList.contains(t.cls);
+        item.classList.toggle('active-tier', isActive);
+      });
     }
 
     updateContestantPanel(panel.closest('.contestant-panel'));
@@ -1413,6 +1420,9 @@ main::-webkit-scrollbar { display:none; }
     }
     updateBox(p);
   });
+
+  // Re-run legend highlight on initial load (in case pre-filled scores exist)
+  document.querySelectorAll('.criteria-panel').forEach(p => updateBox(p));
 
   // Mark all nav dots that are fully scored on initial load
   document.querySelectorAll('.contestant-panel').forEach(cp => {
