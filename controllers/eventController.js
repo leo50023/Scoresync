@@ -1,4 +1,4 @@
-import { db } from "../models/firebaseConfig.js";
+﻿import { db } from "../models/firebaseConfig.js";
 import { getFinanceSummary } from "./financeController.js";
 import {
   collection, addDoc, getDocs, getDoc, doc,
@@ -178,9 +178,10 @@ export const showEvent = async (req, res) => {
           id: d.id,
           ...data,
           timestampStr: data.timestamp?.toDate?.()?.toLocaleString("en-PH", {
+            timeZone: "Asia/Manila",
             month: "short", day: "numeric", year: "numeric",
             hour: "2-digit", minute: "2-digit", hour12: true,
-          }) || "�",
+          }) || "—",
         };
       })
       .sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
