@@ -1181,93 +1181,86 @@ main::-webkit-scrollbar { display:none; }
 
   /* -- updateBox: update progress bar + totals -- */
   function updateBox(panel) {
-    // Use visible entry input first, fall back to hidden score-input
-    const entryInput = panel.querySelector('.score-entry-input');
-    const input      = panel.querySelector('.score-input');
-    if (!entryInput && !input) return; // nothing to work with
+    try {
+      const entryEl = panel.querySelector('.score-entry-input');
+      const hiddenEl = panel.querySelector('.score-input');
+      if (!entryEl) return;
 
-    // Sync entry → hidden if needed
-    if (entryInput && input && entryInput.value !== '' && input.value !== entryInput.value) {
-      input.value = entryInput.value;
-    }
+      const rawVal = entryEl.value;
+      const val    = parseFloat(rawVal) || 0;
+      const max    = parseFloat(entryEl.dataset.max) || 100;
+      const weight = hiddenEl ? (parseFloat(hiddenEl.dataset.weight) || 0) : 0;
+      const pct    = max > 0 ? (val / max) * 100 : 0;
+      const contrib = weight > 0 ? (val / max) * weight : 0;
 
-    const val    = parseFloat((entryInput || input).value) || 0;
-    const max    = parseFloat((entryInput || input).dataset.max || (input && input.dataset.max) || 100);
-    const weight = parseFloat(input ? input.dataset.weight : 0) || 0;
-    const pct    = max > 0 ? (val / max) * 100 : 0;
-    const contrib = (val / max) * weight;
+      // Sync to hidden input
+      if (hiddenEl) hiddenEl.value = val > 0 ? val : '';
 
-    // Gold progress bar
-    const bar = panel.querySelector('.criteria-bar');
-    if (bar) {
-      bar.style.width = pct.toFixed(1) + '%';
-      if (val > 0) {
-        const bt = getRatingTier(pct);
+      // ── Progress bar ──
+      const bar = panel.querySelector('.criteria-bar');
+      if (bar) {
+        bar.style.width = pct.toFixed(1) + '%';
         const barColors = {
-          'rating-poor':  'linear-gradient(90deg,#991b1b,#f87171)',
-          'rating-fair':  'linear-gradient(90deg,#9a3412,#fb923c)',
-          'rating-good':  'linear-gradient(90deg,#854d0e,#facc15)',
-          'rating-vgood': 'linear-gradient(90deg,#065f46,#34d399)',
-          'rating-excel': 'linear-gradient(90deg,#78350f,#c9a227)',
+          poor:  'linear-gradient(90deg,#991b1b,#f87171)',
+          fair:  'linear-gradient(90deg,#9a3412,#fb923c)',
+          good:  'linear-gradient(90deg,#854d0e,#facc15)',
+          vgood: 'linear-gradient(90deg,#065f46,#34d399)',
+          excel: 'linear-gradient(90deg,#78350f,#c9a227)',
         };
-        bar.style.background = barColors[bt.cls] || 'linear-gradient(90deg,#a17b1c,#d6b54a)';
-      } else {
-        bar.style.background = '';
-      }
-    }
-
-    // Toggle filled state accent
-    panel.classList.toggle('has-score', val > 0);
-
-    // Hidden compat elements
-    const disp = panel.querySelector('.score-display');
-    if (disp) disp.textContent = val > 0 ? val : '�';
-    const pctEl = panel.querySelector('.criteria-pct');
-    if (pctEl) pctEl.textContent = Math.round(pct) + '%';
-    const pctLbl = panel.querySelector('.criteria-pct-label');
-    if (pctLbl) pctLbl.textContent = Math.round(pct) + '%';
-    const wp = panel.querySelector('.weighted-preview');
-    if (wp) wp.textContent = contrib.toFixed(2) + '%';
-
-    // #3 — Rating tier label + weighted contribution preview + legend highlight
-    const tierEl    = panel.querySelector('.rating-tier-label');
-    const contribEl = panel.querySelector('.weighted-contrib');
-    const legend    = panel.querySelector('.rating-legend');
-
-    if (val <= 0) {
-      // Clear everything
-      if (tierEl)    { tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none'; }
-      if (contribEl) { contribEl.textContent = ''; }
-      if (legend)    { legend.classList.remove('has-active'); }
-      panel.querySelectorAll('.rating-legend-item').forEach(item => item.classList.remove('active-tier'));
-    } else {
-      const t = getRatingTier(pct);
-
-      // Tier label pill
-      if (tierEl) {
-        tierEl.style.display = '';
-        tierEl.textContent   = t.label;
-        tierEl.className     = 'rating-tier-label ' + t.cls;
+        if (val > 0) {
+          const tier = pct >= 93 ? 'excel' : pct >= 85 ? 'vgood' : pct >= 75 ? 'good' : pct >= 60 ? 'fair' : 'poor';
+          bar.style.background = barColors[tier];
+        } else {
+          bar.style.background = 'linear-gradient(90deg,#a17b1c,#d6b54a)';
+        }
       }
 
-      // Weighted contribution hint
+      // ── Has-score class ──
+      panel.classList.toggle('has-score', val > 0);
+
+      // ── Weighted contribution text ──
+      const contribEl = panel.querySelector('.weighted-contrib');
       if (contribEl) {
-        contribEl.textContent = val + ' pts → contributes ' + contrib.toFixed(1) + '% to total';
+        contribEl.textContent = val > 0 && weight > 0
+          ? val + ' pts → contributes ' + contrib.toFixed(1) + '% to total'
+          : '';
       }
 
-      // Legend highlight — independent of tierEl
-      if (legend) legend.classList.add('has-active');
-      panel.querySelectorAll('.rating-legend-item').forEach(item => {
-        const isActive = item.classList.contains(t.cls);
-        item.classList.toggle('active-tier', isActive);
-      });
-    }
+      // ── Hidden compat ──
+      const disp = panel.querySelector('.score-display');
+      if (disp) disp.textContent = val > 0 ? val : '';
+      const wp = panel.querySelector('.weighted-preview');
+      if (wp) wp.textContent = contrib.toFixed(2) + '%';
 
-    updateContestantPanel(panel.closest('.contestant-panel'));
-    updateOverallRing();
+      // ── Rating legend highlight ──
+      const tierName = pct >= 93 ? 'rating-excel'
+                     : pct >= 85 ? 'rating-vgood'
+                     : pct >= 75 ? 'rating-good'
+                     : pct >= 60 ? 'rating-fair'
+                     : 'rating-poor';
+      const legend = panel.querySelector('.rating-legend');
+      const items  = panel.querySelectorAll('.rating-legend-item');
+
+      if (legend && items.length > 0) {
+        if (val > 0) {
+          legend.classList.add('has-active');
+          items.forEach(function(item) {
+            item.classList.toggle('active-tier', item.classList.contains(tierName));
+          });
+        } else {
+          legend.classList.remove('has-active');
+          items.forEach(function(item) { item.classList.remove('active-tier'); });
+        }
+      }
+
+      updateContestantPanel(panel.closest('.contestant-panel'));
+      updateOverallRing();
+    } catch(err) {
+      console.error('updateBox error:', err);
+    }
   }
 
-  /* -- Contestant panel totals -- */
+    /* -- Contestant panel totals -- */
   function updateContestantPanel(cp) {
     if (!cp) return;
     const panels = cp.querySelectorAll('.criteria-panel');
