@@ -171,36 +171,7 @@
             <div class="judge-criteria-heading">
               <span>{{criteriaName}}</span>
               <span class="judge-weight-badge">{{weight}}%</span>
-            </div>
-
-            <!-- Progress bar + input row -->
-            <div class="judge-score-row">
-              <!-- Progress bar -->
-              <div class="judge-score-track">
-                <div class="criteria-bar"></div>
-              </div>
-              <!-- Visible score input -->
-              <div class="judge-score-entry">
-                <input type="number"
-                  class="score-entry-input"
-                  min="0" max="{{maxScore}}" step="0.01"
-                  placeholder="0"
-                  value="{{value}}"
-                  {{#if ../../readOnly}}readonly aria-readonly="true"{{/if}}
-                  data-max="{{maxScore}}"
-                  oninput="handleScoreInput(this)"
-                />
-                <span>/ {{maxScore}}</span>
-              </div>
-            </div>
-            <!-- Validation error -->
-            <div class="score-error" style="display:none;color:#f87171;font-size:0.68rem;font-weight:700;margin-top:4px"></div>
-            <!-- Rating tier + weighted preview -->
-            <div class="score-meta-row" style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;min-height:18px">
-              <span class="rating-tier-label" style="font-size:0.7rem;font-weight:800;padding:2px 10px;border-radius:999px;border:1px solid currentColor"></span>
-              <span class="weighted-contrib" style="font-size:0.68rem;font-weight:700;color:#94a3b8"></span>
-            </div>
-
+            
             <!-- Rating scale legend -->
             <div class="rating-legend">
               <div class="rating-legend-item rating-poor"><span class="rating-legend-label">Poor</span><span class="rating-legend-range">0–59</span><div class="rating-legend-bar"></div></div>
@@ -227,6 +198,8 @@
                 data-weight="{{weight}}" data-max="{{maxScore}}"
                 tabindex="-1"/>
             </div>
+
+          </div>
 
           </div>
           {{/each}}
