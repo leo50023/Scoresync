@@ -5,22 +5,31 @@
 <main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
 
   <!-- ── Sticky Top Bar ── -->
-  <div class="results-toolbar sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(10,15,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
+  <div class="results-toolbar sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(7,12,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 32px rgba(0,0,0,0.5)">
     <div class="results-toolbar-main flex items-center justify-between gap-2" style="min-width:0">
       <div class="flex items-center gap-3 min-w-0">
         <a href="{{#if isTabulator}}/dashboard{{else}}/events/{{event.id}}{{/if}}" class="btn-sm btn-sm-gray text-xs no-print flex items-center gap-1.5 flex-shrink-0">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
           Back
         </a>
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
         <div class="min-w-0">
           <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">Official Results — {{event.name}}</div>
-          <div class="results-meta text-xs text-slate-400">
-            <span class="font-semibold text-blue-600">{{judgeCount}}</span> judge(s) &bull;
-            <span class="font-semibold text-purple-600">{{ranked.length}}</span> contestant(s) &bull;
-            <span class="font-semibold text-emerald-600">{{criteria.length}}</span> criteria
+          <div class="results-meta flex items-center gap-2 mt-0.5">
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(37,99,235,0.15);color:#60a5fa">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              {{judgeCount}} judges
+            </span>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(124,58,237,0.15);color:#a78bfa">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              {{ranked.length}} contestants
+            </span>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(5,150,105,0.15);color:#34d399">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              {{criteria.length}} criteria
+            </span>
           </div>
         </div>
       </div>
@@ -77,94 +86,104 @@
 
   {{#if ranked.length}}
 
-  <!-- ── Podium ── -->
-  <div id="podium-container" class="card-flat overflow-hidden animate-fadeup">
-    <!-- Header -->
-    <div class="px-6 pt-6 pb-3 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#0f2156,#1a56db)">
-      <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(255,255,255,0.07) 0%,transparent 70%)"></div>
+  <!-- ── Podium Hero ── -->
+  <div id="podium-container" class="animate-fadeup overflow-hidden rounded-2xl" style="background:linear-gradient(160deg,#060d1f 0%,#0a1535 50%,#0d1e42 100%);border:1px solid rgba(255,255,255,0.07);box-shadow:0 8px 48px rgba(0,0,0,0.6)">
+    <!-- Hero header -->
+    <div class="relative overflow-hidden px-6 pt-8 pb-6 text-center" style="background:linear-gradient(135deg,#0c1e4a,#1a3a8c,#0c2060)">
+      <div class="absolute inset-0" style="background:radial-gradient(ellipse at 50% 0%,rgba(96,165,250,0.12) 0%,transparent 65%)"></div>
+      <!-- Decorative stars -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div style="position:absolute;top:12px;left:8%;width:2px;height:2px;border-radius:50%;background:#60a5fa;opacity:.6"></div>
+        <div style="position:absolute;top:24px;left:18%;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.3"></div>
+        <div style="position:absolute;top:8px;right:12%;width:2px;height:2px;border-radius:50%;background:#a78bfa;opacity:.5"></div>
+        <div style="position:absolute;top:32px;right:22%;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.25"></div>
+        <div style="position:absolute;top:18px;left:40%;width:2px;height:2px;border-radius:50%;background:#fbbf24;opacity:.4"></div>
+      </div>
       <div class="relative">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-3" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85)">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-4" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.15)">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block"></span>
           Live Leaderboard
         </div>
-        <h2 class="text-white font-extrabold text-xl tracking-tight">{{event.name}}</h2>
-        <p class="text-blue-200 text-xs mt-1 opacity-80">Official Competition Results</p>
+        <h2 class="text-white font-black text-2xl tracking-tight mb-1">{{event.name}}</h2>
+        <p class="text-blue-300 text-xs opacity-70 tracking-widest uppercase">Official Competition Results</p>
       </div>
     </div>
 
     <!-- Podium Blocks -->
-    <div class="px-6 py-8" data-role="podium-blocks" style="background:#0d1526">
-      <div class="results-podium-layout flex items-end justify-center gap-3 max-w-2xl mx-auto">
+    <div class="px-6 pt-8 pb-6" data-role="podium-blocks">
+      <div class="results-podium-layout flex items-end justify-center gap-4 max-w-2xl mx-auto">
 
         <!-- 2nd Place -->
         {{#each ranked}}{{#if (eq rank 2)}}
-        <div class="flex-1 min-w-0 text-center max-w-[180px]" data-podium-rank="2">
-          <div class="text-4xl mb-2 animate-fadeup-1">🥈</div>
-          <div class="rounded-2xl p-4 border-2 shadow-sm hover:shadow-md transition" style="border-color:rgba(100,116,139,0.4);background:#1a2035">
-            <div class="text-[10px] uppercase font-black tracking-widest mb-1" style="color:var(--text-secondary)">2nd Place</div>
-            <div class="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 shadow-lg" style="border:2px solid rgba(148,163,184,0.5)">
+        <div class="flex-1 min-w-0 text-center max-w-[190px]" data-podium-rank="2">
+          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(148,163,184,0.4))">🥈</div>
+          <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(148,163,184,0.25);background:linear-gradient(160deg,#1a2240,#1e2a4a);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)">
+            <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(148,163,184,0.7)">2nd Place</div>
+            <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(148,163,184,0.4);ring:4px solid rgba(148,163,184,0.1)">
               {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
-              <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#64748b,#94a3b8)">{{number}}</div>
+              <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#475569,#94a3b8)">{{number}}</div>
               {{/if}}
             </div>
-            <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
-            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:var(--text-secondary)">Brgy. {{barangay}}</div>{{/if}}
-            <div class="text-2xl font-black mt-3 leading-none" style="color:var(--text-secondary)"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal" style="color:var(--text-muted)">%</span></div>
-            <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
-              <div class="h-full rounded-full bg-slate-400 transition-all duration-700" style="width:{{finalScoreDisplay}}%"></div>
+            <div class="font-extrabold text-sm leading-tight mb-1" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
+            {{#if barangay}}<div class="text-[10px] mb-3" style="color:rgba(148,163,184,0.6)">Brgy. {{barangay}}</div>{{/if}}
+            <div class="text-2xl font-black leading-none mt-3" style="color:#94a3b8"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full transition-all duration-1000" style="width:{{finalScoreDisplay}}%;background:linear-gradient(90deg,#64748b,#94a3b8)"></div>
             </div>
           </div>
-          <div class="mt-2 h-16 rounded-t-lg bg-slate-200 mx-4"></div>
+          <div class="mt-2 h-14 rounded-t-xl mx-6" style="background:linear-gradient(180deg,rgba(148,163,184,0.3),rgba(148,163,184,0.1))"></div>
         </div>
         {{/if}}{{/each}}
 
-        <!-- 1st Place -->
+        <!-- 1st Place / Champion -->
         {{#each ranked}}{{#if (eq rank 1)}}
-        <div class="flex-1 min-w-0 text-center max-w-[200px] -mt-6" data-podium-rank="1">
-          <div class="text-5xl mb-2 animate-fadeup" style="filter:drop-shadow(0 4px 8px rgba(251,191,36,0.4))">🏆</div>
-          <div class="rounded-2xl p-5 border-2 border-yellow-300 shadow-xl hover:shadow-2xl transition" style="background:linear-gradient(160deg,#fffbeb,#fef3c7)">
-            <div class="text-[10px] text-yellow-600 uppercase font-black tracking-widest mb-1">Champion</div>
-            <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-2 shadow-xl" style="border:3px solid #f59e0b">
+        <div class="flex-1 min-w-0 text-center max-w-[210px] -mt-8" data-podium-rank="1">
+          <div class="text-5xl mb-3 animate-fadeup" style="filter:drop-shadow(0 4px 16px rgba(251,191,36,0.6))">🏆</div>
+          <div class="rounded-2xl p-5 border-2 border-yellow-400/40 transition-all hover:scale-[1.02]" style="background:linear-gradient(160deg,#2a1f05,#3d2a06,#2a1f05);box-shadow:0 8px 40px rgba(245,158,11,0.25),0 0 0 1px rgba(245,158,11,0.15),inset 0 1px 0 rgba(255,255,255,0.08)">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-3" style="background:rgba(245,158,11,0.2);border:1px solid rgba(245,158,11,0.3)">
+              <span class="text-[9px] text-yellow-400 uppercase font-black tracking-[0.18em]">Champion</span>
+            </div>
+            <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3 shadow-2xl" style="border:3px solid rgba(245,158,11,0.6);box-shadow:0 0 24px rgba(245,158,11,0.3)">
               {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
-              <div class="w-full h-full flex items-center justify-center text-white text-base font-extrabold" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>
+              <div class="w-full h-full flex items-center justify-center text-white text-lg font-extrabold" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>
               {{/if}}
             </div>
-            <div class="font-extrabold text-base leading-tight" style="color:#713f12;overflow-wrap:anywhere">{{name}}</div>
-            {{#if barangay}}<div class="text-slate-500 text-xs mt-0.5">Brgy. {{barangay}}</div>{{/if}}
-            <div class="text-3xl font-black text-yellow-600 mt-3 leading-none"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-base font-normal text-yellow-400">%</span></div>
-            <div class="mt-2 h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
-              <div class="h-full rounded-full transition-all duration-700" style="width:{{finalScoreDisplay}}%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
+            <div class="font-extrabold text-base leading-tight mb-1" style="color:#fef3c7;overflow-wrap:anywhere">{{name}}</div>
+            {{#if barangay}}<div class="text-[10px] mb-3" style="color:rgba(251,191,36,0.55)">Brgy. {{barangay}}</div>{{/if}}
+            <div class="text-3xl font-black mt-3 leading-none" style="color:#f59e0b"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-base font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full transition-all duration-1000" style="width:{{finalScoreDisplay}}%;background:linear-gradient(90deg,#d97706,#fbbf24,#f59e0b)"></div>
             </div>
           </div>
-          <div class="mt-2 h-24 rounded-t-lg mx-4" style="background:linear-gradient(180deg,#fbbf24,#f59e0b)"></div>
+          <div class="mt-2 h-24 rounded-t-xl mx-4" style="background:linear-gradient(180deg,rgba(245,158,11,0.4),rgba(245,158,11,0.1))"></div>
         </div>
         {{/if}}{{/each}}
 
         <!-- 3rd Place -->
         {{#each ranked}}{{#if (eq rank 3)}}
-        <div class="flex-1 min-w-0 text-center max-w-[180px]" data-podium-rank="3">
-          <div class="text-4xl mb-2 animate-fadeup-1">🥉</div>
-          <div class="rounded-2xl p-4 border-2 shadow-sm hover:shadow-md transition" style="border-color:rgba(249,115,22,0.4);background:#1c1408">
-            <div class="text-[10px] text-orange-400 uppercase font-black tracking-widest mb-1">3rd Place</div>
-            <div class="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 shadow-lg" style="border:2px solid rgba(249,115,22,0.6)">
+        <div class="flex-1 min-w-0 text-center max-w-[190px]" data-podium-rank="3">
+          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(205,127,50,0.4))">🥉</div>
+          <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(205,127,50,0.25);background:linear-gradient(160deg,#1e140a,#261a0c,#1e140a);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)">
+            <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(205,127,50,0.7)">3rd Place</div>
+            <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(205,127,50,0.4)">
               {{#if photo}}
               <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
               {{else}}
-              <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#92400e,#f97316)">{{number}}</div>
+              <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#78350f,#f97316)">{{number}}</div>
               {{/if}}
             </div>
-            <div class="font-extrabold text-sm leading-tight" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
-            {{#if barangay}}<div class="text-[11px] mt-0.5" style="color:var(--text-secondary)">Brgy. {{barangay}}</div>{{/if}}
-            <div class="text-2xl font-black text-orange-500 mt-3 leading-none"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal text-orange-700">%</span></div>
-            <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
-              <div class="h-full rounded-full bg-orange-400 transition-all duration-700" style="width:{{finalScoreDisplay}}%"></div>
+            <div class="font-extrabold text-sm leading-tight mb-1" style="color:#fed7aa;overflow-wrap:anywhere">{{name}}</div>
+            {{#if barangay}}<div class="text-[10px] mb-3" style="color:rgba(205,127,50,0.6)">Brgy. {{barangay}}</div>{{/if}}
+            <div class="text-2xl font-black mt-3 leading-none" style="color:#cd7f32"><span data-podium-score>{{finalScoreDisplay}}</span><span class="text-sm font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full transition-all duration-1000" style="width:{{finalScoreDisplay}}%;background:linear-gradient(90deg,#92400e,#f97316)"></div>
             </div>
           </div>
-          <div class="mt-2 h-10 rounded-t-lg bg-orange-200 mx-4"></div>
+          <div class="mt-2 h-8 rounded-t-xl mx-6" style="background:linear-gradient(180deg,rgba(205,127,50,0.3),rgba(205,127,50,0.08))"></div>
         </div>
         {{/if}}{{/each}}
 
@@ -172,93 +191,93 @@
     </div>
   </div>
 
-  <!-- ── Full Ranked List with Criteria Bars ── -->
-  <div id="standings-container" class="space-y-3 animate-fadeup-1">
-    <div class="flex items-center justify-between px-1">
-      <h3 class="font-extrabold text-base flex items-center gap-2" style="color:var(--text-primary)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+  <!-- ── All Participants by Rank ── -->
+  <div id="standings-container" class="space-y-2 animate-fadeup-1">
+    <div class="flex items-center justify-between px-1 mb-3">
+      <h3 class="font-extrabold text-sm flex items-center gap-2" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(37,99,235,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </span>
         All Participants by Rank
       </h3>
-      <span class="badge badge-blue text-xs">{{ranked.length}} contestants</span>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(37,99,235,0.12);color:#60a5fa;border:1px solid rgba(37,99,235,0.2)">{{ranked.length}} contestants</span>
     </div>
 
     {{#each ranked}}
-    <div data-contestant-card="1" class="card-flat overflow-hidden hover:shadow-md transition-shadow
-      {{#if (eq rank 1)}}ring-2 ring-yellow-300{{/if}}
-      {{#if (eq rank 2)}}ring-1 ring-slate-300{{/if}}
-      {{#if (eq rank 3)}}ring-1 ring-orange-200{{/if}}">
+    <div data-contestant-card="1" class="overflow-hidden transition-all hover:translate-y-[-1px]"
+      style="border-radius:14px;background:linear-gradient(135deg,#0d1526,#111827);border:1px solid rgba(255,255,255,0.07);box-shadow:0 2px 12px rgba(0,0,0,0.3);
+      {{#if (eq rank 1)}}border-color:rgba(245,158,11,0.35);box-shadow:0 4px 20px rgba(245,158,11,0.12);{{/if}}
+      {{#if (eq rank 2)}}border-color:rgba(148,163,184,0.25);{{/if}}
+      {{#if (eq rank 3)}}border-color:rgba(205,127,50,0.25);{{/if}}">
 
       <!-- Contestant row -->
-      <div class="results-standing-row px-5 py-4 flex items-center gap-4">
+      <div class="results-standing-row px-4 py-3.5 flex items-center gap-3">
+
         <!-- Rank badge -->
-        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shadow-sm
-          {{#if (eq rank 1)}}text-white{{else}}{{#if (eq rank 2)}}text-white{{else}}{{#if (eq rank 3)}}text-white{{else}}bg-slate-100 text-slate-500{{/if}}{{/if}}{{/if}}"
-          style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#b45309,#f59e0b){{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#475569,#94a3b8){{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#92400e,#f97316){{/if}}{{/if}}{{/if}}">
+        <div class="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-black text-sm shadow"
+          style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#92400e,#f59e0b);color:#fff{{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#334155,#94a3b8);color:#fff{{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#78350f,#f97316);color:#fff{{else}}background:rgba(255,255,255,0.06);color:#64748b;border:1px solid rgba(255,255,255,0.1){{/if}}{{/if}}{{/if}}">
           {{rank}}
         </div>
 
         <!-- Contestant number -->
-        <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0" style="background:linear-gradient(135deg,#1e3a8a,#2563eb);box-shadow:0 2px 8px rgba(37,99,235,0.3)">
           {{number}}
         </div>
 
-        <!-- Name + barangay -->
+        <!-- Name + breakdown -->
         <div class="results-standing-name flex-1 min-w-0">
-          <div class="font-extrabold text-sm leading-tight truncate" style="color:var(--text-primary)">{{name}}</div>
-          {{#if tieDetected}}
-            {{#if tieBroken}}
-            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5" style="background:rgba(217,119,6,0.18);color:#d97706">⚖ Tie Broken</span>
-            {{else}}
-            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold mt-0.5" style="background:rgba(220,38,38,0.18);color:#ef4444">⚖ Tie</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="font-extrabold text-sm leading-tight" style="color:var(--text-primary)">{{name}}</div>
+            {{#if tieDetected}}
+              {{#if tieBroken}}
+              <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold" style="background:rgba(217,119,6,0.18);color:#d97706">⚖ Tie Broken</span>
+              {{else}}
+              <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold" style="background:rgba(220,38,38,0.18);color:#ef4444">⚖ Tie</span>
+              {{/if}}
             {{/if}}
-            {{#if tiebreakCriteria}}
-            <div class="text-[10px] mt-0.5" style="color:var(--text-secondary)">via {{tiebreakCriteria}}</div>
-            {{/if}}
-          {{/if}}
+          </div>
           {{#if barangay}}<div class="text-xs mt-0.5" style="color:var(--text-muted)">Brgy. {{barangay}}{{#if age}} &bull; {{age}} yrs{{/if}}</div>{{/if}}
-          <!-- Mini criteria bars / category scores -->
+          {{#if tiebreakCriteria}}<div class="text-[10px] mt-0.5" style="color:var(--text-secondary)">Tiebreak via {{tiebreakCriteria}}</div>{{/if}}
+          <!-- Criteria pills -->
           {{#if @root.isMultiCategory}}
-          <!-- Multi-category: show big category score pills -->
-          <div class="flex gap-2 mt-2 flex-wrap">
+          <div class="flex gap-1.5 mt-2 flex-wrap">
             {{#each categoryScores}}
-            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
-              style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25)">
-              <span style="color:#94a3b8;font-size:10px">{{categoryName}}</span>
+            <div class="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)">
+              <span style="color:#94a3b8">{{categoryName}}</span>
               <span style="color:#c7d2fe;font-weight:800">{{score}}%</span>
             </div>
             {{/each}}
           </div>
           {{else}}
-          <!-- Single-category: show mini criteria bars -->
-          <div class="flex gap-2 mt-2 flex-wrap">
+          <div class="flex gap-2 mt-2 flex-wrap items-center">
             {{#each breakdown}}
-            <div class="flex items-center gap-1.5" title="{{name}}: {{avg}} pts ({{weighted}}%)">
-              <span class="text-[10px] font-bold flex-shrink-0" style="color:{{color}}">{{name}}</span>
-              <div class="h-1.5 rounded-full overflow-hidden" style="width:40px;background:rgba(255,255,255,0.08)">
-                <div class="h-full rounded-full transition-all duration-700" style="width:{{barPct}}%;background:{{color}}"></div>
+            <div class="flex items-center gap-1" title="{{name}}: {{avg}} pts → {{weighted}}%">
+              <span class="text-[9px] font-bold" style="color:{{color}}">{{name}}</span>
+              <div class="h-1 rounded-full overflow-hidden" style="width:36px;background:rgba(255,255,255,0.07)">
+                <div class="h-full rounded-full" style="width:{{barPct}}%;background:{{color}}"></div>
               </div>
-              <span class="text-[10px] font-semibold" style="color:var(--text-muted)">{{weighted}}%</span>
+              <span class="text-[9px]" style="color:var(--text-muted)">{{weighted}}%</span>
             </div>
             {{/each}}
           </div>
           {{/if}}
         </div>
 
-        <!-- Final score -->
+        <!-- Score -->
         <div class="results-standing-score flex-shrink-0 text-right">
-          <div class="font-black text-xl
-            {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
-            {{finalScoreDisplay}}<span class="text-sm font-normal opacity-60">%</span>
+          <div class="font-black text-xl leading-none
+            {{#if (eq rank 1)}}text-yellow-500{{else}}{{#if (eq rank 2)}}text-slate-400{{else}}{{#if (eq rank 3)}}text-orange-500{{else}}text-blue-400{{/if}}{{/if}}{{/if}}">
+            {{finalScoreDisplay}}<span class="text-xs font-normal opacity-50">%</span>
           </div>
-          <div class="text-[11px] text-slate-400 mt-0.5">weighted avg</div>
+          <div class="text-[10px] mt-1" style="color:var(--text-muted)">weighted avg</div>
+          {{#unless (eq rank 1)}}<div class="text-[10px] font-semibold mt-0.5" style="color:rgba(239,68,68,0.7)">-{{gapToFirst}}%</div>{{/unless}}
         </div>
       </div>
 
-      <!-- Score progress bar (full width) -->
-      <div class="h-1.5" style="background:rgba(255,255,255,0.06)">
-        <div class="h-full transition-all duration-700
-          {{#if (eq rank 1)}}{{else}}{{/if}}"
-          style="width:{{finalScoreDisplay}}%;background:{{#if (eq rank 1)}}linear-gradient(90deg,#f59e0b,#fbbf24){{else}}{{#if (eq rank 2)}}linear-gradient(90deg,#64748b,#94a3b8){{else}}{{#if (eq rank 3)}}linear-gradient(90deg,#f97316,#fb923c){{else}}linear-gradient(90deg,#2563eb,#60a5fa){{/if}}{{/if}}{{/if}}">
+      <!-- Score bar -->
+      <div class="h-0.5" style="background:rgba(255,255,255,0.04)">
+        <div class="h-full transition-all duration-1000"
+          style="width:{{finalScoreDisplay}}%;background:{{#if (eq rank 1)}}linear-gradient(90deg,#d97706,#fbbf24){{else}}{{#if (eq rank 2)}}linear-gradient(90deg,#475569,#94a3b8){{else}}{{#if (eq rank 3)}}linear-gradient(90deg,#c2410c,#fb923c){{else}}linear-gradient(90deg,#1d4ed8,#60a5fa){{/if}}{{/if}}{{/if}}">
         </div>
       </div>
 
@@ -267,23 +286,25 @@
   </div>
 
   <!-- ── Official Tabulation Sheet ── -->
-  <div class="section-card animate-fadeup-2 print-tabulation-sheet">
-    <div class="section-header no-print">
-      <h2>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+  <div class="section-card animate-fadeup-2 print-tabulation-sheet" style="border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.07)">
+    <div class="section-header no-print flex items-center justify-between px-5 py-4" style="background:linear-gradient(135deg,rgba(13,20,36,0.9),rgba(17,24,39,0.9));border-bottom:1px solid rgba(255,255,255,0.07)">
+      <h2 class="flex items-center gap-2 font-extrabold text-sm" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(59,130,246,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
         Official Tabulation Sheet
       </h2>
       <div class="flex items-center gap-2">
-        <span class="badge badge-blue text-xs">{{event.name}}</span>
-        <span class="badge badge-purple text-xs no-print">{{judgeCount}} judge(s)</span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(37,99,235,0.12);color:#60a5fa;border:1px solid rgba(37,99,235,0.18)">{{event.name}}</span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold no-print" style="background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.18)">{{judgeCount}} judge(s)</span>
       </div>
     </div>
     <div class="tabulation-note no-print">
-      <span>Criterion cells show the average score and its weighted contribution.</span>
-      <span class="tabulation-scroll-hint">Swipe or scroll horizontally to view all criteria</span>
+      <span>Cells show average score and weighted contribution per criterion.</span>
+      <span class="tabulation-scroll-hint">← Scroll horizontally for all criteria →</span>
     </div>
 
-    <!-- Print title (hidden on screen) -->
+    <!-- Print title -->
     <div class="hidden print-show px-6 py-4 border-b border-slate-100">
       <div style="text-align:center;margin-bottom:6px">
         <img src="/scoresync-logo.png?v=8" alt="ScoreSync" style="width:40px;height:40px;border-radius:50%;display:inline-block;margin-bottom:6px"/>
@@ -298,40 +319,39 @@
       <caption class="sr-only">Official standings with each criterion's average score, weighted contribution, final score, and gap to first place.</caption>
       <thead>
         <tr>
-          <th scope="col" class="tabulation-sticky-rank text-center">Rank</th>
-          <th scope="col" class="tabulation-sticky-number">No.</th>
-          <th scope="col" class="tabulation-sticky-contestant">Contestant</th>
-          <th scope="col" class="hidden sm:table-cell">Barangay</th>
+          <th scope="col" class="tabulation-sticky-rank text-center" style="color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Rank</th>
+          <th scope="col" class="tabulation-sticky-number" style="color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">No.</th>
+          <th scope="col" class="tabulation-sticky-contestant" style="color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Contestant</th>
+          <th scope="col" class="hidden sm:table-cell" style="color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Barangay</th>
           {{#if @root.isMultiCategory}}
           {{#each @root.categoryGroups}}
           <th scope="col" class="text-center text-xs px-3 print-criterion-col">
-            <div class="font-bold">{{name}}</div>
-            <div class="font-normal text-slate-400 text-[10px]">Category Score</div>
+            <div class="font-bold" style="color:#e2e8f0">{{name}}</div>
+            <div class="font-normal text-[10px] mt-0.5" style="color:#64748b">Category Score</div>
           </th>
           {{/each}}
           {{else}}
           {{#each criteria}}
           <th scope="col" class="text-center text-xs px-3 print-criterion-col">
-            <div class="font-bold">{{name}}</div>
-            <div class="font-normal text-slate-400 text-[10px]">{{weight}}% &bull; max {{maxScore}}</div>
+            <div class="font-bold" style="color:#e2e8f0">{{name}}</div>
+            <div class="font-normal text-[10px] mt-0.5" style="color:#64748b">{{weight}}% &bull; max {{maxScore}}</div>
           </th>
           {{/each}}
           {{/if}}
-          <th scope="col" class="text-center text-blue-700 font-extrabold print-final-score">Final Score</th>
-          <th scope="col" class="text-center text-slate-500 text-xs no-print">Gap to 1st</th>
+          <th scope="col" class="text-center font-extrabold print-final-score" style="color:#60a5fa;font-size:11px">Final Score</th>
+          <th scope="col" class="text-center text-xs no-print" style="color:#64748b">Gap to 1st</th>
         </tr>
       </thead>
       <tbody>
         {{#each ranked}}
-        <tr class="{{#if (eq rank 1)}}ring-1 ring-inset ring-yellow-500/20{{/if}}{{#if (eq rank 2)}}ring-1 ring-inset ring-slate-500/20{{/if}}" style="{{#if (eq rank 1)}}background:rgba(217,119,6,0.08){{else}}{{#if (eq rank 2)}}background:rgba(100,116,139,0.05){{/if}}{{/if}}">
+        <tr style="{{#if (eq rank 1)}}background:rgba(217,119,6,0.07){{else}}{{#if (eq rank 2)}}background:rgba(100,116,139,0.04){{/if}}{{/if}}">
           <td class="text-center tabulation-sticky-rank">
-            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-black
-              {{#if (eq rank 1)}}text-white{{else}}{{#if (eq rank 2)}}text-white{{else}}{{#if (eq rank 3)}}text-white{{else}}bg-slate-100 text-slate-500{{/if}}{{/if}}{{/if}}"
-              style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#b45309,#f59e0b){{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#475569,#94a3b8){{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#92400e,#f97316){{/if}}{{/if}}{{/if}}">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-black"
+              style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#92400e,#f59e0b);color:#fff{{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#334155,#94a3b8);color:#fff{{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#78350f,#f97316);color:#fff{{else}}background:rgba(255,255,255,0.06);color:#64748b{{/if}}{{/if}}{{/if}}">
               {{rank}}
             </span>
           </td>
-          <td class="font-mono text-slate-400 text-sm text-center tabulation-sticky-number">{{number}}</td>
+          <td class="font-mono text-xs text-center tabulation-sticky-number" style="color:#64748b">{{number}}</td>
           <td class="tabulation-sticky-contestant">
             <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{name}}</div>
             {{#if tieDetected}}
@@ -348,31 +368,31 @@
           {{#if @root.isMultiCategory}}
           {{#each categoryScores}}
           <td class="text-center px-3 print-criterion-col">
-            <div class="font-extrabold text-lg" style="color:#2563eb">{{score}}%</div>
+            <div class="font-extrabold text-base" style="color:#60a5fa">{{score}}%</div>
           </td>
           {{/each}}
           {{else}}
           {{#each breakdown}}
           <td class="text-center px-3 print-criterion-col">
             <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{avg}}<span class="tabulation-unit"> avg</span></div>
-            <div class="text-[10px] font-bold" style="color:{{color}}">{{weighted}}%<span class="tabulation-unit"> weighted</span></div>
-            <div class="mt-1 h-1 rounded-full overflow-hidden w-16 mx-auto" style="background:rgba(255,255,255,0.08)">
+            <div class="text-[10px] font-bold mt-0.5" style="color:{{color}}">{{weighted}}%<span class="tabulation-unit"> wt.</span></div>
+            <div class="mt-1.5 h-1 rounded-full overflow-hidden w-14 mx-auto" style="background:rgba(255,255,255,0.06)">
               <div class="h-full rounded-full" style="width:{{barPct}}%;background:{{color}}"></div>
             </div>
           </td>
           {{/each}}
           {{/if}}
           <td class="text-center print-final-score">
-            <span class="tabulation-score font-extrabold text-lg
-              {{#if (eq rank 1)}}text-yellow-600{{else}}{{#if (eq rank 2)}}text-slate-600{{else}}{{#if (eq rank 3)}}text-orange-600{{else}}text-blue-700{{/if}}{{/if}}{{/if}}">
+            <span class="tabulation-score font-extrabold text-base
+              {{#if (eq rank 1)}}text-yellow-500{{else}}{{#if (eq rank 2)}}text-slate-400{{else}}{{#if (eq rank 3)}}text-orange-500{{else}}text-blue-400{{/if}}{{/if}}{{/if}}">
               {{finalScoreDisplay}}%
             </span>
           </td>
           <td class="text-center no-print">
             {{#if (eq rank 1)}}
-            <span class="badge badge-yellow text-xs">—</span>
+            <span class="text-[10px] font-bold" style="color:#64748b">—</span>
             {{else}}
-            <span class="text-xs font-bold text-rose-500">-{{gapToFirst}}%</span>
+            <span class="text-[11px] font-bold" style="color:rgba(239,68,68,0.75)">-{{gapToFirst}}%</span>
             {{/if}}
           </td>
         </tr>
@@ -384,28 +404,37 @@
 
   <!-- ── Judge Scoring Progress ── -->
   {{#if ranked.length}}
-  <div class="section-card animate-fadeup-2 no-print">
-    <div class="section-header">
-      <h2>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  <div class="animate-fadeup-2 no-print overflow-hidden" style="border-radius:16px;background:linear-gradient(135deg,#0d1526,#111827);border:1px solid rgba(255,255,255,0.07);box-shadow:0 2px 16px rgba(0,0,0,0.3)">
+    <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+      <h2 class="flex items-center gap-2 font-extrabold text-sm" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(124,58,237,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </span>
         Judge Scoring Progress
       </h2>
-      <span class="badge badge-purple text-xs">Live</span>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.2)">
+        <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping inline-block"></span>
+        Live
+      </span>
     </div>
-    <div id="judgeProgressList" class="px-5 py-3">
+    <div id="judgeProgressList" class="px-5 py-2">
       {{#each judgeProgressData}}
-      <div class="flex items-center gap-3 py-2" style="border-top:1px solid rgba(255,255,255,0.06)">
-        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm grad-purple">
+      <div class="flex items-center gap-3 py-3" style="border-top:1px solid rgba(255,255,255,0.05)">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow grad-purple">
           {{add1 @index}}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</div>
-          <div class="text-[11px]" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
-          <div class="mt-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
-            <div class="h-full rounded-full transition-all" style="width:{{completionPct}}%;background:#7c3aed"></div>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</span>
+            <span class="text-[10px] font-bold" style="color:#a78bfa">{{completionPct}}%</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full transition-all" style="width:{{completionPct}}%;background:linear-gradient(90deg,#6d28d9,#a78bfa)"></div>
+            </div>
+            <span class="text-[10px]" style="color:var(--text-muted)">{{scoredCount}}/{{totalContestants}}</span>
           </div>
         </div>
-        <div class="text-[10px] text-purple-400 font-bold flex-shrink-0">{{completionPct}}%</div>
       </div>
       {{/each}}
     </div>
@@ -418,45 +447,50 @@
             if (!resp.ok) return;
             const data = await resp.json();
             const container = document.getElementById('judgeProgressList');
-            if (!container) return;
-            if (!Array.isArray(data) || data.length === 0) return;
-            // Use textContent assignment to prevent XSS — never inject user data via innerHTML
+            if (!container || !Array.isArray(data) || data.length === 0) return;
             const frag = document.createDocumentFragment();
             data.forEach((j, idx) => {
-              const pct = j.completionPct || 0;
+              const pct = Math.min(100, j.completionPct || 0);
               const row = document.createElement('div');
-              row.className = 'flex items-center gap-3 py-2';
-              row.style.borderTop = '1px solid rgba(255,255,255,0.06)';
+              row.className = 'flex items-center gap-3 py-3';
+              row.style.borderTop = '1px solid rgba(255,255,255,0.05)';
               const num = document.createElement('div');
-              num.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm grad-purple';
+              num.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow grad-purple';
               num.textContent = idx + 1;
               const info = document.createElement('div');
               info.className = 'flex-1 min-w-0';
-              const name = document.createElement('div');
+              const topRow = document.createElement('div');
+              topRow.className = 'flex items-center justify-between mb-1';
+              const name = document.createElement('span');
               name.className = 'font-bold text-sm';
               name.style.color = '#e2e8f0';
               name.textContent = j.alias || ('Judge ' + (idx + 1));
-              const sub = document.createElement('div');
-              sub.className = 'text-[11px]';
-              sub.style.color = '#64748b';
-              sub.textContent = j.scoredCount + ' / ' + j.totalContestants + ' contestants scored';
+              const pctLabel = document.createElement('span');
+              pctLabel.className = 'text-[10px] font-bold';
+              pctLabel.style.color = '#a78bfa';
+              pctLabel.textContent = pct + '%';
+              topRow.appendChild(name); topRow.appendChild(pctLabel);
+              const barRow = document.createElement('div');
+              barRow.className = 'flex items-center gap-2';
               const barWrap = document.createElement('div');
-              barWrap.className = 'mt-1 h-1.5 rounded-full overflow-hidden';
-              barWrap.style.background = 'rgba(255,255,255,0.08)';
+              barWrap.className = 'flex-1 h-1.5 rounded-full overflow-hidden';
+              barWrap.style.background = 'rgba(255,255,255,0.07)';
               const bar = document.createElement('div');
               bar.className = 'h-full rounded-full transition-all';
-              bar.style.cssText = 'width:' + Math.min(100, pct) + '%;background:#7c3aed';
+              bar.style.cssText = 'width:' + pct + '%;background:linear-gradient(90deg,#6d28d9,#a78bfa)';
               barWrap.appendChild(bar);
-              info.appendChild(name); info.appendChild(sub); info.appendChild(barWrap);
-              const pctEl = document.createElement('div');
-              pctEl.className = 'text-[10px] text-purple-400 font-bold flex-shrink-0';
-              pctEl.textContent = pct + '%';
-              row.appendChild(num); row.appendChild(info); row.appendChild(pctEl);
+              const sub = document.createElement('span');
+              sub.className = 'text-[10px]';
+              sub.style.color = '#64748b';
+              sub.textContent = j.scoredCount + '/' + j.totalContestants;
+              barRow.appendChild(barWrap); barRow.appendChild(sub);
+              info.appendChild(topRow); info.appendChild(barRow);
+              row.appendChild(num); row.appendChild(info);
               frag.appendChild(row);
             });
             container.innerHTML = '';
             container.appendChild(frag);
-          } catch(e) { /* silently ignore fetch errors */ }
+          } catch(e) {}
         }
         document.addEventListener('DOMContentLoaded', function() {
           loadJudgeProgress();
@@ -467,28 +501,32 @@
   </div>
   {{/if}}
 
-  <!-- ── People's Choice — Audience Vote ── -->
+  <!-- ── People's Choice ── -->
   {{#if totalAudienceVotes}}
-  <div class="section-card animate-fadeup-2 no-print">
-    <div class="section-header">
-      <h2>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  <div class="animate-fadeup-2 no-print overflow-hidden" style="border-radius:16px;background:linear-gradient(135deg,#0d1526,#111827);border:1px solid rgba(255,255,255,0.07);box-shadow:0 2px 16px rgba(0,0,0,0.3)">
+    <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+      <h2 class="flex items-center gap-2 font-extrabold text-sm" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(225,29,72,0.15)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </span>
         People's Choice
-        <span class="badge badge-red text-xs ml-2">Audience Vote</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold" style="background:rgba(225,29,72,0.15);color:#fb7185;border:1px solid rgba(225,29,72,0.2)">Audience Vote</span>
       </h2>
-      <span class="badge badge-gray text-xs">{{totalAudienceVotes}} votes cast</span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.06);color:#94a3b8;border:1px solid rgba(255,255,255,0.08)">{{totalAudienceVotes}} votes</span>
     </div>
     <div class="px-5 py-4 space-y-3">
       {{#each ranked}}
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#881337,#e11d48)">{{number}}</div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0" style="background:linear-gradient(135deg,#881337,#e11d48);box-shadow:0 2px 8px rgba(225,29,72,0.3)">{{number}}</div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-sm truncate" style="color:var(--text-primary)">{{name}}</div>
-          <div class="mt-1 h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-sm truncate" style="color:var(--text-primary)">{{name}}</span>
+            <span class="text-sm font-extrabold ml-2 flex-shrink-0" style="color:#fb7185">{{lookup ../votesByContestant id}} votes</span>
+          </div>
+          <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
             <div class="h-full rounded-full transition-all duration-700" style="background:linear-gradient(90deg,#be185d,#f43f5e);width:{{#if ../totalAudienceVotes}}{{audienceVotePct}}%{{else}}0%{{/if}}"></div>
           </div>
         </div>
-        <div class="text-sm font-extrabold flex-shrink-0" style="color:#f43f5e">{{lookup ../votesByContestant id}} votes</div>
       </div>
       {{/each}}
     </div>
@@ -497,42 +535,41 @@
 
   <!-- ── Per-Judge Breakdown ── -->
   {{#if judgeBreakdown.length}}
-  <div class="section-card animate-fadeup-2 no-print">
-    <div class="section-header">
-      <h2>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  <div class="animate-fadeup-2 no-print overflow-hidden" style="border-radius:16px;background:linear-gradient(135deg,#0d1526,#111827);border:1px solid rgba(255,255,255,0.07);box-shadow:0 2px 16px rgba(0,0,0,0.3)">
+    <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+      <h2 class="flex items-center gap-2 font-extrabold text-sm" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(124,58,237,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </span>
         Judge Breakdown
       </h2>
-      <span class="badge badge-purple text-xs">{{judgeCount}} judges</span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.18)">{{judgeCount}} judges</span>
     </div>
     {{#each judgeBreakdown}}
-    <div class="px-5 py-4 first:border-0" style="border-top:1px solid rgba(255,255,255,0.06)">
+    <div class="px-5 py-4" style="border-top:1px solid rgba(255,255,255,0.05)">
       <div class="flex items-center gap-3 mb-3">
-        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow-sm grad-purple">
-          {{initial}}
-        </div>
-        <div>
+        <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0 shadow grad-purple">{{initial}}</div>
+        <div class="flex-1 min-w-0">
           {{#if ../isAdmin}}
           <div class="font-bold text-sm" style="color:var(--text-primary)">{{judgeName}}</div>
           {{else}}
           <div class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</div>
           {{/if}}
-          <div class="text-[11px]" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
+          <div class="text-[10px] mt-0.5" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
         </div>
-        <div class="ml-auto">
-          <div class="h-1.5 rounded-full w-24 overflow-hidden" style="background:rgba(255,255,255,0.08)">
-            <div class="h-full rounded-full bg-purple-400 transition-all" style="width:{{completionPct}}%"></div>
+        <div>
+          <div class="h-1.5 rounded-full w-24 overflow-hidden" style="background:rgba(255,255,255,0.07)">
+            <div class="h-full rounded-full transition-all" style="width:{{completionPct}}%;background:linear-gradient(90deg,#6d28d9,#a78bfa)"></div>
           </div>
-          <div class="text-[10px] text-purple-400 font-bold text-right mt-0.5">{{completionPct}}% done</div>
+          <div class="text-[10px] font-bold text-right mt-0.5" style="color:#a78bfa">{{completionPct}}%</div>
         </div>
       </div>
-      <!-- Top 3 scores by this judge -->
       <div class="flex flex-wrap gap-2">
         {{#each topScores}}
-        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">
           <span class="font-bold" style="color:var(--text-primary)">{{contestantName}}</span>
           <span style="color:var(--text-faint)">&bull;</span>
-          <span class="font-extrabold text-purple-400">{{score}}%</span>
+          <span class="font-extrabold" style="color:#a78bfa">{{score}}%</span>
         </div>
         {{/each}}
       </div>
@@ -543,9 +580,9 @@
 
   {{else}}
   <!-- ── No Scores Yet ── -->
-  <div class="card-flat animate-fadeup-1 overflow-hidden">
-    <div class="px-6 py-16 text-center" style="background:linear-gradient(135deg,#0d1526,#111827)">
-      <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm" style="background:linear-gradient(135deg,#1e3a8a,#1e2d5a)">
+  <div class="animate-fadeup-1 overflow-hidden" style="border-radius:16px;border:1px solid rgba(255,255,255,0.07)">
+    <div class="px-6 py-20 text-center" style="background:linear-gradient(135deg,#0d1526,#111827)">
+      <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg" style="background:linear-gradient(135deg,#1e3a8a,#1e2d5a)">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       </div>
       <h3 class="font-extrabold text-lg mb-2" style="color:var(--text-primary)">No scores yet</h3>
@@ -570,15 +607,15 @@
 </div>
 
 <style>
-/* Keep contestant identity visible while wide criteria columns scroll. */
 .tabulation-note {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 18px;
-  color: #94a3b8;
+  padding: 10px 20px;
+  color: #64748b;
   font-size: 11px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(0,0,0,0.2);
 }
 .tabulation-scroll-hint { color: #60a5fa; }
 .tabulation-scroll {
@@ -596,7 +633,19 @@
   position: sticky;
   top: 0;
   z-index: 3;
-  background: #0d1424;
+  background: #0a1020;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.tabulation-table tbody tr {
+  transition: background .15s;
+}
+.tabulation-table tbody tr:hover {
+  background: rgba(255,255,255,0.03) !important;
+}
+.tabulation-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 .tabulation-table .tabulation-sticky-rank,
 .tabulation-table .tabulation-sticky-number,
@@ -607,24 +656,20 @@
 }
 .tabulation-table .tabulation-sticky-rank {
   left: 0;
-  width: 56px;
-  min-width: 56px;
-  max-width: 56px;
+  width: 56px; min-width: 56px; max-width: 56px;
   padding-right: 8px !important;
   padding-left: 8px !important;
 }
 .tabulation-table .tabulation-sticky-number {
   left: 56px;
-  width: 58px;
-  min-width: 58px;
-  max-width: 58px;
+  width: 54px; min-width: 54px; max-width: 54px;
   padding-right: 8px !important;
   padding-left: 8px !important;
 }
 .tabulation-table .tabulation-sticky-contestant {
-  left: 114px;
-  min-width: 190px;
-  box-shadow: 4px 0 10px rgba(0,0,0,0.18);
+  left: 110px;
+  min-width: 180px;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.3);
 }
 .tabulation-table thead .tabulation-sticky-rank,
 .tabulation-table thead .tabulation-sticky-number,
@@ -637,86 +682,44 @@
 .tabulation-score {
   display: inline-block;
   min-width: 76px;
-  padding: 5px 9px;
+  padding: 5px 10px;
   border-radius: 10px;
-  background: rgba(59,130,246,0.1);
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.15);
 }
+
+/* ── Mobile ── */
 @media screen and (max-width: 640px) {
-  .results-toolbar {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .results-toolbar-main {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+  .results-toolbar { padding-top: 10px; padding-bottom: 10px; }
+  .results-toolbar-main { align-items: flex-start; flex-direction: column; gap: 10px; }
   .results-toolbar-actions {
-    width: 100%;
-    max-width: none !important;
-    flex-wrap: wrap;
-    justify-content: stretch;
-    overflow: visible;
+    width: 100%; max-width: none !important;
+    flex-wrap: wrap; justify-content: stretch; overflow: visible;
   }
   .results-toolbar-actions > a,
   .results-toolbar-actions > button {
-    flex: 1 1 calc(50% - 0.5rem);
-    min-width: 0;
-    justify-content: center;
-    text-align: center;
-    white-space: normal;
+    flex: 1 1 calc(50% - 0.5rem); min-width: 0;
+    justify-content: center; text-align: center; white-space: normal;
   }
-  .results-meta {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 4px;
-  }
-  [data-role="podium-blocks"] {
-    padding: 16px !important;
-  }
+  .results-meta { flex-wrap: wrap; gap: 4px; }
+  [data-role="podium-blocks"] { padding: 16px !important; }
   .results-podium-layout {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 12px;
+    align-items: stretch; gap: 10px;
   }
   .results-podium-layout > [data-podium-rank="1"] {
-    grid-column: 1 / -1;
-    order: -1;
-    max-width: none;
-    margin-top: 0;
+    grid-column: 1 / -1; order: -1; max-width: none; margin-top: 0;
   }
   .results-podium-layout > [data-podium-rank="2"],
-  .results-podium-layout > [data-podium-rank="3"] {
-    width: 100%;
-    max-width: none;
-  }
-  .results-podium-layout > [data-podium-rank] > div:last-child {
-    display: none;
-  }
-  .results-standing-row {
-    gap: 8px !important;
-    padding: 12px !important;
-  }
-  .results-standing-row > :first-child {
-    width: 32px !important;
-    height: 32px !important;
-  }
-  .results-standing-row > :nth-child(2) {
-    width: 30px !important;
-    height: 30px !important;
-  }
-  .results-standing-name .truncate {
-    white-space: normal;
-    overflow: visible;
-    overflow-wrap: anywhere;
-  }
-  .results-standing-score {
-    min-width: 64px;
-  }
-  .results-standing-score > div:first-child {
-    font-size: 1rem;
-  }
+  .results-podium-layout > [data-podium-rank="3"] { width: 100%; max-width: none; }
+  .results-podium-layout > [data-podium-rank] > div:last-child { display: none; }
+  .results-standing-row { gap: 8px !important; padding: 10px 12px !important; }
+  .results-standing-score { min-width: 60px; }
+  .results-standing-score > div:first-child { font-size: 1rem; }
 }
+
+/* ── Print ── */
 @media print {
   .tabulation-note { display: none !important; }
   .tabulation-scroll { overflow: visible !important; }
@@ -724,161 +727,55 @@
   .tabulation-table .tabulation-sticky-rank,
   .tabulation-table .tabulation-sticky-number,
   .tabulation-table .tabulation-sticky-contestant {
-    position: static !important;
-    left: auto !important;
-    box-shadow: none !important;
+    position: static !important; left: auto !important; box-shadow: none !important;
   }
   .tabulation-table .tabulation-sticky-rank,
   .tabulation-table .tabulation-sticky-number,
   .tabulation-table .tabulation-sticky-contestant {
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    width: auto !important; min-width: 0 !important; max-width: none !important;
   }
-  /* ── Hide non-content elements ── */
   .no-print { display: none !important; }
   .print-show { display: block !important; }
   .sidebar, nav, header, footer { display: none !important; }
-
-  /* ── Page setup ── */
-  @page {
-    size: A4 landscape;
-    margin: 14mm 12mm 14mm 12mm;
-  }
-
+  @page { size: A4 landscape; margin: 14mm 12mm; }
   html, body {
-    background: #fff !important;
-    color: #111 !important;
+    background: #fff !important; color: #111 !important;
     font-size: 11px !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-
-  /* ── Center main content ── */
-  main {
-    padding: 0 !important;
-    margin: 0 auto !important;
-    max-width: 100% !important;
-    overflow: visible !important;
+  main { padding: 0 !important; margin: 0 auto !important; max-width: 100% !important; overflow: visible !important; }
+  .card-flat, .section-card, [style*="border-radius:16px"] {
+    box-shadow: none !important; border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important; background: #fff !important;
+    page-break-inside: avoid; margin-bottom: 12px !important;
   }
-
-  /* ── Cards ── */
-  .card-flat, .section-card {
-    box-shadow: none !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-    background: #fff !important;
-    page-break-inside: avoid;
-    margin-bottom: 12px !important;
-  }
-
-  /* ── Text colors for white background ── */
-  h1, h2, h3, h4, .font-extrabold, .font-black, .font-bold {
-    color: #111 !important;
-  }
-  p, span, td, th, div {
-    color: #334155 !important;
-  }
-  .text-slate-400, .text-slate-500, .text-slate-600 {
-    color: #64748b !important;
-  }
-
-  /* ── Table ── */
+  h1, h2, h3, h4, .font-extrabold, .font-black, .font-bold { color: #111 !important; }
+  p, span, td, th, div { color: #334155 !important; }
   table { width: 100% !important; border-collapse: collapse !important; }
   th { background: #f1f5f9 !important; color: #334155 !important; font-size: 10px !important; padding: 6px 10px !important; border: 1px solid #e2e8f0 !important; }
   td { padding: 6px 10px !important; border: 1px solid #f1f5f9 !important; color: #334155 !important; font-size: 11px !important; }
   tbody tr:nth-child(even) { background: #f8fafc !important; }
-
-  /* ── Rank badges ── */
-  .badge { border: 1px solid #94a3b8 !important; background: #f1f5f9 !important; color: #334155 !important; }
-
-  /* ── Score bars ── */
-  .h-1\.5, [style*="height:6px"], [style*="height:8px"] { display: none !important; }
-
-  /* ── Print header (shown only on print) ── */
-  .print-show {
-    display: block !important;
-    text-align: center;
-    padding: 0 0 16px 0;
-    border-bottom: 2px solid #1e3a8a;
-    margin-bottom: 16px;
-  }
-  .print-show h2 {
-    font-size: 18px !important;
-    font-weight: 900 !important;
-    color: #1e3a8a !important;
-    text-align: center !important;
-    margin-bottom: 4px !important;
-  }
-  .print-show p {
-    font-size: 11px !important;
-    color: #64748b !important;
-    text-align: center !important;
-  }
-
-  /* ── Section headers ── */
-  .section-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    padding: 8px 16px !important;
-  }
-  .section-header h2 { color: #1e293b !important; font-size: 12px !important; }
-
-  /* ── Podium — hide on print ── */
   .animate-fadeup { display: none !important; }
-  .animate-fadeup-1 { display: block !important; }
-  .animate-fadeup-2 { display: block !important; }
-  .animate-fadeup-3 { display: block !important; }
-
-  /* ── PAGE 1: Compact leaderboard (All Participants by Rank) ── */
-  #standings-container {
-    display: block !important;
-    page-break-after: always !important;
-    break-after: always !important;
-  }
-  /* Hide everything between leaderboard and tabulation sheet on print */
+  .animate-fadeup-1, .animate-fadeup-2, .animate-fadeup-3 { display: block !important; }
+  #standings-container { display: block !important; page-break-after: always !important; break-after: always !important; }
   .no-print { display: none !important; }
-  /* Hide judge progress / polling sections */
   .animate-fadeup-2:not(.print-tabulation-sheet) { display: none !important; }
-  /* Make standings compact for page 1 */
   #standings-container .card-flat { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-radius: 8px !important; }
   .results-standing-row { padding: 6px 12px !important; }
-  .results-standing-name .font-extrabold { font-size: 11px !important; }
-  .results-standing-score .font-black { font-size: 14px !important; }
-
-  /* ── PAGE 2: Full tabulation sheet ── */
-  .print-tabulation-sheet {
-    page-break-before: always;
-    break-before: always;
-    page-break-inside: auto !important;
-    break-inside: auto !important;
-  }
-  .data-table {
-    width: 100% !important;
-    min-width: 0 !important;
-    table-layout: fixed !important;
-  }
-  .data-table th,
-  .data-table td {
-    padding: 4px 3px !important;
-    font-size: 8px !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere;
-  }
-  .data-table th:nth-child(1),
-  .data-table td:nth-child(1) { width: 32px !important; }
-  .data-table th:nth-child(2),
-  .data-table td:nth-child(2) { width: 32px !important; }
-  .data-table th:nth-child(3),
-  .data-table td:nth-child(3) { width: 18% !important; }
-  .data-table th:nth-child(4),
-  .data-table td:nth-child(4) { width: 12% !important; }
+  .print-tabulation-sheet { page-break-before: always; break-before: always; page-break-inside: auto !important; break-inside: auto !important; }
+  .data-table { width: 100% !important; min-width: 0 !important; table-layout: fixed !important; }
+  .data-table th, .data-table td { padding: 4px 3px !important; font-size: 8px !important; white-space: normal !important; overflow-wrap: anywhere; }
+  .data-table th:nth-child(1), .data-table td:nth-child(1) { width: 32px !important; }
+  .data-table th:nth-child(2), .data-table td:nth-child(2) { width: 32px !important; }
+  .data-table th:nth-child(3), .data-table td:nth-child(3) { width: 18% !important; }
+  .data-table th:nth-child(4), .data-table td:nth-child(4) { width: 12% !important; }
   .data-table .print-final-score { width: 9% !important; }
-  .data-table .print-criterion-col { width: auto !important; }
-  .data-table tbody tr {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
+  .data-table tbody tr { page-break-inside: avoid; break-inside: avoid; }
+  .print-show { display: block !important; border-bottom: 2px solid #1e3a8a; padding-bottom: 16px; margin-bottom: 16px; }
+  .print-show h2 { font-size: 18px !important; font-weight: 900 !important; color: #1e3a8a !important; text-align: center !important; }
+  .print-show p { font-size: 11px !important; color: #64748b !important; text-align: center !important; }
+  .section-header { background: #f8fafc !important; border-bottom: 1px solid #e2e8f0 !important; padding: 8px 16px !important; }
+  .tabulation-score { background: transparent !important; border: none !important; }
 }
 .print-show { display: none; }
 </style>
