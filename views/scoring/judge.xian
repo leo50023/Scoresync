@@ -1181,10 +1181,19 @@ main::-webkit-scrollbar { display:none; }
 
   /* -- updateBox: update progress bar + totals -- */
   function updateBox(panel) {
-    const input  = panel.querySelector('.score-input');
-    const val    = parseFloat(input.value) || 0;
-    const max    = parseFloat(input.dataset.max) || 100;
-    const weight = parseFloat(input.dataset.weight) || 0;
+    // Use visible entry input first, fall back to hidden score-input
+    const entryInput = panel.querySelector('.score-entry-input');
+    const input      = panel.querySelector('.score-input');
+    if (!entryInput && !input) return; // nothing to work with
+
+    // Sync entry → hidden if needed
+    if (entryInput && input && entryInput.value !== '' && input.value !== entryInput.value) {
+      input.value = entryInput.value;
+    }
+
+    const val    = parseFloat((entryInput || input).value) || 0;
+    const max    = parseFloat((entryInput || input).dataset.max || (input && input.dataset.max) || 100);
+    const weight = parseFloat(input ? input.dataset.weight : 0) || 0;
     const pct    = max > 0 ? (val / max) * 100 : 0;
     const contrib = (val / max) * weight;
 
