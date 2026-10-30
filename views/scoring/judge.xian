@@ -938,16 +938,32 @@ main::-webkit-scrollbar { display:none; }
   transition: background 0.2s;
 }
 .rating-legend-item.active-tier {
-  background: rgba(255,255,255,0.07);
-  outline: 1px solid currentColor;
+  outline: none;
+}
+/* per-tier active glow */
+.rating-legend-item.rating-poor.active-tier   { background: rgba(248,113,113,0.22); box-shadow: 0 0 0 1.5px #f87171, 0 0 16px rgba(248,113,113,0.35); }
+.rating-legend-item.rating-fair.active-tier   { background: rgba(251,146,60,0.22);  box-shadow: 0 0 0 1.5px #fb923c, 0 0 16px rgba(251,146,60,0.35);  }
+.rating-legend-item.rating-good.active-tier   { background: rgba(250,204,21,0.18);  box-shadow: 0 0 0 1.5px #facc15, 0 0 16px rgba(250,204,21,0.3);   }
+.rating-legend-item.rating-vgood.active-tier  { background: rgba(52,211,153,0.18);  box-shadow: 0 0 0 1.5px #34d399, 0 0 16px rgba(52,211,153,0.3);   }
+.rating-legend-item.rating-excel.active-tier  { background: rgba(201,162,39,0.22);  box-shadow: 0 0 0 1.5px #c9a227, 0 0 16px rgba(201,162,39,0.35);  }
+/* dim inactive tiers when one is active */
+.rating-legend.has-active .rating-legend-item:not(.active-tier) {
+  opacity: 0.35;
 }
 .rating-legend-label {
   display: block; font-size: 0.62rem; font-weight: 800;
   letter-spacing: 0.02em; line-height: 1.3;
+  transition: font-size 0.15s;
+}
+.rating-legend-item.active-tier .rating-legend-label {
+  font-size: 0.68rem;
 }
 .rating-legend-range {
   display: block; font-size: 0.58rem; font-weight: 600;
   opacity: 0.7; margin-top: 1px; line-height: 1.2;
+}
+.rating-legend-item.active-tier .rating-legend-range {
+  opacity: 1;
 }
 .rating-legend-bar {
   height: 3px; border-radius: 999px; margin-top: 5px;
@@ -959,8 +975,8 @@ main::-webkit-scrollbar { display:none; }
 .rating-legend-item.rating-good   .rating-legend-bar { background: #facc15; }
 .rating-legend-item.rating-vgood  .rating-legend-bar { background: #34d399; }
 .rating-legend-item.rating-excel  .rating-legend-bar { background: #c9a227; }
-/* active tier bar full opacity */
-.rating-legend-item.active-tier .rating-legend-bar { opacity: 1; }
+/* active tier bar full opacity + full width */
+.rating-legend-item.active-tier .rating-legend-bar { opacity: 1; height: 4px; }
 
 /* ── Rating tier colours ── */
 .rating-poor  { color:#f87171; border-color:rgba(248,113,113,0.4)!important; background:rgba(248,113,113,0.08)!important; }
@@ -1176,11 +1192,16 @@ main::-webkit-scrollbar { display:none; }
     if (tierEl) {
       if (val <= 0) {
         tierEl.textContent = ''; tierEl.className = 'rating-tier-label'; tierEl.style.display = 'none';
+        const leg = panel.querySelector('.rating-legend');
+        if (leg) { leg.classList.remove('has-active'); }
+        panel.querySelectorAll('.rating-legend-item').forEach(item => item.classList.remove('active-tier'));
       } else {
         tierEl.style.display = '';
         const t = getRatingTier(pct);
         tierEl.textContent = t.label; tierEl.className = 'rating-tier-label ' + t.cls;
         // Highlight active tier in legend
+        const legend = panel.querySelector('.rating-legend');
+        if (legend) legend.classList.add('has-active');
         panel.querySelectorAll('.rating-legend-item').forEach(item => {
           item.classList.toggle('active-tier', item.classList.contains(t.cls));
         });
