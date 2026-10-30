@@ -8,73 +8,88 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- -- Hero Header -- -->
+  <!-- ── Hero Header ── -->
   <div class="relative rounded-2xl overflow-hidden animate-fadeup"
     style="background:linear-gradient(135deg,#1e1b4b 0%,#2e1065 40%,#1e3a8a 100%);border:1px solid rgba(139,92,246,0.25)">
-    <!-- Glow orbs -->
     <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full blur-3xl pointer-events-none" style="background:rgba(139,92,246,0.15)"></div>
     <div class="absolute -left-8 -bottom-8 w-48 h-48 rounded-full blur-3xl pointer-events-none" style="background:rgba(37,99,235,0.12)"></div>
-
     <div class="relative px-6 sm:px-8 py-7 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-      <div class="space-y-3">
-        <!-- Badge -->
+      <div class="space-y-2">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-extrabold"
           style="background:rgba(139,92,246,0.2);color:#c4b5fd;border:1px solid rgba(139,92,246,0.35)">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           {{#if isTabulator}}Official Tabulator Panel{{else}}Official Judge Panel{{/if}}
         </div>
-        <!-- Welcome -->
         <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-          Welcome back, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> ??
+          Welcome, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span>
         </h1>
-        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants � one at a time, in order.{{/if}}</p>
+        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">
+          {{#if isTabulator}}Review and correct scores for any event from this panel.{{else}}Score your assigned events below — work through one contestant at a time.{{/if}}
+        </p>
       </div>
-
-      <!-- Stats mini row -->
       <div class="flex items-center gap-3 flex-wrap flex-shrink-0">
         <div class="rounded-2xl px-5 py-4 text-center min-w-[90px]" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1)">
           <div class="text-2xl font-black text-white">{{recentEvents.length}}</div>
           <div class="text-[10px] font-bold uppercase tracking-wider mt-0.5" style="color:rgba(196,181,253,0.7)">Events</div>
         </div>
         <div class="rounded-2xl px-5 py-4 text-center min-w-[90px]" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2)">
-          <div class="text-2xl font-black" style="color:#6ee7b7">
-            {{readyEventCount}}
-          </div>
+          <div class="text-2xl font-black" style="color:#6ee7b7">{{readyEventCount}}</div>
           <div class="text-[10px] font-bold uppercase tracking-wider mt-0.5" style="color:rgba(110,231,183,0.7)">Ready to score</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- -- Scoring Guideline Banner -- -->
-  <div class="rounded-2xl p-4 sm:p-5 flex items-start gap-4 animate-fadeup-1"
-    style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2)">
-    <div class="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 text-white shadow"
-      style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  {{#unless isTabulator}}
+  <!-- ── How It Works — 3-step flow ── -->
+  <div class="animate-fadeup-1">
+    <div class="flex items-center gap-2 mb-3 px-1">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span class="text-xs font-bold uppercase tracking-widest" style="color:#a78bfa">How scoring works</span>
     </div>
-    <div class="flex-1">
-      <h3 class="font-extrabold text-sm" style="color:#a5b4fc">{{#if isTabulator}}Tabulator Guidelines{{else}}Scoring Guidelines{{/if}}</h3>
-      <p class="text-xs font-medium mt-1 leading-relaxed" style="color:#6366f1">
-        {{#if isTabulator}}
-        Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">Review / Edit Scores</span> on any event to see all judges' scores.
-        You can correct any score entry � all edits are logged in the audit trail.
-        Locked events are <strong style="color:#a5b4fc">read-only</strong>.
-        {{else}}
-        Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Score Now
-        </span> on <strong style="color:#a5b4fc">Ongoing</strong> events only.
-        Scores are saved per contestant � one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
-        Your scores are <strong style="color:#a5b4fc">anonymous</strong> to participants.
-        {{/if}}
-      </p>
+    <div class="grid grid-cols-3 gap-3" id="step-flow">
+
+      <div class="step-card rounded-2xl p-4 relative overflow-hidden" data-step="1"
+        style="background:linear-gradient(145deg,rgba(79,70,229,0.12),rgba(99,102,241,0.06));border:1px solid rgba(99,102,241,0.2)">
+        <div class="absolute top-3 right-3 text-[10px] font-black px-2 py-0.5 rounded-full" style="background:rgba(99,102,241,0.2);color:#818cf8">STEP 1</div>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center mb-3 shadow" style="background:linear-gradient(135deg,#4f46e5,#6366f1)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="font-extrabold text-sm mb-1" style="color:#e2e8f0">Pick an Event</div>
+        <p class="text-[11px] leading-relaxed" style="color:#64748b">Find an <span class="font-bold" style="color:#34d399">Ongoing</span> event assigned to you below.</p>
+      </div>
+
+      <!-- Arrow connector -->
+      <div class="step-card rounded-2xl p-4 relative overflow-hidden" data-step="2"
+        style="background:linear-gradient(145deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:1px solid rgba(16,185,129,0.18)">
+        <div class="absolute top-3 right-3 text-[10px] font-black px-2 py-0.5 rounded-full" style="background:rgba(16,185,129,0.2);color:#34d399">STEP 2</div>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center mb-3 shadow" style="background:linear-gradient(135deg,#065f46,#10b981)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="font-extrabold text-sm mb-1" style="color:#e2e8f0">Score Contestants</div>
+        <p class="text-[11px] leading-relaxed" style="color:#64748b">Enter scores for each contestant across all criteria — one at a time.</p>
+      </div>
+
+      <div class="step-card rounded-2xl p-4 relative overflow-hidden" data-step="3"
+        style="background:linear-gradient(145deg,rgba(245,158,11,0.1),rgba(217,119,6,0.05));border:1px solid rgba(245,158,11,0.18)">
+        <div class="absolute top-3 right-3 text-[10px] font-black px-2 py-0.5 rounded-full" style="background:rgba(245,158,11,0.2);color:#fbbf24">STEP 3</div>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center mb-3 shadow" style="background:linear-gradient(135deg,#78350f,#d97706)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="font-extrabold text-sm mb-1" style="color:#e2e8f0">Submit &amp; Done</div>
+        <p class="text-[11px] leading-relaxed" style="color:#64748b">Hit <span class="font-bold" style="color:#fbbf24">Submit Scores</span> when all contestants are scored. You're done.</p>
+      </div>
+
     </div>
   </div>
+  {{/unless}}
 
-  <!-- -- Events List -- -->
+  <!-- ── Events List ── -->
   <div class="space-y-4 animate-fadeup-2">
     <div class="flex items-center justify-between px-1">
-      <h2 class="font-extrabold text-base" style="color:var(--text-primary)">{{#if isTabulator}}All Event Scores{{else}}Events Available for Scoring{{/if}}</h2>
+      <h2 class="font-extrabold text-base flex items-center gap-2" style="color:var(--text-primary)">
+        {{#if isTabulator}}All Event Scores{{else}}Your Events{{/if}}
+      </h2>
       <span id="judge-event-count" class="text-xs font-bold" style="color:var(--text-muted)" aria-live="polite">{{recentEvents.length}} event(s)</span>
     </div>
 
@@ -93,7 +108,7 @@
             All <span data-filter-count="all">{{recentEvents.length}}</span>
           </button>
           <button type="button" data-event-filter="ready" aria-pressed="false" class="judge-event-filter btn-sm btn-sm-gray whitespace-nowrap">
-            Ready to score <span data-filter-count="ready">{{readyEventCount}}</span>
+            Ready <span data-filter-count="ready">{{readyEventCount}}</span>
           </button>
           <button type="button" data-event-filter="ongoing" aria-pressed="false" class="judge-event-filter btn-sm btn-sm-gray whitespace-nowrap">
             Ongoing <span data-filter-count="ongoing">{{ongoingCount}}</span>
@@ -108,47 +123,58 @@
     <div id="judge-event-list" class="space-y-3">
       {{#each recentEvents}}
 
-      <div class="rounded-2xl overflow-hidden transition-all duration-300
+      <div class="rounded-2xl overflow-hidden transition-all duration-200
         {{#if (eq status 'ongoing')}}hover:-translate-y-0.5 hover:shadow-xl{{/if}}"
-        data-judge-event data-status="{{status}}" data-assigned="{{isAssigned}}"
-        style="background:var(--bg-card);border:1px solid {{#if (eq status 'ongoing')}}rgba(16,185,129,0.3){{else}}{{#if (eq status 'completed')}}rgba(59,130,246,0.2){{else}}rgba(255,255,255,0.07){{/if}}{{/if}};box-shadow:{{#if (eq status 'ongoing')}}0 4px 24px rgba(16,185,129,0.1){{else}}none{{/if}}">
+        data-judge-event
+        data-status="{{status}}"
+        data-assigned="{{isAssigned}}"
+        data-sort="{{#if (eq status 'ongoing')}}0{{else}}{{#if (eq status 'completed')}}2{{else}}1{{/if}}{{/if}}"
+        style="background:var(--bg-card);border:1px solid {{#if (eq status 'ongoing')}}rgba(16,185,129,0.3){{else}}{{#if (eq status 'completed')}}rgba(59,130,246,0.18){{else}}rgba(255,255,255,0.07){{/if}}{{/if}};box-shadow:{{#if (eq status 'ongoing')}}0 4px 24px rgba(16,185,129,0.1){{else}}none{{/if}}">
+
+        {{!-- Ongoing label stripe at top --}}
+        {{#if (eq status 'ongoing')}}
+        <div class="flex items-center gap-2 px-5 pt-3 pb-0">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" style="animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite"></span>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest" style="color:#34d399">Live — Scoring Open</span>
+        </div>
+        {{/if}}
 
         <div class="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
 
-          <!-- Event icon + info -->
+          <!-- Icon + info -->
           <div class="flex items-center gap-4 flex-1 min-w-0">
-            <!-- Icon with theme gradient -->
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
               style="background:{{themeGradient theme}}">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             </div>
 
             <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-0.5">
+              <div class="flex items-center gap-2 mb-0.5 flex-wrap">
                 <h3 class="font-extrabold text-base truncate" style="color:var(--text-primary)">{{name}}</h3>
-                {{#if (eq status 'ongoing')}}
-                <span class="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                {{/if}}
+                <span class="badge {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize text-xs flex-shrink-0">
+                  {{status}}
+                </span>
               </div>
+
               <div class="flex flex-wrap items-center gap-2 text-xs" style="color:var(--text-muted)">
                 {{#if venue}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>{{venue}}</span>{{/if}}
                 {{#if date}}<span class="flex items-center gap-1"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{{date}}{{#if time}} at {{time}}{{/if}}</span>{{/if}}
                 <span class="capitalize px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(255,255,255,0.07);color:var(--text-secondary)">{{#if (eq type 'other')}}{{#if otherType}}{{otherType}}{{else}}Other{{/if}}{{else}}{{type}}{{/if}}</span>
               </div>
 
-              <!-- Stats row -->
+              <!-- Contestant / criteria counts -->
               {{#if contestantCount}}
-              <div class="flex items-center gap-3 mt-2 flex-wrap">
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:var(--text-secondary)">
+              <div class="flex items-center gap-3 mt-1.5 flex-wrap">
+                <span class="flex items-center gap-1 text-[11px] font-semibold" style="color:var(--text-secondary)">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                   {{contestantCount}} contestant{{#if (gt contestantCount 1)}}s{{/if}}
                 </span>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold" style="color:var(--text-secondary)">
+                <span class="flex items-center gap-1 text-[11px] font-semibold" style="color:var(--text-secondary)">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   {{criteriaCount}} criteri{{#if (gt criteriaCount 1)}}a{{else}}on{{/if}}
                 </span>
                 {{#if myScoreCount}}
-                <span class="flex items-center gap-1.5 text-[11px] font-bold" style="color:#6ee7b7">
+                <span class="flex items-center gap-1 text-[11px] font-bold" style="color:#6ee7b7">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                   {{myScoreCount}} scored
                 </span>
@@ -156,18 +182,20 @@
               </div>
               {{/if}}
 
-              <!-- Completion progress bar (for ongoing, judges only) -->
+              <!-- Progress bar (ongoing only) -->
               {{#unless @root.isTabulator}}
               {{#if (eq status 'ongoing')}}
               {{#if contestantCount}}
-              <div class="mt-2.5">
-                <div class="flex justify-between text-[10px] mb-1" style="color:var(--text-muted)">
-                  <span>My progress</span>
-                  <span class="font-bold" style="color:var(--text-primary)">{{completionPct}}%</span>
+              <div class="mt-3">
+                <div class="flex justify-between text-[10px] mb-1.5" style="color:var(--text-muted)">
+                  <span>Your progress</span>
+                  <span class="font-extrabold" style="color:{{#if (gte completionPct 100)}}#34d399{{else}}var(--text-primary){{/if}}">
+                    {{myScoreCount}}/{{contestantCount}} contestants &nbsp;·&nbsp; {{completionPct}}%
+                  </span>
                 </div>
-                <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.08)">
+                <div class="h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
                   <div class="h-full rounded-full transition-all duration-700"
-                    style="width:{{completionPct}}%;background:{{#if (gte completionPct 100)}}#10b981{{else}}linear-gradient(90deg,#6366f1,#8b5cf6){{/if}}"></div>
+                    style="width:{{completionPct}}%;background:{{#if (gte completionPct 100)}}linear-gradient(90deg,#059669,#34d399){{else}}linear-gradient(90deg,#6366f1,#8b5cf6){{/if}}"></div>
                 </div>
               </div>
               {{/if}}
@@ -176,56 +204,74 @@
             </div>
           </div>
 
-          <!-- Actions -->
-          <div class="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
-            <span class="badge {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize text-xs">
-              {{status}}
-            </span>
-              {{#if @root.isTabulator}}
-              <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs">View Results</a>
-              {{else}}{{#if (eq status 'ongoing')}}
-            {{#if isAssigned}}
-            <a href="/events/{{id}}/scoring"
-              class="btn-sm btn-solid-indigo">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              {{#if (gte completionPct 100)}}Review Scores{{else}}{{#if myScoreCount}}Continue Scoring{{else}}Score Now{{/if}}{{/if}}
-            </a>
-            {{else}}
-            <span class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs cursor-not-allowed"
-              style="background:rgba(239,68,68,0.1);color:#fca5a5;border:1px solid rgba(239,68,68,0.25)"
-              title="You are not assigned to this event. Ask the organizer to assign you.">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-              Not Assigned
-            </span>
-            {{/if}}
-            {{else}}{{#if (eq status 'completed')}}
-            <div class="flex flex-wrap items-center justify-end gap-2">
-              {{#if hasScored}}
-              <a href="/events/{{id}}/scoring" class="btn-sm btn-sm-gray text-xs">
-                Review Scores
-              </a>
-              {{/if}}
-              <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs">
+          <!-- Action area -->
+          <div class="flex flex-col items-end gap-1.5 self-end sm:self-center flex-shrink-0 min-w-[140px]">
+            {{#if @root.isTabulator}}
+              <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs w-full text-center">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                 View Results
               </a>
-            </div>
             {{else}}
-            <span class="btn-sm btn-sm-gray text-xs opacity-50 cursor-not-allowed">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Not Started
-            </span>
-            {{/if}}{{/if}}{{/if}}
+              {{#if (eq status 'ongoing')}}
+                {{#if isAssigned}}
+                  <a href="/events/{{id}}/scoring" class="btn-solid-indigo btn-sm w-full text-center justify-center">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    {{#if (gte completionPct 100)}}Review Scores{{else}}{{#if myScoreCount}}Continue Scoring{{else}}Score Now{{/if}}{{/if}}
+                  </a>
+                  <!-- Context hint below button -->
+                  <span class="text-[10px] font-semibold text-center w-full" style="color:{{#if (gte completionPct 100)}}#34d399{{else}}#94a3b8{{/if}}">
+                    {{#if (gte completionPct 100)}}
+                      ✓ All {{contestantCount}} scored
+                    {{else}}
+                      {{myScoreCount}} of {{contestantCount}} done
+                    {{/if}}
+                  </span>
+                {{else}}
+                  <div class="w-full">
+                    <span class="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl font-extrabold text-xs cursor-not-allowed"
+                      style="background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                      Not Assigned
+                    </span>
+                    <p class="text-[10px] text-center mt-1.5 leading-snug" style="color:#64748b">
+                      Ask your administrator<br/>to assign you to this event.
+                    </p>
+                  </div>
+                {{/if}}
+              {{else}}
+                {{#if (eq status 'completed')}}
+                  <div class="flex flex-col gap-1.5 w-full">
+                    {{#if hasScored}}
+                    <a href="/events/{{id}}/scoring" class="btn-sm btn-sm-gray text-xs w-full text-center">Review My Scores</a>
+                    {{/if}}
+                    <a href="/events/{{id}}/results" class="btn-sm btn-sm-blue text-xs w-full text-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                      View Results
+                    </a>
+                  </div>
+                {{else}}
+                  <div class="w-full text-center">
+                    <span class="btn-sm btn-sm-gray text-xs opacity-50 cursor-not-allowed w-full inline-flex justify-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Not Started
+                    </span>
+                    <p class="text-[10px] mt-1" style="color:#475569">Waiting for the event<br/>to go live.</p>
+                  </div>
+                {{/if}}
+              {{/if}}
+            {{/if}}
           </div>
+
         </div>
 
-        <!-- Bottom accent bar for ongoing -->
+        <!-- Bottom accent for ongoing -->
         {{#if (eq status 'ongoing')}}
-        <div class="h-0.5" style="background:linear-gradient(90deg,rgba(16,185,129,0),rgba(16,185,129,0.6),rgba(16,185,129,0))"></div>
+        <div class="h-0.5" style="background:linear-gradient(90deg,rgba(16,185,129,0),rgba(16,185,129,0.7),rgba(16,185,129,0))"></div>
         {{/if}}
-      </div>
 
+      </div>
       {{/each}}
+
       <div id="judge-no-matches" class="hidden rounded-2xl py-10 text-center px-4"
         style="background:var(--bg-card);border:1px solid var(--border-subtle)" role="status">
         <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No matching events</h3>
@@ -235,22 +281,21 @@
     </div>
 
     {{else}}
-    <!-- Empty state -->
     <div class="rounded-2xl py-20 text-center px-4"
       style="background:var(--bg-card);border:1px solid var(--border-subtle)">
       <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
         style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <h3 class="font-bold text-base mb-2" style="color:var(--text-primary)">No Scoring Events Available</h3>
+      <h3 class="font-bold text-base mb-2" style="color:var(--text-primary)">No Events Yet</h3>
       <p class="text-sm max-w-xs mx-auto leading-relaxed" style="color:var(--text-faint)">
-        No events are currently assigned for scoring. Contact the administrator to set up an event and assign you as judge.
+        You haven't been assigned to any events. Contact your administrator to be added as a judge.
       </p>
     </div>
     {{/if}}
   </div>
 
-  <!-- -- Quick Tips -- -->
+  <!-- ── Quick Tips ── -->
   {{#if isTabulator}}
   <div class="grid sm:grid-cols-3 gap-3 animate-fadeup-2">
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.15)">
@@ -259,7 +304,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fde047">Review All Scores</div>
-        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Click <strong style="color:#fde047">Review / Edit Scores</strong> to see every judge's individual scores per contestant.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">Click <strong style="color:#fde047">View Results</strong> to see every judge's individual scores per contestant.</p>
       </div>
     </div>
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15)">
@@ -277,7 +322,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fca5a5">Locked Events</div>
-        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only � no edits allowed.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
       </div>
     </div>
   </div>
@@ -316,63 +361,92 @@
 </main>
 </div>
 {{> footer }}
+
 <script>
-  (() => {
-    const cards = Array.from(document.querySelectorAll("[data-judge-event]"));
-    const search = document.getElementById("judge-event-search");
-    const filters = Array.from(document.querySelectorAll(".judge-event-filter"));
-    const count = document.getElementById("judge-event-count");
-    const noMatches = document.getElementById("judge-no-matches");
-    const clearFilters = document.getElementById("judge-clear-filters");
-    let activeFilter = "all";
+(() => {
+  // ── Auto-sort: ongoing first, then pending, then completed ──
+  const list = document.getElementById('judge-event-list');
+  if (list) {
+    const cards = Array.from(list.querySelectorAll('[data-judge-event]'));
+    cards.sort((a, b) => Number(a.dataset.sort) - Number(b.dataset.sort));
+    cards.forEach(c => list.appendChild(c));
+  }
 
-    if (!cards.length || !search || !count || !noMatches) return;
+  // ── Filter + search ──
+  const cards = Array.from(document.querySelectorAll('[data-judge-event]'));
+  const search = document.getElementById('judge-event-search');
+  const filters = Array.from(document.querySelectorAll('.judge-event-filter'));
+  const count = document.getElementById('judge-event-count');
+  const noMatches = document.getElementById('judge-no-matches');
+  const clearFilters = document.getElementById('judge-clear-filters');
+  let activeFilter = 'all';
 
-    const getStatusCount = (status) => cards.filter((card) => card.dataset.status === status).length;
-    document.querySelector('[data-filter-count="ongoing"]').textContent = getStatusCount("ongoing");
-    document.querySelector('[data-filter-count="completed"]').textContent = getStatusCount("completed");
+  if (!cards.length || !search || !count || !noMatches) return;
 
-    const updateEvents = () => {
-      const term = search.value.trim().toLocaleLowerCase();
-      let visibleCount = 0;
+  const getStatusCount = s => cards.filter(c => c.dataset.status === s).length;
+  document.querySelector('[data-filter-count="ongoing"]').textContent = getStatusCount('ongoing');
+  document.querySelector('[data-filter-count="completed"]').textContent = getStatusCount('completed');
 
-      cards.forEach((card) => {
-        const status = card.dataset.status;
-        const isAssigned = card.dataset.assigned === "true";
-        const matchesFilter = activeFilter === "all"
-          || (activeFilter === "ready" && status === "ongoing" && isAssigned)
-          || status === activeFilter;
-        const matchesSearch = card.textContent.toLocaleLowerCase().includes(term);
-        const visible = matchesFilter && matchesSearch;
-        card.hidden = !visible;
-        if (visible) visibleCount += 1;
-      });
-
-      count.textContent = `${visibleCount} of ${cards.length} event(s)`;
-      noMatches.classList.toggle("hidden", visibleCount !== 0);
-    };
-
-    filters.forEach((button) => {
-      button.addEventListener("click", () => {
-        activeFilter = button.dataset.eventFilter;
-        filters.forEach((filter) => {
-          const selected = filter === button;
-          filter.setAttribute("aria-pressed", String(selected));
-          filter.classList.toggle("btn-sm-indigo", selected);
-          filter.classList.toggle("btn-sm-gray", !selected);
-        });
-        updateEvents();
-      });
+  const updateEvents = () => {
+    const term = search.value.trim().toLocaleLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const status = card.dataset.status;
+      const assigned = card.dataset.assigned === 'true';
+      const matchesFilter =
+        activeFilter === 'all' ||
+        (activeFilter === 'ready' && status === 'ongoing' && assigned) ||
+        status === activeFilter;
+      const matchesSearch = card.textContent.toLocaleLowerCase().includes(term);
+      const show = matchesFilter && matchesSearch;
+      card.hidden = !show;
+      if (show) visible++;
     });
+    count.textContent = `${visible} of ${cards.length} event(s)`;
+    noMatches.classList.toggle('hidden', visible !== 0);
+  };
 
-    search.addEventListener("input", updateEvents);
-    clearFilters.addEventListener("click", () => {
-      activeFilter = "all";
-      search.value = "";
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.eventFilter;
+      filters.forEach(f => {
+        const sel = f === btn;
+        f.setAttribute('aria-pressed', String(sel));
+        f.classList.toggle('btn-sm-indigo', sel);
+        f.classList.toggle('btn-sm-gray', !sel);
+      });
+      updateEvents();
+    });
+  });
+
+  search.addEventListener('input', updateEvents);
+  if (clearFilters) {
+    clearFilters.addEventListener('click', () => {
+      activeFilter = 'all';
+      search.value = '';
       filters[0].click();
       search.focus();
     });
-  })();
+  }
+
+  // ── Highlight active step based on state ──
+  const hasOngoing = cards.some(c => c.dataset.status === 'ongoing' && c.dataset.assigned === 'true');
+  const allDone = cards.every(c => {
+    if (c.dataset.status !== 'ongoing') return true;
+    const pct = parseInt(c.querySelector('[data-completion]')?.textContent || '0');
+    return pct >= 100;
+  });
+  const stepCards = document.querySelectorAll('.step-card');
+  if (stepCards.length === 3) {
+    if (!hasOngoing) {
+      stepCards[0].style.boxShadow = '0 0 0 2px rgba(99,102,241,0.5)';
+    } else if (hasOngoing && !allDone) {
+      stepCards[1].style.boxShadow = '0 0 0 2px rgba(16,185,129,0.5)';
+    } else {
+      stepCards[2].style.boxShadow = '0 0 0 2px rgba(245,158,11,0.5)';
+    }
+  }
+})();
 </script>
 </body>
 </html>
