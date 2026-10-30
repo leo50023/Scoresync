@@ -457,6 +457,33 @@
     .btn-sm-gray:hover   { background:rgba(255,255,255,0.12); color:#cbd5e1; }
     .btn-sm-gold   { background:rgba(245,158,11,0.15); color:#fcd34d; border-color:rgba(245,158,11,0.3); }
     .btn-sm-gold:hover   { background:rgba(245,158,11,0.25); }
+    .btn-sm-indigo { background:rgba(99,102,241,0.15); color:#c7d2fe; border-color:rgba(99,102,241,0.3); }
+    .btn-sm-indigo:hover { background:rgba(99,102,241,0.25); }
+    .btn-sm-rose   { background:rgba(225,29,72,0.15);  color:#fda4af; border-color:rgba(225,29,72,0.3); }
+    .btn-sm-rose:hover   { background:rgba(225,29,72,0.25); }
+    .btn-sm-teal   { background:rgba(20,184,166,0.15); color:#5eead4; border-color:rgba(20,184,166,0.3); }
+    .btn-sm-teal:hover   { background:rgba(20,184,166,0.25); }
+    /* Solid color variants — for primary actions needing strong visual weight */
+    .btn-solid-green   { background:linear-gradient(135deg,#059669,#10b981); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(16,185,129,0.3); }
+    .btn-solid-green:hover   { opacity:0.9; transform:translateY(-1px); }
+    .btn-solid-blue    { background:linear-gradient(135deg,#1d4ed8,#3b82f6); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(37,99,235,0.3); }
+    .btn-solid-blue:hover    { opacity:0.9; transform:translateY(-1px); }
+    .btn-solid-indigo  { background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(99,102,241,0.3); }
+    .btn-solid-indigo:hover  { opacity:0.9; transform:translateY(-1px); }
+    .btn-solid-gold    { background:linear-gradient(135deg,#92400e,#d97706); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(217,119,6,0.3); }
+    .btn-solid-gold:hover    { opacity:0.9; transform:translateY(-1px); }
+    .btn-solid-rose    { background:linear-gradient(135deg,#be123c,#e11d48); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(225,29,72,0.3); }
+    .btn-solid-rose:hover    { opacity:0.9; transform:translateY(-1px); }
+    /* Icon-only button — square, centered, no distortion from global min-height */
+    .btn-icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:36px; height:36px; min-height:36px !important; min-width:36px;
+      border-radius:10px; border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.06); color:var(--text-secondary);
+      cursor:pointer; text-decoration:none; flex-shrink:0;
+      transition: background 60ms ease, color 60ms ease;
+    }
+    .btn-icon:hover { background:rgba(255,255,255,0.12); color:var(--text-primary); }
 
     /* ── Dark Badges ── */
     .badge {

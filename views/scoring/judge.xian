@@ -12,9 +12,7 @@
     <div class="judge-top-row px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
       <div class="judge-top-info min-w-0 flex items-center gap-3">
         <!-- Back button -->
-        <a href="/dashboard" class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl transition"
-          style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)"
-          title="Back to Dashboard">
+        <a href="/dashboard" class="btn-icon no-min-h flex-shrink-0" title="Back to Dashboard">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </a>
         <div class="min-w-0">
@@ -36,7 +34,7 @@
           </svg>
           <span id="overall-pct" class="font-extrabold" style="color:var(--text-primary)">0%</span>
         </div>
-        <a href="/events/{{event.id}}/results" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold" style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
+        <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green text-xs">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           {{#if readOnly}}View Results{{else}}Live Results{{/if}}
         </a>
@@ -264,8 +262,7 @@
 <div class="judge-bottom-nav fixed bottom-0 left-0 right-0 z-30 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,0.06);box-shadow:0 -4px 32px rgba(0,0,0,0.5)">
   <div class="judge-bottom-nav-inner max-w-screen-xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
     <button type="button" id="btn-prev-contestant"
-      class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition disabled:opacity-30"
-      style="background:rgba(255,255,255,0.06);color:var(--text-secondary);border:1px solid rgba(255,255,255,0.1)"
+      class="btn-sm btn-sm-gray disabled:opacity-30"
       onclick="goToContestant(window._currentIdx - 1)">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       Previous
@@ -274,8 +271,7 @@
       Contestant <span id="bottom-pos" style="color:#e5c45a">1</span> / {{contestants.length}}
     </div>
     <button type="button" id="btn-next-contestant"
-      class="judge-bottom-button flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm transition active:scale-[0.98]"
-      style="background:linear-gradient(135deg,#8b6914,#c9a227);color:#0a1628;box-shadow:0 4px 16px rgba(201,162,39,0.3)"
+      class="btn-sm btn-solid-gold"
       onclick="goToContestant(window._currentIdx + 1)">
       Next ?
     </button>
@@ -734,23 +730,24 @@
   width: 100%;
   min-height: 46px;
   padding: 11px 16px;
-  border: 1px solid rgba(214,181,74,0.35);
-  border-radius: 11px;
-  background: #c9a227;
-  color: #111827;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg,#92400e,#c9a227);
+  color: #fff;
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 850;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  transition: background 0.18s,transform 0.18s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(201,162,39,0.3);
+  transition: opacity 0.18s, transform 0.18s;
 }
-.submit-btn:hover {
-  background: #d8b43d;
-}
-.submit-btn:active {
-  transform: translateY(1px);
-}
+.submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
 
 /* Mobile / narrow: stack photo on top */
 @media (max-width: 767px) {
@@ -824,12 +821,6 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-  .judge-bottom-button {
-    flex-shrink: 0;
-    gap: 6px;
-    padding: 9px 10px;
-    font-size: 0.75rem;
-  }
   .judge-bottom-position {
     min-width: 0;
     font-size: 0.7rem;
@@ -847,11 +838,6 @@
     gap: 5px;
     padding-left: 8px;
     padding-right: 8px;
-  }
-  .judge-bottom-button {
-    gap: 4px;
-    padding: 8px;
-    font-size: 0.7rem;
   }
 }
 
@@ -1270,7 +1256,7 @@ main::-webkit-scrollbar { display:none; }
     <h2 style="font-size:1.6rem;font-weight:900;color:#f1f5f9;margin:0 0 10px;line-height:1.2">Scoring Complete! 🎉</h2>
     <p style="font-size:0.85rem;color:#94a3b8;margin:0 0 28px;line-height:1.6">You have successfully submitted scores for all categories and contestants. Your evaluation is now complete.</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <a href="/events/{{event.id}}/results" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;font-weight:800;font-size:0.85rem;text-decoration:none;box-shadow:0 4px 16px rgba(16,185,129,0.35)">
+      <a href="/events/{{event.id}}/results" class="btn-sm btn-solid-green">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         View Results
       </a>

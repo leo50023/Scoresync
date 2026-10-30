@@ -137,9 +137,10 @@
           </div>
           <form method="POST" action="/events/{{../event.id}}/vote" class="mt-4">
             <input type="hidden" name="contestantId" value="{{id}}">
-            <button type="submit" class="w-full rounded-xl py-3 text-sm font-extrabold text-white"
+            <button type="submit"
+              class="btn-sm btn-solid-rose w-full justify-center py-3"
               data-id="{{id}}" {{#if ../alreadyVoted}}disabled{{/if}}
-              style="background:linear-gradient(135deg,#e11d48,#be123c);box-shadow:0 8px 20px rgba(225,29,72,0.2);opacity:{{#if ../alreadyVoted}}0.55{{else}}1{{/if}}">
+              style="{{#if ../alreadyVoted}}opacity:0.55;cursor:not-allowed{{/if}}">
               {{#if ../alreadyVoted}}Vote already submitted{{else}}Vote for {{name}}{{/if}}
             </button>
           </form>

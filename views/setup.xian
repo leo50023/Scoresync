@@ -99,8 +99,7 @@
                 <div class="text-xs" style="color:var(--text-faint)">Automatically assigned for first account</div>
               </div>
             </div>
-            <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition hover:opacity-90 active:scale-95"
-              style="background:linear-gradient(135deg,#1d4ed8,#4f46e5);box-shadow:0 4px 14px rgba(37,99,235,0.4)">
+            <button type="submit" class="btn-primary w-full justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
               Create Admin &amp; Enter ScoreSync
             </button>

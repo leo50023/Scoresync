@@ -41,32 +41,26 @@
           Editing Enabled
         </span>
         {{/if}}
-        <a href="/events/{{event.id}}/results" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(234,179,8,0.12);color:#fde047;border:1px solid rgba(234,179,8,0.3)">
+        <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-gold">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           View Results
         </a>
-        <a href="/events/{{event.id}}/report" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(139,92,246,0.12);color:#c4b5fd;border:1px solid rgba(139,92,246,0.3)">
+        <a href="/events/{{event.id}}/report" class="btn-sm btn-sm-purple">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Report
         </a>
-        <a href="/events/{{event.id}}/results/export" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)">
+        <a href="/events/{{event.id}}/results/export" class="btn-sm btn-sm-green">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export CSV
         </a>
-        <a href="/events/{{event.id}}/announce" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)">
-          ?? Announce
+        <a href="/events/{{event.id}}/announce" class="btn-sm btn-sm-gold">
+          ðŸŽ‰ Announce
         </a>
-        <button type="button" onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(255,255,255,0.07);color:#94a3b8;border:1px solid rgba(255,255,255,0.12);min-height:unset">
+        <button type="button" onclick="window.print()" class="btn-sm btn-sm-gray no-print">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Print
         </button>
-        <a href="/events/{{event.id}}/tabulator/audit-export" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition"
-          style="background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.3)">
+        <a href="/events/{{event.id}}/tabulator/audit-export" class="btn-sm btn-sm-blue">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Audit Log
         </a>
@@ -157,7 +151,7 @@
         </svg>
       </button>
 
-      <!-- Expanded: criteria × judge score grid -->
+      <!-- Expanded: criteria ï¿½ judge score grid -->
       <div class="tab-card-body hidden" id="body-{{id}}">
         <div class="px-5 pb-5 space-y-3">
           {{#each criteriaScores}}
@@ -213,7 +207,7 @@
                     <span class="text-[10px] flex-shrink-0" style="color:var(--text-faint)">/ {{../maxScore}}</span>
                   </div>
                   {{else}}
-                  <span class="text-xs font-semibold" style="color:var(--text-faint)">— not submitted</span>
+                  <span class="text-xs font-semibold" style="color:var(--text-faint)">ï¿½ not submitted</span>
                   {{/if}}
                 </div>
 
@@ -237,8 +231,7 @@
                     onblur="this.style.borderColor='rgba(234,179,8,0.3)'"
                   />
                   <button type="submit"
-                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition active:scale-95 flex-shrink-0"
-                    style="background:rgba(234,179,8,0.15);color:#fde047;border:1px solid rgba(234,179,8,0.35)">
+                    class="btn-sm btn-sm-gold flex-shrink-0">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                     Save
                   </button>

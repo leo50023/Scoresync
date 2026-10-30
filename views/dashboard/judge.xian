@@ -27,7 +27,7 @@
         <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
           Welcome back, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> ??
         </h1>
-        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants — one at a time, in order.{{/if}}</p>
+        <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">{{#if isTabulator}}Enter and review scores for any event from one account.{{else}}Select an active event to score contestants ï¿½ one at a time, in order.{{/if}}</p>
       </div>
 
       <!-- Stats mini row -->
@@ -58,13 +58,13 @@
       <p class="text-xs font-medium mt-1 leading-relaxed" style="color:#6366f1">
         {{#if isTabulator}}
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">Review / Edit Scores</span> on any event to see all judges' scores.
-        You can correct any score entry — all edits are logged in the audit trail.
+        You can correct any score entry ï¿½ all edits are logged in the audit trail.
         Locked events are <strong style="color:#a5b4fc">read-only</strong>.
         {{else}}
         Click <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold text-white" style="background:#6366f1">
           <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Score Now
         </span> on <strong style="color:#a5b4fc">Ongoing</strong> events only.
-        Scores are saved per contestant — one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
+        Scores are saved per contestant ï¿½ one at a time. All criteria weights must add up to <strong style="color:#a5b4fc">100%</strong>.
         Your scores are <strong style="color:#a5b4fc">anonymous</strong> to participants.
         {{/if}}
       </p>
@@ -89,20 +89,16 @@
             style="background:#0a0f1e;border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)">
         </label>
         <div class="flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter events">
-          <button type="button" data-event-filter="all" aria-pressed="true" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#c7d2fe">
+          <button type="button" data-event-filter="all" aria-pressed="true" class="judge-event-filter btn-sm btn-sm-indigo whitespace-nowrap">
             All <span data-filter-count="all">{{recentEvents.length}}</span>
           </button>
-          <button type="button" data-event-filter="ready" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
+          <button type="button" data-event-filter="ready" aria-pressed="false" class="judge-event-filter btn-sm btn-sm-gray whitespace-nowrap">
             Ready to score <span data-filter-count="ready">{{readyEventCount}}</span>
           </button>
-          <button type="button" data-event-filter="ongoing" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
+          <button type="button" data-event-filter="ongoing" aria-pressed="false" class="judge-event-filter btn-sm btn-sm-gray whitespace-nowrap">
             Ongoing <span data-filter-count="ongoing">{{ongoingCount}}</span>
           </button>
-          <button type="button" data-event-filter="completed" aria-pressed="false" class="judge-event-filter whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold transition"
-            style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary)">
+          <button type="button" data-event-filter="completed" aria-pressed="false" class="judge-event-filter btn-sm btn-sm-gray whitespace-nowrap">
             Completed <span data-filter-count="completed">{{completedEventCount}}</span>
           </button>
         </div>
@@ -190,8 +186,7 @@
               {{else}}{{#if (eq status 'ongoing')}}
             {{#if isAssigned}}
             <a href="/events/{{id}}/scoring"
-              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm text-white transition active:scale-95 shadow-lg"
-              style="background:linear-gradient(135deg,#4f46e5,#7c3aed);box-shadow:0 4px 16px rgba(99,102,241,0.4)">
+              class="btn-sm btn-solid-indigo">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               {{#if (gte completionPct 100)}}Review Scores{{else}}{{#if myScoreCount}}Continue Scoring{{else}}Score Now{{/if}}{{/if}}
             </a>
@@ -235,8 +230,7 @@
         style="background:var(--bg-card);border:1px solid var(--border-subtle)" role="status">
         <h3 class="font-bold text-sm mb-1" style="color:var(--text-primary)">No matching events</h3>
         <p class="text-xs mb-4" style="color:var(--text-muted)">Try another search or show all events.</p>
-        <button type="button" id="judge-clear-filters" class="rounded-xl px-4 py-2 text-xs font-bold"
-          style="background:rgba(99,102,241,0.2);color:#c7d2fe">Show all events</button>
+        <button type="button" id="judge-clear-filters" class="btn-sm btn-sm-indigo">Show all events</button>
       </div>
     </div>
 
@@ -283,7 +277,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fca5a5">Locked Events</div>
-        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only ï¿½ no edits allowed.</p>
       </div>
     </div>
   </div>
@@ -364,9 +358,8 @@
         filters.forEach((filter) => {
           const selected = filter === button;
           filter.setAttribute("aria-pressed", String(selected));
-          filter.style.background = selected ? "rgba(99,102,241,0.2)" : "transparent";
-          filter.style.borderColor = selected ? "rgba(99,102,241,0.4)" : "rgba(255,255,255,0.1)";
-          filter.style.color = selected ? "#c7d2fe" : "#94a3b8";
+          filter.classList.toggle("btn-sm-indigo", selected);
+          filter.classList.toggle("btn-sm-gray", !selected);
         });
         updateEvents();
       });

@@ -85,7 +85,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Weight used so far: <strong>{{totalWeight}}%</strong>
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-xl font-semibold text-sm text-white shadow transition hover:opacity-90" style="background:linear-gradient(135deg,#5b21b6,#8b5cf6)">
+        <button type="submit" class="btn-sm btn-solid-indigo w-full justify-center">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="display:inline;margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add Criteria
         </button>
@@ -112,7 +112,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Weight used so far: <strong>{{totalWeight}}%</strong>
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-xl font-semibold text-sm text-white shadow transition hover:opacity-90" style="background:linear-gradient(135deg,#5b21b6,#8b5cf6)">
+        <button type="submit" class="btn-sm btn-solid-indigo w-full justify-center">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="display:inline;margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add Criteria
         </button>

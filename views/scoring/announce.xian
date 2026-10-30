@@ -112,6 +112,32 @@
     }
     #restart-btn:hover { background: rgba(255,255,255,.14); }
 
+    /* ── Go back button ── */
+    #go-btn {
+      position: fixed; left: 24px; top: 50%; transform: translateY(-50%);
+      display: none; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 50%; border: none;
+      cursor: pointer; z-index: 100;
+      background: rgba(255,255,255,.10); color: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.2);
+      transition: background .15s, transform .15s;
+    }
+    #go-btn:hover { background: rgba(255,255,255,.2); transform: translateY(-50%) scale(1.08); }
+    @media print { #go-btn { display: none !important; } }
+
+    /* ── Back to Results (screen only; hidden on print) ── */
+    .announce-back-btn {
+      position: fixed; top: 16px; left: 16px; z-index: 1000;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      background: rgba(255,255,255,0.08); color: #e2e8f0;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: background .15s, color .15s;
+    }
+    .announce-back-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    @media print { .announce-back-btn { display: none !important; } }
+
     /* ── confetti ── */
     .confetti-piece {
       position: fixed; top: -20px; width: 10px; height: 10px;
@@ -135,6 +161,12 @@
 </head>
 <body>
 
+<!-- Back to Results (screen only; hidden on print) -->
+<a href="/events/{{event.id}}/results" class="btn-sm btn-sm-gray no-print announce-back-btn" aria-label="Back to Results">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Results
+</a>
+
 <!-- Start Screen -->
 <div id="start-screen">
   <div class="event-label">{{event.name}}</div>
@@ -149,6 +181,11 @@
   <div id="card-container"></div>
   <button id="restart-btn" onclick="restartReveal()">↺ Restart</button>
 </div>
+
+<!-- Go back button (fixed left, visible when not on first card) -->
+<button id="go-btn" aria-label="Go back" onclick="goBack()">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
 
 <!-- Branding -->
 <div id="branding">{{event.name}} &bull; ScoreSync</div>
@@ -249,6 +286,11 @@
     if (restartBtn) {
       restartBtn.style.display = (idx >= PLACEMENTS.length - 1) ? 'inline-block' : 'none';
     }
+    // Show go-back button only when there's a previous card
+    const goBtn = document.getElementById('go-btn');
+    if (goBtn) {
+      goBtn.style.display = (idx > 0) ? 'flex' : 'none';
+    }
   }
 
   function spawnConfetti() {
@@ -295,6 +337,8 @@
     document.getElementById('start-screen').style.display  = 'block';
     document.getElementById('card-container').innerHTML    = '';
     document.getElementById('restart-btn').style.display   = 'none';
+    const goBtn = document.getElementById('go-btn');
+    if (goBtn) goBtn.style.display = 'none';
     document.querySelectorAll('.confetti-piece').forEach(function (el) { el.remove(); });
   }
 

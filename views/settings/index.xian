@@ -65,17 +65,16 @@
               <div class="flex-1 min-w-0">
                 <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{userName}}</div>
                 <div class="text-xs mt-0.5 capitalize" style="color:var(--text-muted)">{{#if isEncoder}}Participant{{else}}{{userRole}}{{/if}}</div>
-                <p class="text-[11px] mt-1.5" style="color:var(--text-secondary)">PNG, JPG, or WebP · Max 2 MB</p>
+                <p class="text-[11px] mt-1.5" style="color:var(--text-secondary)">PNG, JPG, or WebP ï¿½ Max 2 MB</p>
                 <div class="flex flex-wrap items-center gap-2 mt-3">
                   <button type="button" onclick="document.getElementById('avatar-file').click()"
-                    class="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition"
-                    style="background:rgba(99,102,241,0.16);color:#c7d2fe;border:1px solid rgba(129,140,248,0.32)">
+                    class="btn-sm btn-sm-indigo text-xs">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5v2A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-2"/></svg>
                     Change photo
                   </button>
                   <button type="button" id="remove-avatar-button" onclick="removeProfilePhoto()"
-                    class="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition"
-                    style="display:{{#if userAvatar}}inline-flex{{else}}none{{/if}};background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(248,113,113,0.24)">
+                    class="btn-sm btn-sm-red text-xs"
+                    style="display:{{#if userAvatar}}inline-flex{{else}}none{{/if}}">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5m4-5v5"/></svg>
                     Remove photo
                   </button>
@@ -166,7 +165,7 @@ function removeProfilePhoto() {
 }
 </script>
 
-      <!-- System Behavior Card — accurate, read-only -->
+      <!-- System Behavior Card ï¿½ accurate, read-only -->
       <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:var(--bg-card);border:1px solid var(--border)">
         <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.3)">
@@ -183,7 +182,7 @@ function removeProfilePhoto() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
               <span class="font-bold" style="color:var(--text-primary)">Weighted Average Scoring</span>
-              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Each criterion has a weight (%). Final score = sum of (score / maxScore × weight) across all criteria. Total weights must equal 100%.</p>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Each criterion has a weight (%). Final score = sum of (score / maxScore ï¿½ weight) across all criteria. Total weights must equal 100%.</p>
             </div>
           </div>
 
@@ -254,11 +253,10 @@ function removeProfilePhoto() {
             </div>
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Detailed Description</label>
-              <textarea name="description" rows="3" placeholder="Explain how this feature would benefit the system…" required class="form-input-bare resize-none w-full"></textarea>
+              <textarea name="description" rows="3" placeholder="Explain how this feature would benefit the systemï¿½" required class="form-input-bare resize-none w-full"></textarea>
             </div>
             <div class="flex justify-end">
-              <button type="submit" class="btn-primary text-xs px-5 py-2.5"
-                style="background:linear-gradient(135deg,#b45309,#d97706);box-shadow:0 4px 12px rgba(217,119,6,0.3)">
+              <button type="submit" class="btn-sm btn-solid-gold text-xs">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 Submit Suggestion
               </button>
@@ -267,7 +265,7 @@ function removeProfilePhoto() {
         </div>
       </div>
 
-      <!-- Community Feature Requests — only shown when real submissions exist -->
+      <!-- Community Feature Requests ï¿½ only shown when real submissions exist -->
       {{#if suggestions.length}}
       <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:rgba(255,255,255,0.02);border:1px solid var(--border)">
         <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border-subtle)">
@@ -328,7 +326,7 @@ function removeProfilePhoto() {
         </div>
       </div>
 
-      <!-- Planned Features removed — will show when real data is available -->
+      <!-- Planned Features removed ï¿½ will show when real data is available -->
 
 
 </main>

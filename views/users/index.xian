@@ -183,7 +183,7 @@
             <td class="text-slate-400 text-xs">{{createdAt}}</td>
             <td>
               {{#if (eq role 'admin')}}
-              <!-- Admin role is protected — cannot be changed -->
+              <!-- Admin role is protected ï¿½ cannot be changed -->
               <span class="text-xs font-bold px-3 py-1.5 rounded-lg" style="background:rgba(37,99,235,0.10);color:#93c5fd;border:1px solid rgba(37,99,235,0.2)">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;margin-right:4px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Protected
@@ -270,15 +270,15 @@
       <div>
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Assign System Role</label>
         <select name="role" required class="form-input-bare">
-          <option value="judge">Judge — Can enter scores &amp; view results</option>
-          <option value="encoder">Participant — Can manage contestants</option>
-          <option value="organizer">Organizer — Can manage &amp; oversee events</option>
-          <option value="tabulator">Tabulator — Can enter and review all event scores</option>
+          <option value="judge">Judge ï¿½ Can enter scores &amp; view results</option>
+          <option value="encoder">Participant ï¿½ Can manage contestants</option>
+          <option value="organizer">Organizer ï¿½ Can manage &amp; oversee events</option>
+          <option value="tabulator">Tabulator ï¿½ Can enter and review all event scores</option>
         </select>
       </div>
       <div class="pt-3 flex items-center justify-end gap-2">
-        <button type="button" onclick="toggleAddUserModal()" class="px-4 py-2 text-xs font-bold rounded-xl transition" style="color:#64748b;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)">Cancel</button>
-        <button type="submit" class="btn-primary text-xs px-5 py-2.5 rounded-xl shadow-md">Create Account</button>
+        <button type="button" onclick="toggleAddUserModal()" class="btn-sm btn-sm-gray">Cancel</button>
+        <button type="submit" class="btn-primary text-xs">Create Account</button>
       </div>
     </form>
   </div>

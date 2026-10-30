@@ -377,7 +377,11 @@ function computeFinalScore(c, criteria, allScores) {
     });
     finalScore = catScores.length ? catScores.reduce((a, b) => a + b, 0) / catScores.length : 0;
   } else {
-    finalScore = breakdown.reduce((sum, b) => sum + parseFloat(b.weighted), 0);
+    const raw = breakdown.reduce((sum, b) => sum + parseFloat(b.weighted), 0);
+    const totalWeight = criteria.reduce((sum, cr) => sum + (Number(cr.weight) || 0), 0);
+    // Normalize: if weights sum to more than 100 (multi-category data loaded flat),
+    // divide by totalWeight/100 to keep the result in the 0–100 range.
+    finalScore = totalWeight > 100 ? (raw / totalWeight) * 100 : raw;
   }
   return { breakdown, finalScore: finalScore.toFixed(4), finalScoreDisplay: finalScore.toFixed(2) };
 }
@@ -475,13 +479,10 @@ export const resultsPage = async (req, res) => {
       const completionPct = contestants.length
         ? Math.round((scoredCount / contestants.length) * 100)
         : 0;
+      const judgeScores = allScores.filter(s => s.judgeId === jId);
       const judgeWeighted = contestants.map(c => {
-        let w = 0;
-        criteria.forEach(cr => {
-          const s = allScores.find(s => s.judgeId === jId && s.contestantId === c.id && s.criteriaId === cr.id);
-          if (s) w += (s.score / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        });
-        return { contestantName: c.name, score: w.toFixed(2) };
+        const { finalScoreDisplay } = computeFinalScore(c, criteria, judgeScores);
+        return { contestantName: c.name, score: finalScoreDisplay };
       });
       judgeWeighted.sort((a, b) => b.score - a.score);
       return {
@@ -560,16 +561,8 @@ export const displayBoard = async (req, res) => {
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId) judgeMap[s.judgeId] = true; });
     const ranked = contestants.map(c => {
-      let total = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
-        const avg = judgeScores.length ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        const barPct   = Math.min((avg / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1);
-        total += weighted;
-        return { name: cr.name, weight: cr.weight, color: CRITERIA_COLORS[i % CRITERIA_COLORS.length], avg: avg.toFixed(2), weighted: weighted.toFixed(2), barPct };
-      });
-      return { ...c, breakdown, finalScore: total.toFixed(4), finalScoreDisplay: total.toFixed(2) };
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      return { ...c, breakdown, finalScore, finalScoreDisplay };
     });
     ranked.sort((a, b) => b.finalScore - a.finalScore);
     applyTieBreaking(ranked, criteria);
@@ -605,15 +598,8 @@ export const publicResults = async (req, res) => {
     const judgeMap    = {};
     allScores.forEach(s => { if (s.judgeId && !judgeMap[s.judgeId]) judgeMap[s.judgeId] = s.judgeName || "Judge"; });
     const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
-        const avg = judgeScores.length ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        totalWeighted += weighted;
-        return { name: cr.name, weight: cr.weight, avg: avg.toFixed(2), weighted: weighted.toFixed(2), color: CRITERIA_COLORS[i % CRITERIA_COLORS.length] };
-      });
-      return { ...c, breakdown, finalScore: totalWeighted.toFixed(4), finalScoreDisplay: totalWeighted.toFixed(2) };
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      return { ...c, breakdown, finalScore, finalScoreDisplay };
     });
     ranked.sort((a, b) => b.finalScore - a.finalScore);
     // Apply tie-breaking before rank assignment
@@ -661,27 +647,12 @@ export const exportResults = async (req, res) => {
     const allScores = sSnap.docs.map(d => d.data());
 
     const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map(cr => {
-        const judgeScores = allScores.filter(
-          s => s.contestantId === c.id && s.criteriaId === cr.id
-        );
-        const avg = judgeScores.length
-          ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length
-          : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        totalWeighted += weighted;
-        return {
-          name:    cr.name,
-          avg:     avg.toFixed(2),
-          weighted: weighted.toFixed(2),
-        };
-      });
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
       return {
         ...c,
         breakdown,
-        finalScore:        totalWeighted.toFixed(4),
-        finalScoreDisplay: totalWeighted.toFixed(2),
+        finalScore,
+        finalScoreDisplay,
       };
     });
 
@@ -808,21 +779,15 @@ export const reportPage = async (req, res) => {
       const completionPct = contestants.length ? Math.round((scoredCount / contestants.length) * 100) : 0;
       const sig = sigMap[jId];
       // Per-contestant per-criteria scores for this judge
+      const judgeScores = allScores.filter(s => s.judgeId === jId);
       const contestantScores = ranked.map(c => ({
         name:   c.name,
         number: c.number,
         scores: criteria.map(cr => {
-          const s = allScores.find(sc => sc.judgeId === jId && sc.contestantId === c.id && sc.criteriaId === cr.id);
+          const s = judgeScores.find(sc => sc.contestantId === c.id && sc.criteriaId === cr.id);
           return { criteriaName: cr.name, value: s ? s.score : null };
         }),
-        total: (() => {
-          let t = 0;
-          criteria.forEach(cr => {
-            const s = allScores.find(sc => sc.judgeId === jId && sc.contestantId === c.id && sc.criteriaId === cr.id);
-            if (s) t += (s.score / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-          });
-          return t.toFixed(2);
-        })(),
+        total: computeFinalScore(c, criteria, judgeScores).finalScoreDisplay,
       }));
       return {
         judgeId:          jId,
@@ -1028,26 +993,7 @@ export const scoresJson = async (req, res) => {
     const judgeCount = Object.keys(judgeMap).length || 1;
 
     const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(
-          s => s.contestantId === c.id && s.criteriaId === cr.id
-        );
-        const avg = judgeScores.length
-          ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length
-          : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        const barPct   = Math.min((avg / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1);
-        totalWeighted += weighted;
-        return {
-          name:     cr.name,
-          weight:   cr.weight,
-          color:    CRITERIA_COLORS[i % CRITERIA_COLORS.length],
-          avg:      avg.toFixed(2),
-          weighted: weighted.toFixed(2),
-          barPct,
-        };
-      });
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
       return {
         id:                c.id,
         name:              c.name || "",
@@ -1055,8 +1001,8 @@ export const scoresJson = async (req, res) => {
         number:            c.number || "",
         photo:             c.photo || "",
         breakdown,
-        finalScore:        totalWeighted.toFixed(4),
-        finalScoreDisplay: totalWeighted.toFixed(2),
+        finalScore,
+        finalScoreDisplay,
       };
     });
 
@@ -1101,32 +1047,8 @@ export const announcePage = async (req, res) => {
     const allScores = sSnap.docs.map(d => d.data());
 
     const ranked = contestants.map(c => {
-      let totalWeighted = 0;
-      const breakdown = criteria.map((cr, i) => {
-        const judgeScores = allScores.filter(
-          s => s.contestantId === c.id && s.criteriaId === cr.id
-        );
-        const avg = judgeScores.length
-          ? judgeScores.reduce((sum, s) => sum + s.score, 0) / judgeScores.length
-          : 0;
-        const weighted = (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-        const barPct   = Math.min((avg / (Number(cr.maxScore) || 100)) * 100, 100).toFixed(1);
-        totalWeighted += weighted;
-        return {
-          name:     cr.name,
-          weight:   cr.weight,
-          color:    CRITERIA_COLORS[i % CRITERIA_COLORS.length],
-          avg:      avg.toFixed(2),
-          weighted: weighted.toFixed(2),
-          barPct,
-        };
-      });
-      return {
-        ...c,
-        breakdown,
-        finalScore:        totalWeighted.toFixed(4),
-        finalScoreDisplay: totalWeighted.toFixed(2),
-      };
+      const { breakdown, finalScore, finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      return { ...c, breakdown, finalScore, finalScoreDisplay };
     });
 
     ranked.sort((a, b) => b.finalScore - a.finalScore);
@@ -1294,15 +1216,8 @@ export const tabulatorScoringPage = async (req, res) => {
     // Pass as array so Handlebars can access by index without lookup issues
     const totalsMap = {};
     contestants.forEach(c => {
-      let total = 0;
-      criteria.forEach(cr => {
-        const cScores = allScores.filter(s => s.contestantId === c.id && s.criteriaId === cr.id);
-        const avg = cScores.length
-          ? cScores.reduce((sum, s) => sum + s.score, 0) / cScores.length
-          : 0;
-        total += (avg / (Number(cr.maxScore) || 100)) * (Number(cr.weight) || 0);
-      });
-      totalsMap[c.id] = total.toFixed(2);
+      const { finalScoreDisplay } = computeFinalScore(c, criteria, allScores);
+      totalsMap[c.id] = finalScoreDisplay;
     });
 
     // Build judge completion status

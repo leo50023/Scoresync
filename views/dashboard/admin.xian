@@ -50,17 +50,15 @@
         <div class="flex items-center gap-2 mb-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400" style="box-shadow:0 0 6px #10b981"></span>
           <span class="text-xs font-bold uppercase tracking-widest" style="color:#34d399">System Online</span>
-          <span class="text-xs font-medium" style="color:#1f4037">·</span>
+          <span class="text-xs font-medium" style="color:#1f4037">ï¿½</span>
           <span id="today-date" class="text-xs font-medium" style="color:var(--text-faint)"></span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-black tracking-tight" style="color:var(--text-bright)">
           Welcome, <span style="color:#34d399">{{userName}}</span>
         </h1>
-        <p class="text-sm mt-1" style="color:#4b7a5e">ScoreSync — Competition Management for Gloria, Oriental Mindoro</p>
+        <p class="text-sm mt-1" style="color:#4b7a5e">ScoreSync ï¿½ Competition Management for Gloria, Oriental Mindoro</p>
       </div>
-      <a href="/events/create"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm flex-shrink-0"
-        style="background:linear-gradient(135deg,#059669,#10b981);color:#fff;box-shadow:0 4px 16px rgba(16,185,129,0.3);border:1px solid rgba(16,185,129,0.4)">
+      <a href="/events/create" class="btn-sm btn-solid-green flex-shrink-0">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Event
       </a>
@@ -80,8 +78,7 @@
         <p class="text-xs" style="color:#78350f">Awaiting your approval</p>
       </div>
     </div>
-    <a href="/users" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-xs text-white flex-shrink-0"
-      style="background:#d97706">
+    <a href="/users" class="btn-sm btn-solid-gold flex-shrink-0">
       Review Now
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -151,8 +148,7 @@
       </div>
       <p class="text-sm font-extrabold leading-tight" style="color:#d1fae5">Create New Competition</p>
       <p class="text-xs mt-1 mb-3" style="color:#6ee7b7">Pageant, sports, cultural</p>
-      <a href="/events/create" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
-        style="background:rgba(255,255,255,0.18);color:#fff">
+      <a href="/events/create" class="btn-sm btn-sm-gray">
         Start
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -219,13 +215,13 @@
               </td>
               <td class="py-3 px-3 sm:px-5 text-right">
                 <div class="dashboard-event-actions">
-                  <a href="/events/{{id}}" class="dashboard-event-action rounded-lg" style="background:rgba(16,185,129,0.10);color:#34d399" title="View" aria-label="View event">
+                  <a href="/events/{{id}}" class="btn-icon no-min-h" title="View" aria-label="View event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   </a>
-                  <a href="/events/{{id}}/edit" class="dashboard-event-action rounded-lg hidden sm:inline-flex" style="background:rgba(255,255,255,0.06);color:var(--text-secondary)" title="Edit" aria-label="Edit event">
+                  <a href="/events/{{id}}/edit" class="btn-icon no-min-h hidden sm:inline-flex" title="Edit" aria-label="Edit event">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                   </a>
-                  <a href="/events/{{id}}/results" class="dashboard-event-action rounded-lg" style="background:rgba(59,130,246,0.10);color:#60a5fa" title="Results" aria-label="View event results">
+                  <a href="/events/{{id}}/results" class="btn-icon no-min-h" title="Results" aria-label="View event results">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                   </a>
                 </div>
@@ -300,21 +296,6 @@
             <div class="flex-1">
               <div class="text-xs font-bold" style="color:var(--text-primary)">User Management</div>
               <div class="text-[11px]" style="color:var(--text-faint)">Judges &amp; participants</div>
-            </div>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-
-          <a href="/analytics" class="flex items-center gap-3 p-3 rounded-xl transition"
-            style="border:1px solid transparent"
-            onmouseover="this.style.background='rgba(139,92,246,0.07)';this.style.borderColor='rgba(139,92,246,0.18)'"
-            onmouseout="this.style.background='';this.style.borderColor='transparent'">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-              style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            </div>
-            <div class="flex-1">
-              <div class="text-xs font-bold" style="color:var(--text-primary)">Analytics</div>
-              <div class="text-[11px]" style="color:var(--text-faint)">Score insights</div>
             </div>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
           </a>

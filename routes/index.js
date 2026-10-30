@@ -156,16 +156,6 @@ router.get( "/events/:eventId/tabulator",             requireAuth, requireRole("
 router.post("/events/:eventId/tabulator/update",      requireAuth, requireRole("admin","tabulator"), tabulatorUpdateScore);
 router.get( "/events/:eventId/tabulator/audit-export",requireAuth, requireRole("admin","tabulator"), exportAuditLog);
 
-// ─── AI Score Analytics (admin only) ──────────────────────────────────────────
-import {
-  analyticsDashboard, runAIAnalytics, updateFlagStatus, exportAnalyticsCSV,
-} from "../controllers/analyticsController.js";
-
-router.get( "/analytics",                     requireAuth, requireRole("admin"), analyticsDashboard);
-router.get( "/analytics/export",              requireAuth, requireRole("admin"), exportAnalyticsCSV);
-router.post("/analytics/run",                 requireAuth, requireRole("admin"), runAIAnalytics);
-router.post("/analytics/flags/:flagId/status",requireAuth, requireRole("admin"), updateFlagStatus);
-
 // ─── Inventory (admin & organizer) ────────────────────────────────────────────
 import {
   listInventory, storeInventoryItem, updateInventoryItem, deleteInventoryItem, exportInventoryCSV,
