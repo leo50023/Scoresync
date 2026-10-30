@@ -1,292 +1,247 @@
 ﻿{{> head }}
 <style>
-  .auth-input {
-    width: 100%;
-    padding: 13px 14px 13px 44px;
-    background: rgba(255,255,255,0.04) !important;
-    border: 1.5px solid rgba(255,255,255,0.10) !important;
-    border-radius: 14px !important;
-    font-size: 0.9rem;
-    color: #e2e8f0 !important;
-    outline: none;
-    transition: border-color 60ms ease, box-shadow 60ms ease;
-    -webkit-text-fill-color: #e2e8f0;
+  body.auth-page {
+    min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(16px,3vh,40px) 16px;
+    position: relative; isolation: isolate; overflow: hidden;
+    background: #060c1a;
   }
-  .auth-input:focus {
-    border-color: #6366f1 !important;
-    box-shadow: 0 0 0 3px rgba(99,102,241,0.18) !important;
+  .auth-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
   }
-  .auth-input::placeholder { color: #475569; }
-  .auth-input:-webkit-autofill,
-  .auth-input:-webkit-autofill:hover,
-  .auth-input:-webkit-autofill:focus,
-  .auth-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px #0d1527 inset !important;
-    -webkit-text-fill-color: #e2e8f0 !important;
-    caret-color: #e2e8f0 !important;
-    border-color: rgba(255,255,255,0.10) !important;
-    background-color: #0d1527 !important;
-    transition: background-color 9999s ease-in-out 0s;
+  .auth-bg-orb {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5;
+    animation: orbFloat 8s ease-in-out infinite;
   }
-  .auth-input-pr { padding-right: 48px; }
-  #eyeBtn { min-height: unset !important; min-width: unset !important; height: 28px !important; width: 28px !important; }
-  .auth-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 24px;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
-    padding: 28px 24px;
+  .auth-bg-orb-1 {
+    width: 500px; height: 500px; top: -160px; left: -120px;
+    background: radial-gradient(circle, rgba(79,70,229,0.38), transparent 70%);
+    animation-delay: 0s;
   }
-  @media (max-width: 400px) { .auth-card { padding: 22px 16px; } }
-  .auth-label {
-    display: block;
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: #475569; margin-bottom: 6px;
+  .auth-bg-orb-2 {
+    width: 380px; height: 380px; bottom: -100px; right: -80px;
+    background: radial-gradient(circle, rgba(14,165,233,0.28), transparent 70%);
+    animation-delay: -3s;
   }
-  .auth-btn {
-    width: 100%; padding: 13px;
-    border-radius: 14px;
-    font-size: 0.9rem; font-weight: 800;
-    color: #fff; border: none; cursor: pointer;
-    background: linear-gradient(135deg,#4f46e5,#6366f1);
-    box-shadow: 0 6px 20px rgba(79,70,229,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
-    transition: opacity 60ms ease, transform 60ms ease;
-    letter-spacing: -0.01em;
+  .auth-bg-orb-3 {
+    width: 260px; height: 260px; top: 38%; left: 58%;
+    background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
+    animation-delay: -5.5s;
   }
-  .auth-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-  .auth-btn:active { transform: translateY(0); opacity: 1; }
+  @keyframes orbFloat {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.04); }
+  }
+  .auth-bg-grid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
+    opacity: 0.2;
+  }
+  .auth-shell {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 440px;
+    display: flex; flex-direction: column;
+  }
+  .auth-logomark {
+    width: 68px; height: 68px; border-radius: 20px;
+    overflow: hidden; flex-shrink: 0; margin-bottom: 18px;
+    box-shadow: 0 8px 32px rgba(79,70,229,0.35), 0 0 0 1px rgba(255,255,255,0.1);
+  }
+  .auth-logomark img { width: 100%; height: 100%; object-fit: cover; }
+  .auth-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #818cf8; margin-bottom: 6px;
+  }
+  .auth-eyebrow::before {
+    content: ""; width: 18px; height: 1px;
+    background: linear-gradient(90deg, transparent, #818cf8);
+  }
+  .auth-title {
+    font-size: 1.8rem; font-weight: 900;
+    letter-spacing: -0.04em; line-height: 1.1;
+    color: #f1f5f9; margin-bottom: 5px;
+  }
+  .auth-subtitle { font-size: 0.82rem; color: #94a3b8; }
   .auth-tab-wrap {
-    display: flex; border-radius: 14px; padding: 4px;
-    background: rgba(255,255,255,0.05);
+    display: flex; gap: 4px; padding: 4px; border-radius: 14px;
+    background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     margin-bottom: 20px;
   }
   .auth-tab {
-    flex: 1; padding: 10px; border-radius: 11px;
-    font-size: 0.85rem; font-weight: 700;
-    text-align: center; text-decoration: none;
-    color: #cbd5e1;
-    transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    flex: 1; padding: 10px 12px; border-radius: 11px;
+    font-size: 0.82rem; font-weight: 700;
+    text-align: center; text-decoration: none; color: #94a3b8;
+    transition: all 160ms ease;
   }
-  .auth-tab:not(.active):hover {
-    color: #fff;
-    background: rgba(255,255,255,0.08);
-  }
-  .auth-tab:focus-visible, .auth-home-link:focus-visible, .auth-footer a:focus-visible {
-    outline: 2px solid #a5b4fc;
-    outline-offset: 3px;
-  }
+  .auth-tab:not(.active):hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
   .auth-tab.active {
-    background: linear-gradient(135deg,#4f46e5,#6366f1);
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(79,70,229,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    background: linear-gradient(135deg,#4f46e5,#6366f1); color: #fff;
+    box-shadow: 0 4px 14px rgba(79,70,229,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
   }
-  .auth-home-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 0 16px;
-    border: 1px solid rgba(165,180,252,0.24);
-    border-radius: 999px;
-    background: rgba(99,102,241,0.09);
-    color: #c7d2fe;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  .auth-card {
+    background: linear-gradient(160deg, rgba(18,26,48,0.98), rgba(12,18,34,0.98));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px; padding: 28px 28px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
   }
-  .auth-home-link:hover {
-    background: rgba(99,102,241,0.18);
-    border-color: rgba(165,180,252,0.5);
-    color: #fff;
-    transform: translateY(-1px);
-  }
-  .auth-home-link svg {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-  .auth-footer {
-    color: #94a3b8;
-  }
-  .auth-footer a:not(.auth-home-link) {
-    color: #a5b4fc !important;
-    transition: color 160ms ease;
-  }
-  .auth-footer a:not(.auth-home-link):hover {
-    color: #c7d2fe !important;
+  @media (max-width: 400px) { .auth-card { padding: 22px 16px; } }
+  .auth-label {
+    display: block; font-size: 0.67rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #64748b; margin-bottom: 7px;
   }
   .input-icon-wrap { position: relative; }
   .input-icon {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: #374151; pointer-events: none; z-index: 1;
+    color: #475569; pointer-events: none; z-index: 1;
+    transition: color 160ms ease;
   }
-  .role-card {
-    border-radius: 16px; padding: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1.5px solid rgba(255,255,255,0.08);
-    cursor: pointer; transition: border-color 60ms ease, background 60ms ease;
-  }
-  .role-card:hover { background: rgba(255,255,255,0.06); }
-  body.auth-page {
-    position: relative;
-    isolation: isolate;
-    background:
-      radial-gradient(ellipse at 50% 4%, rgba(79,70,229,0.18), transparent 34%),
-      radial-gradient(ellipse at 100% 60%, rgba(14,165,233,0.06), transparent 38%),
-      #080d19 !important;
-  }
-  body.auth-page::before {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-image: radial-gradient(rgba(148,163,184,0.16) 0.7px, transparent 0.7px);
-    background-size: 24px 24px;
-    content: "";
-    opacity: 0.18;
-    pointer-events: none;
-    mask-image: linear-gradient(to bottom, black, transparent 78%);
-  }
-  .auth-shell {
-    position: relative;
-    z-index: 1;
-    max-width: 400px;
-    margin-block: auto;
-  }
-  .auth-page {
-    min-height: 100vh;
-    min-height: 100svh;
-    padding-top: clamp(24px, 4vh, 40px);
-    padding-bottom: 28px;
-  }
-  .auth-logo {
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-  }
-  .auth-logo img {
-    display: block;
-    object-fit: contain;
-    filter: drop-shadow(0 12px 22px rgba(0,0,0,0.38));
-  }
-  .auth-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    margin-bottom: 9px;
-    color: #a5b4fc;
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .auth-kicker::before {
-    width: 16px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #818cf8);
-    content: "";
-  }
-  .auth-title { font-size: 1.65rem; line-height: 1.15; letter-spacing: -0.04em; }
-  .auth-subtitle { color: #94a3b8 !important; font-size: 0.82rem; margin-top: 7px; }
+  .input-icon-wrap:focus-within .input-icon { color: #818cf8; }
   .auth-input {
-    min-height: 52px;
-    background: rgba(8,13,25,0.72) !important;
-    border-color: rgba(148,163,184,0.2) !important;
+    width: 100%; min-height: 50px;
+    padding: 13px 14px 13px 44px;
+    background: rgba(8,13,26,0.7) !important;
+    border: 1.5px solid rgba(148,163,184,0.14) !important;
     border-radius: 13px !important;
+    font-size: 0.88rem; color: #e2e8f0 !important;
+    outline: none;
     transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    -webkit-text-fill-color: #e2e8f0;
   }
   .auth-input:focus {
-    background: rgba(13,21,39,0.95) !important;
-    border-color: rgba(129,140,248,0.8) !important;
-    box-shadow: 0 0 0 4px rgba(99,102,241,0.14), 0 8px 24px rgba(0,0,0,0.16) !important;
+    background: rgba(13,22,42,0.98) !important;
+    border-color: rgba(129,140,248,0.75) !important;
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.14), 0 4px 20px rgba(0,0,0,0.18) !important;
   }
-  .auth-card {
-    background: linear-gradient(155deg, rgba(20,27,44,0.96), rgba(14,20,34,0.96));
-    border-color: rgba(148,163,184,0.16);
-    box-shadow: 0 28px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.08);
+  .auth-input::placeholder { color: #374151; }
+  .auth-input:-webkit-autofill,
+  .auth-input:-webkit-autofill:hover,
+  .auth-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #0d1527 inset !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
+    caret-color: #e2e8f0 !important;
+    transition: background-color 9999s ease-in-out 0s;
   }
-  .auth-label { color: #94a3b8; margin-bottom: 8px; }
-  .auth-btn {
-    min-height: 52px;
-    background: linear-gradient(110deg,#5146e5,#665cf2 58%,#7875ff);
-    box-shadow: 0 10px 26px rgba(79,70,229,0.28), inset 0 1px 0 rgba(255,255,255,0.28);
-    transition: filter 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-  }
-  .auth-btn:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    box-shadow: 0 14px 32px rgba(79,70,229,0.38), inset 0 1px 0 rgba(255,255,255,0.3);
-  }
-  .auth-btn:active { transform: translateY(0); filter: brightness(0.98); }
-  .auth-tab-wrap { background: rgba(17,24,39,0.82); border-color: rgba(148,163,184,0.14); }
-  .auth-tab { color: #d1d9e6; }
-  .input-icon { color: #71809a; }
+  .auth-input-pr { padding-right: 48px; }
+
+  /* ── Role cards ── */
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .role-grid-full { grid-column: 1 / -1; }
+  .role-card-label { cursor: pointer; }
   .role-card {
-    background: rgba(15,23,42,0.72);
-    border-color: rgba(148,163,184,0.16);
+    border-radius: 14px; padding: 14px 12px;
+    background: rgba(10,16,32,0.7);
+    border: 1.5px solid rgba(148,163,184,0.12);
+    text-align: center;
+    transition: border-color 160ms ease, background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    user-select: none;
+  }
+  .role-card:hover {
+    background: rgba(20,30,56,0.85);
+    border-color: rgba(148,163,184,0.25);
+    transform: translateY(-1px);
+  }
+  input[type="radio"].sr-only:checked + .role-card {
+    border-color: #6366f1 !important;
+    background: rgba(99,102,241,0.12) !important;
+    box-shadow: 0 0 0 1px rgba(99,102,241,0.3), 0 4px 16px rgba(79,70,229,0.2);
+  }
+  input[type="radio"].sr-only:checked + .role-card-tabulator {
+    border-color: #f59e0b !important;
+    background: rgba(245,158,11,0.1) !important;
+    box-shadow: 0 0 0 1px rgba(245,158,11,0.3), 0 4px 16px rgba(245,158,11,0.15);
+  }
+  input[type="radio"].sr-only:checked + .role-card-organizer {
+    border-color: #10b981 !important;
+    background: rgba(16,185,129,0.1) !important;
+    box-shadow: 0 0 0 1px rgba(16,185,129,0.3), 0 4px 16px rgba(16,185,129,0.15);
+  }
+  .role-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+  }
+  .role-card-inline {
+    border-radius: 14px; padding: 12px 16px;
+    background: rgba(10,16,32,0.7);
+    border: 1.5px solid rgba(148,163,184,0.12);
+    display: flex; align-items: center; gap: 14px;
     transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    cursor: pointer;
   }
-  .role-card:hover { background: rgba(30,41,59,0.82); transform: translateY(-1px); }
-  .auth-form > * + * { margin-top: 12px !important; }
-  @media (max-height: 900px) {
-    .auth-page {
-      justify-content: flex-start;
-      padding-top: 12px;
-      padding-bottom: 12px;
-    }
-    .auth-shell { margin-block: 0; }
-    .auth-heading { margin-bottom: 12px !important; }
-    .auth-logo {
-      width: 68px !important;
-      height: 68px !important;
-      margin-bottom: 10px !important;
-    }
-    .auth-kicker { margin-bottom: 5px; }
-    .auth-title { font-size: 1.4rem; }
-    .auth-subtitle { margin-top: 4px; }
-    .auth-tab-wrap { margin-bottom: 12px; }
-    .auth-card { padding: 18px 18px; }
-    .auth-form > * + * { margin-top: 9px !important; }
-    .auth-input { min-height: 44px; padding-top: 9px; padding-bottom: 9px; }
-    .auth-label { margin-bottom: 4px; }
-    .role-card { padding: 8px; }
-    .auth-btn { min-height: 46px; padding-top: 10px; padding-bottom: 10px; }
-    .auth-footer { margin-top: 10px !important; }
-    .auth-home-link { min-height: 38px; }
+  .role-card-inline:hover {
+    background: rgba(20,30,56,0.85);
+    border-color: rgba(148,163,184,0.25);
+    transform: translateY(-1px);
   }
-  @media (max-height: 760px) {
-    .auth-page { padding-top: 8px; padding-bottom: 8px; }
-    .auth-logo {
-      width: 56px !important;
-      height: 56px !important;
-      margin-bottom: 7px !important;
-    }
-    .auth-heading { margin-bottom: 8px !important; }
-    .auth-kicker { font-size: 0.58rem; margin-bottom: 3px; }
-    .auth-title { font-size: 1.25rem; }
-    .auth-subtitle { font-size: 0.74rem; margin-top: 2px; }
-    .auth-tab-wrap { margin-bottom: 8px; }
-    .auth-card { padding: 14px; }
-    .auth-form > * + * { margin-top: 7px !important; }
-    .role-card { padding: 6px; }
-    .auth-footer { margin-top: 7px !important; }
+
+  /* ── Button ── */
+  .auth-btn {
+    width: 100%; min-height: 52px; padding: 14px;
+    border-radius: 14px; font-size: 0.92rem; font-weight: 800;
+    color: #fff; border: none; cursor: pointer;
+    background: linear-gradient(110deg,#4338ca,#5b51f0 50%,#7c73f5);
+    box-shadow: 0 10px 28px rgba(79,70,229,0.32), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: filter 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    letter-spacing: -0.01em;
   }
+  .auth-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 16px 36px rgba(79,70,229,0.42); }
+  .auth-btn:active { transform: translateY(0); filter: brightness(0.97); }
+
+  /* ── Footer ── */
+  .auth-home-link {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 42px; padding: 0 20px;
+    border: 1px solid rgba(165,180,252,0.2); border-radius: 999px;
+    background: rgba(99,102,241,0.07); color: #a5b4fc;
+    font-size: 0.8rem; font-weight: 600; text-decoration: none;
+    transition: all 160ms ease;
+  }
+  .auth-home-link:hover {
+    background: rgba(99,102,241,0.16); border-color: rgba(165,180,252,0.45);
+    color: #e0e7ff; transform: translateY(-1px);
+  }
+  .auth-footer { color: #64748b; }
+  .auth-footer a:not(.auth-home-link) { color: #818cf8 !important; font-weight: 700; transition: color 160ms ease; }
+  .auth-footer a:not(.auth-home-link):hover { color: #c7d2fe !important; }
+
+  /* ── Compact on small height ── */
+  @media (max-height: 820px) {
+    body.auth-page { padding-top: 12px; padding-bottom: 12px; align-items: flex-start; }
+    .auth-logomark { width: 56px; height: 56px; margin-bottom: 12px; }
+    .auth-title { font-size: 1.5rem; }
+    .auth-card { padding: 20px 20px; }
+    .auth-input { min-height: 44px; }
+    .role-card { padding: 10px 8px; }
+  }
+  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
 </style>
-<body class="auth-page min-h-screen flex flex-col items-center justify-center px-4">
 
-  <div class="auth-shell w-full animate-fadeup">
+<div class="auth-bg">
+  <div class="auth-bg-grid"></div>
+  <div class="auth-bg-orb auth-bg-orb-1"></div>
+  <div class="auth-bg-orb auth-bg-orb-2"></div>
+  <div class="auth-bg-orb auth-bg-orb-3"></div>
+</div>
 
-    <!-- Logo -->
-    <div class="auth-heading flex flex-col items-center mb-6">
-      <div class="auth-logo w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-4 flex-shrink-0">
-        <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-full h-full object-cover"/>
+<body class="auth-page">
+  <div class="auth-shell animate-fadeup">
+
+    <!-- Logo + heading -->
+    <div class="flex flex-col items-center text-center mb-7">
+      <div class="auth-logomark">
+        <img src="/scoresync-logo.png?v=8" alt="ScoreSync"/>
       </div>
-      <span class="auth-kicker">ScoreSync account</span>
-      <h1 class="auth-title font-black text-white">Get started</h1>
-      <p class="auth-subtitle text-center">Request a ScoreSync account</p>
+      <span class="auth-eyebrow">ScoreSync</span>
+      <h1 class="auth-title">Create your account</h1>
+      <p class="auth-subtitle">Request access and join the platform</p>
     </div>
 
     <!-- Tab switcher -->
@@ -297,7 +252,7 @@
 
     {{#if error_msg}}
     <div class="alert-error mb-4 text-sm">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span>{{error_msg}}</span>
     </div>
     {{/if}}
@@ -308,9 +263,10 @@
     </div>
     {{/if}}
 
+    <!-- Card -->
     <div class="auth-card">
-      <form method="POST" action="/register" class="auth-form space-y-4">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <form method="POST" action="/register" class="space-y-4">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
         <!-- Full Name -->
         <div>
@@ -343,7 +299,7 @@
             </span>
             <input type="password" name="password" id="passwordInput" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr"/>
             <button type="button" id="eyeBtn" onclick="togglePwd()"
-              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-faint);background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 60ms ease;min-height:unset;height:28px;width:28px">
+              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#475569;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 120ms ease;height:28px;width:28px">
               <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
@@ -351,60 +307,68 @@
 
         <!-- Role -->
         <div>
-          <label class="auth-label">Select Role</label>
-          <div class="grid grid-cols-2 gap-2">
+          <label class="auth-label">Select Your Role</label>
+          <div class="role-grid">
 
-            <label class="cursor-pointer">
-              <input type="radio" name="role" value="judge" class="sr-only peer" required/>
-              <div class="role-card peer-checked:!border-indigo-500 peer-checked:!bg-indigo-500/10 text-center">
-                <div class="w-8 h-8 grad-purple rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <!-- Judge -->
+            <label class="role-card-label">
+              <input type="radio" name="role" value="judge" class="sr-only" required/>
+              <div class="role-card">
+                <div class="role-icon" style="background:linear-gradient(135deg,#3730a3,#6366f1)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
-                <div class="font-bold text-xs text-white">Judge</div>
-                <div class="text-[10px] mt-0.5" style="color:var(--text-faint)">Score contestants</div>
+                <div class="font-bold text-xs text-white mb-0.5">Judge</div>
+                <div class="text-[10px]" style="color:#64748b">Score contestants</div>
               </div>
             </label>
 
-            <label class="cursor-pointer">
-              <input type="radio" name="role" value="tabulator" class="sr-only peer"/>
-              <div class="role-card peer-checked:!border-yellow-500 peer-checked:!bg-yellow-500/10 text-center">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center mx-auto mb-2" style="background:linear-gradient(135deg,#92400e,#d97706)">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 10 2 2 4-4"/></svg>
+            <!-- Tabulator -->
+            <label class="role-card-label">
+              <input type="radio" name="role" value="tabulator" class="sr-only"/>
+              <div class="role-card role-card-tabulator">
+                <div class="role-icon" style="background:linear-gradient(135deg,#78350f,#d97706)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </div>
-                <div class="font-bold text-xs text-white">Tabulator</div>
-                <div class="text-[10px] mt-0.5" style="color:var(--text-faint)">Review scores</div>
+                <div class="font-bold text-xs text-white mb-0.5">Tabulator</div>
+                <div class="text-[10px]" style="color:#64748b">Review scores</div>
               </div>
             </label>
 
-            <label class="cursor-pointer col-span-2">
-              <input type="radio" name="role" value="organizer" class="sr-only peer"/>
-              <div class="role-card peer-checked:!border-amber-500 peer-checked:!bg-amber-500/10 flex items-center gap-3">
-                <div class="w-8 h-8 grad-gold rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <!-- Organizer (full width) -->
+            <label class="role-card-label role-grid-full">
+              <input type="radio" name="role" value="organizer" class="sr-only"/>
+              <div class="role-card role-card-organizer" style="text-align:left;display:flex;align-items:center;gap:14px;padding:12px 16px">
+                <div class="role-icon flex-shrink-0" style="background:linear-gradient(135deg,#065f46,#10b981);margin:0">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 </div>
                 <div class="flex-1">
-                  <div class="font-bold text-xs text-white">Organizer</div>
-                  <div class="text-[10px]" style="color:var(--text-faint)">Create & manage events</div>
+                  <div class="font-bold text-xs text-white mb-0.5">Organizer</div>
+                  <div class="text-[10px]" style="color:#64748b">Create &amp; manage events</div>
                 </div>
-                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.25)">NEW</span>
+                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25)">FULL ACCESS</span>
               </div>
             </label>
 
           </div>
         </div>
 
-        <button type="submit" class="auth-btn">Request Account</button>
+        <button type="submit" class="auth-btn">
+          Request Account
+          <svg style="display:inline;margin-left:8px;vertical-align:-2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+
+        <p class="text-[10px] text-center" style="color:#475569">
+          Your account will be reviewed before activation.
+        </p>
 
       </form>
     </div>
 
-    <div class="auth-footer mt-5 text-center space-y-3">
-      <p class="text-xs">
-        Already have an account?
-        <a href="/login" class="font-bold ml-1">Sign in</a>
-      </p>
+    <!-- Footer -->
+    <div class="auth-footer mt-5 text-center space-y-3 text-xs">
+      <p>Already have an account? <a href="/login">Sign in</a></p>
       <a href="/" class="auth-home-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
         Back to homepage
       </a>
     </div>
@@ -416,9 +380,22 @@ const eyeOpen='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" strok
 const eyeClose='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
 function togglePwd(){
   const i=document.getElementById('passwordInput'),b=document.getElementById('eyeBtn');
-  if(i.type==='password'){ i.type='text'; b.innerHTML=eyeClose; }
-  else { i.type='password'; b.innerHTML=eyeOpen; }
+  if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
+  else{i.type='password';b.innerHTML=eyeOpen;}
 }
+// Role card visual state via JS (radio change)
+document.querySelectorAll('input[name="role"]').forEach(radio=>{
+  radio.addEventListener('change',()=>{
+    document.querySelectorAll('.role-card,.role-card-organizer').forEach(c=>{
+      c.style.borderColor=''; c.style.background=''; c.style.boxShadow='';
+    });
+    const card = radio.nextElementSibling;
+    if(!card) return;
+    const v = radio.value;
+    const colors = { judge:['#6366f1','rgba(99,102,241,0.12)','0 0 0 1px rgba(99,102,241,0.3),0 4px 16px rgba(79,70,229,0.2)'], tabulator:['#f59e0b','rgba(245,158,11,0.1)','0 0 0 1px rgba(245,158,11,0.3),0 4px 14px rgba(245,158,11,0.15)'], organizer:['#10b981','rgba(16,185,129,0.1)','0 0 0 1px rgba(16,185,129,0.3),0 4px 14px rgba(16,185,129,0.15)'] };
+    if(colors[v]){ card.style.borderColor=colors[v][0]; card.style.background=colors[v][1]; card.style.boxShadow=colors[v][2]; }
+  });
+});
 </script>
 </body>
 </html>
