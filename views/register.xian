@@ -3,271 +3,261 @@
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
     display: flex; align-items: center; justify-content: center;
-    padding: clamp(16px,3vh,40px) clamp(12px,4vw,20px);
+    padding: clamp(16px,3vh,40px) clamp(16px,4vw,24px);
     position: relative; isolation: isolate; overflow-x: hidden;
-    background: #060c1a;
+    background: #050913;
   }
-  .auth-bg {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-  }
+
+  /* ── Background ── */
+  .auth-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .auth-bg-orb {
-    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5;
-    animation: orbFloat 8s ease-in-out infinite;
+    position: absolute; border-radius: 50%; filter: blur(100px);
+    animation: orbFloat 10s ease-in-out infinite;
   }
   .auth-bg-orb-1 {
-    width: 500px; height: 500px; top: -160px; left: -120px;
-    background: radial-gradient(circle, rgba(79,70,229,0.38), transparent 70%);
-    animation-delay: 0s;
+    width: 560px; height: 560px; top: -180px; left: -140px; opacity: 0.55;
+    background: radial-gradient(circle, rgba(99,102,241,0.5), transparent 65%);
   }
   .auth-bg-orb-2 {
-    width: 380px; height: 380px; bottom: -100px; right: -80px;
-    background: radial-gradient(circle, rgba(14,165,233,0.28), transparent 70%);
-    animation-delay: -3s;
+    width: 420px; height: 420px; bottom: -100px; right: -100px; opacity: 0.4;
+    background: radial-gradient(circle, rgba(14,165,233,0.45), transparent 65%);
+    animation-delay: -4s;
   }
   .auth-bg-orb-3 {
-    width: 260px; height: 260px; top: 38%; left: 58%;
-    background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
-    animation-delay: -5.5s;
+    width: 300px; height: 300px; top: 45%; left: 50%; opacity: 0.25;
+    background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 65%);
+    animation-delay: -7s;
   }
   @keyframes orbFloat {
     0%,100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-20px) scale(1.04); }
+    50% { transform: translateY(-30px) scale(1.05); }
   }
   .auth-bg-grid {
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
-    background-size: 28px 28px;
-    mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
-    opacity: 0.2;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 60%);
   }
+
+  /* ── Shell ── */
   .auth-shell {
     position: relative; z-index: 1;
-    width: 100%; max-width: 440px;
+    width: 100%; max-width: 420px;
     display: flex; flex-direction: column;
   }
+
+  /* ── Logo ── */
   .auth-logomark {
     width: 68px; height: 68px; border-radius: 20px;
-    overflow: hidden; flex-shrink: 0; margin-bottom: 18px;
-    box-shadow: 0 8px 32px rgba(79,70,229,0.35), 0 0 0 1px rgba(255,255,255,0.1);
+    overflow: hidden; flex-shrink: 0; margin-bottom: 14px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 0 0 4px rgba(99,102,241,0.15), 0 12px 40px rgba(79,70,229,0.4);
   }
   .auth-logomark img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── Eyebrow ── */
   .auth-eyebrow {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.62rem; font-weight: 800;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: #818cf8; margin-bottom: 6px;
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.65rem; font-weight: 800;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #a5b4fc; margin-bottom: 5px;
   }
   .auth-eyebrow::before {
-    content: ""; width: 18px; height: 1px;
+    content: ""; width: 20px; height: 1.5px;
     background: linear-gradient(90deg, transparent, #818cf8);
   }
-  .auth-title {
-    font-size: 1.8rem; font-weight: 900;
-    letter-spacing: -0.04em; line-height: 1.1;
-    color: #f1f5f9; margin-bottom: 5px;
+  .auth-eyebrow::after {
+    content: ""; width: 20px; height: 1.5px;
+    background: linear-gradient(90deg, #818cf8, transparent);
   }
-  .auth-subtitle { font-size: 0.82rem; color: #94a3b8; }
+
+  /* ── Title ── */
+  .auth-title {
+    font-size: 1.9rem; font-weight: 900;
+    letter-spacing: -0.04em; line-height: 1.1;
+    color: #ffffff; margin-bottom: 5px;
+  }
+  .auth-subtitle { font-size: 0.82rem; color: #64748b; }
+
+  /* ── Tab switcher ── */
   .auth-tab-wrap {
-    display: flex; gap: 4px; padding: 4px; border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 20px;
+    display: flex; gap: 3px; padding: 4px; border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 16px;
   }
   .auth-tab {
     flex: 1; padding: 10px 12px; border-radius: 11px;
     font-size: 0.82rem; font-weight: 700;
-    text-align: center; text-decoration: none; color: #94a3b8;
+    text-align: center; text-decoration: none; color: #475569;
     transition: all 160ms ease;
   }
-  .auth-tab:not(.active):hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+  .auth-tab:not(.active):hover { background: rgba(255,255,255,0.05); color: #94a3b8; }
   .auth-tab.active {
-    background: linear-gradient(135deg,#4f46e5,#6366f1); color: #fff;
-    box-shadow: 0 4px 14px rgba(79,70,229,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    background: linear-gradient(135deg,#4338ca,#6366f1); color: #fff;
+    box-shadow: 0 4px 16px rgba(79,70,229,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
   }
+
+  /* ── Card ── */
   .auth-card {
-    background: linear-gradient(160deg, rgba(18,26,48,0.98), rgba(12,18,34,0.98));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px; padding: 28px 28px;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
-    backdrop-filter: blur(20px);
+    background: rgba(11,17,35,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 24px 22px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 24px 64px rgba(0,0,0,0.7),
+      0 8px 24px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
   }
-  @media (max-width: 400px) { .auth-card { padding: 22px 16px; } }
+
+  /* ── Label ── */
   .auth-label {
     display: block; font-size: 0.67rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: #94a3b8; margin-bottom: 3px;
+    color: #94a3b8; margin-bottom: 5px;
   }
+
+  /* ── Input ── */
   .input-icon-wrap { position: relative; }
   .input-icon {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: #475569; pointer-events: none; z-index: 1;
+    color: #374151; pointer-events: none; z-index: 1;
     transition: color 160ms ease;
   }
-  .input-icon-wrap:focus-within .input-icon { color: #818cf8; }
+  .input-icon-wrap:focus-within .input-icon { color: #6366f1; }
+
   .auth-input {
-    width: 100%; min-height: 42px;
-    padding: 10px 14px 10px 44px;
-    background: rgba(8,13,26,0.7) !important;
-    border: 1.5px solid rgba(148,163,184,0.14) !important;
-    border-radius: 13px !important;
-    font-size: 0.88rem; color: #e2e8f0 !important;
+    width: 100%; height: 46px;
+    padding: 0 14px 0 44px;
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    font-size: 0.9rem; color: #f1f5f9 !important;
     outline: none;
     transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    -webkit-text-fill-color: #e2e8f0;
+    -webkit-text-fill-color: #f1f5f9;
   }
   .auth-input:focus {
-    background: rgba(13,22,42,0.98) !important;
-    border-color: rgba(129,140,248,0.75) !important;
-    box-shadow: 0 0 0 4px rgba(99,102,241,0.14), 0 4px 20px rgba(0,0,0,0.18) !important;
+    background: rgba(255,255,255,0.07) !important;
+    border-color: rgba(99,102,241,0.7) !important;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.18), 0 2px 8px rgba(0,0,0,0.3) !important;
   }
-  .auth-input::placeholder { color: #4b5563; }
+  .auth-input::placeholder { color: #374151; }
   .auth-input:-webkit-autofill,
-  .auth-input:-webkit-autofill:hover,
   .auth-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px #0d1527 inset !important;
-    -webkit-text-fill-color: #e2e8f0 !important;
-    caret-color: #e2e8f0 !important;
+    -webkit-box-shadow: 0 0 0 1000px #0a1122 inset !important;
+    -webkit-text-fill-color: #f1f5f9 !important;
     transition: background-color 9999s ease-in-out 0s;
   }
   .auth-input-pr { padding-right: 48px; }
 
   /* ── Role cards ── */
-  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .role-grid-full { grid-column: 1 / -1; }
   .role-card-label { cursor: pointer; }
   .role-card {
-    border-radius: 14px; padding: 14px 12px;
-    background: rgba(10,16,32,0.7);
-    border: 1.5px solid rgba(148,163,184,0.12);
+    border-radius: 12px; padding: 12px 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
     text-align: center;
-    transition: border-color 160ms ease, background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    transition: all 160ms ease;
     user-select: none;
   }
   .role-card:hover {
-    background: rgba(20,30,56,0.85);
-    border-color: rgba(148,163,184,0.25);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.16);
     transform: translateY(-1px);
   }
   input[type="radio"].sr-only:checked + .role-card {
-    border-color: #6366f1 !important;
-    background: rgba(99,102,241,0.12) !important;
-    box-shadow: 0 0 0 1px rgba(99,102,241,0.3), 0 4px 16px rgba(79,70,229,0.2);
+    border-color: rgba(99,102,241,0.7) !important;
+    background: rgba(99,102,241,0.1) !important;
+    box-shadow: 0 0 0 1px rgba(99,102,241,0.3), 0 4px 14px rgba(79,70,229,0.2);
   }
   input[type="radio"].sr-only:checked + .role-card-tabulator {
-    border-color: #f59e0b !important;
-    background: rgba(245,158,11,0.1) !important;
-    box-shadow: 0 0 0 1px rgba(245,158,11,0.3), 0 4px 16px rgba(245,158,11,0.15);
+    border-color: rgba(245,158,11,0.7) !important;
+    background: rgba(245,158,11,0.08) !important;
+    box-shadow: 0 0 0 1px rgba(245,158,11,0.3), 0 4px 14px rgba(245,158,11,0.15);
   }
   input[type="radio"].sr-only:checked + .role-card-organizer {
-    border-color: #10b981 !important;
-    background: rgba(16,185,129,0.1) !important;
-    box-shadow: 0 0 0 1px rgba(16,185,129,0.3), 0 4px 16px rgba(16,185,129,0.15);
+    border-color: rgba(16,185,129,0.7) !important;
+    background: rgba(16,185,129,0.08) !important;
+    box-shadow: 0 0 0 1px rgba(16,185,129,0.3), 0 4px 14px rgba(16,185,129,0.15);
   }
   .role-icon {
-    width: 36px; height: 36px; border-radius: 10px;
+    width: 34px; height: 34px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 10px;
-  }
-  .role-card-inline {
-    border-radius: 14px; padding: 12px 16px;
-    background: rgba(10,16,32,0.7);
-    border: 1.5px solid rgba(148,163,184,0.12);
-    display: flex; align-items: center; gap: 14px;
-    transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
-    cursor: pointer;
-  }
-  .role-card-inline:hover {
-    background: rgba(20,30,56,0.85);
-    border-color: rgba(148,163,184,0.25);
-    transform: translateY(-1px);
+    margin: 0 auto 8px;
   }
 
   /* ── Button ── */
   .auth-btn {
-    width: 100%; min-height: 52px; padding: 14px;
-    border-radius: 14px; font-size: 0.92rem; font-weight: 800;
+    width: 100%; height: 48px;
+    border-radius: 12px; font-size: 0.92rem; font-weight: 800;
     color: #fff; border: none; cursor: pointer;
-    background: linear-gradient(110deg,#4338ca,#5b51f0 50%,#7c73f5);
-    box-shadow: 0 10px 28px rgba(79,70,229,0.32), inset 0 1px 0 rgba(255,255,255,0.25);
-    transition: filter 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-    letter-spacing: -0.01em;
+    background: linear-gradient(135deg,#4338ca 0%,#6366f1 60%,#818cf8 100%);
+    box-shadow: 0 8px 24px rgba(79,70,229,0.4), 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 180ms ease; letter-spacing: 0.01em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .auth-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 16px 36px rgba(79,70,229,0.42); }
-  .auth-btn:active { transform: translateY(0); filter: brightness(0.97); }
+  .auth-btn:hover {
+    background: linear-gradient(135deg,#4f46e5 0%,#6d71f7 60%,#8b8eff 100%);
+    box-shadow: 0 12px 32px rgba(79,70,229,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+  .auth-btn:active { transform: translateY(0); }
 
   /* ── Footer ── */
   .auth-home-link {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-height: 42px; padding: 0 20px;
-    border: 1px solid rgba(165,180,252,0.2); border-radius: 999px;
-    background: rgba(99,102,241,0.07); color: #a5b4fc;
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    height: 40px; padding: 0 20px;
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 999px;
+    background: rgba(255,255,255,0.03); color: #64748b;
     font-size: 0.8rem; font-weight: 600; text-decoration: none;
     transition: all 160ms ease;
   }
   .auth-home-link:hover {
-    background: rgba(99,102,241,0.16); border-color: rgba(165,180,252,0.45);
-    color: #e0e7ff; transform: translateY(-1px);
+    background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15);
+    color: #e2e8f0; transform: translateY(-1px);
   }
-  .auth-footer { color: #64748b; }
+  .auth-footer { color: #374151; }
   .auth-footer a:not(.auth-home-link) { color: #818cf8 !important; font-weight: 700; transition: color 160ms ease; }
-  .auth-footer a:not(.auth-home-link):hover { color: #c7d2fe !important; }
+  .auth-footer a:not(.auth-home-link):hover { color: #a5b4fc !important; }
 
-  /* ── Compact on small height ── */
-  @media (max-height: 820px) {
-    body.auth-page { padding-top: 12px; padding-bottom: 12px; align-items: flex-start; }
-    .auth-logomark { width: 56px; height: 56px; margin-bottom: 12px; }
-    .auth-title { font-size: 1.5rem; }
-    .auth-card { padding: 20px 20px; }
-    .auth-input { min-height: 44px; }
-    .role-card { padding: 10px 8px; }
-  }
+  /* ── Focus ── */
+  .auth-tab:focus-visible, .auth-home-link:focus-visible { outline: 2px solid #6366f1; outline-offset: 3px; }
+  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
 
-  /* ── Mobile width fixes ── */
+  /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 8px 10px 10px; align-items: flex-start; }
+    body.auth-page { padding: 12px 12px 16px; align-items: flex-start; }
     .auth-shell { max-width: 100%; }
-    /* Header — very compact */
-    .auth-logomark { width: 40px; height: 40px; border-radius: 11px; margin-bottom: 6px; }
-    .auth-eyebrow { font-size: 0.55rem; margin-bottom: 2px; gap: 4px; }
-    .auth-eyebrow::before { width: 12px; }
-    .auth-title { font-size: 1.2rem; margin-bottom: 1px; }
-    .auth-subtitle { font-size: 0.7rem; }
-    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 8px !important; }
-    /* Tabs */
-    .auth-tab-wrap { margin-bottom: 8px; padding: 3px; border-radius: 10px; }
-    .auth-tab { padding: 7px 8px; font-size: 0.75rem; border-radius: 8px; }
-    /* Card */
-    .auth-card { padding: 12px 12px; border-radius: 14px; }
-    .auth-card .space-y-4 > * + * { margin-top: 8px !important; }
-    /* Labels */
-    .auth-label { font-size: 0.6rem; margin-bottom: 2px; }
-    /* Inputs */
-    .auth-input { min-height: 40px !important; padding: 8px 8px 8px 34px !important; font-size: 15px !important; border-radius: 10px !important; }
-    .input-icon { left: 8px; }
-    .input-icon svg { width: 13px; height: 13px; }
-    /* Button */
-    .auth-btn { min-height: 42px; font-size: 0.82rem; padding: 10px; border-radius: 11px; }
-    /* Role cards */
+    .auth-logomark { width: 52px; height: 52px; border-radius: 15px; margin-bottom: 10px; }
+    .auth-eyebrow { font-size: 0.6rem; margin-bottom: 3px; }
+    .auth-title { font-size: 1.5rem; margin-bottom: 3px; }
+    .auth-subtitle { font-size: 0.76rem; }
+    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 10px !important; }
+    .auth-tab-wrap { margin-bottom: 10px; padding: 3px; }
+    .auth-tab { padding: 8px 10px; font-size: 0.78rem; }
+    .auth-card { padding: 16px 14px; border-radius: 16px; }
+    .auth-card .space-y-4 > * + * { margin-top: 10px !important; }
+    .auth-label { font-size: 0.62rem; margin-bottom: 4px; }
+    .auth-input { height: 42px !important; font-size: 16px !important; padding-left: 38px !important; }
+    .input-icon { left: 10px; }
+    .auth-btn { height: 44px; font-size: 0.86rem; }
     .role-grid { gap: 6px; }
-    .role-card { padding: 8px 6px; border-radius: 10px; }
-    .role-icon { width: 26px; height: 26px; border-radius: 7px; margin-bottom: 5px; }
-    .role-icon svg { width: 12px !important; height: 12px !important; }
-    .role-card .font-bold.text-xs { font-size: 0.68rem !important; }
-    .role-card .text-\[10px\] { font-size: 0.6rem !important; }
-    .role-grid-full .role-card { padding: 7px 8px; }
-    .role-grid-full .role-icon { width: 26px; height: 26px; }
-    /* Approval note */
-    .auth-card p.text-\[10px\] { font-size: 0.6rem !important; }
-    /* Footer */
-    .auth-footer { margin-top: 8px !important; }
-    .auth-footer.space-y-3 > * + * { margin-top: 6px !important; }
-    .auth-home-link { min-height: 30px; font-size: 0.7rem; padding: 0 12px; }
-    /* Orbs */
-    .auth-bg-orb-1 { width: 180px; height: 180px; }
-    .auth-bg-orb-2 { width: 140px; height: 140px; }
+    .role-card { padding: 10px 8px; border-radius: 10px; }
+    .role-icon { width: 28px; height: 28px; border-radius: 8px; margin-bottom: 6px; }
+    .role-card .font-bold { font-size: 0.7rem !important; }
+    .role-card .text-\[10px\] { font-size: 0.62rem !important; }
+    .role-grid-full .role-card { padding: 9px 10px; }
+    .auth-footer { margin-top: 10px !important; }
+    .auth-footer .space-y-3 > * + * { margin-top: 6px !important; }
+    .auth-home-link { height: 34px; font-size: 0.74rem; }
+    .auth-bg-orb-1 { width: 260px; height: 260px; }
+    .auth-bg-orb-2 { width: 200px; height: 200px; }
     .auth-bg-orb-3 { display: none; }
   }
-  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
 </style>
 
 <div class="auth-bg">
@@ -297,13 +287,13 @@
     </div>
 
     {{#if error_msg}}
-    <div class="alert-error mb-4 text-sm">
+    <div class="alert-error mb-3 text-sm">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span>{{error_msg}}</span>
     </div>
     {{/if}}
     {{#if success_msg}}
-    <div class="alert-success mb-4 text-sm">
+    <div class="alert-success mb-3 text-sm">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
       <span>{{success_msg}}</span>
     </div>
@@ -345,7 +335,7 @@
             </span>
             <input type="password" name="password" id="passwordInput" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr"/>
             <button type="button" id="eyeBtn" onclick="togglePwd()"
-              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#475569;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 120ms ease;height:28px;width:28px">
+              style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#374151;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:color 120ms ease;height:28px;width:28px">
               <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
@@ -364,7 +354,7 @@
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
                 <div class="font-bold text-xs text-white mb-0.5">Judge</div>
-                <div class="text-[10px]" style="color:#64748b">Score contestants</div>
+                <div class="text-[10px]" style="color:#475569">Score contestants</div>
               </div>
             </label>
 
@@ -376,22 +366,22 @@
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </div>
                 <div class="font-bold text-xs text-white mb-0.5">Tabulator</div>
-                <div class="text-[10px]" style="color:#64748b">Review scores</div>
+                <div class="text-[10px]" style="color:#475569">Review scores</div>
               </div>
             </label>
 
-            <!-- Organizer (full width) -->
+            <!-- Organizer -->
             <label class="role-card-label role-grid-full">
               <input type="radio" name="role" value="organizer" class="sr-only"/>
-              <div class="role-card role-card-organizer" style="text-align:left;display:flex;align-items:center;gap:14px;padding:12px 16px">
+              <div class="role-card role-card-organizer" style="text-align:left;display:flex;align-items:center;gap:12px;padding:10px 14px">
                 <div class="role-icon flex-shrink-0" style="background:linear-gradient(135deg,#065f46,#10b981);margin:0">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 </div>
                 <div class="flex-1">
                   <div class="font-bold text-xs text-white mb-0.5">Organizer</div>
-                  <div class="text-[10px]" style="color:#64748b">Create &amp; manage events</div>
+                  <div class="text-[10px]" style="color:#475569">Create &amp; manage events</div>
                 </div>
-                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25)">FULL ACCESS</span>
+                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.2)">FULL ACCESS</span>
               </div>
             </label>
 
@@ -400,21 +390,21 @@
 
         <button type="submit" class="auth-btn">
           Request Account
-          <svg style="display:inline;margin-left:8px;vertical-align:-2px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
 
-        <p class="text-[10px] text-center" style="color:#64748b">
-          Your account will be reviewed before activation.
+        <p class="text-[10px] text-center" style="color:#374151">
+          Your account will be reviewed by an admin before activation.
         </p>
 
       </form>
     </div>
 
     <!-- Footer -->
-    <div class="auth-footer mt-5 text-center space-y-3 text-xs">
+    <div class="auth-footer mt-4 text-center space-y-3 text-xs">
       <p>Already have an account? <a href="/login">Sign in</a></p>
       <a href="/" class="auth-home-link">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
         Back to homepage
       </a>
     </div>
@@ -429,17 +419,23 @@ function togglePwd(){
   if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
   else{i.type='password';b.innerHTML=eyeOpen;}
 }
-// Role card visual state via JS (radio change)
+// Role card JS highlight
 document.querySelectorAll('input[name="role"]').forEach(radio=>{
   radio.addEventListener('change',()=>{
-    document.querySelectorAll('.role-card,.role-card-organizer').forEach(c=>{
+    document.querySelectorAll('.role-card').forEach(c=>{
       c.style.borderColor=''; c.style.background=''; c.style.boxShadow='';
     });
-    const card = radio.nextElementSibling;
-    if(!card) return;
-    const v = radio.value;
-    const colors = { judge:['#6366f1','rgba(99,102,241,0.12)','0 0 0 1px rgba(99,102,241,0.3),0 4px 16px rgba(79,70,229,0.2)'], tabulator:['#f59e0b','rgba(245,158,11,0.1)','0 0 0 1px rgba(245,158,11,0.3),0 4px 14px rgba(245,158,11,0.15)'], organizer:['#10b981','rgba(16,185,129,0.1)','0 0 0 1px rgba(16,185,129,0.3),0 4px 14px rgba(16,185,129,0.15)'] };
-    if(colors[v]){ card.style.borderColor=colors[v][0]; card.style.background=colors[v][1]; card.style.boxShadow=colors[v][2]; }
+    const card=radio.nextElementSibling; if(!card) return;
+    const colors={
+      judge:  ['rgba(99,102,241,0.7)','rgba(99,102,241,0.1)','0 0 0 1px rgba(99,102,241,0.3),0 4px 14px rgba(79,70,229,0.2)'],
+      tabulator: ['rgba(245,158,11,0.7)','rgba(245,158,11,0.08)','0 0 0 1px rgba(245,158,11,0.3),0 4px 14px rgba(245,158,11,0.15)'],
+      organizer: ['rgba(16,185,129,0.7)','rgba(16,185,129,0.08)','0 0 0 1px rgba(16,185,129,0.3),0 4px 14px rgba(16,185,129,0.15)'],
+    };
+    if(colors[radio.value]){
+      card.style.borderColor=colors[radio.value][0];
+      card.style.background=colors[radio.value][1];
+      card.style.boxShadow=colors[radio.value][2];
+    }
   });
 });
 </script>
