@@ -27,7 +27,7 @@
           {{#if isTabulator}}Review and correct scores for any event from this panel.{{else}}Score your assigned events below — work through one contestant at a time.{{/if}}
         </p>
       </div>
-      <div class="flex items-center gap-3 flex-wrap flex-shrink-0">
+      <div class="flex items-center gap-3 flex-wrap flex-shrink-0 judge-hero-stats">
         <div class="rounded-2xl px-5 py-4 text-center min-w-[90px]" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1)">
           <div class="text-2xl font-black text-white">{{recentEvents.length}}</div>
           <div class="text-[10px] font-bold uppercase tracking-wider mt-0.5" style="color:rgba(196,181,253,0.7)">Events</div>

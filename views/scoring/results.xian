@@ -314,7 +314,7 @@
       {{#if event.date}}<p class="text-xs text-slate-400" style="text-align:center;margin-top:2px">{{event.date}}{{#if event.time}} at {{event.time}}{{/if}}{{#if event.venue}} &bull; {{event.venue}}{{/if}}</p>{{/if}}
     </div>
 
-    <div class="tabulation-scroll" role="region" aria-label="Official tabulation sheet" tabindex="0">
+    <div class="tabulation-scroll-wrapper"><div class="tabulation-scroll" role="region" aria-label="Official tabulation sheet" tabindex="0">
     <table class="data-table tabulation-table min-w-max w-full">
       <caption class="sr-only">Official standings with each criterion's average score, weighted contribution, final score, and gap to first place.</caption>
       <thead>
@@ -777,11 +777,90 @@
   .section-header { background: #f8fafc !important; border-bottom: 1px solid #e2e8f0 !important; padding: 8px 16px !important; }
   .tabulation-score { background: transparent !important; border: none !important; }
 }
+
+/* ── #3: Toolbar — icons only on very small screens ── */
+@media (max-width: 520px) {
+  .results-toolbar-actions .btn-sm {
+    padding: 8px 10px !important;
+    gap: 0 !important;
+    font-size: 0 !important;
+    min-width: 36px;
+    justify-content: center;
+  }
+  .results-toolbar-actions .btn-sm svg {
+    margin: 0 !important;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  /* Keep Announce readable */
+  .results-toolbar-actions .btn-sm-gold {
+    font-size: 0.72rem !important;
+    padding: 8px 10px !important;
+    gap: 4px !important;
+  }
+}
+
+/* ── #4: Tabulation scroll hint gradients ── */
+.tabulation-scroll-wrapper {
+  position: relative;
+}
+.tabulation-scroll-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+  width: 40px;
+  background: linear-gradient(to left, rgba(13,20,36,0.9), transparent);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tabulation-scroll-wrapper.scrolled-end::after {
+  opacity: 0;
+}
+.tabulation-scroll-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 40px;
+  background: linear-gradient(to right, rgba(13,20,36,0.9), transparent);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tabulation-scroll-wrapper.has-scroll-left::before {
+  opacity: 1;
+}
 .print-show { display: none; }
 </style>
 
 <script>
 document.getElementById("print-date") && (document.getElementById("print-date").textContent = new Date().toLocaleDateString());
+// #4 scroll hint
+(function(){
+  var wrap=document.querySelector('.tabulation-scroll-wrapper');
+  var scr=document.querySelector('.tabulation-scroll');
+  if(!wrap||!scr)return;
+  function upd(){wrap.classList.toggle('has-scroll-left',scr.scrollLeft>8);wrap.classList.toggle('scrolled-end',scr.scrollLeft>=scr.scrollWidth-scr.clientWidth-8);}
+  scr.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  upd();
+})();
+// #4 — Tabulation scroll hint
+(function() {
+  var wrap = document.querySelector('.tabulation-scroll-wrapper');
+  var scr  = document.querySelector('.tabulation-scroll');
+  if (!wrap || !scr) return;
+  function update() {
+    wrap.classList.toggle('can-scroll-left',  scr.scrollLeft > 8);
+    wrap.classList.toggle('can-scroll-right', scr.scrollLeft < scr.scrollWidth - scr.clientWidth - 8);
+  }
+  scr.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
 </script>
 
 {{> footer }}

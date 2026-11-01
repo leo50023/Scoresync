@@ -129,6 +129,39 @@
     /* Smooth image rendering */
     img { image-rendering: -webkit-optimize-contrast; max-width: 100%; height: auto; }
 
+    /* ── #5: Sidebar overlay smooth animation ── */
+    #sidebar-overlay {
+      transition: opacity 0.2s ease !important;
+    }
+    #sidebar-overlay.hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* ── #6: Judge dashboard stat cards — stack on 380px ── */
+    @media (max-width: 380px) {
+      .judge-hero-stats > div {
+        min-width: unset !important;
+        width: 100% !important;
+      }
+    }
+
+    /* ── #7: Modals — scrollable on mobile ── */
+    @media (max-width: 640px) {
+      .modal-inner,
+      #photo-modal-inner,
+      #complete-modal > div {
+        max-height: 90dvh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      /* Generic modals inside fixed overlay */
+      .fixed.inset-0 > div:not([id="sidebar-overlay"]):not([id="page-loader"]):not([id="page-loader-spinner"]) {
+        max-height: 92dvh !important;
+        overflow-y: auto !important;
+      }
+    }
+
     /* ── Responsive text ── */
     @media (max-width: 480px) {
       .text-5xl { font-size: 1.75rem !important; }
