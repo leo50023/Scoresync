@@ -4,8 +4,8 @@
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
     display: flex; align-items: center; justify-content: center;
-    padding: clamp(20px,4vh,48px) 16px;
-    position: relative; isolation: isolate; overflow: hidden;
+    padding: clamp(20px,4vh,48px) clamp(12px,4vw,20px);
+    position: relative; isolation: isolate; overflow-x: hidden;
     background: #060c1a;
   }
 
@@ -225,6 +225,21 @@
   .auth-tab:focus-visible, .auth-home-link:focus-visible {
     outline: 2px solid #a5b4fc; outline-offset: 3px;
   }
+
+  /* ── Mobile width fixes ── */
+  @media (max-width: 480px) {
+    body.auth-page { padding-left: 12px; padding-right: 12px; align-items: flex-start; padding-top: 24px; }
+    .auth-shell { max-width: 100%; }
+    .auth-title { font-size: 1.65rem; }
+    .auth-card { padding: 22px 16px; border-radius: 18px; }
+    .auth-input { min-height: 48px; font-size: 16px !important; }
+    .auth-btn { min-height: 50px; font-size: 0.88rem; }
+    .auth-logomark { width: 60px; height: 60px; margin-bottom: 14px; }
+    /* Reduce orb sizes to prevent horizontal overflow */
+    .auth-bg-orb-1 { width: 260px; height: 260px; }
+    .auth-bg-orb-2 { width: 200px; height: 200px; }
+    .auth-bg-orb-3 { display: none; }
+  }
 </style>
 
 <div class="auth-bg">
@@ -234,7 +249,7 @@
   <div class="auth-bg-orb auth-bg-orb-3"></div>
 </div>
 
-<body class="auth-page">
+<body class="auth-page" style="overflow-x:hidden">
   <div class="auth-shell animate-fadeup">
 
     <!-- Logo + heading -->

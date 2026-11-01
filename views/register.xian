@@ -3,8 +3,8 @@
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
     display: flex; align-items: center; justify-content: center;
-    padding: clamp(16px,3vh,40px) 16px;
-    position: relative; isolation: isolate; overflow: hidden;
+    padding: clamp(16px,3vh,40px) clamp(12px,4vw,20px);
+    position: relative; isolation: isolate; overflow-x: hidden;
     background: #060c1a;
   }
   .auth-bg {
@@ -221,6 +221,24 @@
     .auth-input { min-height: 44px; }
     .role-card { padding: 10px 8px; }
   }
+
+  /* ── Mobile width fixes ── */
+  @media (max-width: 480px) {
+    body.auth-page { padding-left: 12px; padding-right: 12px; align-items: flex-start; padding-top: 20px; }
+    .auth-shell { max-width: 100%; }
+    .auth-title { font-size: 1.6rem; }
+    .auth-card { padding: 20px 16px; border-radius: 18px; }
+    .auth-tab-wrap { margin-bottom: 16px; }
+    .auth-input { min-height: 48px; font-size: 16px !important; }
+    .auth-btn { min-height: 50px; font-size: 0.88rem; }
+    .role-grid { gap: 8px; }
+    .role-card { padding: 10px 8px; border-radius: 12px; }
+    .auth-logomark { width: 60px; height: 60px; margin-bottom: 14px; }
+    /* Orbs — reduce size to avoid overflow */
+    .auth-bg-orb-1 { width: 280px; height: 280px; }
+    .auth-bg-orb-2 { width: 220px; height: 220px; }
+    .auth-bg-orb-3 { display: none; }
+  }
   .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
 </style>
 
@@ -231,7 +249,7 @@
   <div class="auth-bg-orb auth-bg-orb-3"></div>
 </div>
 
-<body class="auth-page">
+<body class="auth-page" style="overflow-x:hidden">
   <div class="auth-shell animate-fadeup">
 
     <!-- Logo + heading -->
