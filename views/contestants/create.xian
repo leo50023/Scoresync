@@ -47,8 +47,9 @@
             </div>
             <!-- Upload button overlay -->
             <button type="button" onclick="document.getElementById('photo-file').click()"
-              class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white shadow-lg border-2 border-white transition hover:scale-105"
-              style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">
+              class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white shadow-lg border-2 border-white"
+              style="background:linear-gradient(135deg,#7c3aed,#a78bfa);transition:opacity 0.15s ease;"
+              onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
               Upload Photo
             </button>
@@ -132,14 +133,14 @@
           </div>
 
           {{#if isPaymentType}}
-          <!-- Registration Fee — auto-logs to Ticket Sales -->
+          <!-- Registration Fee ï¿½ auto-logs to Ticket Sales -->
           <div class="rounded-xl p-4" style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.18)">
             <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5 flex items-center gap-2" style="color:#10b981">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
               Registration Fee (?)
-              <span class="font-normal text-[10px] normal-case tracking-normal" style="color:#4b5563">— auto-records to Ticket Sales</span>
+              <span class="font-normal text-[10px] normal-case tracking-normal" style="color:#4b5563">ï¿½ auto-records to Ticket Sales</span>
             </label>
-            <input type="number" name="registrationFee" placeholder="0.00 — leave blank if free" min="0" step="0.01" class="form-input-bare"/>
+            <input type="number" name="registrationFee" placeholder="0.00 ï¿½ leave blank if free" min="0" step="0.01" class="form-input-bare"/>
             <p class="text-[11px] mt-1.5" style="color:#4b5563">If entered, a Registration Fee record will automatically appear in Ticket Sales &amp; Income for this event.</p>
           </div>
           {{/if}}
