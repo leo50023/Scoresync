@@ -560,9 +560,45 @@
     .page-header { margin-bottom:28px; }
     .page-header h1 { font-size:1.6rem; font-weight:900; color: var(--text-bright); letter-spacing:-0.03em; }
     .page-header p  { font-size:0.875rem; color: var(--text-muted); margin-top:5px; }
-    .breadcrumb { font-size:0.78rem; color: var(--text-faint); margin-bottom:7px; display:flex; align-items:center; gap:4px; }
-    .breadcrumb a { color:#60a5fa; text-decoration:none; font-weight:500; }
-    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb {
+      font-size: 0.75rem; color: var(--text-faint);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.78rem;
+      padding: 5px 10px 5px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card-sub);
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .breadcrumb a::before {
+      content: '';
+      display: inline-block;
+      width: 14px; height: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      flex-shrink: 0;
+      transition: background-image 120ms ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.08);
+      border-color: var(--border-strong);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e2e8f0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
+    }
+    /* Separator chevron between breadcrumb items */
+    .breadcrumb svg { color: var(--text-faint); flex-shrink: 0; }
+    .breadcrumb span { color: var(--text-secondary); font-weight: 600; font-size: 0.78rem; }
 
     /* ── Section Card ── */
     .section-card {
