@@ -228,16 +228,26 @@
 
   /* ── Mobile width fixes ── */
   @media (max-width: 480px) {
-    body.auth-page { padding-left: 12px; padding-right: 12px; align-items: flex-start; padding-top: 24px; }
+    body.auth-page { padding: 14px 12px; align-items: flex-start; }
     .auth-shell { max-width: 100%; }
-    .auth-title { font-size: 1.65rem; }
-    .auth-card { padding: 22px 16px; border-radius: 18px; }
-    .auth-input { min-height: 48px; font-size: 16px !important; }
-    .auth-btn { min-height: 50px; font-size: 0.88rem; }
-    .auth-logomark { width: 60px; height: 60px; margin-bottom: 14px; }
-    /* Reduce orb sizes to prevent horizontal overflow */
-    .auth-bg-orb-1 { width: 260px; height: 260px; }
-    .auth-bg-orb-2 { width: 200px; height: 200px; }
+    .auth-logomark { width: 48px; height: 48px; border-radius: 14px; margin-bottom: 10px; }
+    .auth-eyebrow { font-size: 0.58rem; margin-bottom: 3px; }
+    .auth-title { font-size: 1.35rem; margin-bottom: 2px; }
+    .auth-subtitle { font-size: 0.75rem; }
+    .flex.flex-col.items-center.text-center.mb-8 { margin-bottom: 12px !important; }
+    .auth-tab-wrap { margin-bottom: 10px; padding: 3px; border-radius: 12px; }
+    .auth-tab { padding: 7px 10px; font-size: 0.77rem; }
+    .auth-card { padding: 14px 12px; border-radius: 14px; }
+    .auth-card .space-y-5 > * + * { margin-top: 10px !important; }
+    .auth-label { font-size: 0.6rem; margin-bottom: 3px; }
+    .auth-input { min-height: 42px !important; padding: 9px 9px 9px 36px !important; font-size: 15px !important; border-radius: 10px !important; }
+    .input-icon { left: 9px; }
+    .auth-btn { min-height: 44px; font-size: 0.83rem; border-radius: 11px; padding: 11px; }
+    .auth-footer { margin-top: 10px !important; }
+    .auth-home-link { min-height: 34px; font-size: 0.73rem; padding: 0 14px; }
+    .auth-trust { margin-top: 10px; gap: 12px; font-size: 0.65rem; }
+    .auth-bg-orb-1 { width: 200px; height: 200px; }
+    .auth-bg-orb-2 { width: 160px; height: 160px; }
     .auth-bg-orb-3 { display: none; }
   }
 </style>

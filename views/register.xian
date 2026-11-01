@@ -224,19 +224,29 @@
 
   /* ── Mobile width fixes ── */
   @media (max-width: 480px) {
-    body.auth-page { padding-left: 12px; padding-right: 12px; align-items: flex-start; padding-top: 20px; }
+    body.auth-page { padding: 14px 12px; align-items: flex-start; }
     .auth-shell { max-width: 100%; }
-    .auth-title { font-size: 1.6rem; }
-    .auth-card { padding: 20px 16px; border-radius: 18px; }
-    .auth-tab-wrap { margin-bottom: 16px; }
-    .auth-input { min-height: 48px; font-size: 16px !important; }
-    .auth-btn { min-height: 50px; font-size: 0.88rem; }
-    .role-grid { gap: 8px; }
-    .role-card { padding: 10px 8px; border-radius: 12px; }
-    .auth-logomark { width: 60px; height: 60px; margin-bottom: 14px; }
-    /* Orbs — reduce size to avoid overflow */
-    .auth-bg-orb-1 { width: 280px; height: 280px; }
-    .auth-bg-orb-2 { width: 220px; height: 220px; }
+    .auth-logomark { width: 48px; height: 48px; border-radius: 14px; margin-bottom: 10px; }
+    .auth-eyebrow { font-size: 0.58rem; margin-bottom: 3px; }
+    .auth-title { font-size: 1.35rem; margin-bottom: 2px; }
+    .auth-subtitle { font-size: 0.75rem; }
+    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 12px !important; }
+    .auth-tab-wrap { margin-bottom: 10px; padding: 3px; border-radius: 12px; }
+    .auth-tab { padding: 7px 10px; font-size: 0.77rem; }
+    .auth-card { padding: 14px 12px; border-radius: 14px; }
+    .auth-card .space-y-4 > * + * { margin-top: 9px !important; }
+    .auth-label { font-size: 0.6rem; margin-bottom: 3px; }
+    .auth-input { min-height: 42px !important; padding: 9px 9px 9px 36px !important; font-size: 15px !important; border-radius: 10px !important; }
+    .input-icon { left: 9px; }
+    .auth-btn { min-height: 44px; font-size: 0.83rem; border-radius: 11px; padding: 11px; }
+    .role-grid { gap: 5px; }
+    .role-card { padding: 8px 5px; border-radius: 10px; }
+    .role-icon { width: 26px; height: 26px; border-radius: 7px; margin-bottom: 5px; }
+    .role-grid-full .role-card { padding: 7px 8px; }
+    .auth-footer { margin-top: 10px !important; }
+    .auth-home-link { min-height: 34px; font-size: 0.73rem; padding: 0 14px; }
+    .auth-bg-orb-1 { width: 200px; height: 200px; }
+    .auth-bg-orb-2 { width: 160px; height: 160px; }
     .auth-bg-orb-3 { display: none; }
   }
   .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
