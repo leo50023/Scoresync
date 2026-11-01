@@ -836,6 +836,21 @@
     /* List dividers */
     [data-theme="light"] *[style*="border-top:1px solid rgba(255,255,255,0.05)"] { border-top-color: rgba(0,0,0,0.06) !important; }
     [data-theme="light"] *[style*="border-color:rgba(255,255,255,0.04)"] { border-color: rgba(0,0,0,0.06) !important; }
+
+    /* ── Sidebar light mode: keep blue gradient, improve text visibility ── */
+    [data-theme="light"] .sidebar-link {
+      color: rgba(255,255,255,0.82) !important;
+    }
+    [data-theme="light"] .sidebar-link:hover {
+      color: #ffffff !important;
+      background: rgba(255,255,255,0.14) !important;
+    }
+    [data-theme="light"] .sidebar-link.active {
+      color: #ffffff !important;
+    }
+    [data-theme="light"] .sidebar-section {
+      color: rgba(255,255,255,0.45) !important;
+    }
     #eyeBtn,
     #sidebar-collapse-btn {
       min-height: unset !important;
