@@ -228,36 +228,24 @@
 
   /* ── Mobile width fixes ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 10px 10px 14px; align-items: flex-start; }
+    body.auth-page { padding: 12px 12px 16px; align-items: flex-start; }
     .auth-shell { max-width: 100%; }
-    /* Hide eyebrow & subtitle */
-    .auth-eyebrow { display: none; }
-    .auth-subtitle { display: none; }
-    /* Logo + title */
-    .auth-logomark { width: 40px; height: 40px; border-radius: 12px; margin-bottom: 8px; }
-    .auth-title { font-size: 1.2rem; margin-bottom: 0; }
+    .auth-logomark { width: 44px; height: 44px; border-radius: 13px; margin-bottom: 8px; }
+    .auth-eyebrow { font-size: 0.56rem; margin-bottom: 3px; }
+    .auth-title { font-size: 1.25rem; margin-bottom: 2px; }
+    .auth-subtitle { font-size: 0.72rem; }
     .flex.flex-col.items-center.text-center.mb-8 { margin-bottom: 10px !important; }
-    /* Tabs */
     .auth-tab-wrap { margin-bottom: 8px; padding: 3px; border-radius: 10px; }
-    .auth-tab { padding: 6px 8px; font-size: 0.75rem; border-radius: 8px; }
-    /* Card */
-    .auth-card { padding: 12px 10px; border-radius: 14px; }
+    .auth-tab { padding: 7px 8px; font-size: 0.75rem; border-radius: 8px; }
+    .auth-card { padding: 14px 12px; border-radius: 14px; }
     .auth-card .space-y-5 > * + * { margin-top: 10px !important; }
-    /* Labels */
-    .auth-label { font-size: 0.58rem; margin-bottom: 3px; }
-    /* Inputs */
-    .auth-input { min-height: 40px !important; padding: 8px 8px 8px 34px !important; font-size: 15px !important; border-radius: 9px !important; }
-    .input-icon { left: 8px; }
-    /* Forgot password row */
-    .auth-card .flex.items-center.justify-between { margin-bottom: 0; }
-    /* Button */
-    .auth-btn { min-height: 42px; font-size: 0.82rem; border-radius: 10px; padding: 10px; }
-    /* Footer */
+    .auth-label { font-size: 0.6rem; margin-bottom: 3px; }
+    .auth-input { min-height: 42px !important; padding: 9px 9px 9px 36px !important; font-size: 15px !important; border-radius: 10px !important; }
+    .input-icon { left: 9px; }
+    .auth-btn { min-height: 44px; font-size: 0.83rem; border-radius: 11px; padding: 11px; }
     .auth-footer { margin-top: 8px !important; }
-    .auth-home-link { min-height: 32px; font-size: 0.7rem; padding: 0 12px; }
-    /* Trust badges — hide on very small */
-    .auth-trust { display: none; }
-    /* Orbs */
+    .auth-home-link { min-height: 32px; font-size: 0.72rem; padding: 0 12px; }
+    .auth-trust { margin-top: 8px; gap: 12px; font-size: 0.62rem; }
     .auth-bg-orb-1 { width: 180px; height: 180px; }
     .auth-bg-orb-2 { width: 140px; height: 140px; }
     .auth-bg-orb-3 { display: none; }
