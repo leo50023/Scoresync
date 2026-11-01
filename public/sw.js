@@ -1,7 +1,7 @@
-// ScoreSync Service Worker — v11
+// ScoreSync Service Worker — v12
 // PWA support: caches static assets for fast loads
 
-const CACHE_STATIC = 'scoresync-static-v11';
+const CACHE_STATIC = 'scoresync-static-v12';
 const CACHE_FONTS  = 'scoresync-fonts-v8';
 
 const STATIC_ASSETS = [
@@ -85,7 +85,10 @@ self.addEventListener('fetch', e => {
     e.respondWith(
       caches.match(e.request).then(cached =>
         cached || fetch(e.request).then(res => {
-          if (res.ok) caches.open(CACHE_STATIC).then(c => c.put(e.request, res.clone()));
+          if (res.ok) {
+            const resClone = res.clone();
+            caches.open(CACHE_STATIC).then(c => c.put(e.request, resClone));
+          }
           return res;
         }).catch(() => new Response('', { status: 503 }))
       )
