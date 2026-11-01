@@ -118,7 +118,7 @@
   .auth-label {
     display: block; font-size: 0.67rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: #64748b; margin-bottom: 7px;
+    color: #94a3b8; margin-bottom: 3px;
   }
 
   /* ── Input ── */
@@ -132,8 +132,8 @@
 
   .auth-input {
     width: 100%;
-    min-height: 52px;
-    padding: 14px 14px 14px 44px;
+    min-height: 42px;
+    padding: 10px 14px 10px 44px;
     background: rgba(8,13,26,0.7) !important;
     border: 1.5px solid rgba(148,163,184,0.14) !important;
     border-radius: 13px !important;
@@ -148,7 +148,7 @@
     border-color: rgba(129,140,248,0.75) !important;
     box-shadow: 0 0 0 4px rgba(99,102,241,0.15), 0 4px 20px rgba(0,0,0,0.2) !important;
   }
-  .auth-input::placeholder { color: #374151; }
+  .auth-input::placeholder { color: #4b5563; }
   .auth-input:-webkit-autofill,
   .auth-input:-webkit-autofill:hover,
   .auth-input:-webkit-autofill:focus {
