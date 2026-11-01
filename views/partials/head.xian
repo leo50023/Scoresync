@@ -836,6 +836,146 @@
     /* List dividers */
     [data-theme="light"] *[style*="border-top:1px solid rgba(255,255,255,0.05)"] { border-top-color: rgba(0,0,0,0.06) !important; }
     [data-theme="light"] *[style*="border-color:rgba(255,255,255,0.04)"] { border-color: rgba(0,0,0,0.06) !important; }
+
+    /* ═══════════════════════════════════════════════════════
+       LIGHT MODE v3 — MINIMAL TARGETED FIXES ONLY
+       Keep dark hero banners + colored icon circles as-is.
+       Fix only elements that become invisible/broken.
+       ═══════════════════════════════════════════════════════ */
+
+    /* ── 1. Page bg ── */
+    [data-theme="light"] body { background: #f1f5f9 !important; }
+    [data-theme="light"] main { background: #f1f5f9 !important; }
+
+    /* ── 2. Cards using var(--bg-card) ── */
+    [data-theme="light"] .rounded-2xl[style*="background:var(--bg-card)"],
+    [data-theme="light"] .rounded-3xl[style*="background:var(--bg-card)"],
+    [data-theme="light"] .card, [data-theme="light"] .card-flat, [data-theme="light"] .section-card {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.09) !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04) !important;
+    }
+    /* card section headers */
+    [data-theme="light"] .rounded-2xl[style*="background:var(--bg-card)"] [style*="border-bottom:1px solid var(--border-subtle)"],
+    [data-theme="light"] .section-header {
+      background: #f8fafc !important;
+      border-bottom-color: rgba(0,0,0,0.07) !important;
+    }
+
+    /* ── 3. Navbar ── */
+    [data-theme="light"] nav[style*="bg-navbar"], [data-theme="light"] nav {
+      background: #ffffff !important;
+      border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06) !important;
+    }
+    [data-theme="light"] #navbar-profile-pill { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; }
+    [data-theme="light"] #theme-toggle-btn { background: rgba(0,0,0,0.06) !important; border-color: rgba(0,0,0,0.12) !important; color: #475569 !important; }
+
+    /* ── 4. Judge search input (worst offender: hardcoded #0a0f1e) ── */
+    [data-theme="light"] input[style*="background:#0a0f1e"],
+    [data-theme="light"] input[style*="background: #0a0f1e"] {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.14) !important;
+      color: #0f172a !important;
+    }
+
+    /* ── 5. Step cards — text was white (#e2e8f0), invisible on white bg ── */
+    [data-theme="light"] .step-card [style*="color:#e2e8f0"] { color: #1e293b !important; }
+    [data-theme="light"] .step-card [style*="color:#64748b"] { color: #475569 !important; }
+    [data-theme="light"] .step-card [style*="color:#34d399"] { color: #059669 !important; }
+    [data-theme="light"] .step-card [style*="color:#fbbf24"] { color: #b45309 !important; }
+    /* Step card bg — very transparent rgba become visible */
+    [data-theme="light"] .step-card[style*="background:linear-gradient(145deg,rgba(79,70,229"] { background: rgba(79,70,229,0.08) !important; border-color: rgba(79,70,229,0.25) !important; }
+    [data-theme="light"] .step-card[style*="background:linear-gradient(145deg,rgba(16,185,129"] { background: rgba(16,185,129,0.08) !important; border-color: rgba(16,185,129,0.25) !important; }
+    [data-theme="light"] .step-card[style*="background:linear-gradient(145deg,rgba(245,158,11"] { background: rgba(245,158,11,0.08) !important; border-color: rgba(245,158,11,0.25) !important; }
+    [data-theme="light"] .step-card [style*="color:#818cf8"] { color: #4f46e5 !important; }
+    [data-theme="light"] .step-card [style*="background:rgba(99,102,241,0.2)"] { background: rgba(99,102,241,0.15) !important; }
+    [data-theme="light"] .step-card [style*="background:rgba(16,185,129,0.2)"] { background: rgba(16,185,129,0.15) !important; }
+    [data-theme="light"] .step-card [style*="background:rgba(245,158,11,0.2)"] { background: rgba(245,158,11,0.15) !important; }
+
+    /* ── 6. Judge tip cards (nearly transparent on white) ── */
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(99,102,241,0.06)"]  { background: rgba(79,70,229,0.07) !important; border-color: rgba(79,70,229,0.2) !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(16,185,129,0.06)"]  { background: rgba(16,185,129,0.07) !important; border-color: rgba(16,185,129,0.2) !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(245,158,11,0.06)"]  { background: rgba(245,158,11,0.07) !important; border-color: rgba(245,158,11,0.2) !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(234,179,8,0.06)"]   { background: rgba(234,179,8,0.07) !important; border-color: rgba(234,179,8,0.2) !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(239,68,68,0.06)"]   { background: rgba(239,68,68,0.07) !important; border-color: rgba(239,68,68,0.2) !important; }
+    /* tip card text */
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(99,102,241,0.06)"] [style*="color:#a5b4fc"] { color: #4f46e5 !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(16,185,129,0.06)"] [style*="color:#6ee7b7"] { color: #059669 !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(245,158,11,0.06)"] [style*="color:#fcd34d"] { color: #b45309 !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(234,179,8,0.06)"]  [style*="color:#fde047"] { color: #854d0e !important; }
+    [data-theme="light"] .rounded-2xl[style*="background:rgba(239,68,68,0.06)"]  [style*="color:#fca5a5"] { color: #b91c1c !important; }
+
+    /* ── 7. Progress bar tracks (rgba(255,255,255,0.07) = invisible on white) ── */
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.07)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.06)"],
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.08)"] {
+      background: rgba(0,0,0,0.07) !important;
+    }
+    /* But DON'T override the ones inside hero banners (they look ok) */
+    [data-theme="light"] [style*="background:linear-gradient(135deg,#064e3b"] [style*="background:rgba(255,255,255"],
+    [data-theme="light"] [style*="background:linear-gradient(135deg,#071a0e"] [style*="background:rgba(255,255,255"],
+    [data-theme="light"] [style*="background:linear-gradient(135deg,#1e1b4b"] [style*="background:rgba(255,255,255"] {
+      background: rgba(255,255,255,0.15) !important;
+    }
+
+    /* ── 8. Table rows (white-on-white borders) ── */
+    [data-theme="light"] tr[style*="border-top:1px solid rgba(255,255,255,0.04)"] {
+      border-top-color: rgba(0,0,0,0.06) !important;
+    }
+    [data-theme="light"] tr[style*="background:rgba(255,255,255,0.02)"] {
+      background: #f8fafc !important;
+    }
+    [data-theme="light"] [style*="border-top:1px solid rgba(255,255,255,0.05)"] {
+      border-top-color: rgba(0,0,0,0.06) !important;
+    }
+
+    /* ── 9. Badges ── */
+    [data-theme="light"] .badge-green  { background: rgba(16,185,129,0.12) !important; color: #065f46 !important; border-color: rgba(16,185,129,0.25) !important; }
+    [data-theme="light"] .badge-blue   { background: rgba(59,130,246,0.12) !important; color: #1d4ed8 !important; border-color: rgba(59,130,246,0.25) !important; }
+    [data-theme="light"] .badge-yellow { background: rgba(245,158,11,0.12) !important; color: #b45309 !important; border-color: rgba(245,158,11,0.25) !important; }
+    [data-theme="light"] .badge-red    { background: rgba(239,68,68,0.1) !important;   color: #b91c1c !important; border-color: rgba(239,68,68,0.22) !important; }
+    [data-theme="light"] .badge-purple { background: rgba(124,58,237,0.1) !important;  color: #6d28d9 !important; border-color: rgba(124,58,237,0.22) !important; }
+
+    /* ── 10. KPI numbers and text ── */
+    [data-theme="light"] .kpi-number { color: #0f172a !important; }
+    [data-theme="light"] [style*="color:var(--text-bright)"] { color: #0f172a !important; }
+    [data-theme="light"] [style*="color:#374151"] { color: #374151 !important; } /* already dark, keep */
+    /* KPI action links */
+    [data-theme="light"] a[style*="color:#34d399"] { color: #059669 !important; }
+    [data-theme="light"] a[style*="color:#60a5fa"] { color: #2563eb !important; }
+    [data-theme="light"] a[style*="color:#a78bfa"] { color: #7c3aed !important; }
+
+    /* ── 11. System Info "Connected" text ── */
+    [data-theme="light"] span[style*="color:#34d399"] { color: #059669 !important; }
+
+    /* ── 12. Inputs ── */
+    [data-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="color"]):not([type="range"]),
+    [data-theme="light"] textarea,
+    [data-theme="light"] select {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.14) !important;
+      color: #0f172a !important;
+    }
+    [data-theme="light"] input:focus, [data-theme="light"] textarea:focus, [data-theme="light"] select:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+    }
+
+    /* ── 13. Scrollbar ── */
+    [data-theme="light"] ::-webkit-scrollbar-track { background: #f1f5f9; }
+    [data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+
+    /* ── 14. Alerts ── */
+    [data-theme="light"] .alert-success { background: rgba(16,185,129,0.1) !important; border-color: rgba(16,185,129,0.3) !important; color: #065f46 !important; }
+    [data-theme="light"] .alert-error   { background: rgba(239,68,68,0.08) !important; border-color: rgba(239,68,68,0.25) !important; color: #b91c1c !important; }
+
+    /* ── 15. Criteria rows (near-transparent bg disappears) ── */
+    [data-theme="light"] [style*="background:rgba(255,255,255,0.02)"] { background: rgba(0,0,0,0.02) !important; }
+
+    /* ── 16. Footer ── */
+    [data-theme="light"] footer { background: #ffffff !important; border-top-color: rgba(0,0,0,0.07) !important; color: #64748b !important; }
+    [data-theme="light"] footer a { color: #2563eb !important; }
     #eyeBtn,
     #sidebar-collapse-btn {
       min-height: unset !important;
