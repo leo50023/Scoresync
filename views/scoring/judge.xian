@@ -1,4 +1,4 @@
-﻿{{> head }}
+{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -193,21 +193,6 @@
                 <span>/ {{maxScore}}</span>
               </div>
             </div>
-            <!-- Validation error -->
-            <div class="score-error" style="display:none;color:#f87171;font-size:0.68rem;font-weight:700;margin-top:4px"></div>
-            <!-- Rating tier + weighted preview -->
-            <div class="score-meta-row" style="display:none;margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px">
-              <span class="rating-tier-label" style="font-size:0.7rem;font-weight:800;padding:2px 10px;border-radius:999px;border:1px solid currentColor"></span>
-              <span class="weighted-contrib" style="font-size:0.68rem;font-weight:700;color:#94a3b8"></span>
-            </div>
-            <!-- Rating scale legend -->
-            <div class="rating-legend">
-              <div class="rating-legend-item rl-poor"><span class="rl-label">Poor</span><span class="rl-range">0–59</span><div class="rl-bar"></div></div>
-              <div class="rating-legend-item rl-fair"><span class="rl-label">Fair</span><span class="rl-range">60–74</span><div class="rl-bar"></div></div>
-              <div class="rating-legend-item rl-good"><span class="rl-label">Good</span><span class="rl-range">75–84</span><div class="rl-bar"></div></div>
-              <div class="rating-legend-item rl-vgood"><span class="rl-label">Very Good</span><span class="rl-range">85–92</span><div class="rl-bar"></div></div>
-              <div class="rating-legend-item rl-excel"><span class="rl-label">Excellent</span><span class="rl-range">93–100</span><div class="rl-bar"></div></div>
-            </div>
 
             <!-- Hidden elements for JS compatibility (display:none wrapper) -->
             <div style="display:none">
@@ -248,10 +233,8 @@
           {{#unless ../readOnly}}
           <button type="button"
             class="submit-btn"
-            data-total-criteria="{{scores.length}}"
             onclick="submitContestant({{@index}})">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span class="submit-btn-label">Submit scores</span>
+            Submit scores
           </button>
           {{else}}
           <div class="py-3 text-center text-xs font-bold rounded-xl" style="background:rgba(255,255,255,0.04);color:var(--text-secondary);border:1px solid var(--border)">Read-only score review</div>
@@ -273,12 +256,6 @@
   {{/if}}
 
 </main>
-</div>
-
-<!-- Toast notification -->
-<div id="score-toast">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="score-toast-msg">Scores saved!</span>
 </div>
 
 <!-- Sticky bottom nav bar (Prev / Next contestant) -->
@@ -922,82 +899,8 @@ main::-webkit-scrollbar { display:none; }
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-
-/* ── Rating tier colours ── */
-.rating-poor  { color:#f87171; border-color:rgba(248,113,113,0.4)!important; background:rgba(248,113,113,0.08)!important; }
-.rating-fair  { color:#fb923c; border-color:rgba(251,146,60,0.4)!important;  background:rgba(251,146,60,0.08)!important;  }
-.rating-good  { color:#facc15; border-color:rgba(250,204,21,0.4)!important;  background:rgba(250,204,21,0.08)!important;  }
-.rating-vgood { color:#34d399; border-color:rgba(52,211,153,0.4)!important;  background:rgba(52,211,153,0.08)!important;  }
-.rating-excel { color:#c9a227; border-color:rgba(201,162,39,0.5)!important;  background:rgba(201,162,39,0.12)!important;  }
-
-/* ── Submit button: all-filled state ── */
-.submit-btn.all-filled {
-  background: linear-gradient(135deg,#065f46,#10b981) !important;
-  box-shadow: 0 4px 20px rgba(16,185,129,0.38) !important;
-}
-
-/* ── Next button: unsaved warning ── */
-#btn-next-contestant.has-unsaved {
-  background: linear-gradient(135deg,#78350f,#d97706) !important;
-  border-color: rgba(245,158,11,0.5) !important;
-  color: #fff !important;
-  box-shadow: 0 0 0 2px rgba(245,158,11,0.25) !important;
-}
-
-/* ── Score error ── */
-.score-error { display:none; }
-.score-error.visible { display:block !important; }
-
-/* ── Score meta row ── */
-.score-meta-row { display:flex !important; }
-
-/* ── Submit toast ── */
-#score-toast {
-  position: fixed; bottom: 80px; left: 50%;
-  transform: translateX(-50%) translateY(12px);
-  z-index: 9999; pointer-events: none;
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 20px; border-radius: 999px;
-  background: linear-gradient(135deg,#065f46,#10b981);
-  color: #fff; font-size: 0.8rem; font-weight: 800;
-  box-shadow: 0 8px 32px rgba(16,185,129,0.4);
-  opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease;
-  white-space: nowrap;
-}
-#score-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ── Nav dot submit flash ── */
-@keyframes dotFlash {
-  0%   { box-shadow: 0 0 0 0   rgba(16,185,129,0.8); }
-  60%  { box-shadow: 0 0 0 10px rgba(16,185,129,0);   }
-  100% { box-shadow: 0 0 0 0   rgba(16,185,129,0);    }
-}
-.nav-dot.flash-saved { animation: dotFlash 0.65s ease; }
 /* Reveal main after CSS loads � prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
-
-/* ── Rating legend ── */
-.rating-legend { display:flex; gap:3px; margin-top:8px; padding:6px 8px; border-radius:10px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); }
-.rating-legend-item { flex:1; text-align:center; padding:5px 3px 7px; border-radius:6px; border:1px solid transparent; transition:all 0.2s ease; }
-.rl-label { display:block; font-size:0.6rem; font-weight:800; line-height:1.3; }
-.rl-range { display:block; font-size:0.56rem; font-weight:600; opacity:0.65; margin-top:1px; }
-.rl-bar   { height:3px; border-radius:999px; margin-top:5px; opacity:0.5; }
-.rating-legend-item.rl-poor  { color:#f87171; } .rating-legend-item.rl-poor  .rl-bar { background:#f87171; }
-.rating-legend-item.rl-fair  { color:#fb923c; } .rating-legend-item.rl-fair  .rl-bar { background:#fb923c; }
-.rating-legend-item.rl-good  { color:#facc15; } .rating-legend-item.rl-good  .rl-bar { background:#facc15; }
-.rating-legend-item.rl-vgood { color:#34d399; } .rating-legend-item.rl-vgood .rl-bar { background:#34d399; }
-.rating-legend-item.rl-excel { color:#c9a227; } .rating-legend-item.rl-excel .rl-bar { background:#c9a227; }
-/* dim inactive when one is active */
-.rating-legend.rl-active .rating-legend-item           { opacity:0.28; }
-.rating-legend.rl-active .rating-legend-item.rl-lit    { opacity:1 !important; }
-.rating-legend-item.rl-poor.rl-lit  { background:rgba(248,113,113,0.18)!important; border-color:#f87171!important; box-shadow:0 0 10px rgba(248,113,113,0.4); }
-.rating-legend-item.rl-fair.rl-lit  { background:rgba(251,146,60,0.18)!important;  border-color:#fb923c!important; box-shadow:0 0 10px rgba(251,146,60,0.4);  }
-.rating-legend-item.rl-good.rl-lit  { background:rgba(250,204,21,0.15)!important;  border-color:#facc15!important; box-shadow:0 0 10px rgba(250,204,21,0.35); }
-.rating-legend-item.rl-vgood.rl-lit { background:rgba(52,211,153,0.15)!important;  border-color:#34d399!important; box-shadow:0 0 10px rgba(52,211,153,0.35); }
-.rating-legend-item.rl-excel.rl-lit { background:rgba(201,162,39,0.18)!important;  border-color:#c9a227!important; box-shadow:0 0 10px rgba(201,162,39,0.4);  }
-.rating-legend-item.rl-lit .rl-label { font-size:0.65rem; }
-.rating-legend-item.rl-lit .rl-range { opacity:1; }
-.rating-legend-item.rl-lit .rl-bar   { opacity:1; height:4px; }
 </style>
 
 <script>
@@ -1007,149 +910,72 @@ main::-webkit-scrollbar { display:none; }
   let saveTimer;
   window._currentIdx = 0;
   window._currentCriteria = {}; // kept for compatibility, not used for display
-  const _dirtySet = new Set(); // tracks contestants with unsaved changes
+  window._hasExistingScores = {{#if hasExistingScores}}true{{else}}false{{/if}};
+  const totalContestants = {{contestants.length}};
 
-  /* -- Rating tier helper -- */
-  function getRatingTier(pct) {
-    if (pct >= 93) return { label: 'Excellent',  cls: 'rating-excel' };
-    if (pct >= 85) return { label: 'Very Good',  cls: 'rating-vgood' };
-    if (pct >= 75) return { label: 'Good',        cls: 'rating-good'  };
-    if (pct >= 60) return { label: 'Fair',        cls: 'rating-fair'  };
-    return               { label: 'Poor',         cls: 'rating-poor'  };
-  }
+  /* -- Pre-fill visible inputs from existing hidden values -- */
+  document.querySelectorAll('.criteria-panel').forEach(panel => {
+    const input   = panel.querySelector('.score-input');
+    const entryEl = panel.querySelector('.score-entry-input');
+    if (!entryEl || !input) return;
+    if (input.value) {
+      entryEl.value = input.value;
+      updateBox(panel);
+    }
+  });
 
-  /* -- Toast helper -- */
-  function showToast(msg) {
-    const t = document.getElementById('score-toast');
-    const m = document.getElementById('score-toast-msg');
-    if (!t) return;
-    if (m) m.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.classList.remove('show'), 2200);
-  }
-
-  /* -- Next button unsaved warning -- */
-  function updateNextWarning() {
-    const btn = document.getElementById('btn-next-contestant');
-    if (!btn) return;
-    const hasDirty = _dirtySet.has(String(window._currentIdx));
-    btn.classList.toggle('has-unsaved', hasDirty);
-    btn.title = hasDirty ? 'You have unsaved scores — submit before moving on' : '';
-  }
   /* -- Handle score text input -- */
   window.handleScoreInput = function(entryEl) {
-    var scoreRow = entryEl.closest('.judge-score-row');
-    var panel    = scoreRow ? scoreRow.previousElementSibling : null;
-    if (!panel || !panel.classList.contains('criteria-panel')) return;
-    var sib = getSiblings(panel);
-    var max = parseFloat(entryEl.dataset.max) || 100;
-    var val = parseFloat(entryEl.value);
-    var cp  = panel.closest('.contestant-panel');
-    if (cp) _dirtySet.add(cp.dataset.idx);
-    updateNextWarning();
+    const panel  = entryEl.closest('.criteria-panel');
+    const input  = panel.querySelector('.score-input');
+    const max    = parseFloat(entryEl.dataset.max) || 100;
+    let val      = parseFloat(entryEl.value);
+
     if (isNaN(val) || entryEl.value === '') {
-      if (sib.input) sib.input.value = '';
+      input.value = '';
       entryEl.style.borderColor = 'rgba(201,162,39,0.4)';
-      entryEl.style.boxShadow   = '';
-      if (sib.err) { sib.err.textContent = ''; sib.err.classList.remove('visible'); }
-      updateBoxFrom(panel, sib, 0, max);
-      schedSave();
-      return;
-    }
-    if (val > max) {
-      entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
-      entryEl.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
-      if (sib.err) { sib.err.textContent = 'Max is ' + max; sib.err.classList.add('visible'); }
-      if (sib.input) sib.input.value = val;
-      updateBoxFrom(panel, sib, val, max);
+      updateBox(panel);
       schedSave();
       return;
     }
     if (val < 0) val = 0;
-    if (sib.err) { sib.err.textContent = ''; sib.err.classList.remove('visible'); }
-    entryEl.style.borderColor = 'rgba(201,162,39,0.7)';
-    entryEl.style.boxShadow   = '';
-    if (sib.input) sib.input.value = val;
-    updateBoxFrom(panel, sib, val, max);
+    if (val > max) {
+      val = max;
+      entryEl.value = max;
+      entryEl.style.borderColor = 'rgba(239,68,68,0.6)';
+    } else {
+      entryEl.style.borderColor = 'rgba(201,162,39,0.7)';
+    }
+    input.value = val;
+    updateBox(panel);
     schedSave();
   };
 
-  function getSiblings(panel) {
-    var r = { row:null, err:null, meta:null, legend:null, hidden:null, input:null };
-    var el = panel.nextElementSibling;
-    while (el) {
-      var cls = el.classList;
-      if (cls.contains('judge-score-row'))      r.row    = el;
-      else if (cls.contains('score-error'))     r.err    = el;
-      else if (cls.contains('score-meta-row'))  r.meta   = el;
-      else if (cls.contains('rating-legend'))   r.legend = el;
-      else if (el.style && el.style.display === 'none') {
-        r.hidden = el;
-        r.input  = el.querySelector('.score-input');
-      }
-      if (cls.contains('criteria-panel') || cls.contains('contestant-total-display')) break;
-      el = el.nextElementSibling;
-    }
-    return r;
-  }
-
-  /* -- updateBox (legacy wrapper) -- */
+  /* -- updateBox: update progress bar + totals -- */
   function updateBox(panel) {
-    var sib = getSiblings(panel);
-    var inp = sib.row ? sib.row.querySelector('.score-entry-input') : null;
-    var val = inp ? (parseFloat(inp.value) || 0) : 0;
-    var max = inp ? (parseFloat(inp.dataset.max) || 100) : 100;
-    updateBoxFrom(panel, sib, val, max);
-  }
+    const input  = panel.querySelector('.score-input');
+    const val    = parseFloat(input.value) || 0;
+    const max    = parseFloat(input.dataset.max) || 100;
+    const weight = parseFloat(input.dataset.weight) || 0;
+    const pct    = max > 0 ? (val / max) * 100 : 0;
+    const contrib = (val / max) * weight;
 
-  function updateBoxFrom(panel, sib, val, max) {
-    var weight  = sib.input ? (parseFloat(sib.input.dataset.weight) || 0) : 0;
-    var pct     = max > 0 ? (val / max) * 100 : 0;
-    var contrib = weight > 0 ? (val / max) * weight : 0;
-    var tier    = pct >= 93 ? 'rl-excel' : pct >= 85 ? 'rl-vgood' : pct >= 75 ? 'rl-good' : pct >= 60 ? 'rl-fair' : 'rl-poor';
+    // Gold progress bar
+    const bar = panel.querySelector('.criteria-bar');
+    if (bar) { bar.style.width = pct.toFixed(1) + '%'; }
 
-    // Progress bar
-    var bar = sib.row ? sib.row.querySelector('.criteria-bar') : null;
-    if (bar) {
-      bar.style.width = pct.toFixed(1) + '%';
-      var barColors = {'rl-poor':'linear-gradient(90deg,#991b1b,#f87171)','rl-fair':'linear-gradient(90deg,#9a3412,#fb923c)','rl-good':'linear-gradient(90deg,#854d0e,#facc15)','rl-vgood':'linear-gradient(90deg,#065f46,#34d399)','rl-excel':'linear-gradient(90deg,#78350f,#c9a227)'};
-      bar.style.background = val > 0 ? barColors[tier] : 'linear-gradient(90deg,#a17b1c,#d6b54a)';
-    }
-
-    // has-score
+    // Toggle filled state accent
     panel.classList.toggle('has-score', val > 0);
 
-    // Hidden compat
-    if (sib.hidden) {
-      var disp = sib.hidden.querySelector('.score-display');   if (disp) disp.textContent = val > 0 ? val : '';
-      var wp   = sib.hidden.querySelector('.weighted-preview'); if (wp)   wp.textContent   = contrib.toFixed(2) + '%';
-    }
-
-    // Tier label + contrib hint
-    if (sib.meta) {
-      var tierLabels = {'rl-poor':'Poor','rl-fair':'Fair','rl-good':'Good','rl-vgood':'Very Good','rl-excel':'Excellent'};
-      var tierEl    = sib.meta.querySelector('.rating-tier-label');
-      var contribEl = sib.meta.querySelector('.weighted-contrib');
-      if (tierEl) {
-        if (val > 0) { tierEl.textContent = tierLabels[tier]; tierEl.className = 'rating-tier-label ' + tier; tierEl.style.display = 'inline-block'; }
-        else         { tierEl.textContent = ''; tierEl.style.display = 'none'; }
-      }
-      if (contribEl) contribEl.textContent = (val > 0 && weight > 0) ? val + ' pts → ' + contrib.toFixed(1) + '% of total' : '';
-    }
-
-    // Legend highlight
-    if (sib.legend) {
-      if (val > 0) {
-        sib.legend.classList.add('rl-active');
-        sib.legend.querySelectorAll('.rating-legend-item').forEach(function(item) {
-          item.classList.toggle('rl-lit', item.classList.contains(tier));
-        });
-      } else {
-        sib.legend.classList.remove('rl-active');
-        sib.legend.querySelectorAll('.rating-legend-item').forEach(function(item) { item.classList.remove('rl-lit'); });
-      }
-    }
+    // Hidden compat elements
+    const disp = panel.querySelector('.score-display');
+    if (disp) disp.textContent = val > 0 ? val : '�';
+    const pctEl = panel.querySelector('.criteria-pct');
+    if (pctEl) pctEl.textContent = Math.round(pct) + '%';
+    const pctLbl = panel.querySelector('.criteria-pct-label');
+    if (pctLbl) pctLbl.textContent = Math.round(pct) + '%';
+    const wp = panel.querySelector('.weighted-preview');
+    if (wp) wp.textContent = contrib.toFixed(2) + '%';
 
     updateContestantPanel(panel.closest('.contestant-panel'));
     updateOverallRing();
@@ -1196,21 +1022,6 @@ main::-webkit-scrollbar { display:none; }
     });
     const sc = document.getElementById('hdr-scored');
     if (sc) sc.textContent = totalScored;
-
-    // #4 — Update submit button label + green state
-    const cpIdx = cp.dataset.idx;
-    const btn = document.querySelector('.contestant-panel[data-idx="' + cpIdx + '"] .submit-btn');
-    if (btn) {
-      const tot = cp.querySelectorAll('.criteria-panel').length;
-      const lbl = btn.querySelector('.submit-btn-label');
-      if (filled === tot && tot > 0) {
-        btn.classList.add('all-filled');
-        if (lbl) lbl.textContent = 'Submit scores ✓';
-      } else {
-        btn.classList.remove('all-filled');
-        if (lbl) lbl.textContent = 'Submit (' + filled + ' of ' + tot + ' filled)';
-      }
-    }
   }
 
   /* -- Overall ring -- */
@@ -1258,9 +1069,6 @@ main::-webkit-scrollbar { display:none; }
     document.getElementById('bottom-pos').textContent = idx + 1;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     updateOverallRing();
-
-    // #5 — Amber warning on Next if current contestant has unsaved changes
-    updateNextWarning();
   };
 
   /* -- nextOrSave � kept for compatibility -- */
@@ -1283,25 +1091,12 @@ main::-webkit-scrollbar { display:none; }
       if (!confirm(empty.length + ' score(s) are empty. Submit anyway? Empty scores will count as 0.')) return;
     }
     try { localStorage.removeItem(storeKey); } catch(e) {}
-
-    // #2 — Flash nav dot green + show toast
-    const _dot = document.querySelector('.nav-dot[data-idx="' + panelIdx + '"]');
-    if (_dot) {
-      _dot.classList.add('scored', 'flash-saved');
-      _dot.addEventListener('animationend', () => _dot.classList.remove('flash-saved'), { once: true });
-    }
-    showToast('Scores saved for contestant ' + (panelIdx + 1) + '!');
-
-    // #5 — Clear dirty flag
-    _dirtySet.delete(String(panelIdx));
-    updateNextWarning();
-
     // Save next contestant index so we auto-jump after page reload
     const nextIdx = panelIdx + 1;
     if (nextIdx < totalContestants) {
       try { localStorage.setItem('ss_next_contestant_' + '{{event.id}}', nextIdx); } catch(e) {}
     }
-    setTimeout(() => { document.getElementById('scoringForm').submit(); }, 420);
+    document.getElementById('scoringForm').submit();
   };
 
   window.nextContestant = function(idx) { goToContestant(idx + 1); };
