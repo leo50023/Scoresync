@@ -1037,50 +1037,6 @@ main::-webkit-scrollbar { display:none; }
     btn.classList.toggle('has-unsaved', hasDirty);
     btn.title = hasDirty ? 'You have unsaved scores — submit before moving on' : '';
   }
-  const _dirtySet = new Set(); // tracks contestants with unsaved changes
-
-  /* -- Rating tier helper -- */
-  function getRatingTier(pct) {
-    if (pct >= 93) return { label: 'Excellent',  cls: 'rating-excel' };
-    if (pct >= 85) return { label: 'Very Good',  cls: 'rating-vgood' };
-    if (pct >= 75) return { label: 'Good',        cls: 'rating-good'  };
-    if (pct >= 60) return { label: 'Fair',        cls: 'rating-fair'  };
-    return               { label: 'Poor',         cls: 'rating-poor'  };
-  }
-
-  /* -- Toast helper -- */
-  function showToast(msg) {
-    const t = document.getElementById('score-toast');
-    const m = document.getElementById('score-toast-msg');
-    if (!t) return;
-    if (m) m.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.classList.remove('show'), 2200);
-  }
-
-  /* -- Next button unsaved warning -- */
-  function updateNextWarning() {
-    const btn = document.getElementById('btn-next-contestant');
-    if (!btn) return;
-    const hasDirty = _dirtySet.has(String(window._currentIdx));
-    btn.classList.toggle('has-unsaved', hasDirty);
-    btn.title = hasDirty ? 'You have unsaved scores — submit before moving on' : '';
-  }
-  window._hasExistingScores = {{#if hasExistingScores}}true{{else}}false{{/if}};
-  const totalContestants = {{contestants.length}};
-
-  /* -- Pre-fill visible inputs from existing hidden values -- */
-  document.querySelectorAll('.criteria-panel').forEach(panel => {
-    const input   = panel.querySelector('.score-input');
-    const entryEl = panel.querySelector('.score-entry-input');
-    if (!entryEl || !input) return;
-    if (input.value) {
-      entryEl.value = input.value;
-      updateBox(panel);
-    }
-  });
-
   /* -- Handle score text input -- */
   window.handleScoreInput = function(entryEl) {
     var scoreRow = entryEl.closest('.judge-score-row');
