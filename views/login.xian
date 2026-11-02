@@ -117,7 +117,9 @@
   }
   .auth-input::placeholder { color: rgba(255,255,255,0.35); }
   .auth-input:-webkit-autofill,
-  .auth-input:-webkit-autofill:focus {
+  .auth-input:-webkit-autofill:hover,
+  .auth-input:-webkit-autofill:focus,
+  .auth-input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px rgba(45,35,100,0.55) inset !important;
     -webkit-text-fill-color: #ffffff !important;
     caret-color: #ffffff !important;
@@ -307,11 +309,13 @@ function fixAutofill(){
   document.querySelectorAll('.auth-input').forEach(el=>{
     el.style.setProperty('background','rgba(255,255,255,0.08)','important');
     el.style.setProperty('color','#ffffff','important');
+    el.style.setProperty('-webkit-text-fill-color','#ffffff','important');
   });
 }
 document.addEventListener('DOMContentLoaded', fixAutofill);
-setTimeout(fixAutofill, 100);
-setTimeout(fixAutofill, 500);
+setTimeout(fixAutofill, 50);
+setTimeout(fixAutofill, 200);
+setTimeout(fixAutofill, 600);
 </script>
 </body>
 </html>
