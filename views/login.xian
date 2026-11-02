@@ -167,7 +167,7 @@
   /* ─── Mobile ─── */
   @media (max-width: 480px) {
     body.auth-page {
-      padding: 20px 16px 24px;
+      padding: 20px 28px 24px;
       align-items: flex-start;
     }
     .auth-shell { max-width: 100%; }
