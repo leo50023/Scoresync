@@ -1,243 +1,225 @@
 ﻿{{> head }}
 <style>
-  /* ─── Base ─── */
+  /* ── Page ── */
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
     display: flex; align-items: center; justify-content: center;
     padding: 24px 20px;
-    position: relative; isolation: isolate; overflow-x: hidden;
-    background: #060c1a;
+    position: relative; isolation: isolate; overflow: hidden;
+    background: linear-gradient(135deg, #1a1040 0%, #0f2040 35%, #0d3030 65%, #1a1040 100%);
   }
 
-  /* ─── Background ─── */
-  .auth-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .auth-bg-orb {
-    position: absolute; border-radius: 50%; filter: blur(90px);
-    animation: orbFloat 10s ease-in-out infinite;
-  }
-  .auth-bg-orb-1 { width: 500px; height: 500px; top: -160px; left: -120px; opacity: 0.5; background: radial-gradient(circle, rgba(99,102,241,0.45), transparent 65%); }
-  .auth-bg-orb-2 { width: 380px; height: 380px; bottom: -100px; right: -80px; opacity: 0.38; background: radial-gradient(circle, rgba(14,165,233,0.4), transparent 65%); animation-delay: -4s; }
-  .auth-bg-orb-3 { width: 260px; height: 260px; top: 40%; left: 52%; opacity: 0.22; background: radial-gradient(circle, rgba(139,92,246,0.35), transparent 65%); animation-delay: -7s; }
-  @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-28px) scale(1.04)} }
-  .auth-bg-grid {
+  /* ── Animated gradient ── */
+  .auth-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .auth-bg::before {
+    content: '';
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
-    background-size: 30px 30px;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 65%);
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(120,80,255,0.45) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(0,180,160,0.35) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 10%, rgba(80,120,255,0.3) 0%, transparent 40%),
+      radial-gradient(ellipse at 10% 80%, rgba(160,60,220,0.25) 0%, transparent 40%);
+    animation: bgShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes bgShift {
+    0%   { opacity: 0.8; transform: scale(1) rotate(0deg); }
+    100% { opacity: 1;   transform: scale(1.06) rotate(2deg); }
   }
 
-  /* ─── Shell ─── */
+  /* ── Shell ── */
   .auth-shell {
     position: relative; z-index: 1;
     width: 100%; max-width: 420px;
     display: flex; flex-direction: column; align-items: center;
   }
 
-  /* ─── Logo ─── */
+  /* ── Logo ── */
   .auth-logomark {
-    width: 72px; height: 72px; border-radius: 18px;
-    overflow: hidden; flex-shrink: 0; margin-bottom: 12px;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 0 0 4px rgba(99,102,241,0.18), 0 10px 36px rgba(79,70,229,0.38);
+    width: 70px; height: 70px; border-radius: 20px;
+    overflow: hidden; flex-shrink: 0; margin-bottom: 16px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 8px 32px rgba(120,80,255,0.4);
   }
   .auth-logomark img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ─── Eyebrow ─── */
+  /* ── Eyebrow ── */
   .auth-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 0.62rem; font-weight: 800;
     letter-spacing: 0.2em; text-transform: uppercase;
-    color: #a5b4fc; margin-bottom: 8px;
+    color: rgba(180,160,255,0.85); margin-bottom: 6px;
   }
   .auth-eyebrow::before, .auth-eyebrow::after {
     content: ""; width: 22px; height: 1.5px;
-    background: linear-gradient(90deg, transparent, #818cf8);
+    background: rgba(180,160,255,0.5);
   }
-  .auth-eyebrow::after { background: linear-gradient(90deg, #818cf8, transparent); }
 
-  /* ─── Title ─── */
+  /* ── Title ── */
   .auth-title {
     font-size: 2rem; font-weight: 900;
     letter-spacing: -0.03em; line-height: 1.1;
     color: #ffffff; margin-bottom: 6px; text-align: center;
   }
-  .auth-subtitle { font-size: 0.82rem; color: #64748b; text-align: center; }
+  .auth-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-align: center; }
 
-  /* ─── Tab switcher ─── */
+  /* ── Tabs ── */
   .auth-tab-wrap {
-    display: flex; gap: 4px; padding: 4px; border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    margin-top: 20px; margin-bottom: 16px; width: 100%;
+    display: flex; gap: 0; padding: 5px; border-radius: 14px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 20px; margin-bottom: 0; width: 100%;
   }
   .auth-tab {
-    flex: 1; padding: 10px 14px; border-radius: 11px;
-    font-size: 0.85rem; font-weight: 700;
-    text-align: center; text-decoration: none; color: #475569;
-    transition: all 150ms ease;
+    flex: 1; padding: 11px 14px; border-radius: 10px;
+    font-size: 0.88rem; font-weight: 700;
+    text-align: center; text-decoration: none;
+    color: rgba(255,255,255,0.45); transition: all 200ms ease;
   }
-  .auth-tab:not(.active):hover { background: rgba(255,255,255,0.06); color: #94a3b8; }
+  .auth-tab:not(.active):hover { color: rgba(255,255,255,0.75); }
   .auth-tab.active {
-    background: linear-gradient(135deg,#4338ca,#6366f1); color: #fff;
-    box-shadow: 0 4px 14px rgba(79,70,229,0.42), inset 0 1px 0 rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.15); color: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
   }
 
-  /* ─── Card ─── */
+  /* ── Card ── */
   .auth-card {
-    background: #0d1528;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px; padding: 22px 20px;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.07);
-    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 22px; padding: 24px 22px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    width: 100%; margin-top: 14px;
   }
 
-  /* ─── Label ─── */
+  /* ── Label ── */
   .auth-label {
-    display: block; font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: #94a3b8; margin-bottom: 6px;
+    display: block; font-size: 0.75rem; font-weight: 600;
+    color: rgba(255,255,255,0.7); margin-bottom: 7px;
   }
 
-  /* ─── Input ─── */
+  /* ── Input ── */
   .input-icon-wrap { position: relative; }
   .input-icon {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: #334155; pointer-events: none; z-index: 1; transition: color 150ms ease;
+    color: rgba(255,255,255,0.3); pointer-events: none; z-index: 1;
+    transition: color 150ms ease;
   }
-  .input-icon-wrap:focus-within .input-icon { color: #6366f1; }
+  .input-icon-wrap:focus-within .input-icon { color: rgba(255,255,255,0.7); }
   .auth-input {
     width: 100%; height: 50px;
     padding: 0 14px 0 44px;
-    background: #0a1020 !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
     border-radius: 12px !important;
-    font-size: 0.92rem; color: #f1f5f9 !important;
+    font-size: 0.92rem; color: #ffffff !important;
     outline: none;
-    transition: border-color 150ms ease, box-shadow 150ms ease;
-    -webkit-text-fill-color: #f1f5f9;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    -webkit-text-fill-color: #ffffff;
   }
   .auth-input:focus {
-    border-color: rgba(99,102,241,0.65) !important;
-    box-shadow: 0 0 0 3px rgba(99,102,241,0.16) !important;
+    background: rgba(255,255,255,0.11) !important;
+    border-color: rgba(150,120,255,0.7) !important;
+    box-shadow: 0 0 0 3px rgba(120,80,255,0.2) !important;
   }
-  .auth-input::placeholder { color: #2d3748; }
-  .auth-input:-webkit-autofill, .auth-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px #0a1020 inset !important;
-    -webkit-text-fill-color: #f1f5f9 !important;
+  .auth-input::placeholder { color: rgba(255,255,255,0.3); }
+  .auth-input:-webkit-autofill,
+  .auth-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px rgba(30,20,60,0.9) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
     transition: background-color 9999s ease-in-out 0s;
   }
   .auth-input-pr { padding-right: 48px; }
 
-  /* ─── Role cards ─── */
+  /* ── Role cards ── */
   .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .role-grid-full { grid-column: 1 / -1; }
   .role-card-label { cursor: pointer; }
   .role-card {
     border-radius: 13px; padding: 14px 12px;
-    background: #0a1020;
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
     text-align: center;
-    transition: all 150ms ease; user-select: none;
+    transition: all 160ms ease; user-select: none;
   }
-  .role-card:hover { border-color: rgba(255,255,255,0.2); background: #0e1630; transform: translateY(-1px); }
+  .role-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); transform: translateY(-1px); }
   input[type="radio"].sr-only:checked + .role-card {
-    border-color: rgba(99,102,241,0.7) !important;
-    background: rgba(99,102,241,0.1) !important;
-    box-shadow: 0 0 0 1px rgba(99,102,241,0.25);
+    border-color: rgba(150,120,255,0.7) !important;
+    background: rgba(120,80,255,0.15) !important;
+    box-shadow: 0 0 0 1px rgba(150,120,255,0.3);
   }
   input[type="radio"].sr-only:checked + .role-card-tabulator {
     border-color: rgba(245,158,11,0.7) !important;
-    background: rgba(245,158,11,0.08) !important;
+    background: rgba(245,158,11,0.1) !important;
     box-shadow: 0 0 0 1px rgba(245,158,11,0.25);
   }
   input[type="radio"].sr-only:checked + .role-card-organizer {
     border-color: rgba(16,185,129,0.7) !important;
-    background: rgba(16,185,129,0.08) !important;
+    background: rgba(16,185,129,0.1) !important;
     box-shadow: 0 0 0 1px rgba(16,185,129,0.25);
   }
   .role-icon {
     width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 10px;
+    margin: 0 auto 9px;
   }
+  .role-card .font-bold { color: rgba(255,255,255,0.9) !important; }
+  .role-card .text-\[10px\] { color: rgba(255,255,255,0.45) !important; }
 
-  /* ─── Button ─── */
+  /* ── Button ── */
   .auth-btn {
     width: 100%; height: 52px;
-    border-radius: 13px; font-size: 0.95rem; font-weight: 800;
+    border-radius: 13px; font-size: 0.95rem; font-weight: 700;
     color: #fff; border: none; cursor: pointer;
-    background: linear-gradient(135deg,#4338ca 0%,#6366f1 55%,#818cf8 100%);
-    box-shadow: 0 8px 24px rgba(79,70,229,0.42), inset 0 1px 0 rgba(255,255,255,0.18);
+    background: linear-gradient(135deg, rgba(120,80,255,0.9) 0%, rgba(100,100,255,0.95) 50%, rgba(80,160,220,0.9) 100%);
+    box-shadow: 0 4px 20px rgba(100,80,255,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
     transition: all 180ms ease;
     display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .auth-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .auth-btn:hover { filter: brightness(1.12); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(100,80,255,0.55); }
   .auth-btn:active { transform: translateY(0); filter: none; }
 
-  /* ─── Footer ─── */
+  /* ── Footer ── */
   .auth-home-link {
     display: inline-flex; align-items: center; justify-content: center; gap: 7px;
     height: 40px; padding: 0 20px;
-    border: 1px solid rgba(255,255,255,0.1); border-radius: 999px;
-    background: rgba(255,255,255,0.04); color: #64748b;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 999px;
+    background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.55);
     font-size: 0.8rem; font-weight: 600; text-decoration: none;
     transition: all 150ms ease;
   }
-  .auth-home-link:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; }
-  .auth-footer { color: #334155; }
-  .auth-footer a:not(.auth-home-link) { color: #818cf8 !important; font-weight: 700; transition: color 150ms ease; }
-  .auth-footer a:not(.auth-home-link):hover { color: #a5b4fc !important; }
+  .auth-home-link:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .auth-footer { color: rgba(255,255,255,0.4); }
+  .auth-footer a:not(.auth-home-link) { color: rgba(160,130,255,1) !important; font-weight: 700; transition: color 150ms ease; }
+  .auth-footer a:not(.auth-home-link):hover { color: rgba(200,180,255,1) !important; }
 
-  /* ─── Focus ─── */
-  .auth-tab:focus-visible { outline: 2px solid #6366f1; outline-offset: 3px; }
+  /* ── Focus + util ── */
+  .auth-tab:focus-visible { outline: 2px solid rgba(180,160,255,0.8); outline-offset: 3px; }
   .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
 
-  /* ─── Mobile ─── */
+  /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page {
-      padding: 18px 28px 22px;
-      align-items: flex-start;
-    }
+    body.auth-page { padding: 18px 24px 24px; }
     .auth-shell { max-width: 100%; }
-    .auth-logomark { width: 68px; height: 68px; }
-    .auth-title { font-size: 1.8rem; }
-    .auth-subtitle { font-size: 0.82rem; }
-    .auth-tab-wrap { margin-top: 16px; margin-bottom: 12px; }
-    .auth-tab { padding: 11px 14px; font-size: 0.84rem; }
-    .auth-card {
-      padding: 20px 16px;
-      border-radius: 16px;
-      width: 100%;
-    }
+    .auth-logomark { width: 62px; height: 62px; border-radius: 17px; margin-bottom: 12px; }
+    .auth-title { font-size: 1.75rem; }
+    .auth-tab-wrap { margin-top: 16px; }
+    .auth-card { padding: 18px 16px; border-radius: 18px; margin-top: 12px; }
     .auth-card .space-y-4 > * + * { margin-top: 12px !important; }
-    .auth-label { font-size: 0.65rem; margin-bottom: 6px; }
-    .auth-input {
-      height: 50px !important;
-      font-size: 16px !important;
-      border-radius: 12px !important;
-    }
-    .auth-btn { height: 52px; font-size: 0.93rem; border-radius: 13px; }
-    .role-grid { gap: 10px; }
-    .role-card { padding: 14px 12px; border-radius: 13px; }
-    .role-icon { width: 36px; height: 36px; border-radius: 10px; margin-bottom: 8px; }
-    .role-card .font-bold.text-xs { font-size: 0.8rem !important; }
-    .role-card .text-\[10px\] { font-size: 0.68rem !important; }
-    .role-grid-full .role-card { padding: 12px 14px; }
-    .auth-footer { margin-top: 14px !important; }
-    .auth-home-link { height: 40px; font-size: 0.78rem; }
-    .auth-bg-orb-1 { width: 260px; height: 260px; }
-    .auth-bg-orb-2 { width: 200px; height: 200px; }
-    .auth-bg-orb-3 { display: none; }
+    .auth-label { font-size: 0.72rem; }
+    .auth-input { height: 48px !important; font-size: 16px !important; border-radius: 11px !important; }
+    .auth-btn { height: 50px; font-size: 0.92rem; }
+    .role-grid { gap: 8px; }
+    .role-card { padding: 12px 10px; border-radius: 12px; }
+    .role-icon { width: 32px; height: 32px; border-radius: 9px; margin-bottom: 7px; }
+    .role-grid-full .role-card { padding: 10px 12px; }
+    .auth-footer { margin-top: 12px !important; }
+    .auth-home-link { height: 38px; font-size: 0.76rem; }
   }
 </style>
 
-<div class="auth-bg">
-  <div class="auth-bg-grid"></div>
-  <div class="auth-bg-orb auth-bg-orb-1"></div>
-  <div class="auth-bg-orb auth-bg-orb-2"></div>
-  <div class="auth-bg-orb auth-bg-orb-3"></div>
-</div>
+<div class="auth-bg"></div>
 
-<body class="auth-page" style="overflow-x:hidden">
+<body class="auth-page" style="overflow:hidden">
   <div class="auth-shell animate-fadeup">
 
     <div class="auth-logomark">
@@ -253,13 +235,13 @@
     </div>
 
     {{#if error_msg}}
-    <div class="alert-error mb-3 text-sm w-full">
+    <div class="alert-error mt-3 text-sm w-full">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span>{{error_msg}}</span>
     </div>
     {{/if}}
     {{#if success_msg}}
-    <div class="alert-success mb-3 text-sm w-full">
+    <div class="alert-success mt-3 text-sm w-full">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
       <span>{{success_msg}}</span>
     </div>
@@ -272,9 +254,7 @@
         <div>
           <label class="auth-label">Full Name</label>
           <div class="input-icon-wrap">
-            <span class="input-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </span>
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
             <input type="text" name="name" placeholder="Juan dela Cruz" required class="auth-input"/>
           </div>
         </div>
@@ -282,9 +262,7 @@
         <div>
           <label class="auth-label">Email Address</label>
           <div class="input-icon-wrap">
-            <span class="input-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </span>
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
             <input type="email" name="email" placeholder="you@example.com" required autocomplete="email" class="auth-input"/>
           </div>
         </div>
@@ -292,12 +270,11 @@
         <div>
           <label class="auth-label">Password</label>
           <div class="input-icon-wrap" style="position:relative">
-            <span class="input-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </span>
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
             <input type="password" name="password" id="passwordInput" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr"/>
             <button type="button" id="eyeBtn" onclick="togglePwd()"
-              style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#334155;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:6px;height:28px;width:28px">
+              style="position:absolute;right:13px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;height:28px;width:28px;transition:color 150ms ease"
+              onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
               <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
@@ -306,29 +283,26 @@
         <div>
           <label class="auth-label">Select Your Role</label>
           <div class="role-grid">
-
             <label class="role-card-label">
               <input type="radio" name="role" value="judge" class="sr-only" required/>
               <div class="role-card">
                 <div class="role-icon" style="background:linear-gradient(135deg,#3730a3,#6366f1)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
-                <div class="font-bold text-xs text-white mb-0.5">Judge</div>
-                <div class="text-[10px]" style="color:#475569">Score contestants</div>
+                <div class="font-bold text-xs mb-0.5">Judge</div>
+                <div class="text-[10px]">Score contestants</div>
               </div>
             </label>
-
             <label class="role-card-label">
               <input type="radio" name="role" value="tabulator" class="sr-only"/>
               <div class="role-card role-card-tabulator">
                 <div class="role-icon" style="background:linear-gradient(135deg,#78350f,#d97706)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </div>
-                <div class="font-bold text-xs text-white mb-0.5">Tabulator</div>
-                <div class="text-[10px]" style="color:#475569">Review scores</div>
+                <div class="font-bold text-xs mb-0.5">Tabulator</div>
+                <div class="text-[10px]">Review scores</div>
               </div>
             </label>
-
             <label class="role-card-label role-grid-full">
               <input type="radio" name="role" value="organizer" class="sr-only"/>
               <div class="role-card role-card-organizer" style="text-align:left;display:flex;align-items:center;gap:12px;padding:12px 14px">
@@ -336,13 +310,12 @@
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 </div>
                 <div class="flex-1">
-                  <div class="font-bold text-xs text-white mb-0.5">Organizer</div>
-                  <div class="text-[10px]" style="color:#475569">Create &amp; manage events</div>
+                  <div class="font-bold text-xs mb-0.5">Organizer</div>
+                  <div class="text-[10px]">Create &amp; manage events</div>
                 </div>
-                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(16,185,129,0.14);color:#34d399;border:1px solid rgba(16,185,129,0.22)">FULL ACCESS</span>
+                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0" style="background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.3)">FULL ACCESS</span>
               </div>
             </label>
-
           </div>
         </div>
 
@@ -351,13 +324,13 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
 
-        <p class="text-[10px] text-center" style="color:#334155">
+        <p class="text-[11px] text-center" style="color:rgba(255,255,255,0.3);margin-top:8px">
           Your account will be reviewed by an admin before activation.
         </p>
       </form>
     </div>
 
-    <div class="auth-footer mt-4 text-center space-y-3 text-xs w-full">
+    <div class="auth-footer mt-4 text-center space-y-3 text-sm w-full">
       <p>Already have an account? <a href="/login">Sign in</a></p>
       <a href="/" class="auth-home-link">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
@@ -380,9 +353,9 @@ document.querySelectorAll('input[name="role"]').forEach(radio=>{
     document.querySelectorAll('.role-card').forEach(c=>{c.style.borderColor='';c.style.background='';c.style.boxShadow='';});
     const card=radio.nextElementSibling; if(!card) return;
     const colors={
-      judge:     ['rgba(99,102,241,0.7)','rgba(99,102,241,0.1)','0 0 0 1px rgba(99,102,241,0.25)'],
-      tabulator: ['rgba(245,158,11,0.7)','rgba(245,158,11,0.08)','0 0 0 1px rgba(245,158,11,0.25)'],
-      organizer: ['rgba(16,185,129,0.7)','rgba(16,185,129,0.08)','0 0 0 1px rgba(16,185,129,0.25)'],
+      judge:     ['rgba(150,120,255,0.7)','rgba(120,80,255,0.15)','0 0 0 1px rgba(150,120,255,0.3)'],
+      tabulator: ['rgba(245,158,11,0.7)','rgba(245,158,11,0.1)','0 0 0 1px rgba(245,158,11,0.25)'],
+      organizer: ['rgba(16,185,129,0.7)','rgba(16,185,129,0.1)','0 0 0 1px rgba(16,185,129,0.25)'],
     };
     if(colors[radio.value]){card.style.borderColor=colors[radio.value][0];card.style.background=colors[radio.value][1];card.style.boxShadow=colors[radio.value][2];}
   });
