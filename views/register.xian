@@ -193,20 +193,21 @@
 
   /* ─── Mobile ─── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 18px 16px 22px; }
+    body.auth-page { padding: 16px 16px 20px; }
     .auth-shell { max-width: 100%; }
-    .auth-logomark { width: 64px; height: 64px; }
-    .auth-title { font-size: 1.75rem; }
-    .auth-tab-wrap { margin-top: 14px; margin-bottom: 12px; }
-    .auth-card { padding: 18px 16px; border-radius: 16px; }
-    .auth-card .space-y-4 > * + * { margin-top: 12px !important; }
-    .auth-input { height: 48px !important; font-size: 16px !important; }
-    .auth-btn { height: 50px; }
-    .role-grid { gap: 8px; }
-    .role-card { padding: 12px 10px; border-radius: 12px; }
-    .role-icon { width: 32px; height: 32px; border-radius: 9px; margin-bottom: 8px; }
-    .auth-bg-orb-1 { width: 260px; height: 260px; }
-    .auth-bg-orb-2 { width: 200px; height: 200px; }
+    /* Make the card smaller/narrower */
+    .auth-card { padding: 16px 14px; border-radius: 14px; max-width: 100%; }
+    .auth-card .space-y-4 > * + * { margin-top: 10px !important; }
+    .auth-input { height: 44px !important; font-size: 16px !important; }
+    .auth-btn { height: 46px; font-size: 0.88rem; }
+    .auth-logomark { width: 58px; height: 58px; }
+    .auth-title { font-size: 1.6rem; }
+    .auth-tab-wrap { margin-top: 12px; margin-bottom: 10px; }
+    .role-grid { gap: 7px; }
+    .role-card { padding: 11px 9px; border-radius: 11px; }
+    .role-icon { width: 30px; height: 30px; border-radius: 8px; margin-bottom: 7px; }
+    .auth-bg-orb-1 { width: 240px; height: 240px; }
+    .auth-bg-orb-2 { width: 180px; height: 180px; }
     .auth-bg-orb-3 { display: none; }
   }
 </style>
