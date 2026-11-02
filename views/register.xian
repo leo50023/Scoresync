@@ -193,10 +193,9 @@
 
   /* ─── Mobile ─── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 16px 16px 20px; }
+    body.auth-page { padding: 16px 24px 20px; }
     .auth-shell { max-width: 100%; }
-    /* Make the card smaller/narrower */
-    .auth-card { padding: 16px 14px; border-radius: 14px; max-width: 100%; }
+    .auth-card { padding: 16px 14px; border-radius: 14px; }
     .auth-card .space-y-4 > * + * { margin-top: 10px !important; }
     .auth-input { height: 44px !important; font-size: 16px !important; }
     .auth-btn { height: 46px; font-size: 0.88rem; }
