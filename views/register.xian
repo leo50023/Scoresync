@@ -124,8 +124,9 @@
   .auth-input::placeholder { color: rgba(255,255,255,0.35); }
   .auth-input:-webkit-autofill,
   .auth-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px rgba(80,60,140,0.25) inset !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(45,35,100,0.55) inset !important;
     -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
     transition: background-color 9999s ease-in-out 0s;
   }
   .auth-input-pr { padding-right: 48px; }
@@ -348,7 +349,16 @@ function togglePwd(){
   if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
   else{i.type='password';b.innerHTML=eyeOpen;}
 }
-document.querySelectorAll('input[name="role"]').forEach(radio=>{
+// Override autofill background
+function fixAutofill(){
+  document.querySelectorAll('.auth-input').forEach(el=>{
+    el.style.setProperty('background','rgba(255,255,255,0.08)','important');
+    el.style.setProperty('color','#ffffff','important');
+  });
+}
+document.addEventListener('DOMContentLoaded', fixAutofill);
+setTimeout(fixAutofill, 100);
+setTimeout(fixAutofill, 500);
   radio.addEventListener('change',()=>{
     document.querySelectorAll('.role-card').forEach(c=>{c.style.borderColor='';c.style.background='';c.style.boxShadow='';});
     const card=radio.nextElementSibling; if(!card) return;
