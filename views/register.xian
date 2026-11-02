@@ -76,8 +76,8 @@
   }
   .auth-tab:not(.active):hover { color: rgba(255,255,255,0.75); }
   .auth-tab.active {
-    background: rgba(255,255,255,0.15); color: #fff;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.2); color: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
   }
 
   /* ── Card ── */
@@ -108,8 +108,8 @@
   .auth-input {
     width: 100%; height: 50px;
     padding: 0 14px 0 44px;
-    background: rgba(255,255,255,0.07) !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    background: rgba(0,0,0,0.25) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
     border-radius: 12px !important;
     font-size: 0.92rem; color: #ffffff !important;
     outline: none;
@@ -117,11 +117,11 @@
     -webkit-text-fill-color: #ffffff;
   }
   .auth-input:focus {
-    background: rgba(255,255,255,0.11) !important;
-    border-color: rgba(150,120,255,0.7) !important;
-    box-shadow: 0 0 0 3px rgba(120,80,255,0.2) !important;
+    background: rgba(0,0,0,0.35) !important;
+    border-color: rgba(150,120,255,0.8) !important;
+    box-shadow: 0 0 0 3px rgba(120,80,255,0.22) !important;
   }
-  .auth-input::placeholder { color: rgba(255,255,255,0.3); }
+  .auth-input::placeholder { color: rgba(255,255,255,0.35); }
   .auth-input:-webkit-autofill,
   .auth-input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 1000px rgba(30,20,60,0.9) inset !important;
