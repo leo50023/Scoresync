@@ -64,8 +64,8 @@
   /* ── Tabs ── */
   .auth-tab-wrap {
     display: flex; gap: 0; padding: 5px; border-radius: 14px;
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
     margin-top: 20px; margin-bottom: 0; width: 100%;
   }
   .auth-tab {
@@ -82,8 +82,8 @@
 
   /* ── Card ── */
   .auth-card {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 22px; padding: 24px 22px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
     backdrop-filter: blur(20px);
@@ -108,8 +108,8 @@
   .auth-input {
     width: 100%; height: 50px;
     padding: 0 14px 0 44px;
-    background: rgba(0,0,0,0.25) !important;
-    border: 1px solid rgba(255,255,255,0.18) !important;
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.22) !important;
     border-radius: 12px !important;
     font-size: 0.92rem; color: #ffffff !important;
     outline: none;
@@ -117,8 +117,8 @@
     -webkit-text-fill-color: #ffffff;
   }
   .auth-input:focus {
-    background: rgba(0,0,0,0.35) !important;
-    border-color: rgba(150,120,255,0.8) !important;
+    background: rgba(255,255,255,0.05) !important;
+    border-color: rgba(180,150,255,0.85) !important;
     box-shadow: 0 0 0 3px rgba(120,80,255,0.22) !important;
   }
   .auth-input::placeholder { color: rgba(255,255,255,0.35); }
@@ -136,8 +136,8 @@
   .role-card-label { cursor: pointer; }
   .role-card {
     border-radius: 13px; padding: 14px 12px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
     text-align: center;
     transition: all 160ms ease; user-select: none;
   }
