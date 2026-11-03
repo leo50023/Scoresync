@@ -199,11 +199,9 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page {
-      padding: 14px 32px 16px;
-      align-items: flex-start;
-    }
-    .auth-shell { max-width: 100%; }
+    body.auth-page { padding: 14px 16px 16px; align-items: flex-start; }
+    /* Shell — add side margin so card doesn't touch screen edge */
+    .auth-shell { width: calc(100% - 24px); margin: 0 auto; max-width: 100%; }
     .auth-logomark { width: 40px; height: 40px; border-radius: 11px; margin-bottom: 4px; }
     .auth-eyebrow { font-size: 0.52rem; margin-bottom: 2px; }
     .auth-eyebrow::before, .auth-eyebrow::after { width: 10px; }

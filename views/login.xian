@@ -177,11 +177,9 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page {
-      padding: 20px 32px 20px;
-      align-items: flex-start;
-    }
-    .auth-shell { max-width: 100%; }
+    body.auth-page { padding: 18px 16px 18px; align-items: flex-start; }
+    /* Shell — add side margin so card doesn't touch screen edge */
+    .auth-shell { width: calc(100% - 24px); margin: 0 auto; max-width: 100%; }
     .auth-logomark { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 5px; }
     .auth-eyebrow { font-size: 0.54rem; margin-bottom: 2px; }
     .auth-eyebrow::before, .auth-eyebrow::after { width: 12px; }
