@@ -6,7 +6,7 @@ import { loginRateLimit } from "../middleware/rateLimit.js";
 
 // ─── Notifications API ────────────────────────────────────────────────────────
 import { getNotifications } from "../controllers/notificationController.js";
-router.get("/api/notifications", requireAuth, requireRole("admin","organizer"), getNotifications);
+router.get("/api/notifications", requireAuth, getNotifications);
 
 // ─── Scheduled jobs (authenticated with CRON_SECRET) ─────────────────────────
 import { updateScheduledEventStatuses } from "../controllers/cronController.js";
