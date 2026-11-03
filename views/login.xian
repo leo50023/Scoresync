@@ -117,7 +117,7 @@
   .auth-input:-webkit-autofill:hover,
   .auth-input:-webkit-autofill:focus,
   .auth-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px #1e1a38 inset !important;
+    -webkit-box-shadow: 0 0 0 1000px #2d2a52 inset !important;
     -webkit-text-fill-color: #ffffff !important;
     caret-color: #ffffff !important;
     transition: background-color 9999s ease-in-out 0s;
@@ -177,19 +177,57 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 20px 24px 28px; }
+    body.auth-page {
+      padding: 16px 20px 16px;
+      align-items: flex-start;
+      overflow-y: auto;
+    }
     .auth-shell { max-width: 100%; }
-    .auth-logomark { width: 60px; height: 60px; border-radius: 16px; margin-bottom: 12px; }
-    .auth-title { font-size: 1.75rem; }
-    .auth-tab-wrap { margin-top: 16px; }
-    .auth-card { padding: 22px 18px; border-radius: 18px; margin-top: 14px; }
-    .auth-card .space-y-5 > * + * { margin-top: 14px !important; }
-    .auth-label { font-size: 0.73rem; }
-    .auth-input { height: 50px !important; font-size: 16px !important; border-radius: 11px !important; }
-    .auth-btn { height: 50px; font-size: 0.92rem; }
-    .auth-footer { margin-top: 14px !important; }
-    .auth-home-link { height: 38px; font-size: 0.76rem; }
-    .auth-trust { margin-top: 12px; font-size: 0.62rem; }
+
+    /* Logo */
+    .auth-logomark { width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; }
+
+    /* Eyebrow */
+    .auth-eyebrow { font-size: 0.58rem; margin-bottom: 4px; }
+    .auth-eyebrow::before, .auth-eyebrow::after { width: 16px; }
+
+    /* Title + subtitle */
+    .auth-title { font-size: 1.6rem; margin-bottom: 3px; }
+    .auth-subtitle { font-size: 0.76rem; }
+
+    /* Heading spacing */
+    .flex.flex-col.items-center.text-center { margin-bottom: 12px !important; }
+
+    /* Tabs */
+    .auth-tab-wrap { margin-top: 0; margin-bottom: 10px; padding: 4px; border-radius: 12px; }
+    .auth-tab { padding: 9px 12px; font-size: 0.82rem; border-radius: 9px; }
+
+    /* Card */
+    .auth-card { padding: 18px 16px; border-radius: 16px; margin-top: 0; }
+    .auth-card .space-y-5 > * + * { margin-top: 12px !important; }
+
+    /* Labels */
+    .auth-label { font-size: 0.68rem; margin-bottom: 5px; }
+
+    /* Inputs */
+    .auth-input { height: 46px !important; font-size: 16px !important; border-radius: 11px !important; }
+
+    /* Remember me */
+    .auth-card label.flex { font-size: 0.8rem !important; }
+
+    /* Button */
+    .auth-btn { height: 48px; font-size: 0.9rem; border-radius: 12px; }
+
+    /* Footer */
+    .auth-footer { margin-top: 12px !important; }
+    .auth-footer.space-y-3 > * + * { margin-top: 6px !important; }
+    .auth-home-link { height: 36px; font-size: 0.74rem; padding: 0 16px; }
+
+    /* Trust badges */
+    .auth-trust { margin-top: 10px; gap: 12px; font-size: 0.6rem; }
+
+    /* Orbs */
+    .auth-bg-orb-1, .auth-bg-orb-2, .auth-bg-orb-3 { display: none; }
   }
 
   /* ── Focus ── */

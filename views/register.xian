@@ -199,22 +199,63 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 18px 24px 24px; }
+    body.auth-page {
+      padding: 14px 20px 16px;
+      align-items: flex-start;
+      overflow-y: auto;
+    }
     .auth-shell { max-width: 100%; }
-    .auth-logomark { width: 62px; height: 62px; border-radius: 17px; margin-bottom: 12px; }
-    .auth-title { font-size: 1.75rem; }
-    .auth-tab-wrap { margin-top: 16px; }
-    .auth-card { padding: 18px 16px; border-radius: 18px; margin-top: 12px; }
-    .auth-card .space-y-4 > * + * { margin-top: 12px !important; }
-    .auth-label { font-size: 0.72rem; }
-    .auth-input { height: 48px !important; font-size: 16px !important; border-radius: 11px !important; }
-    .auth-btn { height: 50px; font-size: 0.92rem; }
-    .role-grid { gap: 8px; }
-    .role-card { padding: 12px 10px; border-radius: 12px; }
-    .role-icon { width: 32px; height: 32px; border-radius: 9px; margin-bottom: 7px; }
-    .role-grid-full .role-card { padding: 10px 12px; }
-    .auth-footer { margin-top: 12px !important; }
-    .auth-home-link { height: 38px; font-size: 0.76rem; }
+
+    /* Logo */
+    .auth-logomark { width: 48px; height: 48px; border-radius: 13px; margin-bottom: 6px; }
+
+    /* Eyebrow */
+    .auth-eyebrow { font-size: 0.56rem; margin-bottom: 3px; }
+    .auth-eyebrow::before, .auth-eyebrow::after { width: 14px; }
+
+    /* Title + subtitle */
+    .auth-title { font-size: 1.45rem; margin-bottom: 2px; }
+    .auth-subtitle { font-size: 0.73rem; }
+
+    /* Heading spacing */
+    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 10px !important; }
+
+    /* Tabs */
+    .auth-tab-wrap { margin-top: 0; margin-bottom: 10px; padding: 3px; border-radius: 11px; }
+    .auth-tab { padding: 8px 10px; font-size: 0.8rem; border-radius: 9px; }
+
+    /* Card */
+    .auth-card { padding: 14px 14px; border-radius: 15px; margin-top: 0; }
+    .auth-card .space-y-4 > * + * { margin-top: 10px !important; }
+
+    /* Labels */
+    .auth-label { font-size: 0.65rem; margin-bottom: 4px; }
+
+    /* Inputs */
+    .auth-input { height: 44px !important; font-size: 16px !important; border-radius: 10px !important; }
+
+    /* Button */
+    .auth-btn { height: 46px; font-size: 0.88rem; border-radius: 11px; }
+
+    /* Role cards */
+    .role-grid { gap: 7px; }
+    .role-card { padding: 10px 8px; border-radius: 11px; }
+    .role-icon { width: 28px; height: 28px; border-radius: 8px; margin-bottom: 6px; }
+    .role-icon svg { width: 13px !important; height: 13px !important; }
+    .role-card .font-bold.text-xs { font-size: 0.7rem !important; }
+    .role-card .text-\[10px\] { font-size: 0.62rem !important; }
+    .role-grid-full .role-card { padding: 8px 10px; }
+
+    /* Approval note */
+    .auth-card > form > p { font-size: 0.6rem !important; margin-top: 6px !important; }
+
+    /* Footer */
+    .auth-footer { margin-top: 10px !important; }
+    .auth-footer .space-y-3 > * + * { margin-top: 5px !important; }
+    .auth-home-link { height: 34px; font-size: 0.72rem; padding: 0 14px; }
+
+    /* Orbs */
+    .auth-bg-orb-1, .auth-bg-orb-2, .auth-bg-orb-3 { display: none; }
   }
 </style>
 
