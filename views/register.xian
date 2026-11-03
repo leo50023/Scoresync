@@ -267,36 +267,38 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 14px 16px 16px; align-items: flex-start; }
-    /* Shell — add side margin so card doesn't touch screen edge */
+    body.auth-page { padding: 10px 16px 12px; align-items: flex-start; }
     .auth-shell { width: calc(100% - 24px); margin: 0 auto; max-width: 100%; }
-    .auth-logomark { width: 40px; height: 40px; border-radius: 11px; margin-bottom: 4px; }
-    .auth-eyebrow { font-size: 0.52rem; margin-bottom: 2px; }
+    .auth-logomark { width: 38px; height: 38px; border-radius: 10px; margin-bottom: 4px; animation: none; }
+    .auth-eyebrow { font-size: 0.5rem; margin-bottom: 2px; }
     .auth-eyebrow::before, .auth-eyebrow::after { width: 10px; }
-    .auth-title { font-size: 1.25rem; margin-bottom: 1px; }
-    .auth-subtitle { font-size: 0.68rem; }
-    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 7px !important; }
-    .auth-tab-wrap { margin-top: 0; margin-bottom: 7px; padding: 3px; border-radius: 9px; }
-    .auth-tab { padding: 7px 8px; font-size: 0.72rem; border-radius: 7px; }
-    .auth-card { padding: 11px 11px; border-radius: 13px; margin-top: 0; }
-    .auth-card .space-y-4 > * + * { margin-top: 7px !important; }
-    .auth-label { font-size: 0.6rem; margin-bottom: 2px; }
-    .auth-input { height: 38px !important; font-size: 15px !important; border-radius: 9px !important; }
-    .input-icon { left: 9px; }
+    .auth-title { font-size: 1.2rem; margin-bottom: 1px; }
+    .auth-subtitle { font-size: 0.66rem; }
+    .flex.flex-col.items-center.text-center.mb-7 { margin-bottom: 6px !important; }
+    .auth-tab-wrap { margin-top: 0; margin-bottom: 6px; padding: 3px; border-radius: 9px; }
+    .auth-tab { padding: 6px 8px; font-size: 0.7rem; border-radius: 7px; }
+    .auth-card { padding: 10px 10px; border-radius: 12px; margin-top: 0; animation: none; }
+    .auth-card .space-y-4 > * + * { margin-top: 6px !important; }
+    .auth-label { font-size: 0.58rem; margin-bottom: 2px; }
+    .auth-input { height: 36px !important; font-size: 15px !important; border-radius: 8px !important; }
+    .input-icon { left: 8px; }
     .input-icon svg { width: 12px; height: 12px; }
-    .auth-btn { height: 40px; font-size: 0.8rem; border-radius: 9px; }
+    .auth-btn { height: 38px; font-size: 0.78rem; border-radius: 9px; }
     .auth-btn svg { width: 12px; height: 12px; }
+    .btn-spinner { width: 14px !important; height: 14px !important; }
     .role-grid { gap: 5px; }
-    .role-card { padding: 7px 5px; border-radius: 9px; }
-    .role-icon { width: 24px; height: 24px; border-radius: 6px; margin-bottom: 4px; }
-    .role-icon svg { width: 11px !important; height: 11px !important; }
-    .role-card .font-bold.text-xs { font-size: 0.64rem !important; }
-    .role-card .text-\[10px\] { font-size: 0.56rem !important; }
-    .role-grid-full .role-card { padding: 6px 8px; }
-    .auth-card > form > p { font-size: 0.55rem !important; margin-top: 4px !important; }
-    .auth-footer { margin-top: 7px !important; }
-    .auth-footer .space-y-3 > * + * { margin-top: 4px !important; }
-    .auth-home-link { height: 30px; font-size: 0.68rem; padding: 0 10px; }
+    .role-card { padding: 6px 5px; border-radius: 8px; }
+    .role-icon { width: 22px; height: 22px; border-radius: 6px; margin-bottom: 4px; }
+    .role-icon svg { width: 10px !important; height: 10px !important; }
+    .role-card .font-bold.text-xs { font-size: 0.62rem !important; }
+    .role-card .text-\[10px\] { font-size: 0.54rem !important; }
+    .role-grid-full .role-card { padding: 5px 8px; gap: 8px !important; }
+    .role-grid-full .role-icon { width: 22px !important; height: 22px !important; }
+    .auth-card > form > p { font-size: 0.52rem !important; margin-top: 3px !important; }
+    .auth-footer { margin-top: 6px !important; }
+    .auth-footer .space-y-3 > * + * { margin-top: 3px !important; }
+    .auth-footer.text-sm { font-size: 0.7rem !important; }
+    .auth-home-link { height: 28px; font-size: 0.65rem; padding: 0 10px; }
     .auth-bg-orb-1, .auth-bg-orb-2, .auth-bg-orb-3 { display: none; }
   }
 </style>
