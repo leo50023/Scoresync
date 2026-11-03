@@ -121,7 +121,7 @@
             <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(148,163,184,0.7)">2nd Place</div>
             <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(148,163,184,0.4);ring:4px solid rgba(148,163,184,0.1)">
               {{#if photo}}
-              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
+              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top" loading="lazy"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#475569,#94a3b8)">{{number}}</div>
               {{/if}}
@@ -147,7 +147,7 @@
             </div>
             <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3 shadow-2xl" style="border:3px solid rgba(245,158,11,0.6);box-shadow:0 0 24px rgba(245,158,11,0.3)">
               {{#if photo}}
-              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
+              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top" loading="lazy"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-lg font-extrabold" style="background:linear-gradient(135deg,#92400e,#f59e0b)">{{number}}</div>
               {{/if}}
@@ -171,7 +171,7 @@
             <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(205,127,50,0.7)">3rd Place</div>
             <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(205,127,50,0.4)">
               {{#if photo}}
-              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top"/>
+              <img src="{{photo}}" alt="{{name}}" class="w-full h-full object-cover" style="object-position:center top" loading="lazy"/>
               {{else}}
               <div class="w-full h-full flex items-center justify-center text-white text-sm font-extrabold" style="background:linear-gradient(135deg,#78350f,#f97316)">{{number}}</div>
               {{/if}}

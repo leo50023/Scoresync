@@ -58,15 +58,16 @@ export const storeContestant = async (req, res) => {
   const { eventId } = req.params;
   try {
     // ── Enforce maxContestants limit ─────────────────────────────────────────
-    const eSnap = await getDoc(doc(db, "events", eventId));
+    // Parallel fetch — event + contestants at the same time
+    const [eSnap, cSnapInit] = await Promise.all([
+      getDoc(doc(db, "events", eventId)),
+      getDocs(collection(db, "events", eventId, "contestants")),
+    ]);
     if (eSnap.exists()) {
       const maxContestants = Number(eSnap.data().maxContestants) || 0;
-      if (maxContestants > 0) {
-        const cSnap = await getDocs(collection(db, "events", eventId, "contestants"));
-        if (cSnap.size >= maxContestants) {
-          req.flash("error_msg", `Cannot add more contestants. The limit for this event is ${maxContestants}.`);
-          return res.redirect(`/events/${eventId}`);
-        }
+      if (maxContestants > 0 && cSnapInit.size >= maxContestants) {
+        req.flash("error_msg", `Cannot add more contestants. The limit for this event is ${maxContestants}.`);
+        return res.redirect(`/events/${eventId}`);
       }
     }
 

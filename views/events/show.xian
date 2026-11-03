@@ -167,7 +167,7 @@
           {{#if photo}}
           <img src="{{photo}}" alt="{{name}}"
             class="absolute inset-0 w-full h-full object-cover"
-            style="object-position:center top"/>
+            style="object-position:center top" loading="lazy"/>
           {{else}}
           <div class="absolute inset-0 flex items-center justify-center" style="background:linear-gradient(160deg,#0f1e3d,#1a2f5a)">
             <div class="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-black shadow-lg" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">{{number}}</div>

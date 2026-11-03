@@ -147,7 +147,7 @@
             onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
             <div class="flex items-center gap-3">
               {{#if photo}}
-              <img src="{{photo}}" alt="" class="w-9 h-9 rounded-xl object-cover flex-shrink-0" style="border:1px solid rgba(255,255,255,0.1)"/>
+              <img src="{{photo}}" alt="" class="w-9 h-9 rounded-xl object-cover flex-shrink-0" style="border:1px solid rgba(255,255,255,0.1)" loading="lazy"/>
               {{else}}
               <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2)">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/></svg>
@@ -241,7 +241,7 @@
           <div class="px-5 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 grad-green shadow-sm">
-                {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover"/>{{else}}?{{/if}}
+                {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover" loading="lazy"/>{{else}}?{{/if}}
               </div>
               <div>
                 <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>
@@ -258,7 +258,7 @@
             onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
             <div class="flex items-center gap-3">
               <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 grad-blue shadow-sm">
-                {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover"/>{{else}}T{{/if}}
+                {{#if photo}}<img src="{{photo}}" class="w-full h-full rounded-full object-cover" loading="lazy"/>{{else}}T{{/if}}
               </div>
               <div>
                 <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>

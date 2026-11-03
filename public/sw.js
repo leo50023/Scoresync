@@ -1,7 +1,7 @@
-// ScoreSync Service Worker — v12
+// ScoreSync Service Worker — v13
 // PWA support: caches static assets for fast loads
 
-const CACHE_STATIC = 'scoresync-static-v12';
+const CACHE_STATIC = 'scoresync-static-v13';
 const CACHE_FONTS  = 'scoresync-fonts-v8';
 
 const STATIC_ASSETS = [
@@ -12,6 +12,7 @@ const STATIC_ASSETS = [
   '/scoresync-logo.png',
   '/minsu-logo.png',
   '/icon.png',
+  '/icon.png?v=7',
   '/webfonts/fa-solid-900.woff2',
   '/webfonts/fa-regular-400.woff2',
   '/webfonts/fa-brands-400.woff2',
