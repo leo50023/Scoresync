@@ -202,12 +202,83 @@
     .auth-bg-orb-1, .auth-bg-orb-2, .auth-bg-orb-3 { display: none; }
   }
 
+
+  /* ── Premium loading indicator ── */
+  .auth-loader {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; z-index: 9999;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+    opacity: 0; transition: opacity 200ms ease;
+  }
+  .auth-loader.active { opacity: 1; }
+  .auth-loader-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #7c4dff, #b47dff, #4fc3f7, #7c4dff);
+    background-size: 200% 100%;
+    animation: loaderShimmer 1.4s linear infinite;
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 0 12px rgba(150,100,255,0.8), 0 0 4px rgba(150,100,255,0.6);
+    transition: width 300ms ease;
+  }
+  @keyframes loaderShimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── Button loading state ── */
+  .auth-btn.loading {
+    opacity: 0.85; cursor: not-allowed; pointer-events: none;
+  }
+  .auth-btn .btn-spinner {
+    display: none; width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  .auth-btn.loading .btn-spinner { display: block; }
+  .auth-btn.loading .btn-text { opacity: 0.8; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Logo pulse glow ── */
+  .auth-logomark {
+    animation: logoPulse 4s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%,100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 8px 32px rgba(120,80,255,0.4); }
+    50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.2),  0 8px 40px rgba(150,100,255,0.65), 0 0 20px rgba(120,80,255,0.3); }
+  }
+
+  /* ── Input hover ── */
+  .auth-input:hover:not(:focus) {
+    border-color: rgba(255,255,255,0.32) !important;
+  }
+
+  /* ── Card entrance ── */
+  .auth-card {
+    animation: cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 0.1s;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+  }
+
+  /* ── Tab active glow ── */
+  .auth-tab.active {
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  }
+
   /* ── Focus ── */
   .auth-tab:focus-visible { outline: 2px solid rgba(180,160,255,0.8); outline-offset: 3px; }
 </style>
 
 <div class="auth-bg"></div>
 
+<div class="auth-loader" id="auth-loader">
+  <div class="auth-loader-bar" id="auth-loader-bar"></div>
+</div>
 <body class="auth-page" style="overflow:hidden">
   <div class="auth-shell animate-fadeup">
 
@@ -278,8 +349,9 @@
           <a href="/forgot-password" class="text-sm font-semibold" style="color:rgba(160,130,255,0.9);text-decoration:none" onmouseover="this.style.color='rgba(200,180,255,1)'" onmouseout="this.style.color='rgba(160,130,255,0.9)'">Forgot password?</a>
         </div>
 
-        <button type="submit" class="auth-btn">
-          Sign in
+        <button type="submit" class="auth-btn" data-loading="Signing in...">
+          <div class="btn-spinner"></div>
+          <span class="btn-text">Sign in</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
       </form>
@@ -323,6 +395,39 @@ document.addEventListener('DOMContentLoaded', fixAutofill);
 setTimeout(fixAutofill, 50);
 setTimeout(fixAutofill, 200);
 setTimeout(fixAutofill, 600);
+
+// Premium loading indicator
+function startLoader() {
+  var loader = document.getElementById('auth-loader');
+  var bar = document.getElementById('auth-loader-bar');
+  if (!loader || !bar) return;
+  loader.classList.add('active');
+  bar.style.width = '0%';
+  setTimeout(function(){ bar.style.width = '30%'; }, 50);
+  setTimeout(function(){ bar.style.width = '60%'; }, 300);
+  setTimeout(function(){ bar.style.width = '80%'; }, 800);
+}
+function finishLoader() {
+  var loader = document.getElementById('auth-loader');
+  var bar = document.getElementById('auth-loader-bar');
+  if (!loader || !bar) return;
+  bar.style.width = '100%';
+  setTimeout(function(){ loader.classList.remove('active'); bar.style.width = '0%'; }, 400);
+}
+
+// Form submit with loading state
+document.querySelectorAll('.auth-card form').forEach(function(form) {
+  form.addEventListener('submit', function() {
+    startLoader();
+    // Button loading state
+    var btn = form.querySelector('.auth-btn');
+    if (btn) {
+      btn.classList.add('loading');
+      var textEl = btn.querySelector('.btn-text');
+      if (textEl) textEl.textContent = btn.dataset.loading || 'Please wait...';
+    }
+  });
+});
 </script>
 </body>
 </html>
