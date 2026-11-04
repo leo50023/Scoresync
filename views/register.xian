@@ -3,9 +3,9 @@
   /* ── Page ─ */
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px 20px;
-    position: relative; isolation: isolate; overflow: hidden;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    position: relative; isolation: isolate; overflow-y: auto; overflow-x: hidden;
     background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1e3a5f 75%, #0f172a 100%);
   }
 
