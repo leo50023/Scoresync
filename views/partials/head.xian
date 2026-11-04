@@ -1040,40 +1040,57 @@
     });
   </script>
 
-  <!-- Framer-Motion-style animations -->
+  <!-- Framer-Motion-style animations — smooth edition -->
   <style>
-    /* ─── Base keyframes ─────────────────────────────────────────── */
-    @keyframes fm-fadeUp   { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes fm-fadeDown { from{opacity:0;transform:translateY(-24px)} to{opacity:1;transform:translateY(0)} }
+    /* ─── Base keyframes — smooth, natural motion ─────────────────── */
+    @keyframes fm-fadeUp {
+      from { opacity:0; transform:translateY(32px) scale(0.98); }
+      to   { opacity:1; transform:translateY(0)    scale(1);    }
+    }
+    @keyframes fm-fadeDown {
+      from { opacity:0; transform:translateY(-32px) scale(0.98); }
+      to   { opacity:1; transform:translateY(0)     scale(1);   }
+    }
     @keyframes fm-fadeIn   { from{opacity:0} to{opacity:1} }
-    @keyframes fm-scaleIn  { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-    @keyframes fm-slideRight { from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:translateX(0)} }
-    @keyframes fm-slideLeft  { from{opacity:0;transform:translateX(28px)}  to{opacity:1;transform:translateX(0)} }
-    @keyframes fm-pop      { 0%{transform:scale(1)} 40%{transform:scale(1.06)} 100%{transform:scale(1)} }
-    @keyframes fm-shimmer  { from{background-position:200% 0} to{background-position:-200% 0} }
+    @keyframes fm-scaleIn  {
+      from { opacity:0; transform:scale(0.88) translateY(12px); }
+      to   { opacity:1; transform:scale(1)    translateY(0);    }
+    }
+    @keyframes fm-slideRight {
+      from { opacity:0; transform:translateX(-36px); }
+      to   { opacity:1; transform:translateX(0);     }
+    }
+    @keyframes fm-slideLeft {
+      from { opacity:0; transform:translateX(36px); }
+      to   { opacity:1; transform:translateX(0);    }
+    }
+    @keyframes fm-shimmer { from{background-position:200% 0} to{background-position:-200% 0} }
 
-    /* ─── Utility animation classes ─────────────────────────────── */
-    .fm-fade-up   { animation: fm-fadeUp   0.55s cubic-bezier(0.22,1,0.36,1) both; }
-    .fm-fade-down { animation: fm-fadeDown 0.55s cubic-bezier(0.22,1,0.36,1) both; }
-    .fm-fade-in   { animation: fm-fadeIn   0.45s ease both; }
-    .fm-scale-in  { animation: fm-scaleIn  0.45s cubic-bezier(0.22,1,0.36,1) both; }
-    .fm-slide-right { animation: fm-slideRight 0.5s cubic-bezier(0.22,1,0.36,1) both; }
-    .fm-slide-left  { animation: fm-slideLeft  0.5s cubic-bezier(0.22,1,0.36,1) both; }
+    /* ─── Smooth spring easing ───────────────────────────────────── */
+    /* cubic-bezier(0.16,1,0.3,1) = smooth spring like framer-motion */
+    .fm-fade-up    { animation: fm-fadeUp    0.7s cubic-bezier(0.16,1,0.3,1) both; }
+    .fm-fade-down  { animation: fm-fadeDown  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+    .fm-fade-in    { animation: fm-fadeIn    0.5s cubic-bezier(0.16,1,0.3,1) both; }
+    .fm-scale-in   { animation: fm-scaleIn   0.65s cubic-bezier(0.16,1,0.3,1) both; }
+    .fm-slide-right{ animation: fm-slideRight 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+    .fm-slide-left { animation: fm-slideLeft  0.65s cubic-bezier(0.16,1,0.3,1) both; }
 
     /* ─── Stagger delays ─────────────────────────────────────────── */
-    .fm-delay-1 { animation-delay: 0.05s }
-    .fm-delay-2 { animation-delay: 0.1s  }
-    .fm-delay-3 { animation-delay: 0.15s }
-    .fm-delay-4 { animation-delay: 0.2s  }
-    .fm-delay-5 { animation-delay: 0.25s }
-    .fm-delay-6 { animation-delay: 0.3s  }
+    .fm-delay-1 { animation-delay: 0.06s }
+    .fm-delay-2 { animation-delay: 0.12s }
+    .fm-delay-3 { animation-delay: 0.18s }
+    .fm-delay-4 { animation-delay: 0.24s }
+    .fm-delay-5 { animation-delay: 0.30s }
+    .fm-delay-6 { animation-delay: 0.36s }
 
-    /* ─── Scroll-reveal (starts hidden, JS adds .fm-visible) ─────── */
+    /* ─── Scroll-reveal ──────────────────────────────────────────── */
     .fm-reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
-                  transform 0.55s cubic-bezier(0.22,1,0.36,1);
+      transform: translateY(28px);
+      transition:
+        opacity  0.7s cubic-bezier(0.16,1,0.3,1),
+        transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform;
     }
     .fm-reveal.fm-visible {
       opacity: 1;
@@ -1081,59 +1098,74 @@
     }
     .fm-reveal-scale {
       opacity: 0;
-      transform: scale(0.94);
-      transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1),
-                  transform 0.5s cubic-bezier(0.22,1,0.36,1);
+      transform: scale(0.92) translateY(16px);
+      transition:
+        opacity  0.65s cubic-bezier(0.16,1,0.3,1),
+        transform 0.65s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform;
     }
     .fm-reveal-scale.fm-visible {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1) translateY(0);
     }
 
-    /* ─── Hover spring on interactive cards ─────────────────────── */
+    /* ─── Hover spring — smooth lift ─────────────────────────────── */
     .fm-hover {
-      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
-                  box-shadow 0.25s ease;
+      transition:
+        transform  0.35s cubic-bezier(0.34,1.4,0.64,1),
+        box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
       will-change: transform;
+      cursor: pointer;
     }
     .fm-hover:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12);
     }
     .fm-hover:active {
       transform: translateY(0) scale(0.98);
-      transition-duration: 0.12s;
+      transition-duration: 0.15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* ─── Tap/press feedback on buttons ─────────────────────────── */
+    /* ─── Tap feedback on buttons ────────────────────────────────── */
     .fm-tap {
-      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+      transition: transform 0.2s cubic-bezier(0.34,1.4,0.64,1),
+                  filter 0.2s ease;
     }
-    .fm-tap:active { transform: scale(0.96); }
+    .fm-tap:hover  { filter: brightness(1.06); }
+    .fm-tap:active {
+      transform: scale(0.95);
+      filter: brightness(0.96);
+      transition-duration: 0.1s;
+    }
 
-    /* ─── Page enter — wraps the main content area ───────────────── */
+    /* ─── Page enter ─────────────────────────────────────────────── */
     .fm-page-enter {
-      animation: fm-fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
+      animation: fm-fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
     }
 
-    /* ─── Shimmer skeleton loader ────────────────────────────────── */
+    /* ─── Shimmer skeleton ───────────────────────────────────────── */
     .fm-skeleton {
-      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 25%,
+        rgba(255,255,255,0.10) 50%,
+        rgba(255,255,255,0.04) 75%);
       background-size: 200% 100%;
-      animation: fm-shimmer 1.5s linear infinite;
+      animation: fm-shimmer 1.8s linear infinite;
       border-radius: 8px;
     }
 
-    /* Respect reduced motion */
+    /* ─── Reduce motion ──────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .fm-fade-up, .fm-fade-down, .fm-fade-in,
-      .fm-scale-in, .fm-slide-right, .fm-slide-left,
-      .fm-reveal, .fm-reveal-scale, .fm-page-enter {
+      .fm-fade-up, .fm-fade-down, .fm-fade-in, .fm-scale-in,
+      .fm-slide-right, .fm-slide-left, .fm-page-enter,
+      .fm-reveal, .fm-reveal-scale {
         animation: none !important;
         transition: none !important;
         opacity: 1 !important;
         transform: none !important;
       }
+      .fm-hover, .fm-tap { transition: none !important; }
     }
   </style>
   <script>
