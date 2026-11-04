@@ -86,7 +86,7 @@
   {{/if}}
 
   <!-- -- KPI Cards -- -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 animate-fadeup-1">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" data-stagger="fm-fade-up">
 
     <!-- Total Events -->
     <div class="rounded-2xl p-4 sm:p-5 relative overflow-hidden"
@@ -157,7 +157,7 @@
   </div>
 
   <!-- -- Main Grid -- -->
-  <div class="grid lg:grid-cols-3 gap-5 animate-fadeup-2">
+  <div class="grid lg:grid-cols-3 gap-5 fm-reveal">
 
     <!-- Recent Events -->
     <div class="lg:col-span-2 rounded-2xl overflow-hidden"

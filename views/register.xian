@@ -389,7 +389,7 @@
 </div>
 
 <body class="auth-page">
-  <div class="auth-shell">
+  <div class="auth-shell fm-fade-up">
     <!-- Logo -->
     <div class="auth-logomark">
       <img src="/scoresync-logo.png?v=8" alt="ScoreSync"/>
@@ -419,7 +419,7 @@
     {{/if}}
 
     <!-- Card -->
-    <div class="auth-card">
+    <div class="auth-card fm-scale-in fm-delay-2">
       <form method="POST" action="/register">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
@@ -462,7 +462,7 @@
           <div class="role-grid">
             <label class="role-card-label">
               <input type="radio" name="role" value="judge" class="sr-only" required/>
-              <div class="role-card role-card-judge">
+              <div class="role-card role-card-judge fm-hover">
                 <div class="role-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -477,7 +477,7 @@
 
             <label class="role-card-label">
               <input type="radio" name="role" value="tabulator" class="sr-only"/>
-              <div class="role-card role-card-tabulator">
+              <div class="role-card role-card-tabulator fm-hover">
                 <div class="role-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -508,7 +508,7 @@
           </div>
         </div>
 
-        <button type="submit" class="auth-btn" data-loading="Submitting...">
+        <button type="submit" class="auth-btn fm-tap" data-loading="Submitting...">
           <div class="btn-spinner"></div>
           <span class="btn-text">Request Account</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>

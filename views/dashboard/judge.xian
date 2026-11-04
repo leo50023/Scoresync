@@ -9,7 +9,7 @@
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
   <!-- ── Hero Header ── -->
-  <div class="relative rounded-2xl overflow-hidden animate-fadeup"
+  <div class="relative rounded-2xl overflow-hidden fm-fade-up"
     style="background:linear-gradient(135deg,#1e1b4b 0%,#2e1065 40%,#1e3a8a 100%);border:1px solid rgba(139,92,246,0.25)">
     <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full blur-3xl pointer-events-none" style="background:rgba(139,92,246,0.15)"></div>
     <div class="absolute -left-8 -bottom-8 w-48 h-48 rounded-full blur-3xl pointer-events-none" style="background:rgba(37,99,235,0.12)"></div>
@@ -42,7 +42,7 @@
 
   {{#unless isTabulator}}
   <!-- ── How It Works — 3-step flow ── -->
-  <div class="animate-fadeup-1">
+  <div class="fm-fade-up fm-delay-2">
     <div class="flex items-center gap-2 mb-3 px-1">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span class="text-xs font-bold uppercase tracking-widest" style="color:#a78bfa">How scoring works</span>
@@ -85,7 +85,7 @@
   {{/unless}}
 
   <!-- ── Events List ── -->
-  <div class="space-y-4 animate-fadeup-2">
+  <div class="space-y-4 fm-reveal">
     <div class="flex items-center justify-between px-1">
       <h2 class="font-extrabold text-base flex items-center gap-2" style="color:var(--text-primary)">
         {{#if isTabulator}}All Event Scores{{else}}Your Events{{/if}}

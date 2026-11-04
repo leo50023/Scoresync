@@ -159,7 +159,7 @@
         {{#if isOrganizer}}<a href="/events/{{event.id}}/contestants/add" class="btn-primary btn-sm text-xs px-3 py-1.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add</a>{{/if}}
       </div>
       {{#if contestants.length}}
-      <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" data-stagger="fm-scale-in">
         {{#each contestants}}
         <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition hover:-translate-y-1"
           style="aspect-ratio:3/4;border:1px solid var(--border);background:#111827">

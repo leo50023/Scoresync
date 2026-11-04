@@ -3,7 +3,7 @@
   /* ── Page ── */
   body.auth-page {
     min-height: 100vh; min-height: 100svh;
-    display: flex; align-items: flex-start; justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 40px 20px;
     position: relative; isolation: isolate; overflow-y: auto; overflow-x: hidden;
     background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1e3a5f 75%, #0f172a 100%);
@@ -313,7 +313,7 @@
 </div>
 
 <body class="auth-page">
-  <div class="auth-shell">
+  <div class="auth-shell fm-fade-up">
     <!-- Logo -->
     <div class="auth-logomark">
       <img src="/scoresync-logo.png?v=8" alt="ScoreSync"/>
@@ -343,7 +343,7 @@
     {{/if}}
 
     <!-- Card -->
-    <div class="auth-card">
+    <div class="auth-card fm-scale-in fm-delay-2">
       <form method="POST" action="/login">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
@@ -378,7 +378,7 @@
           <a href="/forgot-password" class="auth-forgot">Forgot password?</a>
         </div>
 
-        <button type="submit" class="auth-btn" data-loading="Signing in...">
+        <button type="submit" class="auth-btn fm-tap" data-loading="Signing in...">
           <div class="btn-spinner"></div>
           <span class="btn-text">Sign in</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>

@@ -342,7 +342,7 @@
   <div class="hero-layout relative z-10">
 
     <!-- Copy -->
-    <div class="animate-fadeup">
+    <div class="fm-fade-up">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Competition management, made clear
