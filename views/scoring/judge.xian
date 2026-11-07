@@ -532,7 +532,7 @@
 /* .judge-photo-frame img is defined above in the main block */
 .judge-scoring-col {
   min-width: 0;
-  padding: 22px 24px 22px 22px;
+  padding: 16px 20px 18px 18px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -564,7 +564,7 @@
 .judge-contestant-heading h2 {
   margin: 0;
   color: #f1f5f9;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 850;
   line-height: 1.2;
   overflow-wrap: anywhere;
@@ -575,22 +575,22 @@
   font-weight: 800;
 }
 .judge-contestant-meta {
-  min-height: 18px;
-  margin-bottom: 16px;
+  min-height: 16px;
+  margin-bottom: 10px;
   color: #94a3b8;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 .judge-card-divider {
   height: 1px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   background: rgba(255,255,255,0.08);
 }
 .criteria-panel {
-  margin-bottom: 8px;
-  padding: 12px 14px;
+  margin-bottom: 6px;
+  padding: 8px 12px;
   border: 1px solid rgba(148,163,184,0.13);
   border-left: 3px solid transparent;
-  border-radius: 12px;
+  border-radius: 10px;
   background: rgba(255,255,255,0.025);
   transition: border-color 0.2s,background 0.2s;
 }
@@ -613,9 +613,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 9px;
+  margin-bottom: 6px;
   color: #e2e8f0;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 .judge-weight-badge {
@@ -635,7 +635,7 @@
   min-width: 0;
 }
 .judge-score-track, .judge-overall-track {
-  height: 7px;
+  height: 6px;
   min-width: 0;
   overflow: hidden;
   border-radius: 999px;
@@ -658,15 +658,15 @@
   flex-shrink: 0;
 }
 .judge-score-entry input {
-  width: 76px;
-  height: 42px;
-  min-height: 42px;
+  width: 64px;
+  height: 36px;
+  min-height: 36px;
   border: 1px solid rgba(148,163,184,0.24);
-  border-radius: 10px;
+  border-radius: 9px;
   outline: none;
   background: #0a1220;
   color: #f1f5f9;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 800;
   text-align: center;
   -moz-appearance: textfield;
@@ -691,8 +691,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 12px;
-  padding: 12px 0 5px;
+  margin-top: 8px;
+  padding: 8px 0 4px;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 .judge-total-label {
@@ -709,7 +709,7 @@
 }
 .contestant-total {
   color: #e5c45a;
-  font-size: 1.65rem;
+  font-size: 1.4rem;
   font-weight: 850;
 }
 .contestant-fill-label {
@@ -723,8 +723,8 @@
   white-space: nowrap;
 }
 .judge-overall-track {
-  margin: 2px 0 14px;
-  height: 5px;
+  margin: 2px 0 10px;
+  height: 4px;
 }
 .submit-btn {
   width: 100%;
