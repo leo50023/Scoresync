@@ -19,7 +19,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span class="text-blue-100 text-sm">This runs <strong>once</strong> — after an admin exists, this page is locked.</span>
       </div>
-      <p class="text-blue-300 text-xs" style="opacity:0.6">&copy; 2026 ScoreSync &mdash; Gloria, Oriental Mindoro</p>
+      <p class="text-blue-300 text-xs" style="opacity:0.6">&copy; 2026 ScoreSync</p>
     </div>
   </div>
 

@@ -236,7 +236,7 @@
 
   <!-- Footer -->
   <div class="flex-shrink-0 px-8 py-3 flex items-center justify-between text-xs" style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);color:var(--text-faint)">
-    <span>ScoreSync — Official Tabulation System · Gloria, Oriental Mindoro</span>
+    <span>ScoreSync — Official Tabulation System</span>
     <span>{{criteria.length}} criteria · {{judgeCount}} judge(s)</span>
   </div>
 

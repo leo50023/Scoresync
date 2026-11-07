@@ -1,7 +1,7 @@
 {
   "name": "ScoreSync — Competition Tabulator",
   "short_name": "ScoreSync",
-  "description": "Official competition scoring and tabulation system for Gloria, Oriental Mindoro",
+  "description": "Official competition scoring and tabulation system",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#0d1f35",

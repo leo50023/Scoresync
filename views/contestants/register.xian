@@ -83,7 +83,7 @@
     </div>
 
     <p class="text-center text-xs mt-4" style="color:var(--text-faint)">
-      Powered by <span style="color:#34d399;font-weight:700">ScoreSync</span> · Gloria, Oriental Mindoro
+      Powered by <span style="color:#34d399;font-weight:700">ScoreSync</span>
     </p>
   </div>
 </body>
