@@ -121,7 +121,7 @@
             </div>
             <!-- Expand button -->
             <button type="button" class="photo-expand-btn" onclick="openPhotoModal('{{photo}}','{{name}}','{{number}}')" title="View full photo" aria-label="View full photo">
-              &times;
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
           </div>
           {{else}}
@@ -405,11 +405,8 @@
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 8px;
   color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
   cursor: pointer;
-  opacity: 0.85;
+  opacity: 0.8;
   transition: opacity 0.2s, background 0.2s;
   backdrop-filter: blur(4px);
   z-index: 2;
