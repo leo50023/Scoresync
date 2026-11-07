@@ -21,7 +21,7 @@
       radial-gradient(ellipse at 55%  5%, rgba(124,58,237,0.18) 0%, transparent 45%),
       radial-gradient(ellipse at 5%  80%, rgba(99,102,241,0.12) 0%, transparent 45%),
       radial-gradient(ellipse at 90% 15%, rgba(14,165,233,0.12) 0%, transparent 40%);
-    animation: bgPulse 18s ease-in-out infinite alternate;
+    animation: bgPulse 22s ease-in-out infinite alternate;
   }
   .auth-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -30,7 +30,11 @@
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
     opacity: 0.6;
   }
-  @keyframes bgPulse { 0%{opacity:0.85;transform:scale(1)} 100%{opacity:1;transform:scale(1.04)} }
+  @keyframes bgPulse {
+    0%   { opacity: 0.7;  transform: scale(1)    rotate(0deg); }
+    50%  { opacity: 0.95; transform: scale(1.06) rotate(1deg); }
+    100% { opacity: 0.8;  transform: scale(1.02) rotate(-1deg); }
+  }
 
   /* ── Shell ── */
   .auth-shell {
@@ -44,12 +48,18 @@
     width: 68px; height: 68px; border-radius: 20px;
     overflow: hidden; flex-shrink: 0; margin-bottom: 18px;
     box-shadow: 0 0 0 1px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.3), 0 8px 32px rgba(0,0,0,0.5);
-    animation: logoPulse 5s ease-in-out infinite;
+    animation: logoPulse 5s ease-in-out infinite, logoFloat 6s ease-in-out infinite;
+  }
+  @keyframes logoFloat {
+    0%,100% { transform: translateY(0px); }
+    50%     { transform: translateY(-6px); }
   }
   .auth-logomark img { width: 100%; height: 100%; object-fit: cover; }
   @keyframes logoPulse {
-    0%,100% { box-shadow: 0 0 0 1px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.3), 0 8px 32px rgba(0,0,0,0.5); }
-    50%      { box-shadow: 0 0 0 1px rgba(124,58,237,0.5),  0 0 36px rgba(124,58,237,0.45), 0 8px 40px rgba(0,0,0,0.6); }
+    0%   { box-shadow: 0 0 0 1px rgba(124,58,237,0.3),  0 0 20px rgba(124,58,237,0.25), 0 8px 32px rgba(0,0,0,0.5); }
+    33%  { box-shadow: 0 0 0 1px rgba(99,102,241,0.45),  0 0 32px rgba(99,102,241,0.4),  0 8px 36px rgba(0,0,0,0.55); }
+    66%  { box-shadow: 0 0 0 1px rgba(14,165,233,0.4),   0 0 28px rgba(14,165,233,0.35), 0 8px 38px rgba(0,0,0,0.55); }
+    100% { box-shadow: 0 0 0 1px rgba(124,58,237,0.3),  0 0 20px rgba(124,58,237,0.25), 0 8px 32px rgba(0,0,0,0.5); }
   }
 
   /* ── Eyebrow ── */
@@ -110,8 +120,10 @@
     animation-delay: 0.1s;
   }
   @keyframes cardIn {
-    from { opacity:0; transform:translateY(24px) scale(0.97); }
-    to   { opacity:1; transform:translateY(0)    scale(1);    }
+    0%   { opacity:0;   transform:translateY(32px) scale(0.95) rotateX(4deg); filter:blur(4px); }
+    60%  { opacity:0.9; transform:translateY(-4px) scale(1.01); filter:blur(0); }
+    80%  { transform:translateY(2px) scale(0.995); }
+    100% { opacity:1;   transform:translateY(0)   scale(1);    filter:blur(0); }
   }
 
   /* ── Label ── */
@@ -215,12 +227,14 @@
     position: relative; overflow: hidden;
   }
   .auth-btn::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
-    opacity: 0; transition: opacity 0.3s ease;
+    content: ''; position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.55s cubic-bezier(0.16,1,0.3,1);
   }
   .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(124,58,237,0.55), 0 4px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25); }
-  .auth-btn:hover::before { opacity: 1; }
+  .auth-btn:hover::before { left: 150%; }
   .auth-btn:active { transform: translateY(0); transition-duration: 0.1s; }
   .auth-btn.loading { opacity: 0.8; cursor: not-allowed; pointer-events: none; }
   .auth-btn .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -248,8 +262,53 @@
   /* ── Loader ── */
   .auth-loader { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 9999; background: rgba(255,255,255,0.06); overflow: hidden; opacity: 0; transition: opacity 0.2s ease; }
   .auth-loader.active { opacity: 1; }
-  .auth-loader-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #7c3aed, #a78bfa, #6366f1, #3b82f6); background-size: 200% 100%; animation: shimmer 1.5s linear infinite; border-radius: 0 3px 3px 0; box-shadow: 0 0 16px rgba(124,58,237,0.9); transition: width 0.3s ease; }
-  @keyframes shimmer { from{background-position:200% 0} to{background-position:-200% 0} }
+  .auth-loader-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg,
+      #4f46e5, #7c3aed, #a78bfa, #6366f1, #06b6d4, #7c3aed, #4f46e5);
+    background-size: 300% 100%;
+    animation: loaderFlow 1.2s linear infinite;
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 0 20px rgba(124,58,237,1), 0 0 40px rgba(124,58,237,0.5);
+    transition: width 0.25s cubic-bezier(0.16,1,0.3,1);
+    position: relative; overflow: hidden;
+  }
+  .auth-loader-bar::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 60px; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: loaderGlow 0.8s ease-in-out infinite;
+  }
+  @keyframes loaderFlow {
+    from { background-position: 100% 0; }
+    to   { background-position: -200% 0; }
+  }
+  @keyframes loaderGlow {
+    0%,100% { opacity: 0; transform: translateX(-30px); }
+    50%     { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── Stagger field entrance ── */
+  .auth-card .field-row {
+    opacity: 0; transform: translateY(16px);
+    animation: fieldIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .auth-card .field-row:nth-child(1) { animation-delay: 0.22s; }
+  .auth-card .field-row:nth-child(2) { animation-delay: 0.32s; }
+  .auth-card .field-row:nth-child(3) { animation-delay: 0.42s; }
+  .auth-card .field-row:nth-child(4) { animation-delay: 0.50s; }
+  @keyframes fieldIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Input focus glow ring ── */
+  .input-icon-wrap::after {
+    content: ''; position: absolute; inset: -1px;
+    border-radius: 14px;
+    box-shadow: 0 0 0 0 rgba(124,58,237,0);
+    transition: box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none; z-index: 0;
+  }
+  .input-icon-wrap:focus-within::after { box-shadow: 0 0 0 4px rgba(124,58,237,0.18); }
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
@@ -275,9 +334,26 @@
   }
 
   .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0 }
+
+  /* ── Floating particles ── */
+  .auth-bg-particles {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .auth-particle {
+    position: absolute; width: 2px; height: 2px;
+    border-radius: 50%; background: rgba(255,255,255,0.35);
+    animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-20px) scale(1.5); opacity: 0; }
+  }
 </style>
 
 <div class="auth-bg"></div>
+<div class="auth-bg-particles" id="auth-particles"></div>
 <div class="auth-loader" id="auth-loader"><div class="auth-loader-bar" id="auth-loader-bar"></div></div>
 
 <body class="auth-page" style="overflow-x:hidden">
@@ -312,7 +388,7 @@
     <form method="POST" action="/register">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-      <div>
+      <div class="field-row">
         <label class="auth-label">Full Name</label>
         <div class="input-icon-wrap">
           <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
@@ -320,7 +396,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="field-row">
         <label class="auth-label">Email Address</label>
         <div class="input-icon-wrap">
           <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
@@ -328,7 +404,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="field-row">
         <label class="auth-label">Password</label>
         <div class="input-icon-wrap" style="position:relative">
           <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
@@ -391,14 +467,15 @@
 </div>
 
 <script>
-const eyeOpen='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-const eyeClose='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+// ── Eye toggle ──
+var eyeOpen='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+var eyeClose='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
 function togglePwd(){
-  const i=document.getElementById('passwordInput'),b=document.getElementById('eyeBtn');
+  var i=document.getElementById('passwordInput'),b=document.getElementById('eyeBtn');
   if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
   else{i.type='password';b.innerHTML=eyeOpen;}
 }
-// Role card JS highlight
+// ── Role card highlight ──
 document.querySelectorAll('input[name="role"]').forEach(function(r){
   r.addEventListener('change',function(){
     document.querySelectorAll('.role-card').forEach(function(c){
@@ -413,12 +490,24 @@ document.querySelectorAll('input[name="role"]').forEach(function(r){
     if(colors[r.value]){card.style.background=colors[r.value][0];card.style.borderColor=colors[r.value][1];card.style.boxShadow=colors[r.value][2];}
   });
 });
+// ── Premium loader with completion ──
 function startLoader(){
   var l=document.getElementById('auth-loader'),b=document.getElementById('auth-loader-bar');
-  if(!l||!b)return; l.classList.add('active'); b.style.width='0%';
-  setTimeout(function(){b.style.width='35%'},60);
-  setTimeout(function(){b.style.width='65%'},350);
-  setTimeout(function(){b.style.width='82%'},900);
+  if(!l||!b)return;
+  l.classList.add('active'); b.style.transition='none'; b.style.width='0%';
+  requestAnimationFrame(function(){
+    b.style.transition='width 0.3s cubic-bezier(0.16,1,0.3,1)';
+    setTimeout(function(){b.style.width='30%'},40);
+    setTimeout(function(){b.style.width='60%'},400);
+    setTimeout(function(){b.style.width='80%'},900);
+  });
+}
+function completeLoader(){
+  var l=document.getElementById('auth-loader'),b=document.getElementById('auth-loader-bar');
+  if(!l||!b)return;
+  b.style.transition='width 0.3s cubic-bezier(0.16,1,0.3,1)';
+  b.style.width='100%';
+  setTimeout(function(){ l.style.opacity='0'; setTimeout(function(){ l.classList.remove('active'); b.style.width='0%'; l.style.opacity=''; },300); },350);
 }
 document.querySelectorAll('.auth-card form').forEach(function(f){
   f.addEventListener('submit',function(){
@@ -427,6 +516,26 @@ document.querySelectorAll('.auth-card form').forEach(function(f){
     if(btn){btn.classList.add('loading');var t=btn.querySelector('.btn-text');if(t)t.textContent=btn.dataset.loading||'Please wait...';}
   });
 });
+window.addEventListener('pagehide', completeLoader);
+// ── Floating particles ──
+(function(){
+  var wrap=document.getElementById('auth-particles');
+  if(!wrap)return;
+  var colors=['rgba(124,58,237,0.6)','rgba(99,102,241,0.5)','rgba(14,165,233,0.5)','rgba(167,139,250,0.45)','rgba(255,255,255,0.3)'];
+  for(var i=0;i<28;i++){
+    var p=document.createElement('div');
+    p.className='auth-particle';
+    var sz=(Math.random()*2+1).toFixed(1);
+    p.style.left=Math.random()*100+'%';
+    p.style.width=sz+'px'; p.style.height=sz+'px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration=(Math.random()*12+8)+'s';
+    p.style.animationDelay=(-Math.random()*12)+'s';
+    p.style.borderRadius='50%';
+    if(Math.random()>0.6) p.style.filter='blur(1px)';
+    wrap.appendChild(p);
+  }
+})();
 </script>
 </body>
 </html>
