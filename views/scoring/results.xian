@@ -836,33 +836,30 @@
 .print-show { display: none; }
 
 @media print {
-  /* Hide everything except the ranking table */
-  body * { visibility: hidden; }
-  .no-print, #main-sidebar, nav, header,
-  #podium-container, .results-toolbar,
-  .tabulation-scroll-wrapper,
-  #main-sidebar, .sidebar,
-  main > *:not(.print-rank-table) { display: none !important; }
-
-  /* Show only the ranked table */
-  .print-rank-table,
-  .print-rank-table * { visibility: visible; }
-
-  body, main, .flex, .flex-1 {
-    display: block !important;
-    background: #fff !important;
+  /* Force single page, white background */
+  html, body {
+    height: auto !important;
     overflow: visible !important;
+    background: #fff !important;
   }
 
+  /* Hide absolutely everything first */
+  body > * { display: none !important; }
+
+  /* Then show only the print table */
   .print-rank-table {
     display: block !important;
-    position: fixed !important;
-    top: 0; left: 0;
+    position: static !important;
+    top: auto; left: auto;
     width: 100%;
     padding: 24px;
     background: #fff;
     color: #000;
+    page-break-after: avoid;
+    page-break-inside: avoid;
   }
+  .print-rank-table,
+  .print-rank-table * { visibility: visible !important; }
 
   /* Clean white table styles */
   .print-rank-table h2 {
