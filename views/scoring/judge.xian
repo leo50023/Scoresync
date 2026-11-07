@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -121,7 +121,7 @@
             </div>
             <!-- Expand button -->
             <button type="button" class="photo-expand-btn" onclick="openPhotoModal('{{photo}}','{{name}}','{{number}}')" title="View full photo" aria-label="View full photo">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
           {{else}}
@@ -273,7 +273,7 @@
     <button type="button" id="btn-next-contestant"
       class="btn-sm btn-solid-gold"
       onclick="goToContestant(window._currentIdx + 1)">
-      Next ?
+      Next <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
   </div>
 </div>
@@ -406,7 +406,7 @@
   border-radius: 8px;
   color: #fff;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.75;
   transition: opacity 0.2s, background 0.2s;
   backdrop-filter: blur(4px);
   z-index: 2;
@@ -1278,7 +1278,7 @@ main::-webkit-scrollbar { display:none; }
 <!-- -- Photo Fullscreen Modal -- -->
 <div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" style="display:none" onclick="closePhotoModal(event)">
   <div id="photo-modal-inner">
-    <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close">?</button>
+    <button id="photo-modal-close" onclick="closePhotoModal()" aria-label="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <img id="photo-modal-img" src="" alt=""/>
     <div id="photo-modal-caption">
       <div id="photo-modal-caption-name"></div>
@@ -1332,3 +1332,4 @@ window.closeCompleteModal = function(e) {
 {{/if}}
 
 </html>
+
