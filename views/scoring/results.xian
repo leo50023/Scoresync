@@ -836,30 +836,53 @@
 .print-show { display: none; }
 
 @media print {
-  /* Force single page, white background */
+  /* Force white everywhere */
   html, body {
     height: auto !important;
     overflow: visible !important;
     background: #fff !important;
+    color: #000 !important;
   }
 
-  /* Hide absolutely everything first */
+  /* Hide ALL body children */
   body > * { display: none !important; }
 
-  /* Then show only the print table */
+  /* Kill any remaining dark backgrounds */
+  * {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+  }
+
+  /* Show ONLY the print table */
   .print-rank-table {
     display: block !important;
     position: static !important;
-    top: auto; left: auto;
-    width: 100%;
-    padding: 24px;
-    background: #fff;
-    color: #000;
-    page-break-after: avoid;
-    page-break-inside: avoid;
+    width: 100% !important;
+    padding: 24px !important;
+    background: #fff !important;
+    color: #000 !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
   }
   .print-rank-table,
-  .print-rank-table * { visibility: visible !important; }
+  .print-rank-table * {
+    visibility: visible !important;
+    display: revert !important;
+  }
+
+  /* Restore table header bg */
+  .print-rank-table th {
+    background: #1e3a8a !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-rank-table tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+}
 
   /* Clean white table styles */
   .print-rank-table h2 {
