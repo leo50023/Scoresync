@@ -840,15 +840,23 @@
   body * { visibility: hidden; }
   .no-print, #main-sidebar, nav, header,
   #podium-container, .results-toolbar,
-  .tabulation-scroll-wrapper { display: none !important; }
+  .tabulation-scroll-wrapper,
+  #main-sidebar, .sidebar,
+  main > *:not(.print-rank-table) { display: none !important; }
 
   /* Show only the ranked table */
   .print-rank-table,
   .print-rank-table * { visibility: visible; }
 
+  body, main, .flex, .flex-1 {
+    display: block !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
   .print-rank-table {
     display: block !important;
-    position: fixed;
+    position: fixed !important;
     top: 0; left: 0;
     width: 100%;
     padding: 24px;
