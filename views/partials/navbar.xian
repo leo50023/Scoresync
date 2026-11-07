@@ -78,15 +78,6 @@
       </div>
     </div>
 
-    <!-- Theme Toggle -->
-    <button type="button" id="theme-toggle-btn" onclick="toggleTheme()" data-no-min
-      title="Toggle light/dark mode"
-      style="width:36px;height:36px;min-height:unset;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);color:#e2e8f0;cursor:pointer;flex-shrink:0;transition:all 120ms ease">
-      <!-- Sun icon (shown in dark mode = click to go light) -->
-      <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      <!-- Moon icon (shown in light mode = click to go dark) -->
-      <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
     <a id="navbar-profile-pill" href="/settings" class="flex items-center gap-2 pl-1 py-1 rounded-full border transition group"
       style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);padding-right:12px;min-width:0;max-width:160px;flex-wrap:wrap">
       <div class="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 shadow" style="border:1.5px solid rgba(255,255,255,0.2)">
@@ -112,97 +103,6 @@
 <script>
 (function() {
   // Sync theme toggle icon on load
-  function syncThemeIcon() {
-    var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-    var sun  = document.getElementById('theme-icon-sun');
-    var moon = document.getElementById('theme-icon-moon');
-    var btn  = document.getElementById('theme-toggle-btn');
-    if (sun)  sun.style.display  = isDark ? '' : 'none';
-    if (moon) moon.style.display = isDark ? 'none' : '';
-    if (btn) {
-      if (isDark) {
-        btn.style.background   = 'rgba(255,255,255,0.12)';
-        btn.style.borderColor  = 'rgba(255,255,255,0.25)';
-        btn.style.color        = '#e2e8f0';
-      } else {
-        btn.style.background   = 'rgba(0,0,0,0.08)';
-        btn.style.borderColor  = 'rgba(0,0,0,0.2)';
-        btn.style.color        = '#0f172a';
-      }
-    }
-  }
-  syncThemeIcon();
-
-  window.toggleTheme = function() {
-    var html    = document.documentElement;
-    var isDark  = html.getAttribute('data-theme') !== 'light';
-    var newTheme = isDark ? 'light' : 'dark';
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('ss-theme', newTheme);
-    syncThemeIcon();
-    applyThemeToInlineStyles(newTheme);
-  };
-
-  // Override all inline hardcoded dark backgrounds/colors when switching themes
-  function applyThemeToInlineStyles(theme) {
-    var isLight = theme === 'light';
-    // Map of dark values → light replacements
-    var bgMap = {
-      '#111827':  isLight ? '#ffffff' : '#111827',
-      '#0d1424':  isLight ? '#f8fafc' : '#0d1424',
-      '#0a0f1e':  isLight ? '#f0f4f8' : '#0a0f1e',
-      '#060b18':  isLight ? '#e8edf5' : '#060b18',
-      '#0f1623':  isLight ? '#f8fafc' : '#0f1623',
-      '#0d1117':  isLight ? '#f8fafc' : '#0d1117',
-      '#1a1a2e':  isLight ? '#f0f4f8' : '#1a1a2e',
-      '#16213e':  isLight ? '#f0f4f8' : '#16213e',
-      '#0f3460':  isLight ? '#e8edf5' : '#0f3460',
-    };
-    var textMap = {
-      '#e2e8f0': isLight ? '#0f172a' : '#e2e8f0',
-      '#f1f5f9': isLight ? '#020617' : '#f1f5f9',
-      '#f0fdf4': isLight ? '#0f172a' : '#f0fdf4',
-      '#cbd5e1': isLight ? '#334155' : '#cbd5e1',
-      '#94a3b8': isLight ? '#475569' : '#94a3b8',
-      '#374151': isLight ? '#6b7280' : '#374151',
-      '#475569': isLight ? '#6b7280' : '#475569',
-      '#64748b': isLight ? '#64748b' : '#64748b',
-    };
-    // Walk all elements with style attributes
-    var all = document.querySelectorAll('[style]');
-    all.forEach(function(el) {
-      var s = el.getAttribute('style') || '';
-      // Replace background colors
-      Object.keys(bgMap).forEach(function(dark) {
-        if (s.indexOf(dark) !== -1) {
-          el.style.setProperty('background', bgMap[dark], 'important');
-        }
-      });
-      // Replace text colors
-      Object.keys(textMap).forEach(function(dark) {
-        if (s.indexOf('color:' + dark) !== -1 || s.indexOf('color: ' + dark) !== -1) {
-          el.style.setProperty('color', textMap[dark], 'important');
-        }
-      });
-      // Fix white rgba borders for light mode
-      if (isLight && (s.indexOf('rgba(255,255,255,0.0') !== -1 || s.indexOf('rgba(255,255,255,0.1') !== -1)) {
-        if (s.indexOf('border') !== -1) {
-          var cur = el.style.borderColor;
-          if (!cur || cur.indexOf('rgba(255') !== -1) {
-            el.style.setProperty('border-color', 'rgba(0,0,0,0.09)', 'important');
-          }
-        }
-      }
-    });
-    // Force body background
-    document.body.style.setProperty('background', isLight ? '#f0f4f8' : '#0a0f1e', 'important');
-  }
-
-  // Apply on load too if light mode is active
-  (function(){
-    var t = document.documentElement.getAttribute('data-theme');
-    if (t === 'light') applyThemeToInlineStyles('light');
-  })();
 
   function applyNavbarLayout() {
     var usernameLabel = document.getElementById('navbar-username-label');
