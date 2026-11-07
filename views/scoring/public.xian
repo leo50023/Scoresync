@@ -91,7 +91,7 @@
   <!-- Footer -->
   <div class="text-center py-8 px-4 text-xs" style="color:var(--text-faint)">
     <p>Powered by <strong style="color:#34d399">ScoreSync</strong> — Official Tabulation System</p>
-    <p class="mt-1">Municipality of Gloria, Oriental Mindoro</p>
+    <p class="mt-1">Powered by <strong style="color:#34d399">ScoreSync</strong></p>
   </div>
 
 </body>

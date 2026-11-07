@@ -1,6 +1,6 @@
 <footer class="mt-auto py-4 px-6 flex items-center justify-between text-xs flex-shrink-0"
   style="border-top:1px solid var(--border);background:var(--bg-card-hover);color:var(--text-muted)">
-  <span>&copy; 2026 <span class="font-bold" style="color:#60a5fa">ScoreSync</span> &mdash; Municipality of Gloria, Oriental Mindoro</span>
+  <span>&copy; 2026 <span class="font-bold" style="color:#60a5fa">ScoreSync</span></span>
 </footer>
 </body>
 </html>
