@@ -834,6 +834,78 @@
   opacity: 1;
 }
 .print-show { display: none; }
+
+@media print {
+  /* Hide everything except the ranking table */
+  body * { visibility: hidden; }
+  .no-print, #main-sidebar, nav, header,
+  #podium-container, .results-toolbar,
+  .tabulation-scroll-wrapper { display: none !important; }
+
+  /* Show only the ranked table */
+  .print-rank-table,
+  .print-rank-table * { visibility: visible; }
+
+  .print-rank-table {
+    display: block !important;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 24px;
+    background: #fff;
+    color: #000;
+  }
+
+  /* Clean white table styles */
+  .print-rank-table h2 {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 4px;
+    color: #000;
+  }
+  .print-rank-table .print-event-meta {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  .print-rank-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .print-rank-table th {
+    background: #1e3a8a;
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .print-rank-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #111;
+  }
+  .print-rank-table tr:nth-child(even) td { background: #f8fafc; }
+  .print-rank-table tr:first-child td { font-weight: 700; }
+  .print-rank-table .print-rank-num {
+    font-weight: 900;
+    font-size: 14px;
+    color: #1e3a8a;
+  }
+  .print-rank-table .print-score {
+    font-weight: 800;
+    color: #1e3a8a;
+  }
+  .print-rank-table .print-footer {
+    margin-top: 16px;
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+  }
+}
 </style>
 
 <script>
@@ -860,6 +932,51 @@ document.getElementById("print-date") && (document.getElementById("print-date").
   scr.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
   update();
+})();
+</script>
+
+<!-- ── Print-only Rankings Table ── -->
+<div class="print-rank-table" style="display:none">
+  <h2>Official Results — {{event.name}}</h2>
+  <div class="print-event-meta">
+    {{#if event.date}}Date: {{event.date}} &nbsp;|&nbsp;{{/if}}
+    {{judgeCount}} Judge(s) &nbsp;|&nbsp; {{ranked.length}} Contestant(s) &nbsp;|&nbsp; {{criteria.length}} Criteria &nbsp;|&nbsp;
+    Printed: <span id="print-date-table"></span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:48px">Rank</th>
+        <th style="width:36px">#</th>
+        <th>Contestant</th>
+        <th style="width:90px;text-align:right">Weighted Avg</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each ranked}}
+      <tr>
+        <td class="print-rank-num">
+          {{#if (eq rank 1)}}🥇 1st{{/if}}
+          {{#if (eq rank 2)}}🥈 2nd{{/if}}
+          {{#if (eq rank 3)}}🥉 3rd{{/if}}
+          {{#unless (lte rank 3)}}{{rank}}th{{/unless}}
+        </td>
+        <td style="color:#555">#{{number}}</td>
+        <td style="font-weight:600">{{name}}</td>
+        <td class="print-score" style="text-align:right">{{finalScoreDisplay}}%</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <div class="print-footer">ScoreSync — Official Competition Results &bull; {{event.name}} &bull; <span class="print-date-footer"></span></div>
+</div>
+
+<script>
+(function(){
+  var d = new Date().toLocaleDateString();
+  var el = document.getElementById('print-date-table');
+  if(el) el.textContent = d;
+  document.querySelectorAll('.print-date-footer').forEach(function(e){ e.textContent = d; });
 })();
 </script>
 
