@@ -113,7 +113,7 @@
         <div class="judge-photo-col">
           {{#if photo}}
           <div class="judge-photo-frame">
-            <img src="{{photo}}" alt="{{name}}" style="display:block;width:260px;height:360px;max-width:260px;object-fit:cover;object-position:center top;border:0"/>
+            <img src="{{photo}}" alt="{{name}}" style="display:block;width:360px;height:100%;max-width:360px;object-fit:cover;object-position:center top;border:0"/>
             <!-- Name overlay at bottom -->
             <div class="judge-photo-overlay">
               <div class="judge-photo-overlay-name">{{name}}</div>
@@ -315,19 +315,19 @@
 }
 .judge-card-inner {
   display: grid;
-  grid-template-columns: 300px minmax(0,1fr);
-  align-items: start;
+  grid-template-columns: 360px minmax(0,1fr);
+  align-items: stretch;
   min-width: 0;
   width: 100%;
 }
 .judge-photo-col {
-  width: 300px;
-  min-width: 300px;
-  max-width: 300px;
+  width: 360px;
+  min-width: 360px;
+  max-width: 360px;
   flex-shrink: 0;
-  padding: 20px;
+  padding: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   background: rgba(4,10,20,0.3);
   border-right: 1px solid rgba(255,255,255,0.06);
@@ -336,18 +336,18 @@
 }
 .judge-photo-col img {
   display: block !important;
-  width: 260px !important;
-  height: 360px !important;
-  max-width: 260px !important;
+  width: 360px !important;
+  height: 100% !important;
+  max-width: 360px !important;
 }
 .judge-photo-frame {
   position: relative;
-  width: 260px;
-  min-width: 260px;
-  max-width: 260px;
-  height: 360px;
-  min-height: 360px;
-  max-height: 360px;
+  width: 360px;
+  min-width: 360px;
+  max-width: 360px;
+  height: 100%;
+  min-height: 440px;
+  max-height: unset;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 16px;
@@ -357,9 +357,9 @@
 }
 .judge-photo-frame img {
   display: block !important;
-  width: 260px !important;
-  height: 360px !important;
-  max-width: 260px !important;
+  width: 360px !important;
+  height: 100% !important;
+  max-width: 360px !important;
   object-fit: cover;
   object-position: center top;
   border: 0;
@@ -509,8 +509,9 @@
   align-items: center;
   justify-content: center;
   padding: 24px 12px;
-  width: 260px;
-  height: 360px;
+  width: 360px;
+  height: 100%;
+  min-height: 440px;
 }
 .judge-photo-placeholder > .text-center {
   width: 100%;
@@ -784,23 +785,23 @@
     gap: 14px;
   }
   .judge-photo-frame {
-    width: 150px !important;
-    min-width: 150px !important;
-    max-width: 150px !important;
-    height: 200px !important;
-    min-height: 200px !important;
-    max-height: 200px !important;
+    width: 160px !important;
+    min-width: 160px !important;
+    max-width: 160px !important;
+    height: 210px !important;
+    min-height: 210px !important;
+    max-height: 210px !important;
     flex-shrink: 0;
     border-radius: 12px;
   }
   .judge-photo-frame img {
-    width: 150px !important;
-    height: 200px !important;
-    max-width: 150px !important;
+    width: 160px !important;
+    height: 210px !important;
+    max-width: 160px !important;
   }
   .judge-photo-placeholder {
-    width: 150px !important;
-    height: 200px !important;
+    width: 160px !important;
+    height: 210px !important;
     min-height: unset;
   }
   .judge-scoring-col {
