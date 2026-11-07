@@ -1,4 +1,4 @@
-{{> head }}
+ï»¿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -37,7 +37,7 @@
                 <div id="create-cover-placeholder" class="flex flex-col items-center justify-center py-8 gap-2">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                   <p class="text-xs font-semibold" style="color:var(--text-muted)">Click to upload cover photo</p>
-                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP — max 3MB</p>
+                  <p class="text-[11px]" style="color:var(--text-faint)">JPG, PNG, WebP â€” max 3MB</p>
                 </div>
                 <img id="create-cover-preview" src="" alt="Cover preview" class="hidden w-full h-40 object-cover rounded-xl"/>
               </div>
@@ -69,21 +69,21 @@
                   <option value="completed">Completed</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
-                <p class="text-[11px] mt-1" style="color:var(--text-faint)">Auto-set from date — you can override.</p>
+                <p class="text-[11px] mt-1" style="color:var(--text-faint)">Auto-set from date â€” you can override.</p>
               </div>
             </div>
 
-            <!-- Other LGU Competition — auto-shows when type = other -->
+            <!-- Other LGU Competition â€” auto-shows when type = other -->
             <div id="other-lgu-wrap" class="hidden animate-fadeup">
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
                 Specify Competition Type <span class="text-red-500">*</span>
               </label>
               <input type="text" name="otherType" id="other-lgu-input"
-                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest, Fiesta Parade…"
+                placeholder="e.g. Sayaw sa Bangko, Literary &amp; Musical Contest, Fiesta Paradeâ€¦"
                 class="form-input-bare"/>
               <p class="text-[11px] mt-1.5" style="color:var(--text-faint)">Describe the type of LGU competition not listed above.</p>
             </div>
-            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Organizer</label><input type="text" name="organizer" placeholder="e.g. Municipality of Gloria — Tourism Office" class="form-input-bare"/></div>
+            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Organizer</label><input type="text" name="organizer" placeholder="e.g. Municipality of Gloria â€” Tourism Office" class="form-input-bare"/></div>
 
             <!-- Theme Color Picker -->
             <div>
@@ -155,53 +155,15 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">End Time</label>
                 <input type="time" name="endTime" id="event-end-time" onchange="autoSetStatus()" class="form-input-bare"/>
-                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends — auto-marks Completed.</p>
+                <p class="text-[11px] mt-1" style="color:var(--text-faint)">When event ends â€” auto-marks Completed.</p>
               </div>
             </div>
 
-            <!-- Venue dropdown + free-text fallback -->
+            <!-- Venue free-text -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Location</label>
-              <select id="venue-select" name="venue" onchange="handleVenueSelect(this)" class="form-input-bare bg-white">
-                <option value="">— Select a venue —</option>
-                <optgroup label="Barangays in Gloria">
-                  <option value="Brgy. Agsalin">Brgy. Agsalin</option>
-                  <option value="Brgy. Agos">Brgy. Agos</option>
-                  <option value="Brgy. Alma Villa">Brgy. Alma Villa</option>
-                  <option value="Brgy. Andres Bonifacio">Brgy. Andres Bonifacio</option>
-                  <option value="Brgy. Balete">Brgy. Balete</option>
-                  <option value="Brgy. Banus">Brgy. Banus</option>
-                  <option value="Brgy. Banutan">Brgy. Banutan</option>
-                  <option value="Brgy. Buong Lupa">Brgy. Buong Lupa</option>
-                  <option value="Brgy. Bulaklakan">Brgy. Bulaklakan</option>
-                  <option value="Brgy. Gaudencio Antonino">Brgy. Gaudencio Antonino</option>
-                  <option value="Brgy. Guimbonan">Brgy. Guimbonan</option>
-                  <option value="Brgy. Kawit">Brgy. Kawit</option>
-                  <option value="Brgy. Lucio Laurel">Brgy. Lucio Laurel</option>
-                  <option value="Brgy. Macario Adriatico">Brgy. Macario Adriatico</option>
-                  <option value="Brgy. Malamig">Brgy. Malamig</option>
-                  <option value="Brgy. Malayong">Brgy. Malayong</option>
-                  <option value="Brgy. Maligaya (Pob.)">Brgy. Maligaya (Pob.)</option>
-                  <option value="Brgy. Malubay">Brgy. Malubay</option>
-                  <option value="Brgy. Manguyang">Brgy. Manguyang</option>
-                  <option value="Brgy. Maragooc">Brgy. Maragooc</option>
-                  <option value="Brgy. Mirayan">Brgy. Mirayan</option>
-                  <option value="Brgy. Narra">Brgy. Narra</option>
-                  <option value="Brgy. Papandungin">Brgy. Papandungin</option>
-                  <option value="Brgy. San Antonio">Brgy. San Antonio</option>
-                  <option value="Brgy. Santa Maria">Brgy. Santa Maria</option>
-                  <option value="Brgy. Santa Theresa">Brgy. Santa Theresa</option>
-                  <option value="Brgy. Tambong">Brgy. Tambong</option>
-                </optgroup>
-                <optgroup label="Other">
-                  <option value="__custom__">Type a custom venue…</option>
-                </optgroup>
-              </select>
-              <!-- Free-text fallback (shown when custom is chosen) -->
-              <div id="venue-custom-wrap" class="hidden mt-2">
-                <input type="text" id="venue-custom-input" placeholder="Enter venue name…" class="form-input-bare"
-                  oninput="document.getElementById('venue-select').value='__custom__'; this.form.querySelector('[name=venue]') && (document.getElementById('venue-select').name=''); this.setAttribute('name','venue')"/>
-              </div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Location / Venue</label>
+              <input type="text" name="venue" placeholder="e.g. Municipal Gymnasium, School Auditorium, Hotel Function Hall" class="form-input-bare" maxlength="120"/>
+              <p class="text-[11px] mt-1.5" style="color:var(--text-faint)">Enter the exact venue or location of the event.</p>
             </div>
 
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Max Contestants</label><input type="number" name="maxContestants" placeholder="e.g. 20" min="1" max="200" class="form-input-bare"/></div>
@@ -216,7 +178,7 @@
             <h2 class="font-bold text-slate-800">Prizes &amp; Rules</h2>
           </div>
           <div class="px-6 py-5 space-y-4">
-            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place — ?10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
+            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place â€” ?10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Rules &amp; Mechanics</label><textarea name="rules" rows="4" placeholder="List the competition rules..." class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Additional Notes</label><textarea name="notes" rows="2" class="form-input-bare resize-none"></textarea></div>
           </div>
@@ -230,7 +192,7 @@
           <div class="px-6 py-4 space-y-2 text-sm text-slate-600">
             <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Saved to Firebase Firestore</div>
             <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Add contestants after creation</div>
-            <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Criteria auto-set below — edit before saving</div>
+            <div class="flex items-center gap-2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Criteria auto-set below â€” edit before saving</div>
           </div>
           <div class="px-6 pb-5 space-y-2">
             <button type="submit" class="btn-primary w-full py-3 text-sm justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>Create Event</button>
@@ -345,7 +307,7 @@
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Payment Method</label>
               <select name="paymentMethod" class="form-input-bare bg-white">
-                <option value="">— None / Not Applicable —</option>
+                <option value="">â€” None / Not Applicable â€”</option>
                 <option value="GCash">GCash</option>
                 <option value="Maya">Maya (PayMaya)</option>
                 <option value="BDO">BDO</option>
@@ -423,22 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
     autoSetStatus();
   }
 });
-function handleVenueSelect(sel) {
-  const wrap  = document.getElementById('venue-custom-wrap');
-  const input = document.getElementById('venue-custom-input');
-  if (sel.value === '__custom__') {
-    wrap.classList.remove('hidden');
-    // Remove name from select so custom input submits instead
-    sel.removeAttribute('name');
-    input.setAttribute('name', 'venue');
-    input.focus();
-  } else {
-    wrap.classList.add('hidden');
-    sel.setAttribute('name', 'venue');
-    input.removeAttribute('name');
-    input.value = '';
-  }
-}
 
 /* -- Event type-based field visibility -- */
 // Types that need Prizes & Rules
@@ -449,7 +395,7 @@ const PAYMENT_TYPES = ['talent','cultural','choral','dance','culinary','booth','
 function handleEventType(sel) {
   const type = sel.value;
 
-  // Other LGU — show specify field
+  // Other LGU â€” show specify field
   const otherWrap  = document.getElementById('other-lgu-wrap');
   const otherInput = document.getElementById('other-lgu-input');
   if (type === 'other') {
@@ -462,20 +408,20 @@ function handleEventType(sel) {
     otherInput.value = '';
   }
 
-  // Prizes & Rules — show only for prize-based event types
+  // Prizes & Rules â€” show only for prize-based event types
   const prizesCard = document.getElementById('prizes-rules-card');
   if (prizesCard) {
     prizesCard.classList.toggle('hidden', !PRIZE_TYPES.includes(type));
   }
 
-  // Payment QR — show toggle button for payment types, not the card directly
+  // Payment QR â€” show toggle button for payment types, not the card directly
   const paymentCard   = document.getElementById('payment-qr-card');
   const paymentToggle = document.getElementById('payment-qr-toggle-wrap');
   const isPayment = PAYMENT_TYPES.includes(type);
   if (paymentCard)   paymentCard.classList.add('hidden');       // always keep card hidden until toggled
   if (paymentToggle) paymentToggle.classList.toggle('hidden', !isPayment);
 
-  // Event QR placeholder — hide always (generated after save)
+  // Event QR placeholder â€” hide always (generated after save)
   const eventQrCard = document.getElementById('event-qr-card');
   if (eventQrCard) eventQrCard.classList.add('hidden');
 }
