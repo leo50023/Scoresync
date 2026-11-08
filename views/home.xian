@@ -285,6 +285,116 @@
     .trust-row { justify-content: center; }
     .preview-card { max-width: 500px; margin: 0 auto; }
   }
+  /* ── Social proof bar ── */
+  .social-proof-bar {
+    background: rgba(255,255,255,0.025);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 14px 24px;
+  }
+  .social-proof-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .sp-label {
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #475569; white-space: nowrap;
+  }
+  .sp-divider { width: 1px; height: 18px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+  .sp-tags { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .sp-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #94a3b8;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .sp-tag:hover { border-color: rgba(99,102,241,0.3); color: #c7d2fe; }
+  .sp-tag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── FAQ section ── */
+  .faq-section {
+    padding: clamp(64px,9vw,100px) 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(79,70,229,0.08), transparent 60%), #060c1a;
+  }
+  .faq-item {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.025);
+    overflow: hidden;
+    transition: border-color 0.2s;
+    margin-bottom: 10px;
+  }
+  .faq-item:hover { border-color: rgba(99,102,241,0.2); }
+  .faq-btn {
+    width: 100%; text-align: left;
+    padding: 18px 22px; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    font-size: 0.92rem; font-weight: 700; color: #e2e8f0;
+    transition: color 0.2s;
+  }
+  .faq-btn:hover { color: #fff; }
+  .faq-icon {
+    width: 24px; height: 24px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.2);
+    color: #a78bfa; font-size: 14px; font-weight: 700;
+    transition: transform 0.3s ease, background 0.2s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(99,102,241,0.25); }
+  .faq-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1), padding 0.35s ease;
+    padding: 0 22px;
+  }
+  .faq-item.open .faq-body { max-height: 200px; padding: 0 22px 18px; }
+  .faq-body p { font-size: 0.88rem; color: #64748b; line-height: 1.7; }
+
+  /* ── Footer upgrade ── */
+  .home-footer {
+    background: #020608;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 24px 28px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; margin-bottom: 32px;
+    align-items: start;
+  }
+  .footer-brand-name {
+    font-size: 1rem; font-weight: 900; color: #e2e8f0; margin-bottom: 6px;
+  }
+  .footer-brand-desc {
+    font-size: 0.8rem; color: #334155; line-height: 1.6; max-width: 280px;
+  }
+  .footer-links {
+    display: flex; gap: 24px; flex-wrap: wrap; justify-content: flex-end;
+  }
+  .footer-link {
+    font-size: 0.8rem; font-weight: 600; color: #334155;
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-link:hover { color: #94a3b8; }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.72rem; color: #1e293b;
+  }
+  @media (max-width: 600px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-links { justify-content: flex-start; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-bg-glow-1, .hero-bg-glow-2, .feature-card, .step-card { animation: none; transition: none; }
     .feature-card:hover, .step-card:hover { transform: none; }
@@ -583,6 +693,22 @@
   </div>
 </section>
 
+<!-- ── Social Proof Bar ── -->
+<div class="social-proof-bar">
+  <div class="social-proof-inner">
+    <span class="sp-label">Used for</span>
+    <div class="sp-divider"></div>
+    <div class="sp-tags">
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#f59e0b"></span>Pageants</span>
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#8b5cf6"></span>Talent Shows</span>
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#06b6d4"></span>Cultural Competitions</span>
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#10b981"></span>Academic Contests</span>
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#f43f5e"></span>Dance Festivals</span>
+      <span class="sp-tag"><span class="sp-tag-dot" style="background:#3b82f6"></span>Choral Competitions</span>
+    </div>
+  </div>
+</div>
+
 <!-- ── Features ── -->
 <section id="features" class="features-section">
   <div class="section-wrap">
@@ -692,6 +818,74 @@
   </div>
 </section>
 
+<!-- ── FAQ ── -->
+<section class="faq-section">
+  <div class="section-wrap">
+    <div class="text-center mb-12 sr">
+      <div class="section-eyebrow" style="background:rgba(99,102,241,0.08);color:#a78bfa;border:1px solid rgba(99,102,241,0.2)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Common Questions
+      </div>
+      <h2 class="section-title">Frequently asked</h2>
+      <p class="section-sub">Everything you need to know before getting started.</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+
+      <div class="faq-item sr sr-delay-1">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Who can use ScoreSync?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p>Anyone running a competition — pageant organizers, school event committees, cultural festivals, talent show hosts. ScoreSync supports multiple roles: Admin, Organizer, Judge, and Tabulator, each with their own access level.</p>
+        </div>
+      </div>
+
+      <div class="faq-item sr sr-delay-2">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Is ScoreSync free to use?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p>Yes — you can register and create an account for free. Simply request access and an admin will activate your account. No credit card required to get started.</p>
+        </div>
+      </div>
+
+      <div class="faq-item sr sr-delay-3">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          How many judges can score at the same time?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p>There is no hard limit. All judges score independently and in real time — scores are aggregated automatically as each judge submits. The system handles multiple judges simultaneously without conflict.</p>
+        </div>
+      </div>
+
+      <div class="faq-item sr sr-delay-4">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Can I customize the scoring criteria?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p>Yes. Each event has its own set of criteria with custom names, weights (percentages), and max scores. You can define as many criteria as your competition requires — beauty, talent, Q&A, and more.</p>
+        </div>
+      </div>
+
+      <div class="faq-item sr sr-delay-5">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Is the data secure?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p>ScoreSync is built on Firebase with encrypted data transmission, role-based access control, and CSRF protection. Only authorized users with the correct role can view or submit scores.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── CTA ── -->
 <section class="cta-section">
   <div class="section-wrap relative z-10">
@@ -721,17 +915,79 @@
 
 <!-- ── Footer ── -->
 <footer class="home-footer">
-  <div class="flex items-center justify-center gap-2 mb-3">
-    <div class="w-6 h-6 rounded-lg overflow-hidden" style="border:1px solid rgba(255,255,255,0.1)">
-      <img src="/scoresync-logo.png?v=8" alt="" class="w-full h-full object-cover"/>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-7 h-7 rounded-lg overflow-hidden flex-shrink-0" style="border:1px solid rgba(255,255,255,0.12)">
+            <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-full h-full object-cover"/>
+          </div>
+          <div class="footer-brand-name">ScoreSync</div>
+        </div>
+        <p class="footer-brand-desc">Competition management made clear — confident scoring, transparent tabulation, and results your audience can trust.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#features" class="footer-link">Features</a>
+        <a href="#how" class="footer-link">How it works</a>
+        <a href="/login" class="footer-link">Sign In</a>
+        <a href="/register" class="footer-link">Register</a>
+      </div>
     </div>
-    <span class="font-black text-sm" style="color:#334155">ScoreSync</span>
+    <div class="footer-bottom">
+      <span>&copy; {{currentYear}} ScoreSync. All rights reserved.</span>
+      <span style="display:flex;align-items:center;gap:6px">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#34d399;box-shadow:0 0 6px #34d399"></span>
+        System Online
+      </span>
+    </div>
   </div>
-  <p style="color:#1e293b">&copy; {{currentYear}} ScoreSync. All rights reserved.</p>
 </footer>
 
 {{> footer }}
 <script>
+// ── FAQ toggle ──
+window.toggleFaq = function(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+  if(!isOpen) item.classList.add('open');
+};
+
+// ── Animated score preview in hero card ──
+(function(){
+  var scores = [
+    { el: null, target: 78.4, current: 0 },
+    { el: null, target: 65.2, current: 0 },
+    { el: null, target: 52.8, current: 0 }
+  ];
+  var scoreEls = document.querySelectorAll('.preview-inner .space-y-4 span[style*="color:#60a5fa"], .preview-inner .space-y-4 span[style*="color:#a78bfa"], .preview-inner .space-y-4 span[style*="color:#34d399"]');
+  scoreEls.forEach(function(el, i){ if(scores[i]) scores[i].el = el; });
+  var triggered = false;
+  var io = new IntersectionObserver(function(entries){
+    if(triggered) return;
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        triggered = true;
+        scores.forEach(function(s){
+          if(!s.el) return;
+          var start = null, dur = 1800;
+          function step(ts){
+            if(!start) start = ts;
+            var prog = Math.min((ts-start)/dur, 1);
+            var ease = 1 - Math.pow(1-prog, 3);
+            s.el.textContent = (s.current + (s.target - s.current) * ease).toFixed(1);
+            if(prog < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+        io.disconnect();
+      }
+    });
+  }, {threshold: 0.4});
+  var card = document.querySelector('.preview-card');
+  if(card) io.observe(card);
+})();
+
 // ── Floating particles ──
 (function(){
   var wrap=document.getElementById('home-particles');
