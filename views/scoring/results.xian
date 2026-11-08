@@ -79,6 +79,11 @@
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Print
         </button>
+        <!-- Auto-reload toggle for tabulator -->
+        <button id="auto-reload-btn" type="button" onclick="toggleAutoReload()" class="btn-sm btn-sm-teal text-xs no-print" title="Auto-reload results">
+          <svg id="auto-reload-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <span id="auto-reload-label">Auto: OFF</span>
+        </button>
         {{/if}}
       </div>
     </div>
@@ -1017,5 +1022,88 @@ document.getElementById("print-date") && (document.getElementById("print-date").
 </script>
 
 {{> footer }}
+<script>
+// ── Auto-reload for tabulator ──
+(function(){
+  var btn   = document.getElementById('auto-reload-btn');
+  var label = document.getElementById('auto-reload-label');
+  var icon  = document.getElementById('auto-reload-icon');
+  if(!btn) return; // not tabulator role
+
+  var INTERVALS = [10, 15, 30, 60]; // seconds options
+  var intervalIdx = 1; // default 15s
+  var timer = null;
+  var countdown = 0;
+  var countdownTimer = null;
+  var enabled = false;
+
+  function getSeconds(){ return INTERVALS[intervalIdx]; }
+
+  function startCountdown(){
+    countdown = getSeconds();
+    clearInterval(countdownTimer);
+    countdownTimer = setInterval(function(){
+      countdown--;
+      if(label) label.textContent = 'Auto: ' + countdown + 's';
+      if(countdown <= 0){
+        clearInterval(countdownTimer);
+        location.reload();
+      }
+    }, 1000);
+  }
+
+  function stopCountdown(){
+    clearInterval(countdownTimer);
+    clearInterval(timer);
+  }
+
+  function setActive(on){
+    enabled = on;
+    if(on){
+      btn.style.background = 'rgba(20,184,166,0.3)';
+      btn.style.borderColor = 'rgba(20,184,166,0.6)';
+      btn.style.color = '#5eead4';
+      icon.style.animation = 'spin 1.5s linear infinite';
+      startCountdown();
+    } else {
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+      icon.style.animation = 'none';
+      if(label) label.textContent = 'Auto: OFF';
+      stopCountdown();
+    }
+  }
+
+  window.toggleAutoReload = function(){
+    if(!enabled){
+      // cycle interval on first click while off: 10 → 15 → 30 → 60 → back
+      // Actually just turn on at current interval; right-click cycles (handled below)
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  };
+
+  // Right-click / long-press to change interval
+  btn.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+    intervalIdx = (intervalIdx + 1) % INTERVALS.length;
+    if(enabled){
+      stopCountdown();
+      startCountdown();
+    }
+    if(!enabled && label) label.textContent = 'Auto: ' + getSeconds() + 's';
+  });
+
+  // Add spin keyframe if not already present
+  if(!document.getElementById('auto-reload-style')){
+    var st = document.createElement('style');
+    st.id = 'auto-reload-style';
+    st.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(st);
+  }
+})();
+</script>
 </body>
 </html>
