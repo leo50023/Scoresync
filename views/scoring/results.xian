@@ -609,6 +609,7 @@
     </div>
   </div>
   {{/if}}
+{{/if}}
 
 </main>
 </div>
@@ -1015,8 +1016,6 @@ document.getElementById("print-date") && (document.getElementById("print-date").
 })();
 </script>
 
-{{/if}}
-{{/if}}
 {{> footer }}
 </body>
 </html>
