@@ -797,42 +797,49 @@
   .judge-photo-col {
     width: 100%;
     max-width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-right: 0;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     overflow: hidden;
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    gap: 14px;
+    gap: 12px;
   }
+  /* Small photo on mobile — just a card thumbnail */
   .judge-photo-frame {
-    width: 160px !important;
-    min-width: 160px !important;
-    max-width: 160px !important;
-    height: 210px !important;
-    min-height: 210px !important;
-    max-height: 210px !important;
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    height: 120px !important;
+    min-height: 120px !important;
+    max-height: 120px !important;
     flex-shrink: 0;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .judge-photo-frame img {
-    width: 160px !important;
-    height: 210px !important;
-    max-width: 160px !important;
+    width: 90px !important;
+    height: 120px !important;
+    max-width: 90px !important;
+    object-position: center top;
   }
   .judge-photo-placeholder {
-    width: 160px !important;
-    height: 210px !important;
+    width: 90px !important;
+    height: 120px !important;
     min-height: unset;
   }
+  /* Hide expand button on mobile photo */
+  .photo-expand-btn { display: none !important; }
   .judge-scoring-col {
-    padding: 16px 14px;
+    padding: 14px 12px;
   }
   .contestant-panel {
     margin: 10px 8px;
     border-radius: 14px;
   }
+  .judge-contestant-heading h2 { font-size: 1rem; }
+  .judge-card-eyebrow { margin-bottom: 4px; }
+  .judge-card-divider { margin-bottom: 8px; }
   .judge-score-entry input {
     width: 60px;
   }
