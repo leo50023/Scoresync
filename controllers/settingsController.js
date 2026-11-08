@@ -52,7 +52,7 @@ export const settingsPage = async (req, res) => {
       isEncoder:   req.session.userRole === "encoder",
       isOrganizer: req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
-      municipality:  "Gloria, Oriental Mindoro",
+      municipality:  "",
       systemVersion: "v2.5.0-PROD",
       aiModel:       "Gemini 2.5 Flash",
       suggestions:   [],
