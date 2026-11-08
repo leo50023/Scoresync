@@ -106,11 +106,15 @@ export const scoringPage = async (req, res) => {
     const criteria = crSnap.docs ? crSnap.docs.map((d,i) => ({id:d.id,...d.data(),color:CRITERIA_COLORS[i%CRITERIA_COLORS.length]})) : crSnap;
 
     const scoreMap = {};
+    const remarksMap = {};
     sSnap.docs.forEach(d => {
       const s = d.data();
       if (s.judgeId === judgeId) {
         if (!isMultiCategory || s.categoryId === activeCategoryId) {
           scoreMap[`${s.contestantId}|${s.criteriaId}`] = s.score;
+        }
+        if (s.remarks) {
+          remarksMap[s.contestantId] = s.remarks;
         }
       }
     });
@@ -149,7 +153,7 @@ export const scoringPage = async (req, res) => {
       event: ev, contestants: matrix, criteria, judgeId,
       scoringLocked: ev.scoringLocked || false, readOnly, hasExistingScores,
       isMultiCategory, categories: categoryProgress, activeCategoryId, activeCategory,
-      showCompleteModal,
+      showCompleteModal, remarksMap,
       userName: req.session.userName, userRole: req.session.userRole,
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin", isJudge: req.session.userRole === "judge",
@@ -166,6 +170,7 @@ export const submitScores = async (req, res) => {
   const { eventId, categoryId } = req.params;
   const judgeId = req.session.userId;
   const { scores } = req.body;
+  const remarks = req.body.remarks || {};
 
   // Block submit if event is not ongoing (judges only)
   try {
@@ -225,6 +230,7 @@ export const submitScores = async (req, res) => {
           criteriaId,
           categoryId: categoryId || null,
           score,
+          remarks: sanitizeText((remarks[contestantId] || ""), 300) || "",
           submittedAt: isEdit ? (existingScoresSnap.docs.find(d => d.id === docId)?.data()?.submittedAt ?? serverTimestamp()) : serverTimestamp(),
         };
         if (isEdit) {
@@ -401,6 +407,29 @@ export const resultsPage = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/events");
 
     const ev          = { id: eSnap.id, ...eSnap.data() };
+
+    // Results lock: judges see a locked page if resultsLocked is true
+    if (ev.resultsLocked && req.session.userRole === 'judge') {
+      return res.render("scoring/results", {
+        title: 'Results Locked',
+        event: ev,
+        resultsLocked: true,
+        userName: req.session.userName,
+        userRole: req.session.userRole,
+        userInitial: (req.session.userName || 'U')[0].toUpperCase(),
+        isJudge: true,
+        ranked: [],
+        criteria: [],
+        judgeCount: 0,
+        judgeBreakdown: [],
+        judgeProgressData: [],
+        votesByContestant: {},
+        totalAudienceVotes: 0,
+        isMultiCategory: false,
+        categoryGroups: [],
+      });
+    }
+
     const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
 
     // ── criteria already loaded via loadCriteria (handles flat + multi-category)

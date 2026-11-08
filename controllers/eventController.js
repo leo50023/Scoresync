@@ -400,3 +400,20 @@ export const removeJudge = async (req, res) => {
     res.redirect(`/events/${id}`);
   }
 };
+
+// --- Toggle results lock (anonymous judging mode) -----------------------------
+export const toggleResultsLock = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const eSnap = await getDoc(doc(db, "events", id));
+    if (!eSnap.exists()) return res.redirect("/events");
+    const locked = !eSnap.data().resultsLocked;
+    await updateDoc(doc(db, "events", id), { resultsLocked: locked });
+    req.flash("success_msg", locked ? "Results locked. Judges cannot see the leaderboard." : "Results unlocked. Leaderboard is now visible.");
+    res.redirect(`/events/${id}`);
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Failed to toggle results lock.");
+    res.redirect(`/events/${id}`);
+  }
+};

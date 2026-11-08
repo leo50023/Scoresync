@@ -63,7 +63,7 @@ router.get("/admin/backup", requireAuth, requireRole("admin"), backupData);
 import {
   listEvents, createEventPage, storeEvent,
   showEvent, editEventPage, updateEvent, deleteEvent, updateEventStatus,
-  assignJudge, removeJudge,
+  assignJudge, removeJudge, toggleResultsLock,
 } from "../controllers/eventController.js";
 
 router.get( "/events",                requireAuth,                                      listEvents);
@@ -151,6 +151,8 @@ router.get( "/events/:eventId/display",  displayBoard);
 router.get( "/events/:eventId/public",   publicResults);
 // Score lock
 router.post("/events/:eventId/lock",     requireAuth, requireRole("admin","organizer"), toggleScoreLock);
+// Results lock (anonymous judging mode)
+router.post("/events/:id/results/lock",  requireAuth, requireRole("admin","organizer"), toggleResultsLock);
 // Report & signatures
 router.get( "/events/:eventId/report",      requireAuth, reportPage);
 router.post("/events/:eventId/report/sign", requireAuth, confirmSignature);

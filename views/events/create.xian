@@ -224,7 +224,6 @@
               Enable
             </button>
           </div>
-
           <!-- Multi-category preview (hidden by default) -->
           <div id="multi-cat-preview" class="hidden px-5 py-3 space-y-3">
             <div class="rounded-xl p-3" style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15)">
@@ -241,6 +240,25 @@
           </div>
 
           <div id="flat-criteria-section">
+            <!-- Load Preset dropdown -->
+            <div class="px-5 pt-3 pb-1 relative" id="preset-dropdown-wrap">
+              <button type="button" onclick="togglePresetDropdown()"
+                class="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition"
+                style="background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.3)">
+                📋 Load Preset Criteria
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div id="preset-dropdown-menu" class="hidden absolute left-5 mt-1 z-10 rounded-xl overflow-hidden shadow-xl"
+                style="background:#111827;border:1px solid rgba(255,255,255,0.12);min-width:260px">
+                <div class="px-3 py-2 text-[10px] font-extrabold uppercase tracking-widest" style="color:#64748b;border-bottom:1px solid rgba(255,255,255,0.07)">Digital / Creative Events</div>
+                <button type="button" onclick="loadDigitalPreset('logo')" class="preset-item w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition" style="color:#cbd5e1;background:transparent;border:none;cursor:pointer">🖼 Digital Logo Making</button>
+                <button type="button" onclick="loadDigitalPreset('photography')" class="preset-item w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition" style="color:#cbd5e1;background:transparent;border:none;cursor:pointer">📷 Photography</button>
+                <button type="button" onclick="loadDigitalPreset('poster')" class="preset-item w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition" style="color:#cbd5e1;background:transparent;border:none;cursor:pointer">🎨 Digital Poster / Slogan</button>
+                <button type="button" onclick="loadDigitalPreset('video')" class="preset-item w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition" style="color:#cbd5e1;background:transparent;border:none;cursor:pointer">🎬 Short Video / Reel</button>
+                <div class="px-3 py-2 text-[10px] font-extrabold uppercase tracking-widest" style="color:#64748b;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07)">Pageant</div>
+                <button type="button" onclick="loadDigitalPreset('pageant_standard')" class="preset-item w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition" style="color:#cbd5e1;background:transparent;border:none;cursor:pointer">👑 Pageant (Standard)</button>
+              </div>
+            </div>
             <div class="px-5 py-2 text-xs" style="color:var(--text-muted)">Auto-filled from event type. Edit, remove, or add rows. Weights must total <strong style="color:#c4b5fd">100%</strong>.</div>
             <!-- Column headers -->
             <div class="px-5 flex items-center gap-2 mb-1">
@@ -710,6 +728,76 @@ handleEventType = function(sel) {
 document.addEventListener('DOMContentLoaded', () => {
   const sel = document.getElementById('event-type-select');
   if (sel) loadPreset(sel.value);
+});
+
+/* -- Digital Event Preset Criteria -- */
+const DIGITAL_PRESETS = {
+  logo: [
+    { name: 'Creativity & Originality', weight: 30, max: 100 },
+    { name: 'Relevance to Theme',        weight: 25, max: 100 },
+    { name: 'Technical Execution',       weight: 25, max: 100 },
+    { name: 'Visual Impact',             weight: 20, max: 100 },
+  ],
+  photography: [
+    { name: 'Composition & Framing', weight: 30, max: 100 },
+    { name: 'Theme Relevance',        weight: 25, max: 100 },
+    { name: 'Technical Quality',      weight: 25, max: 100 },
+    { name: 'Creativity',             weight: 20, max: 100 },
+  ],
+  poster: [
+    { name: 'Message Clarity',  weight: 30, max: 100 },
+    { name: 'Visual Design',    weight: 25, max: 100 },
+    { name: 'Originality',      weight: 25, max: 100 },
+    { name: 'Impact & Appeal',  weight: 20, max: 100 },
+  ],
+  video: [
+    { name: 'Content & Storytelling',  weight: 30, max: 100 },
+    { name: 'Editing & Production',    weight: 25, max: 100 },
+    { name: 'Theme Relevance',         weight: 25, max: 100 },
+    { name: 'Creativity',              weight: 20, max: 100 },
+  ],
+  pageant_standard: [
+    { name: 'Beauty',             weight: 30, max: 100 },
+    { name: 'Intelligence',       weight: 25, max: 100 },
+    { name: 'Talent',             weight: 25, max: 100 },
+    { name: 'Poise & Personality',weight: 20, max: 100 },
+  ],
+};
+
+window.loadDigitalPreset = function(presetKey) {
+  const preset = DIGITAL_PRESETS[presetKey];
+  if (!preset) return;
+  _criteriaRows = preset.map(r => ({ ...r }));
+  renderCriteriaRows();
+  // Close dropdown and show flat criteria section
+  document.getElementById('preset-dropdown-menu').classList.add('hidden');
+  const flat = document.getElementById('flat-criteria-section');
+  if (flat) flat.classList.remove('hidden');
+  const multiPrev = document.getElementById('multi-cat-preview');
+  if (multiPrev) multiPrev.classList.add('hidden');
+  _multiCategoryEnabled = false;
+  const btn = document.getElementById('multi-cat-btn');
+  if (btn) {
+    btn.textContent = 'Enable';
+    btn.style.background = 'rgba(99,102,241,0.12)';
+    btn.style.color = '#a5b4fc';
+    btn.style.borderColor = 'rgba(99,102,241,0.3)';
+  }
+  document.getElementById('use-multi-cat').value = '';
+};
+
+window.togglePresetDropdown = function() {
+  const menu = document.getElementById('preset-dropdown-menu');
+  menu.classList.toggle('hidden');
+};
+
+// Close preset dropdown on outside click
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('preset-dropdown-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const menu = document.getElementById('preset-dropdown-menu');
+    if (menu) menu.classList.add('hidden');
+  }
 });
 </script>
 {{> footer }}

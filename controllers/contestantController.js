@@ -54,6 +54,7 @@ export const storeContestant = async (req, res) => {
   const description     = sanitizeText(req.body.description, 500);
   const photo           = req.body.photo  || "";
   const platform        = sanitizeText(req.body.platform, 500);
+  const submissionLink  = sanitizeText(req.body.submissionLink, 500);
   const registrationFee = req.body.registrationFee || "";
   const { eventId } = req.params;
   try {
@@ -79,6 +80,7 @@ export const storeContestant = async (req, res) => {
       gender:          gender          || "",
       description:     description     || "",
       platform:        platform        || "",
+      submissionLink:  submissionLink  || "",
       photo:           photo           || "",
       registrationFee: Number(registrationFee) || 0,
       createdAt:       serverTimestamp(),
@@ -135,16 +137,18 @@ export const updateContestant = async (req, res) => {
   const description = sanitizeText(req.body.description, 500);
   const photo       = req.body.photo  || "";
   const platform    = sanitizeText(req.body.platform, 500);
+  const submissionLink = sanitizeText(req.body.submissionLink, 500);
   try {
     await updateDoc(doc(db, "events", eventId, "contestants", id), {
       name,
-      number:      number      || "",
-      barangay:    barangay    || "",
-      age:         age         || "",
-      gender:      gender      || "",
-      description: description || "",
-      platform:    platform    || "",
-      photo:       photo       || "",
+      number:          number          || "",
+      barangay:        barangay        || "",
+      age:             age             || "",
+      gender:          gender          || "",
+      description:     description     || "",
+      platform:        platform        || "",
+      submissionLink:  submissionLink  || "",
+      photo:           photo           || "",
     });
     req.flash("success_msg", "Contestant updated.");
     res.redirect(`/events/${eventId}`);
@@ -194,6 +198,7 @@ export const selfRegisterPage = async (req, res) => {
 export const selfRegister = async (req, res) => {
   const { eventId } = req.params;
   const { name, barangay, age, platform, contact } = req.body;
+  const submissionLink = (req.body.submissionLink || "").trim().substring(0, 500);
   try {
     if (!name || !name.trim()) {
       if (!req.session._flash) req.session._flash = {};
@@ -221,6 +226,7 @@ export const selfRegister = async (req, res) => {
       age:         age       || "",
       platform:    platform  || "",
       contact:     contact   || "",
+      submissionLink: submissionLink || "",
       photo:       "",
       number:      "",
       status:      "pending_approval", // needs admin approval

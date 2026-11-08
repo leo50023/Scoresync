@@ -229,6 +229,28 @@
             <div class="contestant-progress-bar"></div>
           </div>
 
+          <!-- Remarks textarea (editable) / read-only display -->
+          {{#unless ../readOnly}}
+          <div class="judge-remarks-wrap" style="margin-top:8px">
+            <label class="judge-remarks-label" for="remarks-{{id}}">Remarks <span style="font-weight:500;opacity:0.6">(optional)</span></label>
+            <textarea
+              id="remarks-{{id}}"
+              name="remarks[{{id}}]"
+              maxlength="300"
+              rows="2"
+              placeholder="Short note about this contestant..."
+              class="judge-remarks-textarea"
+            >{{#if (lookup ../../remarksMap id)}}{{lookup ../../remarksMap id}}{{/if}}</textarea>
+          </div>
+          {{else}}
+          {{#if (lookup ../../remarksMap id)}}
+          <div class="judge-remarks-readonly" style="margin-top:8px">
+            <div class="judge-remarks-readonly-label">Judge's Remarks:</div>
+            <div class="judge-remarks-readonly-text">{{lookup ../../remarksMap id}}</div>
+          </div>
+          {{/if}}
+          {{/unless}}
+
           <!-- SUBMIT button -->
           {{#unless ../readOnly}}
           <button type="button"
@@ -953,6 +975,151 @@ main::-webkit-scrollbar { display:none; }
 }
 /* Reveal main after CSS loads � prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
+/* ── Judge Remarks ── */
+.judge-remarks-wrap { margin-top: 8px; }
+.judge-remarks-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.judge-remarks-textarea {
+  width: 100%;
+  background: var(--bg-card, #101c30);
+  color: var(--text-primary, #e2e8f0);
+  border: 1px solid var(--border, rgba(148,163,184,0.2));
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.judge-remarks-textarea:focus {
+  border-color: rgba(201,162,39,0.5);
+  box-shadow: 0 0 0 2px rgba(201,162,39,0.1);
+}
+.judge-remarks-textarea::placeholder { color: #374151; }
+.judge-remarks-readonly {
+  margin-top: 8px;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-card, #101c30);
+  color: var(--text-primary, #e2e8f0);
+  border: 1px solid var(--border, rgba(148,163,184,0.2));
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+.judge-remarks-readonly-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.judge-remarks-readonly-text {
+  color: var(--text-primary, #e2e8f0);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Mobile scoring improvements ── */
+@media (max-width: 767px) {
+  .contestant-panel {
+    margin: 10px 6px !important;
+    width: calc(100% - 12px) !important;
+  }
+  .judge-card-inner {
+    grid-template-columns: 1fr !important;
+  }
+  .judge-photo-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 220px !important;
+    padding: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+  .judge-photo-frame {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  .judge-photo-frame img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 220px !important;
+  }
+  .judge-photo-placeholder {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+    flex-direction: row !important;
+    gap: 16px;
+    padding: 16px !important;
+    border-radius: 0 !important;
+  }
+  .judge-scoring-col {
+    padding: 14px 12px 16px !important;
+  }
+  .judge-score-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+  }
+  .judge-score-track {
+    width: 100% !important;
+    height: 8px !important;
+  }
+  .judge-score-entry {
+    justify-content: space-between !important;
+    gap: 8px;
+  }
+  .judge-score-entry input.score-entry-input {
+    flex: 1 !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    font-size: 1.3rem !important;
+    border-radius: 12px !important;
+  }
+  .judge-score-entry > span {
+    font-size: 0.85rem !important;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .judge-criteria-heading {
+    font-size: 0.85rem !important;
+  }
+  .submit-btn {
+    min-height: 52px !important;
+    font-size: 0.88rem !important;
+  }
+  .judge-remarks-textarea {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.75rem !important;
+  }
+  .judge-bottom-nav {
+    padding-bottom: max(env(safe-area-inset-bottom), 8px);
+  }
+}
 </style>
 
 <script>
