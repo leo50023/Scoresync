@@ -1211,4 +1211,174 @@
       }
     })();
   </script>
-</head>
+
+  <!-- ── Premium Confirmation Modal ── -->
+  <style>
+    #ss-confirm-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1);
+    }
+    #ss-confirm-overlay.active {
+      opacity: 1; pointer-events: all;
+    }
+    #ss-confirm-box {
+      background: linear-gradient(145deg, #111827, #0d1424);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 28px 28px 24px;
+      width: 100%; max-width: 400px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      transform: scale(0.92) translateY(16px);
+      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1);
+      position: relative;
+    }
+    #ss-confirm-overlay.active #ss-confirm-box {
+      transform: scale(1) translateY(0);
+    }
+    #ss-confirm-icon-wrap {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    #ss-confirm-title {
+      font-size: 1rem; font-weight: 800;
+      color: #f1f5f9; margin-bottom: 8px; line-height: 1.3;
+    }
+    #ss-confirm-msg {
+      font-size: 0.875rem; color: #64748b;
+      line-height: 1.6; margin-bottom: 22px;
+    }
+    #ss-confirm-actions {
+      display: flex; gap: 10px; justify-content: flex-end;
+    }
+    #ss-confirm-cancel {
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 600;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    #ss-confirm-cancel:hover { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+    #ss-confirm-ok {
+      padding: 10px 22px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 700;
+      border: none; cursor: pointer; color: #fff;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    #ss-confirm-ok:hover { opacity: 0.88; transform: translateY(-1px); }
+    #ss-confirm-ok:active { transform: translateY(0); }
+  </style>
+
+  <div id="ss-confirm-overlay">
+    <div id="ss-confirm-box">
+      <div id="ss-confirm-icon-wrap">
+        <svg id="ss-confirm-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"></svg>
+      </div>
+      <div id="ss-confirm-title"></div>
+      <div id="ss-confirm-msg"></div>
+      <div id="ss-confirm-actions">
+        <button id="ss-confirm-cancel" type="button">Cancel</button>
+        <button id="ss-confirm-ok" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var overlay  = document.getElementById('ss-confirm-overlay');
+      var box      = document.getElementById('ss-confirm-box');
+      var titleEl  = document.getElementById('ss-confirm-title');
+      var msgEl    = document.getElementById('ss-confirm-msg');
+      var okBtn    = document.getElementById('ss-confirm-ok');
+      var cancelBtn= document.getElementById('ss-confirm-cancel');
+      var iconWrap = document.getElementById('ss-confirm-icon-wrap');
+      var iconEl   = document.getElementById('ss-confirm-icon');
+      var _resolve = null;
+
+      var TYPES = {
+        danger: {
+          bg:   'rgba(239,68,68,0.15)',
+          border:'rgba(239,68,68,0.3)',
+          okBg: 'linear-gradient(135deg,#dc2626,#ef4444)',
+          okShadow:'0 4px 14px rgba(220,38,38,0.4)',
+          path: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+        },
+        warning: {
+          bg:   'rgba(245,158,11,0.15)',
+          border:'rgba(245,158,11,0.3)',
+          okBg: 'linear-gradient(135deg,#92400e,#d97706)',
+          okShadow:'0 4px 14px rgba(217,119,6,0.4)',
+          path: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
+        },
+        info: {
+          bg:   'rgba(59,130,246,0.15)',
+          border:'rgba(59,130,246,0.3)',
+          okBg: 'linear-gradient(135deg,#1d4ed8,#3b82f6)',
+          okShadow:'0 4px 14px rgba(37,99,235,0.4)',
+          path: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
+        }
+      };
+
+      window.ssConfirm = function(opts) {
+        return new Promise(function(resolve) {
+          _resolve = resolve;
+          var type = TYPES[opts.type || 'danger'];
+          titleEl.textContent  = opts.title  || 'Are you sure?';
+          msgEl.textContent    = opts.message || 'This action cannot be undone.';
+          okBtn.textContent    = opts.ok      || 'Confirm';
+          cancelBtn.textContent= opts.cancel  || 'Cancel';
+          okBtn.style.background  = type.okBg;
+          okBtn.style.boxShadow   = type.okShadow;
+          iconWrap.style.background = type.bg;
+          iconWrap.style.border   = '1px solid ' + type.border;
+          iconEl.innerHTML = type.path;
+          overlay.classList.add('active');
+          cancelBtn.focus();
+        });
+      };
+
+      function close(result) {
+        overlay.classList.remove('active');
+        if (_resolve) { _resolve(result); _resolve = null; }
+      }
+
+      okBtn.addEventListener('click',     function() { close(true);  });
+      cancelBtn.addEventListener('click', function() { close(false); });
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) close(false);
+      });
+      document.addEventListener('keydown', function(e) {
+        if (!overlay.classList.contains('active')) return;
+        if (e.key === 'Escape') close(false);
+        if (e.key === 'Enter')  close(true);
+      });
+    })();
+  </script>
+<script>
+// Global form interceptor for data-confirm-title forms
+document.addEventListener('submit', async function(e) {
+  var form = e.target;
+  if (!form.hasAttribute('data-confirm-title')) return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  var confirmed = await window.ssConfirm({
+    title:   form.getAttribute('data-confirm-title') || 'Confirm',
+    message: form.getAttribute('data-confirm-msg')   || 'Are you sure?',
+    ok:      form.getAttribute('data-confirm-ok')    || 'Confirm',
+    cancel:  form.getAttribute('data-confirm-cancel') || 'Cancel',
+    type:    form.getAttribute('data-confirm-type')  || 'warning'
+  });
+  if (confirmed) {
+    form.removeAttribute('data-confirm-title');
+    form.submit();
+  }
+}, true);
+</script></head>

@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -128,7 +128,7 @@
                     Approve
                   </button>
                 </form>
-                <form method="POST" action="/users/{{id}}/reject" onsubmit="return confirm('Reject account request for {{name}}?')" class="inline">
+                <form method="POST" action="/users/{{id}}/reject" onsubmit="return false" data-confirm-title="Reject Request" data-confirm-msg="Reject this account request?" data-confirm-ok="Reject" data-confirm-type="warning" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <button type="submit" class="btn-sm btn-sm-red text-xs px-2.5 py-1.5 flex items-center gap-1">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -208,7 +208,7 @@
                   Gmail
                 </a>
                 {{#unless (eq role 'admin')}}
-                <form method="POST" action="/users/{{id}}/delete" onsubmit="return confirm('Remove {{name}}?')" class="inline">
+                <form method="POST" action="/users/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove User" data-confirm-msg="Remove this user?" data-confirm-ok="Remove" data-confirm-type="danger" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <button type="submit" class="btn-sm btn-sm-red text-xs px-2.5 py-1.5" title="Delete User"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
                 </form>

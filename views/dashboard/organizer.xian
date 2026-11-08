@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -188,7 +188,7 @@
             Live Results
           </a>
           <form method="POST" action="/events/{{id}}/status" class="w-full"
-            onsubmit="return confirm('End this event and mark as completed?')">
+            onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="End this event and mark as completed?" data-confirm-ok="End Event" data-confirm-type="warning">
             <input type="hidden" name="_csrf" value="{{../csrfToken}}">
             <input type="hidden" name="status" value="completed">
             <button type="submit"

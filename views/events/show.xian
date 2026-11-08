@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -51,7 +51,7 @@
       </form>
       {{/if}}
       {{#if (eq event.status 'ongoing')}}
-      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return confirm('Manually end this event?')">
+      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
         <button type="submit" class="btn-sm btn-solid-blue">
@@ -112,7 +112,7 @@
       </form>
       {{/if}}
       {{#if (eq event.status 'ongoing')}}
-      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return confirm('Are you sure you want to manually end this event?')">
+      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
         <button type="submit" class="btn-sm btn-solid-blue">
@@ -189,7 +189,7 @@
               class="btn-icon no-min-h" title="Edit">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </a>
-            <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return confirm('Remove contestant?')">
+            <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return false" data-confirm-title="Remove Contestant" data-confirm-msg="Remove this contestant from the event? This cannot be undone." data-confirm-ok="Remove" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
               <button class="btn-icon no-min-h" title="Delete">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
@@ -203,7 +203,7 @@
               class="btn-icon no-min-h" title="Edit">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </a>
-            <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return confirm('Remove contestant?')">
+            <form method="POST" action="/events/{{../event.id}}/contestants/{{id}}/delete" class="inline" onsubmit="return false" data-confirm-title="Remove Contestant" data-confirm-msg="Remove this contestant from the event? This cannot be undone." data-confirm-ok="Remove" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
               <button class="btn-icon no-min-h" title="Delete">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
@@ -746,7 +746,7 @@
               </td>
               {{#if ../isAdmin}}
               <td class="text-right">
-                <form method="POST" action="/events/{{../event.id}}/finance/{{id}}/delete" class="inline" onsubmit="return confirm('Remove this entry?')">
+                <form method="POST" action="/events/{{../event.id}}/finance/{{id}}/delete" class="inline" onsubmit="return false" data-confirm-title="Remove Entry" data-confirm-msg="Delete this finance entry? This cannot be undone." data-confirm-ok="Delete" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <button class="btn-sm btn-sm-red text-xs px-2.5 py-1.5">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
@@ -1096,7 +1096,7 @@ window._onTimerEventEnd = function() {
     Choose organizer menu items
   </button>
   <div style="height:1px;background:rgba(255,255,255,0.07);margin:4px 0"></div>
-  <form method="POST" action="/events/{{event.id}}/delete" onsubmit="return confirm('Delete this event? This cannot be undone.')"><input type="hidden" name="_csrf" value="{{csrfToken}}"><button type="submit" class="dropdown-item w-full text-left" style="color:#fca5a5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete Event</button></form>
+  <form method="POST" action="/events/{{event.id}}/delete" onsubmit="return false" data-confirm-title="Delete Event" data-confirm-msg="Permanently delete this event and all its data? This cannot be undone." data-confirm-ok="Delete Event" data-confirm-type="danger"><input type="hidden" name="_csrf" value="{{csrfToken}}"><button type="submit" class="dropdown-item w-full text-left" style="color:#fca5a5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete Event</button></form>
 </div>
 
 {{#if isAdmin}}
@@ -1196,7 +1196,7 @@ window._onTimerEventEnd = function() {
     {{/unless}}
     {{#unless (includes event.hiddenOrganizerMoreItems "delete")}}
   <div style="height:1px;background:rgba(255,255,255,0.07);margin:4px 0"></div>
-  <form method="POST" action="/events/{{event.id}}/delete" onsubmit="return confirm('Delete this event? This cannot be undone.')"><input type="hidden" name="_csrf" value="{{csrfToken}}"><button type="submit" class="dropdown-item w-full text-left" style="color:#fca5a5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete Event</button></form>
+  <form method="POST" action="/events/{{event.id}}/delete" onsubmit="return false" data-confirm-title="Delete Event" data-confirm-msg="Permanently delete this event and all its data? This cannot be undone." data-confirm-ok="Delete Event" data-confirm-type="danger"><input type="hidden" name="_csrf" value="{{csrfToken}}"><button type="submit" class="dropdown-item w-full text-left" style="color:#fca5a5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete Event</button></form>
     {{/unless}}
 </div>
 

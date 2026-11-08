@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -43,13 +43,13 @@
             <div class="text-xs mt-1" style="color:var(--text-muted)">Max score: <span class="font-semibold" style="color:var(--text-secondary)">{{maxScore}} pts</span></div>
           </div>
           {{#if ../isAdmin}}
-          <form method="POST" action="/events/{{../event.id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criteria?')">
+          <form method="POST" action="/events/{{../event.id}}/criteria/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove Criteria" data-confirm-msg="Remove this criteria?" data-confirm-ok="Remove" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs px-2.5 py-1.5"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
           </form>
           {{/if}}
           {{#if ../isOrganizer}}
-          <form method="POST" action="/events/{{../event.id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criteria?')">
+          <form method="POST" action="/events/{{../event.id}}/criteria/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove Criteria" data-confirm-msg="Remove this criteria?" data-confirm-ok="Remove" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs px-2.5 py-1.5"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
           </form>

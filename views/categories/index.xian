@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -81,13 +81,13 @@
             Add Criteria
           </button>
           {{#if ../isAdmin}}
-          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return confirm('Delete this category and all its criteria?')" class="inline">
+          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return false" data-confirm-title="Delete Category" data-confirm-msg="Delete this category?" data-confirm-ok="Delete" data-confirm-type="danger" class="inline">
             <input type="hidden" name="_csrf" value="{{../csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
           </form>
           {{/if}}
           {{#if ../isOrganizer}}
-          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return confirm('Delete this category and all its criteria?')" class="inline">
+          <form method="POST" action="/events/{{../event.id}}/categories/{{id}}/delete" onsubmit="return false" data-confirm-title="Delete Category" data-confirm-msg="Delete this category?" data-confirm-ok="Delete" data-confirm-type="danger" class="inline">
             <input type="hidden" name="_csrf" value="{{../csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
           </form>
@@ -132,13 +132,13 @@
             <div class="text-xs mt-0.5" style="color:var(--text-muted)">Max: {{maxScore}} pts</div>
           </div>
           {{#if ../../isAdmin}}
-          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criterion?')" class="inline">
+          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove Criteria" data-confirm-msg="Remove this criterion?" data-confirm-ok="Remove" data-confirm-type="danger" class="inline">
             <input type="hidden" name="_csrf" value="{{../../csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs px-2"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           </form>
           {{/if}}
           {{#if ../../isOrganizer}}
-          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return confirm('Remove this criterion?')" class="inline">
+          <form method="POST" action="/events/{{../../event.id}}/categories/{{../id}}/criteria/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove Criteria" data-confirm-msg="Remove this criterion?" data-confirm-ok="Remove" data-confirm-type="danger" class="inline">
             <input type="hidden" name="_csrf" value="{{../../csrfToken}}">
             <button class="btn-sm btn-sm-red text-xs px-2"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           </form>

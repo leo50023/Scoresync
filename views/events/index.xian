@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -99,7 +99,7 @@
             </form>
             {{/if}}
             {{#if (eq status 'ongoing')}}
-            <form method="POST" action="/events/{{id}}/status" onsubmit="return confirm('Manually end event?')">
+            <form method="POST" action="/events/{{id}}/status" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually end event?" data-confirm-ok="End Event" data-confirm-type="warning">
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">
               <input type="hidden" name="status" value="completed">
               <button type="submit" class="btn-sm btn-solid-blue w-full justify-center">

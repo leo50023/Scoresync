@@ -1129,7 +1129,7 @@ main::-webkit-scrollbar { display:none; }
   };
 
   /* -- submitContestant -- */
-  window.submitContestant = function(panelIdx) {
+  window.submitContestant = async function(panelIdx) {
     const cp = document.querySelector('.contestant-panel[data-idx="' + panelIdx + '"]');
     const inputs = cp ? cp.querySelectorAll('.score-input') : [];
     const empty = [...inputs].filter(n => !n.value || parseFloat(n.value) < 0);
@@ -1140,7 +1140,8 @@ main::-webkit-scrollbar { display:none; }
         const entryEl = panel ? panel.querySelector('.score-entry-input') : null;
         if (entryEl) entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
       });
-      if (!confirm(empty.length + ' score(s) are empty. Submit anyway? Empty scores will count as 0.')) return;
+      const _ok = await window.ssConfirm({ title: 'Empty Scores', message: empty.length + ' score(s) are empty. Submit anyway? Empty scores will count as 0.', ok: 'Submit Anyway', cancel: 'Go Back', type: 'warning' });
+    if (!_ok) return;
     }
     try { localStorage.removeItem(storeKey); } catch(e) {}
     // Save next contestant index so we auto-jump after page reload

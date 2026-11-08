@@ -12,7 +12,7 @@
     <p>Update all details for <span class="font-semibold text-blue-600">{{event.name}}</span>.</p>
   </div>
 
-  <form id="delete-event-form" method="POST" action="/events/{{event.id}}/delete" onsubmit="return confirm('DELETE this event? This CANNOT be undone.')">
+  <form id="delete-event-form" method="POST" action="/events/{{event.id}}/delete" onsubmit="return false" data-confirm-title="Delete Event" data-confirm-msg="DELETE this event? This cannot be undone." data-confirm-ok="Delete" data-confirm-type="danger">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
   </form>
 
@@ -405,8 +405,9 @@ function clearEditQR() {
 function replaceEditQR() {
   document.getElementById('edit-qr-file').click();
 }
-function removeEditQR() {
-  if (!confirm('Remove the payment QR from this event?')) return;
+async function removeEditQR() {
+  const ok = await window.ssConfirm({ title: 'Remove QR Code', message: 'Remove the payment QR from this event?', ok: 'Remove', cancel: 'Cancel', type: 'warning' });
+  if (!ok) return;
   document.getElementById('edit-qr-b64').value = '';
   const ex = document.getElementById('edit-qr-existing');
   if (ex) ex.style.display = 'none';
