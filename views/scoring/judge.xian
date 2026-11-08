@@ -54,7 +54,7 @@
           class="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold transition"
           style="{{#if (eq id ../activeCategoryId)}}background:rgba(99,102,241,0.3);color:#c7d2fe;border:1px solid rgba(99,102,241,0.5){{else}}background:rgba(255,255,255,0.06);color:#64748b;border:1px solid rgba(255,255,255,0.1){{/if}}">
           {{name}}
-          {{#if scoreCount}}<span class="ml-1 text-[9px] font-black" style="color:#6ee7b7">?</span>{{/if}}
+          {{#if scoreCount}}<span class="ml-1 text-[9px] font-black" style="color:#6ee7b7">&#10003;</span>{{/if}}
         </a>
         {{/each}}
       </div>
@@ -62,7 +62,7 @@
       <!-- Search bar -->
       <div class="relative">
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number�"
+        <input id="contestant-search" type="search" autocomplete="off" placeholder="Search contestant by name or number..."
           class="w-full rounded-xl pl-9 pr-3 py-2 text-xs outline-none"
           style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary)"
           oninput="filterContestants(this.value)"
@@ -87,14 +87,14 @@
   {{#if readOnly}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 no-print" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25)">
   <div class="text-xs" style="color:#bfdbfe">{{#if isTabulator}}Scoring is locked. Scores are available in read-only mode.{{else}}Event completed. Scores are available in read-only mode.{{/if}}</div>
-    <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results ?</a>
+    <a href="/events/{{event.id}}/results" class="text-xs font-bold" style="color:#6ee7b7">View event results &rarr;</a>
   </div>
   {{/if}}
 
   {{#if hasExistingScores}}
   <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex items-start gap-2.5 no-print" style="background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.25)">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below � you can update them and re-submit.{{/if}}</div>
+    <div class="text-xs" style="color:#f0c040">{{#if readOnly}}Your submitted scores are shown below for review.{{else}}You have previously submitted scores for this event. Your existing scores are shown below &mdash; you can update them and re-submit.{{/if}}</div>
   </div>
   {{/if}}
 
@@ -1195,7 +1195,7 @@ main::-webkit-scrollbar { display:none; }
 
     // Hidden compat elements
     const disp = panel.querySelector('.score-display');
-    if (disp) disp.textContent = val > 0 ? val : '�';
+    if (disp) disp.textContent = val > 0 ? val : '--';
     const pctEl = panel.querySelector('.criteria-pct');
     if (pctEl) pctEl.textContent = Math.round(pct) + '%';
     const pctLbl = panel.querySelector('.criteria-pct-label');
