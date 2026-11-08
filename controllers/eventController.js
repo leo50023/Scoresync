@@ -407,7 +407,7 @@ export const toggleResultsLock = async (req, res) => {
   try {
     const eSnap = await getDoc(doc(db, "events", id));
     if (!eSnap.exists()) return res.redirect("/events");
-    const locked = !eSnap.data().resultsLocked;
+    const locked = !(eSnap.data().resultsLocked || false);
     await updateDoc(doc(db, "events", id), { resultsLocked: locked });
     req.flash("success_msg", locked ? "Results locked. Judges cannot see the leaderboard." : "Results unlocked. Leaderboard is now visible.");
     res.redirect(`/events/${id}`);

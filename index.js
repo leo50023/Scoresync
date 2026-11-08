@@ -81,6 +81,8 @@ hbs.registerHelper("gte", (a, b) => Number(a) >= Number(b));
 hbs.registerHelper("lt",  (a, b) => Number(a) < Number(b));
 hbs.registerHelper("lte", (a, b) => Number(a) <= Number(b));
 hbs.registerHelper("not", (a)    => !a);
+hbs.registerHelper("and", (a, b) => a && b);
+hbs.registerHelper("or",  (a, b) => a || b);
 hbs.registerHelper("includes", (items, value) => Array.isArray(items) && items.includes(value));
 hbs.registerHelper("add1",(a)    => Number(a) + 1);
 hbs.registerHelper("sub1",(a)    => Number(a) - 1);

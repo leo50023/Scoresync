@@ -84,8 +84,7 @@
     </div>
   </div>
 
-  {{#if resultsLocked}}
-  {{#if isJudge}}
+  {{#if (and resultsLocked isJudge)}}
   <div class="fm-fade-up rounded-2xl p-8 text-center" style="background:var(--bg-card);border:1px solid var(--border)">
     <div class="text-4xl mb-4">🔒</div>
     <h2 class="font-extrabold text-lg mb-2" style="color:var(--text-primary)">Results Locked</h2>
@@ -1016,7 +1015,6 @@ document.getElementById("print-date") && (document.getElementById("print-date").
 })();
 </script>
 
-{{/if}}
 {{/if}}
 {{/if}}
 {{> footer }}

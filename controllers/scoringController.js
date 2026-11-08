@@ -545,8 +545,9 @@ export const resultsPage = async (req, res) => {
     });
 
     res.render("scoring/results", {
-      title:       `Results � ${ev.name}`,
+      title:       `Results — ${ev.name}`,
       event:       ev,
+      resultsLocked: ev.resultsLocked || false,
       ranked,
       criteria,
       judgeCount,
