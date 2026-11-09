@@ -420,6 +420,7 @@ export const resultsPage = async (req, res) => {
         isJudge: true,
         ranked: [],
         criteria: [],
+        criteriaWeightsJson: '[]',
         judgeCount: 0,
         judgeBreakdown: [],
         judgeProgressData: [],
@@ -550,6 +551,10 @@ export const resultsPage = async (req, res) => {
       resultsLocked: ev.resultsLocked || false,
       ranked,
       criteria,
+      criteriaWeightsJson: JSON.stringify((criteria || []).map(c => ({
+        name:   String(c.name   || ''),
+        weight: Number(c.weight || 0),
+      }))),
       judgeCount,
       judgeBreakdown,
       judgeProgressData,

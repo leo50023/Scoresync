@@ -204,7 +204,7 @@
   </div>
 
   <!-- ── Criteria Weight Distribution Donut Chart ── -->
-  <script id="criteria-weight-data" type="application/json">[{{#each criteria}}{"name":"{{name}}","weight":{{weight}}}{{#unless @last}},{{/unless}}{{/each}}]</script>
+  <script id="criteria-weight-data" type="application/json">{{{criteriaWeightsJson}}}</script>
   <div id="criteria-donut-section" class="fm-fade-up rounded-2xl overflow-hidden no-print" style="background:var(--bg-card);border:1px solid var(--border)">
     <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
       <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
