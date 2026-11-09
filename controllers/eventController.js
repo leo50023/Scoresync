@@ -204,6 +204,11 @@ export const showEvent = async (req, res) => {
       criteria,
       categories,
       finance,
+      financeEntriesJson: JSON.stringify((finance.entries || []).map(e => ({
+        type:     String(e.type     || ''),
+        category: String(e.category || 'other'),
+        amount:   Number(e.amount   || 0),
+      }))),
       auditLog,
       allJudges,
       assignedJudges,

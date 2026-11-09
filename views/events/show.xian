@@ -622,6 +622,61 @@
 
     </div>
 
+    {{#if canManageFinance}}
+    <!-- Income Breakdown Donut Chart -->
+    <div class="rounded-2xl overflow-hidden mb-4" style="background:var(--bg-card);border:1px solid var(--border)">
+      <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+        <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
+          <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(16,185,129,0.15)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg></span>
+          Income Breakdown by Category
+        </h2>
+      </div>
+      <div class="p-5 flex flex-col sm:flex-row items-center gap-6">
+        <div style="width:160px;height:160px;flex-shrink:0">
+          <svg id="income-donut-svg" viewBox="0 0 160 160" width="160" height="160" style="transform:rotate(-90deg)">
+            <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="22"/>
+          </svg>
+        </div>
+        <div id="income-donut-legend" class="flex flex-wrap gap-x-5 gap-y-2"></div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var data = {{{financeEntriesJson}}};
+      var incomeEntries = data.filter(function(e){ return e.type === "income"; });
+      var el = document.getElementById("income-donut-svg");
+      var lg = document.getElementById("income-donut-legend");
+      if(!el||!lg||!incomeEntries.length){ if(el) el.closest(".rounded-2xl").style.display="none"; return; }
+      var COLORS=["#34d399","#60a5fa","#f59e0b","#a78bfa","#f87171","#38bdf8"];
+      var byCategory={};
+      incomeEntries.forEach(function(e){ var c=e.category||"other"; byCategory[c]=(byCategory[c]||0)+Number(e.amount||0); });
+      var cats=Object.keys(byCategory).filter(function(k){ return byCategory[k]>0; });
+      var total=cats.reduce(function(s,k){ return s+byCategory[k]; },0);
+      if(total<=0){ el.closest(".rounded-2xl").style.display="none"; return; }
+      var r=54, circ=2*Math.PI*r, offset=0;
+      cats.forEach(function(cat,i){
+        var val=byCategory[cat], frac=val/total, segLen=frac*circ;
+        var color=COLORS[i%COLORS.length];
+        var c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+        c.setAttribute("cx","80"); c.setAttribute("cy","80"); c.setAttribute("r",r);
+        c.setAttribute("fill","none"); c.setAttribute("stroke",color); c.setAttribute("stroke-width","22");
+        c.setAttribute("stroke-dasharray",segLen+" "+(circ-segLen));
+        var fo=circ-((offset/total)*circ);
+        c.setAttribute("stroke-dashoffset",circ);
+        c.style.transition="stroke-dashoffset 0.9s ease "+(i*0.1)+"s";
+        c.dataset.fo=fo; el.appendChild(c);
+        offset+=val;
+        var li=document.createElement("div");
+        li.style.cssText="display:flex;align-items:center;gap:6px;font-size:12px";
+        li.innerHTML='<span style="width:10px;height:10px;border-radius:2px;background:'+color+'"></span>'
+          +'<span style="color:var(--text-primary);font-weight:600">'+(cat.charAt(0).toUpperCase()+cat.slice(1))+'</span>'
+          +'<span style="color:var(--text-faint)">&#8369;'+val.toFixed(2)+'</span>';
+        lg.appendChild(li);
+      });
+      requestAnimationFrame(function(){ el.querySelectorAll("circle[data-fo]").forEach(function(c){ c.style.strokeDashoffset=c.dataset.fo; }); });
+    })();
+    </script>
+    {{/if}}
     <!-- Main finance card -->
     <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
 
