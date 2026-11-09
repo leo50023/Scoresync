@@ -357,5 +357,102 @@
   const el=document.getElementById('today-date');
   if(el) el.textContent=days[d.getDay()]+', '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 </script>
+
+<script>
+/* ── 15s smart auto-refresh: reloads the dashboard only when the user is idle,
+   so admin/organizer changes appear for judges & other roles automatically. ── */
+(() => {
+  const REFRESH_MS = 15000;
+  let lastActivity = Date.now();          // last user-interaction timestamp
+  let nextRefreshAt = Date.now() + REFRESH_MS;
+  let refreshing = false;
+
+  // Any real interaction resets the idle clock (capture so inner scroll fires too).
+  const touch = () => { lastActivity = Date.now(); };
+  ['mousemove', 'keydown', 'click', 'touchstart', 'wheel'].forEach(ev =>
+    window.addEventListener(ev, touch, { passive: true, capture: true }));
+  window.addEventListener('scroll', touch, { passive: true, capture: true });
+
+  // ── Guards: never reload while the user is mid-interaction ──
+  const isInputFocused = () => {
+    const ae = document.activeElement;
+    if (!ae) return false;
+    const t = ae.tagName;
+    return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || ae.isContentEditable;
+  };
+  const isModalOpen = () => {
+    const nodes = document.querySelectorAll('.fixed.inset-0, [role="dialog"], .modal, #ss-confirm-overlay');
+    for (const m of nodes) {
+      if (m.id === 'ss-confirm-overlay') { if (m.classList.contains('active')) return true; continue; }
+      if (m.classList.contains('hidden')) continue;
+      const cs = getComputedStyle(m);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      return true;                       // a full-screen overlay is on screen
+    }
+    return false;
+  };
+  const scrollDepth = () => {
+    let top = window.scrollY || document.documentElement.scrollTop || 0;
+    document.querySelectorAll('main, [class*="overflow-y-auto"], [class*="overflow-auto"]')
+      .forEach(el => { top = Math.max(top, el.scrollTop || 0); });
+    return top;
+  };
+  const canRefresh = () => {
+    if (refreshing) return false;
+    if (document.hidden) return false;                 // tab in background
+    if (Date.now() - lastActivity < REFRESH_MS) return false;  // active < 15s ago
+    if (isInputFocused()) return false;                // typing / searching
+    if (isModalOpen()) return false;                   // confirm dialog / modal open
+    if (scrollDepth() > 300) return false;             // scrolled down reading
+    return true;
+  };
+
+  // ── Unobtrusive "Live" indicator (bottom-right, dark theme) ──
+  const ind = document.createElement('div');
+  ind.setAttribute('aria-hidden', 'true');
+  ind.style.cssText =
+    'position:fixed;bottom:14px;right:16px;z-index:60;display:inline-flex;align-items:center;' +
+    'gap:7px;padding:6px 11px;border-radius:9999px;user-select:none;pointer-events:none;' +
+    'font:700 11px/1 system-ui,"Segoe UI",Roboto,sans-serif;letter-spacing:.01em;color:#6ee7b7;' +
+    'background:rgba(13,17,23,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);' +
+    'border:1px solid rgba(16,185,129,.25);box-shadow:0 6px 18px rgba(0,0,0,.4)';
+  ind.innerHTML =
+    '<span id="ssar-dot" style="width:8px;height:8px;border-radius:50%;flex-shrink:0;' +
+    'background:#10b981;box-shadow:0 0 7px #10b981;transition:all .25s ease"></span>' +
+    '<span id="ssar-label">Live 15s</span>';
+  document.body.appendChild(ind);
+  const dot = ind.querySelector('#ssar-dot');
+  const label = ind.querySelector('#ssar-label');
+
+  // 1s ticker: countdown + idle/active state
+  setInterval(() => {
+    if (refreshing) return;
+    const remain = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
+    const idle = Date.now() - lastActivity >= REFRESH_MS;
+    label.textContent = 'Live ' + remain + 's';
+    if (idle) {                          // eligible to refresh → steady green
+      dot.style.background = '#10b981';
+      dot.style.boxShadow = '0 0 7px #10b981';
+      dot.style.opacity = '1';
+    } else {                             // user active → paused (dim grey)
+      dot.style.background = '#64748b';
+      dot.style.boxShadow = 'none';
+      dot.style.opacity = '.55';
+    }
+  }, 1000);
+
+  // ── Main reload poll (every 15s) ──
+  const poll = () => {
+    nextRefreshAt = Date.now() + REFRESH_MS;     // reset countdown either way
+    if (!canRefresh()) return;                   // try again next tick
+    refreshing = true;
+    dot.style.background = '#fbbf24';
+    dot.style.boxShadow = '0 0 7px #fbbf24';
+    label.textContent = 'Refreshing...';         // flash "Refreshing..." for 1s
+    setTimeout(() => location.reload(), 1000);
+  };
+  setInterval(poll, REFRESH_MS);
+})();
+</script>
 </body>
 </html>
