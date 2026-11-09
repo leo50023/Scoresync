@@ -34,6 +34,7 @@ export const dashboardPage = async (req, res) => {
     let pendingUsers = [];
     let ongoingEvents = [];
     let judges = [];
+    let judgeCount = 0, tabulatorCount = 0, organizerCount = 0, adminCount = 0, encoderCount = 0;
 
     if (role === "admin") {
       const [evSnap, uSnap] = await Promise.all([
@@ -66,6 +67,13 @@ export const dashboardPage = async (req, res) => {
       pendingUsers = allUsers.filter(u => u.status === "pending");
       pendingCount = pendingUsers.length;
       totalUsers  = allUsers.filter(u => u.status !== "pending").length;
+
+      // Role counts for donut chart
+      judgeCount     = allUsers.filter(u => u.role === "judge"     && u.status !== "pending").length;
+      tabulatorCount = allUsers.filter(u => u.role === "tabulator" && u.status !== "pending").length;
+      organizerCount = allUsers.filter(u => u.role === "organizer" && u.status !== "pending").length;
+      adminCount     = allUsers.filter(u => u.role === "admin"     && u.status !== "pending").length;
+      encoderCount   = allUsers.filter(u => u.role === "encoder"   && u.status !== "pending").length;
     }
 
     // Organizer: load ongoing events + judges list
@@ -118,6 +126,11 @@ export const dashboardPage = async (req, res) => {
       judges,
       pendingUsers,
       pendingCount,
+      judgeCount,
+      tabulatorCount,
+      organizerCount,
+      adminCount,
+      encoderCount,
     };
 
     if (role === "admin")     return res.render("dashboard/admin",     viewData);
