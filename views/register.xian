@@ -431,16 +431,28 @@
         <div id="pwd-match-msg" style="font-size:11.5px;margin-top:-10px;margin-bottom:6px;display:none"></div>
       </div>
 
+
       <div style="margin-bottom:20px">
-        <label class="auth-label">Select Your Role</label>
-        <select name="role" required class="auth-input" style="padding-left:14px;cursor:pointer">
-          <option value="" disabled selected>Choose a role...</option>
-          <option value="judge">Judge — Score contestants</option>
-          <option value="tabulator">Tabulator — Review scores</option>
-        </select>
-        <p style="font-size:11px;color:rgba(100,116,139,0.7);margin-top:6px;">
-          Organizer access is granted by an admin only.
-        </p>
+        <label class="role-section-label">Select Your Role</label>
+        <div class="role-grid">
+          <label class="role-card-label">
+            <input type="radio" name="role" value="judge" class="sr-only" required/>
+            <div class="role-card role-card-judge">
+              <div class="role-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+              <div class="role-title">Judge</div>
+              <div class="role-desc">Score contestants</div>
+            </div>
+          </label>
+          <label class="role-card-label">
+            <input type="radio" name="role" value="tabulator" class="sr-only"/>
+            <div class="role-card role-card-tabulator">
+              <div class="role-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+              <div class="role-title">Tabulator</div>
+              <div class="role-desc">Review scores</div>
+            </div>
+          </label>
+        </div>
+        <p style="font-size:11px;color:rgba(100,116,139,0.6);margin-top:8px;text-align:center;">Organizer access is granted by an admin only.</p>
       </div>
 
       <button type="submit" class="auth-btn fm-tap" data-loading="Submitting...">
@@ -497,7 +509,20 @@ function checkPasswordMatch(){
 }
 // Also check match when typing in password field
 document.getElementById('passwordInput') && document.getElementById('passwordInput').addEventListener('input', checkPasswordMatch);
-// ── Premium loader with completion ──
+// ── Role card highlight ──
+document.querySelectorAll('input[name="role"]').forEach(function(r){
+  r.addEventListener('change',function(){
+    document.querySelectorAll('.role-card').forEach(function(c){
+      c.style.background=''; c.style.borderColor=''; c.style.boxShadow=''; c.style.transform='';
+    });
+    var card=r.nextElementSibling; if(!card) return;
+    var colors={
+      judge:     ['rgba(124,58,237,0.15)','rgba(124,58,237,0.6)','0 0 0 3px rgba(124,58,237,0.15),0 8px 24px rgba(124,58,237,0.2)'],
+      tabulator: ['rgba(245,158,11,0.12)', 'rgba(245,158,11,0.55)','0 0 0 3px rgba(245,158,11,0.15),0 8px 24px rgba(245,158,11,0.15)'],
+    };
+    if(colors[r.value]){card.style.background=colors[r.value][0];card.style.borderColor=colors[r.value][1];card.style.boxShadow=colors[r.value][2];}
+  });
+});// ── Premium loader with completion ──
 function startLoader(){
   var l=document.getElementById('auth-loader'),b=document.getElementById('auth-loader-bar');
   if(!l||!b)return;
