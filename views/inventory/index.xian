@@ -8,7 +8,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/></svg>{{error_msg}}</div>{{/if}}
 
-  <!-- �� Page Header �� -->
+  <!--  Page Header  -->
   <div class="flex items-center justify-between animate-fadeup">
     <div class="page-header mb-0">
       <div class="breadcrumb"><a href="/dashboard">Dashboard</a></div>
@@ -20,7 +20,7 @@
       <form method="GET" action="/inventory">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <select name="eventId" onchange="this.form.submit()" class="form-input-bare text-sm" style="min-width:180px">
-          <option value="">� All Events �</option>
+          <option value="">All Events</option>
           {{#each events}}
           <option value="{{id}}" {{#if (eq id ../filterEventId)}}selected{{/if}}>{{name}}</option>
           {{/each}}
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <!-- �� KPI Cards Row �� -->
+  <!--  KPI Cards Row  -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-fadeup-1">
 
     <!-- Total Income -->
@@ -104,7 +104,7 @@
 
   </div>
 
-  <!-- �� Main Content: Chart + Type Breakdown | Recent Records �� -->
+  <!--  Main Content: Chart + Type Breakdown | Recent Records  -->
   <div class="grid lg:grid-cols-3 gap-5 animate-fadeup-1">
 
     <!-- LEFT 2/3: Bar Chart + Records Table -->
@@ -115,7 +115,7 @@
         <div class="flex items-center justify-between mb-4">
           <div>
             <h2 class="font-extrabold text-base" style="color:var(--text-primary)">Income by Record</h2>
-            <p class="text-xs mt-0.5" style="color:var(--text-muted)">All ticket sales entries � bar height = total income</p>
+            <p class="text-xs mt-0.5" style="color:var(--text-muted)">All ticket sales entries &mdash; bar height = total income</p>
           </div>
           <span class="badge badge-green text-xs" id="chart-total-badge">?{{totalValue}} total</span>
         </div>
@@ -129,7 +129,7 @@
         <div class="section-header">
           <h2>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/></svg>
-            {{#if selectedEvent}}{{selectedEvent.name}} � Records{{else}}All Records{{/if}}
+            {{#if selectedEvent}}{{selectedEvent.name}} Records{{else}}All Records{{/if}}
             <span class="ml-2 badge badge-green text-[10px]">{{items.length}}</span>
           </h2>
           {{#if isAdmin}}
@@ -157,7 +157,7 @@
                 <div class="font-semibold text-sm" style="color:var(--text-primary)">{{ticketType}}</div>
                 <div class="text-xs mt-0.5" style="color:var(--text-muted)">
                   {{#unless ../filterEventId}}{{eventName}} &bull; {{/unless}}
-                  {{quantity}} × ?{{unitPrice}}
+                  {{quantity}} &times; &#8369;{{unitPrice}}
                   {{#if notes}} &bull; {{notes}}{{/if}}
                 </div>
               </div>
@@ -186,7 +186,7 @@
         </div>
         <!-- Footer total -->
         <div class="px-5 py-3 flex items-center justify-between" style="border-top:1px solid var(--border);background:rgba(16,185,129,0.05)">
-          <span class="text-xs font-extrabold uppercase tracking-wide" style="color:var(--text-muted)">Total · {{totalItems}} tickets</span>
+          <span class="text-xs font-extrabold uppercase tracking-wide" style="color:var(--text-muted)">Total  {{totalItems}} tickets</span>
           <span class="font-black text-emerald-400 text-base">?{{totalValue}}</span>
         </div>
 
@@ -286,7 +286,7 @@
 </main>
 </div>
 
-<!-- ══ ADD RECORD MODAL ══ -->
+<!--  ADD RECORD MODAL  -->
 <div id="add-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(4px)">
   <div class="card-flat w-full max-w-md mx-4 shadow-2xl">
     <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border)">
@@ -306,7 +306,7 @@
       <div>
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Event <span class="text-red-500">*</span></label>
         <select name="eventId" required class="form-input-bare">
-          <option value="">Select an event�</option>
+          <option value="">Select an event...</option>
           {{#each events}}
           <option value="{{id}}" {{#if (eq id ../filterEventId)}}selected{{/if}}>{{name}}</option>
           {{/each}}
@@ -314,7 +314,7 @@
       </div>
       <div>
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Ticket / Income Type <span class="text-red-500">*</span></label>
-        <input type="text" name="ticketType" placeholder="e.g. General Admission, VIP, Sponsor Fee�" required class="form-input-bare"/>
+        <input type="text" name="ticketType" placeholder="e.g. General Admission, VIP, Sponsor Fee" required class="form-input-bare"/>
       </div>
       <!-- Quick presets -->
       <div class="flex flex-wrap gap-1.5">
@@ -351,7 +351,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           <div>
             <div class="text-xs font-semibold" style="color:#6ee7b7">Upload receipt / QR</div>
-            <div class="text-[10px]" style="color:var(--text-muted)">PNG/JPG · max 2MB</div>
+            <div class="text-[10px]" style="color:var(--text-muted)">PNG/JPG  max 2MB</div>
           </div>
         </div>
         <input type="file" id="inv-photo-file" accept="image/*" class="hidden" onchange="handleInvPhoto(this)"/>
@@ -363,7 +363,7 @@
       </div>
       <div>
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Notes</label>
-        <textarea name="notes" rows="2" placeholder="e.g. Sold at gate, online pre-sale�" class="form-input-bare resize-none"></textarea>
+        <textarea name="notes" rows="2" placeholder="e.g. Sold at gate, online pre-sale" class="form-input-bare resize-none"></textarea>
       </div>
       <div class="flex gap-3 pt-1">
         <button type="submit" class="btn-sm btn-solid-green flex-1 justify-center">
@@ -376,7 +376,7 @@
   </div>
 </div>
 
-<!-- ══ EDIT MODAL ══ -->
+<!--  EDIT MODAL  -->
 <div id="edit-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(4px)">
   <div class="card-flat w-full max-w-md mx-4 shadow-2xl">
     <div class="px-6 py-4 flex items-center justify-between" style="border-bottom:1px solid var(--border)">
@@ -438,7 +438,7 @@
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-/* �� Build chart data from server items �� */
+/*  Build chart data from server items  */
 const ITEMS = [
   {{#each items}}
   { label: "{{ticketType}}", total: {{totalValue}}, qty: {{quantity}}, price: {{unitPrice}} },
@@ -448,23 +448,23 @@ const ITEMS = [
 const TOTAL_VALUE = {{#if totalValue}}{{totalValue}}{{else}}0{{/if}};
 const TOTAL_QTY   = {{#if totalItems}}{{totalItems}}{{else}}0{{/if}};
 
-/* �� KPI avg �� */
+/*  KPI avg  */
 const avgEl = document.getElementById('kpi-avg');
 if (avgEl) {
   const avg = TOTAL_QTY > 0 ? (TOTAL_VALUE / TOTAL_QTY) : 0;
   avgEl.textContent = '?' + avg.toLocaleString('en-PH', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
-/* �� Colour palette �� */
+/*  Colour palette  */
 const COLORS = ['#10b981','#f59e0b','#6366f1','#ef4444','#3b82f6','#8b5cf6','#ec4899','#14b8a6'];
 
-/* �� Bar chart �� */
+/*  Bar chart  */
 const barCtx = document.getElementById('income-bar-chart');
 if (barCtx && ITEMS.length) {
   new Chart(barCtx, {
     type: 'bar',
     data: {
-      labels: ITEMS.map(i => i.label.length > 16 ? i.label.slice(0,14)+'�' : i.label),
+      labels: ITEMS.map(i => i.label.length > 16 ? i.label.slice(0,14)+'...' : i.label),
       datasets: [{
         data:            ITEMS.map(i => i.total),
         backgroundColor: ITEMS.map((_, idx) => COLORS[idx % COLORS.length] + '33'),
@@ -492,7 +492,7 @@ if (barCtx && ITEMS.length) {
   barCtx.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-slate-300 text-sm font-semibold">No data yet</div>';
 }
 
-/* �� Donut chart �� */
+/*  Donut chart  */
 const donutCtx = document.getElementById('income-donut');
 if (donutCtx && ITEMS.length) {
   // Group by label
@@ -539,7 +539,7 @@ if (donutCtx && ITEMS.length) {
   donutCtx.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-slate-300 text-sm font-semibold">No data</div>';
 }
 
-/* �� Sparklines (mini bar) �� */
+/*  Sparklines (mini bar)  */
 ['sparkline-income','sparkline-tickets','sparkline-avg'].forEach((id,si) => {
   const el = document.getElementById(id);
   if (!el || !ITEMS.length) return;
@@ -554,7 +554,7 @@ if (donutCtx && ITEMS.length) {
   </svg>`;
 });
 
-/* �� Modals �� */
+/*  Modals  */
 function openAddModal()  { document.getElementById('add-modal').classList.remove('hidden'); }
 function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
 document.getElementById('add-modal').addEventListener('click', e => { if(e.target===document.getElementById('add-modal')) closeAddModal(); });
