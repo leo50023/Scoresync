@@ -437,8 +437,10 @@
           <option value="" disabled selected>Choose a role...</option>
           <option value="judge">Judge — Score contestants</option>
           <option value="tabulator">Tabulator — Review scores</option>
-          <option value="organizer">Organizer — Create &amp; manage events</option>
         </select>
+        <p style="font-size:11px;color:rgba(100,116,139,0.7);margin-top:6px;">
+          Organizer access is granted by an admin only.
+        </p>
       </div>
 
       <button type="submit" class="auth-btn fm-tap" data-loading="Submitting...">
