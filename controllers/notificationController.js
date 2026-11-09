@@ -100,6 +100,22 @@ export const getNotifications = async (req, res) => {
           });
         }
       });
+
+      // Notify when a judge has scored all contestants
+      assignedJudgeIds.forEach((jId, idx) => {
+        const scored = judgeScoreCounts[jId] || 0;
+        if (scored >= totalContestants) {
+          alerts.push({
+            id:      `judge-complete-${ev.id}-${jId}`,
+            type:    'info',
+            icon:    '✅',
+            title:   'Judge scoring complete',
+            message: `${judgeNames[jId] || ('Judge ' + (idx+1))} has submitted scores for all ${totalContestants} contestants in "${ev.name}".`,
+            eventId: ev.id,
+            urgency: 'normal',
+          });
+        }
+      });
     }
 
     // Pending accounts (admin only)
