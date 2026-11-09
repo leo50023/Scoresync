@@ -203,6 +203,96 @@
     </div>
   </div>
 
+  <!-- ── Criteria Weight Distribution Donut Chart ── -->
+  <script id="criteria-weight-data" type="application/json">[{{#each criteria}}{"name":"{{name}}","weight":{{weight}}}{{#unless @last}},{{/unless}}{{/each}}]</script>
+  <div id="criteria-donut-section" class="fm-fade-up rounded-2xl overflow-hidden no-print" style="background:var(--bg-card);border:1px solid var(--border)">
+    <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+      <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(96,165,250,0.15)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+        </span>
+        Criteria Weight Distribution
+      </h2>
+    </div>
+    <div class="p-5 flex flex-col sm:flex-row items-center gap-6">
+      <div class="flex-shrink-0" style="width:200px;height:200px">
+        <svg id="criteria-donut-svg" viewBox="0 0 200 200" width="200" height="200" style="transform:rotate(-90deg)">
+          <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="28"/>
+        </svg>
+      </div>
+      <div id="criteria-donut-legend" class="flex flex-wrap gap-x-5 gap-y-2"></div>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var raw = document.getElementById('criteria-weight-data');
+    if (!raw) return;
+    var criteria;
+    try { criteria = JSON.parse(raw.textContent); } catch(e) { return; }
+    if (!criteria || !criteria.length) return;
+
+    var COLORS = ['#60a5fa','#34d399','#f59e0b','#a78bfa','#f87171','#38bdf8'];
+    var r = 70, cx = 100, cy = 100, circumference = 2 * Math.PI * r;
+    var svg = document.getElementById('criteria-donut-svg');
+    var legend = document.getElementById('criteria-donut-legend');
+    if (!svg || !legend) return;
+
+    var totalWeight = criteria.reduce(function(s, c) { return s + (c.weight || 0); }, 0);
+    if (totalWeight <= 0) return;
+
+    var offset = 0;
+    criteria.forEach(function(c, i) {
+      var color = COLORS[i % COLORS.length];
+      var fraction = c.weight / totalWeight;
+      var segLen = fraction * circumference;
+      var gap = circumference - segLen;
+
+      var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', cx);
+      circle.setAttribute('cy', cy);
+      circle.setAttribute('r', r);
+      circle.setAttribute('fill', 'none');
+      circle.setAttribute('stroke', color);
+      circle.setAttribute('stroke-width', '28');
+      circle.setAttribute('stroke-dasharray', segLen + ' ' + gap);
+      circle.setAttribute('stroke-dashoffset', circumference - offset * circumference / 1 + circumference);
+      // Start hidden then animate
+      circle.setAttribute('stroke-dashoffset', circumference);
+      circle.style.transition = 'stroke-dashoffset 0.9s cubic-bezier(.4,0,.2,1) ' + (i * 0.12) + 's';
+      svg.appendChild(circle);
+
+      var dashOffset = circumference - (offset / totalWeight) * circumference;
+      // Correct calculation: rotate via dashoffset
+      circle.setAttribute('stroke-dasharray', segLen + ' ' + (circumference - segLen));
+      circle.setAttribute('stroke-dashoffset', circumference - (offset / totalWeight) * circumference);
+      // Initially hidden
+      var finalOffset = circumference - (offset / totalWeight) * circumference;
+      circle.setAttribute('stroke-dashoffset', circumference);
+      circle.dataset.finalOffset = finalOffset;
+
+      // Legend item
+      var li = document.createElement('div');
+      li.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:12px;';
+      li.innerHTML = '<span style="width:12px;height:12px;border-radius:3px;background:' + color + ';flex-shrink:0;display:inline-block"></span>'
+        + '<span style="color:var(--text-primary);font-weight:600">' + c.name + '</span>'
+        + '<span style="color:var(--text-faint);margin-left:2px">' + c.weight + '%</span>';
+      legend.appendChild(li);
+
+      offset += c.weight;
+    });
+
+    // Animate on load
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        svg.querySelectorAll('circle[data-final-offset]').forEach(function(el) {
+          el.style.strokeDashoffset = el.dataset.finalOffset;
+          el.setAttribute('stroke-dashoffset', el.dataset.finalOffset);
+        });
+      });
+    });
+  })();
+  </script>
+
   <!-- ── All Participants by Rank ── -->
   <div id="standings-container" class="space-y-2 fm-reveal">
     <div class="flex items-center justify-between px-1 mb-3">

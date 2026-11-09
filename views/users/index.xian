@@ -155,7 +155,7 @@
     <div class="overflow-x-auto">
       <table class="data-table">
         <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Joined</th><th>Change Role</th><th class="text-right pr-5">Action</th></tr></thead>
-        <tbody>
+        <tbody id="users-tbody">
           {{#each users}}
           <tr>
             <td>
@@ -300,6 +300,74 @@
   }
 </script>
 
+<script>
+(function() {
+  var tbody = document.getElementById('users-tbody');
+  if (!tbody) return;
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  if (rows.length === 0) return;
+
+  var PAGE_SIZE = 10;
+  var currentPage = 1;
+  var totalPages = Math.ceil(rows.length / PAGE_SIZE);
+
+  // Create pagination container after the table's parent section-card
+  var container = document.createElement('div');
+  container.id = 'users-pagination';
+  container.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid rgba(255,255,255,0.06)';
+  tbody.closest('.section-card').appendChild(container);
+
+  function showPage(page) {
+    currentPage = page;
+    var start = (page - 1) * PAGE_SIZE;
+    var end   = start + PAGE_SIZE;
+    rows.forEach(function(row, i) {
+      row.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+    render();
+  }
+
+  function render() {
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    var info = document.createElement('div');
+    var start = (currentPage - 1) * PAGE_SIZE + 1;
+    var end   = Math.min(currentPage * PAGE_SIZE, rows.length);
+    info.style.cssText = 'font-size:11px;color:var(--text-faint)';
+    info.textContent = 'Showing ' + start + '–' + end + ' of ' + rows.length + ' users';
+    container.appendChild(info);
+
+    var btnsRow = document.createElement('div');
+    btnsRow.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap;justify-content:center';
+
+    function mkBtn(label, page, disabled, active) {
+      var b = document.createElement('button');
+      b.textContent = label;
+      b.disabled = disabled;
+      b.style.cssText = 'padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:' + (disabled ? 'not-allowed' : 'pointer') + ';border:1px solid;'
+        + (active
+          ? 'background:rgba(16,185,129,0.2);color:#34d399;border-color:rgba(16,185,129,0.4)'
+          : 'background:rgba(255,255,255,0.04);color:var(--text-faint);border-color:rgba(255,255,255,0.1)');
+      if (!disabled && !active) {
+        b.addEventListener('mouseenter', function(){ b.style.background='rgba(255,255,255,0.08)'; });
+        b.addEventListener('mouseleave', function(){ b.style.background='rgba(255,255,255,0.04)'; });
+      }
+      if (!disabled) b.addEventListener('click', function(){ showPage(page); });
+      return b;
+    }
+
+    btnsRow.appendChild(mkBtn('Prev', currentPage - 1, currentPage === 1, false));
+    for (var p = 1; p <= totalPages; p++) {
+      btnsRow.appendChild(mkBtn(String(p), p, false, p === currentPage));
+    }
+    btnsRow.appendChild(mkBtn('Next', currentPage + 1, currentPage === totalPages, false));
+    container.appendChild(btnsRow);
+  }
+
+  showPage(1);
+})();
+</script>
 {{> footer }}
 </body>
 </html>

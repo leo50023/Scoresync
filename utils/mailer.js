@@ -21,6 +21,7 @@ function getTransporter() {
   _transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: { user, pass },
+    tls: { rejectUnauthorized: false },
   });
 
   return _transporter;
@@ -34,12 +35,17 @@ export async function sendMail({ to, subject, text, html }) {
   const transporter = getTransporter();
   if (!transporter) return;
   try {
+    await transporter.verify();
+  } catch (verifyErr) {
+    console.error('[mailer] SMTP verify failed:', verifyErr);
+  }
+  try {
     await transporter.sendMail({
       from: `"ScoreSync" <${process.env.GMAIL_USER}>`,
       to, subject, text, html,
     });
   } catch (err) {
-    console.error('[mailer] Failed to send email:', err.message);
+    console.error('[mailer] Failed to send email:', err);
   }
 }
 

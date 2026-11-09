@@ -102,7 +102,7 @@ export const approveUser = async (req, res) => {
           <p style="color:#475569;font-size:12px;margin-top:24px">If you did not request this account, please ignore this email.</p>
         </div>
       </div>`,
-    }).catch(() => {});
+    }).catch(err => console.error('[mailer] approval email failed:', err));
 
     req.flash("success_msg", `Account approved and ${userData.name} notified via email.`);
     res.redirect("/users");
@@ -142,7 +142,7 @@ export const rejectUser = async (req, res) => {
             <p style="color:#475569;font-size:12px;margin-top:24px">If you did not request this account, please ignore this email.</p>
           </div>
         </div>`,
-      }).catch(() => {});
+      }).catch(err => console.error('[mailer] rejection email failed:', err));
     }
 
     req.flash("success_msg", `Account request for ${userData.name || 'user'} rejected.`);

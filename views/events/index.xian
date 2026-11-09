@@ -118,6 +118,8 @@
     {{/each}}
   </div>
 
+  <div id="events-pagination"></div>
+
   {{else}}
   <div class="py-20 text-center animate-fadeup-1 rounded-2xl" style="background:var(--bg-card);border:1px solid var(--border)">
     <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
@@ -138,29 +140,87 @@
 </main>
 </div>
 <script>
-function filterEvents(status) {
-  const cards = document.querySelectorAll('.event-card');
-  const btns  = document.querySelectorAll('.filter-btn');
-  let visible = 0;
+var _allVisibleCards = [];
+var _eventsCurrentPage = 1;
+var _eventsPageSize = 10;
 
-  cards.forEach(card => {
-    const show = status === 'all' || card.dataset.status === status;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
+function filterEvents(status) {
+  var cards = Array.from(document.querySelectorAll('.event-card'));
+  var btns  = document.querySelectorAll('.filter-btn');
+
+  _allVisibleCards = cards.filter(function(card) {
+    return status === 'all' || card.dataset.status === status;
   });
 
-  // Update button styles via btn-* classes
-  btns.forEach(btn => {
-    const active = btn.id === 'filter-' + status;
+  cards.forEach(function(card) { card.style.display = 'none'; });
+
+  btns.forEach(function(btn) {
+    var active = btn.id === 'filter-' + status;
     btn.classList.toggle('btn-solid-green', active);
     btn.classList.toggle('btn-sm-gray', !active);
   });
 
-  const countEl = document.getElementById('events-count');
-  if (countEl) countEl.textContent = visible + ' event' + (visible !== 1 ? 's' : '') + (status !== 'all' ? ' � ' + status : '');
+  _eventsCurrentPage = 1;
+  renderEventsPage();
 }
-// Init
-document.addEventListener('DOMContentLoaded', () => filterEvents('all'));
+
+function renderEventsPage() {
+  var cards = Array.from(document.querySelectorAll('.event-card'));
+  cards.forEach(function(card) { card.style.display = 'none'; });
+
+  var start = (_eventsCurrentPage - 1) * _eventsPageSize;
+  var end   = start + _eventsPageSize;
+  var pageCards = _allVisibleCards.slice(start, end);
+  pageCards.forEach(function(card) { card.style.display = ''; });
+
+  var total = _allVisibleCards.length;
+  var totalPages = Math.ceil(total / _eventsPageSize) || 1;
+
+  var countEl = document.getElementById('events-count');
+  if (countEl) {
+    var showEnd = Math.min(end, total);
+    countEl.textContent = total === 0 ? '0 events' :
+      'Showing ' + (start + 1) + '\u2013' + showEnd + ' of ' + total + ' event' + (total !== 1 ? 's' : '');
+  }
+
+  var paginationEl = document.getElementById('events-pagination');
+  if (!paginationEl) return;
+  paginationEl.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  paginationEl.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0';
+
+  var btnsRow = document.createElement('div');
+  btnsRow.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap;justify-content:center';
+
+  function mkBtn(label, page, disabled, active) {
+    var b = document.createElement('button');
+    b.textContent = label;
+    b.disabled = disabled;
+    b.style.cssText = 'padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:' + (disabled ? 'not-allowed' : 'pointer') + ';border:1px solid;'
+      + (active
+        ? 'background:rgba(16,185,129,0.2);color:#34d399;border-color:rgba(16,185,129,0.4)'
+        : 'background:rgba(255,255,255,0.04);color:var(--text-faint);border-color:rgba(255,255,255,0.1)');
+    if (!disabled && !active) {
+      b.addEventListener('mouseenter', function(){ b.style.background='rgba(255,255,255,0.08)'; });
+      b.addEventListener('mouseleave', function(){ b.style.background='rgba(255,255,255,0.04)'; });
+    }
+    if (!disabled) b.addEventListener('click', function(){ _eventsCurrentPage = page; renderEventsPage(); });
+    return b;
+  }
+
+  btnsRow.appendChild(mkBtn('Prev', _eventsCurrentPage - 1, _eventsCurrentPage === 1, false));
+  for (var p = 1; p <= totalPages; p++) {
+    btnsRow.appendChild(mkBtn(String(p), p, false, p === _eventsCurrentPage));
+  }
+  btnsRow.appendChild(mkBtn('Next', _eventsCurrentPage + 1, _eventsCurrentPage === totalPages, false));
+  paginationEl.appendChild(btnsRow);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  _allVisibleCards = Array.from(document.querySelectorAll('.event-card'));
+  filterEvents('all');
+});
 </script>
 {{> footer }}
 </body>

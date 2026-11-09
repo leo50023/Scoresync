@@ -159,7 +159,7 @@
         {{#if isOrganizer}}<a href="/events/{{event.id}}/contestants/add" class="btn-primary btn-sm text-xs px-3 py-1.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add</a>{{/if}}
       </div>
       {{#if contestants.length}}
-      <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" data-stagger="fm-scale-in">
+      <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="contestants-list" data-stagger="fm-scale-in">
         {{#each contestants}}
         <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition hover:-translate-y-1"
           style="aspect-ratio:3/4;border:1px solid var(--border);background:#111827">
@@ -621,6 +621,97 @@
       </div>
 
     </div>
+
+    <!-- Income Breakdown Donut Chart -->
+    <script id="finance-entries-data" type="application/json">[{{#each finance.entries}}{"type":"{{type}}","category":"{{category}}","amount":{{amount}}}{{#unless @last}},{{/unless}}{{/each}}]</script>
+    <div class="rounded-2xl overflow-hidden mb-4" style="background:var(--bg-card);border:1px solid var(--border)">
+      <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+        <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
+          <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(16,185,129,0.15)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+          </span>
+          Income Breakdown by Category
+        </h2>
+      </div>
+      <div class="p-5 flex flex-col sm:flex-row items-center gap-6">
+        <div class="flex-shrink-0" style="width:200px;height:200px">
+          <svg id="income-donut-svg" viewBox="0 0 200 200" width="200" height="200" style="transform:rotate(-90deg)">
+            <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="28"/>
+          </svg>
+        </div>
+        <div id="income-donut-legend" class="flex flex-wrap gap-x-5 gap-y-2"></div>
+      </div>
+    </div>
+    <script>
+    (function() {
+      var raw = document.getElementById('finance-entries-data');
+      if (!raw) return;
+      var entries;
+      try { entries = JSON.parse(raw.textContent); } catch(e) { return; }
+      var incomeEntries = entries.filter(function(e){ return e.type === 'income'; });
+      if (!incomeEntries.length) {
+        var s = document.getElementById('income-donut-svg');
+        var l = document.getElementById('income-donut-legend');
+        if (s) s.closest('.rounded-2xl').style.display = 'none';
+        return;
+      }
+      var COLORS = ['#34d399','#60a5fa','#f59e0b','#a78bfa','#f87171','#38bdf8'];
+      var byCategory = {};
+      incomeEntries.forEach(function(e){
+        var cat = e.category || 'other';
+        byCategory[cat] = (byCategory[cat] || 0) + Number(e.amount || 0);
+      });
+      var cats = Object.keys(byCategory).filter(function(k){ return byCategory[k] > 0; });
+      var total = cats.reduce(function(s, k){ return s + byCategory[k]; }, 0);
+      if (total <= 0) return;
+
+      var r = 70, circumference = 2 * Math.PI * r;
+      var svg = document.getElementById('income-donut-svg');
+      var legend = document.getElementById('income-donut-legend');
+      if (!svg || !legend) return;
+
+      var offset = 0;
+      cats.forEach(function(cat, i) {
+        var val = byCategory[cat];
+        var fraction = val / total;
+        var segLen = fraction * circumference;
+        var color = COLORS[i % COLORS.length];
+
+        var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', '100');
+        circle.setAttribute('cy', '100');
+        circle.setAttribute('r', r);
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', color);
+        circle.setAttribute('stroke-width', '28');
+        circle.setAttribute('stroke-dasharray', segLen + ' ' + (circumference - segLen));
+        var finalOffset = circumference - (offset / total) * circumference;
+        circle.setAttribute('stroke-dashoffset', circumference);
+        circle.style.transition = 'stroke-dashoffset 0.9s cubic-bezier(.4,0,.2,1) ' + (i * 0.12) + 's';
+        circle.dataset.finalOffset = finalOffset;
+        svg.appendChild(circle);
+
+        var li = document.createElement('div');
+        li.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:12px;';
+        var label = cat.charAt(0).toUpperCase() + cat.slice(1).replace(/-/g,' ');
+        li.innerHTML = '<span style="width:12px;height:12px;border-radius:3px;background:' + color + ';flex-shrink:0;display:inline-block"></span>'
+          + '<span style="color:var(--text-primary);font-weight:600">' + label + '</span>'
+          + '<span style="color:var(--text-faint);margin-left:2px">₱' + val.toFixed(2) + '</span>';
+        legend.appendChild(li);
+
+        offset += val;
+      });
+
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          svg.querySelectorAll('circle[data-final-offset]').forEach(function(el) {
+            el.style.strokeDashoffset = el.dataset.finalOffset;
+            el.setAttribute('stroke-dashoffset', el.dataset.finalOffset);
+          });
+        });
+      });
+    })();
+    </script>
 
     <!-- Main finance card -->
     <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
@@ -1241,5 +1332,72 @@ document.getElementById('add-judge-modal').addEventListener('click', function(e)
 </script>
 
 {{> footer }}
+<script>
+(function() {
+  var list = document.getElementById('contestants-list');
+  if (!list) return;
+  var cards = Array.from(list.children);
+  if (cards.length === 0) return;
+
+  var PAGE_SIZE = 10;
+  var currentPage = 1;
+  var totalPages = Math.ceil(cards.length / PAGE_SIZE);
+
+  var paginationEl = document.createElement('div');
+  paginationEl.id = 'contestants-pagination';
+  paginationEl.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid rgba(255,255,255,0.06)';
+  list.parentElement.appendChild(paginationEl);
+
+  function showPage(page) {
+    currentPage = page;
+    var start = (page - 1) * PAGE_SIZE;
+    var end   = start + PAGE_SIZE;
+    cards.forEach(function(card, i) {
+      card.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+    render();
+  }
+
+  function render() {
+    paginationEl.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    var info = document.createElement('div');
+    var start = (currentPage - 1) * PAGE_SIZE + 1;
+    var end   = Math.min(currentPage * PAGE_SIZE, cards.length);
+    info.style.cssText = 'font-size:11px;color:var(--text-faint)';
+    info.textContent = 'Showing ' + start + '\u2013' + end + ' of ' + cards.length + ' contestants';
+    paginationEl.appendChild(info);
+
+    var btnsRow = document.createElement('div');
+    btnsRow.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap;justify-content:center';
+
+    function mkBtn(label, page, disabled, active) {
+      var b = document.createElement('button');
+      b.textContent = label;
+      b.disabled = disabled;
+      b.style.cssText = 'padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:' + (disabled ? 'not-allowed' : 'pointer') + ';border:1px solid;'
+        + (active
+          ? 'background:rgba(16,185,129,0.2);color:#34d399;border-color:rgba(16,185,129,0.4)'
+          : 'background:rgba(255,255,255,0.04);color:var(--text-faint);border-color:rgba(255,255,255,0.1)');
+      if (!disabled && !active) {
+        b.addEventListener('mouseenter', function(){ b.style.background='rgba(255,255,255,0.08)'; });
+        b.addEventListener('mouseleave', function(){ b.style.background='rgba(255,255,255,0.04)'; });
+      }
+      if (!disabled) b.addEventListener('click', function(){ showPage(page); });
+      return b;
+    }
+
+    btnsRow.appendChild(mkBtn('Prev', currentPage - 1, currentPage === 1, false));
+    for (var p = 1; p <= totalPages; p++) {
+      btnsRow.appendChild(mkBtn(String(p), p, false, p === currentPage));
+    }
+    btnsRow.appendChild(mkBtn('Next', currentPage + 1, currentPage === totalPages, false));
+    paginationEl.appendChild(btnsRow);
+  }
+
+  showPage(1);
+})();
+</script>
 </body>
 </html>
