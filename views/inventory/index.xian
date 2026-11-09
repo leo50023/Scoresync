@@ -452,7 +452,7 @@ const TOTAL_QTY   = {{#if totalItems}}{{totalItems}}{{else}}0{{/if}};
 const avgEl = document.getElementById('kpi-avg');
 if (avgEl) {
   const avg = TOTAL_QTY > 0 ? (TOTAL_VALUE / TOTAL_QTY) : 0;
-  avgEl.textContent = '?' + avg.toLocaleString('en-PH', {minimumFractionDigits:2, maximumFractionDigits:2});
+  avgEl.textContent = '\u20B1' + avg.toLocaleString('en-PH', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
 /*  Colour palette  */
@@ -483,7 +483,7 @@ if (barCtx && ITEMS.length) {
         x: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' }, color: '#94a3b8' } },
         y: { grid: { color: '#f1f5f9' }, ticks: {
           font: { size: 11 }, color: '#94a3b8',
-          callback: v => '?' + (v >= 1000 ? (v/1000).toFixed(0)+'K' : v)
+          callback: v => '\u20B1' + (v >= 1000 ? (v/1000).toFixed(0)+'K' : v)
         }},
       },
     },
@@ -580,7 +580,7 @@ function calcPreview() {
   const qty   = parseFloat(document.querySelector('[name=quantity]')?.value || 0);
   const price = parseFloat(document.getElementById('add-unit-price')?.value || 0);
   const el    = document.getElementById('add-total-preview');
-  if (el) el.textContent = '?' + (qty*price).toLocaleString('en-PH',{minimumFractionDigits:2});
+  if (el) el.textContent = '\u20B1' + (qty*price).toLocaleString('en-PH',{minimumFractionDigits:2});
 }
 document.querySelector('[name=quantity]')?.addEventListener('input', calcPreview);
 
