@@ -417,34 +417,28 @@
         </div>
       </div>
 
-      <div style="margin-bottom:20px">
-        <label class="role-section-label">Select Your Role</label>
-        <div class="role-grid">
-          <label class="role-card-label">
-            <input type="radio" name="role" value="judge" class="sr-only" required/>
-            <div class="role-card role-card-judge">
-              <div class="role-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
-              <div class="role-title">Judge</div>
-              <div class="role-desc">Score contestants</div>
-            </div>
-          </label>
-          <label class="role-card-label">
-            <input type="radio" name="role" value="tabulator" class="sr-only"/>
-            <div class="role-card role-card-tabulator">
-              <div class="role-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-              <div class="role-title">Tabulator</div>
-              <div class="role-desc">Review scores</div>
-            </div>
-          </label>
-          <label class="role-card-label role-grid-full">
-            <input type="radio" name="role" value="organizer" class="sr-only"/>
-            <div class="role-card role-card-organizer" style="flex-direction:row;text-align:left;padding:14px 16px;gap:14px">
-              <div class="role-icon" style="margin:0;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-              <div style="flex:1"><div class="role-title" style="margin-bottom:2px">Organizer</div><div class="role-desc">Create &amp; manage events</div></div>
-              <span class="role-full-access">FULL ACCESS</span>
-            </div>
-          </label>
+      <div class="field-row">
+        <label class="auth-label">Confirm Password</label>
+        <div class="input-icon-wrap" style="position:relative">
+          <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <input type="password" id="confirmPasswordInput" placeholder="Re-enter your password" required minlength="6" autocomplete="new-password" class="auth-input auth-input-pr" oninput="checkPasswordMatch()"/>
+          <button type="button" id="eyeBtn2" onclick="togglePwd2()"
+            style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:rgba(100,116,139,0.6);background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;transition:color 0.2s ease"
+            onmouseover="this.style.color='rgba(167,139,250,0.9)'" onmouseout="this.style.color='rgba(100,116,139,0.6)'">
+            <svg id="eyeIcon2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
         </div>
+        <div id="pwd-match-msg" style="font-size:11.5px;margin-top:-10px;margin-bottom:6px;display:none"></div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <label class="auth-label">Select Your Role</label>
+        <select name="role" required class="auth-input" style="padding-left:14px;cursor:pointer">
+          <option value="" disabled selected>Choose a role...</option>
+          <option value="judge">Judge — Score contestants</option>
+          <option value="tabulator">Tabulator — Review scores</option>
+          <option value="organizer">Organizer — Create &amp; manage events</option>
+        </select>
       </div>
 
       <button type="submit" class="auth-btn fm-tap" data-loading="Submitting...">
@@ -475,21 +469,32 @@ function togglePwd(){
   if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
   else{i.type='password';b.innerHTML=eyeOpen;}
 }
-// ── Role card highlight ──
-document.querySelectorAll('input[name="role"]').forEach(function(r){
-  r.addEventListener('change',function(){
-    document.querySelectorAll('.role-card').forEach(function(c){
-      c.style.background=''; c.style.borderColor=''; c.style.boxShadow=''; c.style.transform='';
-    });
-    var card=r.nextElementSibling; if(!card) return;
-    var colors={
-      judge:     ['rgba(124,58,237,0.15)','rgba(124,58,237,0.6)','0 0 0 3px rgba(124,58,237,0.15),0 8px 24px rgba(124,58,237,0.2)'],
-      tabulator: ['rgba(245,158,11,0.12)', 'rgba(245,158,11,0.55)','0 0 0 3px rgba(245,158,11,0.15),0 8px 24px rgba(245,158,11,0.15)'],
-      organizer: ['rgba(16,185,129,0.12)', 'rgba(16,185,129,0.55)','0 0 0 3px rgba(16,185,129,0.15),0 8px 24px rgba(16,185,129,0.15)'],
-    };
-    if(colors[r.value]){card.style.background=colors[r.value][0];card.style.borderColor=colors[r.value][1];card.style.boxShadow=colors[r.value][2];}
-  });
-});
+function togglePwd2(){
+  var i=document.getElementById('confirmPasswordInput'),b=document.getElementById('eyeBtn2');
+  if(i.type==='password'){i.type='text';b.innerHTML=eyeClose;}
+  else{i.type='password';b.innerHTML=eyeOpen;}
+}
+// ── Password match check ──
+function checkPasswordMatch(){
+  var p1=document.getElementById('passwordInput');
+  var p2=document.getElementById('confirmPasswordInput');
+  var msg=document.getElementById('pwd-match-msg');
+  if(!p1||!p2||!msg) return;
+  if(!p2.value){ msg.style.display='none'; p2.style.borderColor=''; return; }
+  if(p1.value===p2.value){
+    msg.style.display='block';
+    msg.style.color='#34d399';
+    msg.textContent='✓ Passwords match';
+    p2.style.borderColor='rgba(52,211,153,0.6)';
+  } else {
+    msg.style.display='block';
+    msg.style.color='#fca5a5';
+    msg.textContent='✗ Passwords do not match';
+    p2.style.borderColor='rgba(239,68,68,0.6)';
+  }
+}
+// Also check match when typing in password field
+document.getElementById('passwordInput') && document.getElementById('passwordInput').addEventListener('input', checkPasswordMatch);
 // ── Premium loader with completion ──
 function startLoader(){
   var l=document.getElementById('auth-loader'),b=document.getElementById('auth-loader-bar');
@@ -510,7 +515,17 @@ function completeLoader(){
   setTimeout(function(){ l.style.opacity='0'; setTimeout(function(){ l.classList.remove('active'); b.style.width='0%'; l.style.opacity=''; },300); },350);
 }
 document.querySelectorAll('.auth-card form').forEach(function(f){
-  f.addEventListener('submit',function(){
+  f.addEventListener('submit',function(e){
+    // Validate password match before submit
+    var p1=document.getElementById('passwordInput');
+    var p2=document.getElementById('confirmPasswordInput');
+    if(p1 && p2 && p1.value !== p2.value){
+      e.preventDefault();
+      var msg=document.getElementById('pwd-match-msg');
+      if(msg){ msg.style.display='block'; msg.style.color='#fca5a5'; msg.textContent='✗ Passwords do not match'; }
+      p2.focus();
+      return;
+    }
     startLoader();
     var btn=f.querySelector('.auth-btn');
     if(btn){btn.classList.add('loading');var t=btn.querySelector('.btn-text');if(t)t.textContent=btn.dataset.loading||'Please wait...';}
