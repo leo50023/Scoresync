@@ -44,7 +44,7 @@
 
   <div id="events-count" class="text-xs" style="color:var(--text-faint)"></div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5" data-stagger="fm-fade-up" id="events-grid">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5" id="events-grid">
     {{#each events}}
     <div class="overflow-hidden flex flex-col rounded-2xl fm-hover event-card"
       data-status="{{status}}"
