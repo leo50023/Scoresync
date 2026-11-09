@@ -103,7 +103,7 @@
     <input type="hidden" name="_csrf" value="{{../csrfToken}}">
               <input type="hidden" name="status" value="completed">
               <button type="submit" class="btn-sm btn-solid-blue w-full justify-center">
-                ? End
+                End Event
               </button>
             </form>
             {{/if}}
