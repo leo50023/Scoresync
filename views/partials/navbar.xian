@@ -29,12 +29,20 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span id="notif-badge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:999px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:0 3px;align-items:center;justify-content:center;border:2px solid var(--bg-navbar);transition:transform 0.3s cubic-bezier(0.34,1.6,0.64,1)"></span>
       </button>
-      <div id="notif-panel" style="display:none;position:fixed;top:60px;right:8px;left:8px;width:auto;max-width:360px;margin-left:auto;border-radius:16px;z-index:9999;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;background:#0d1424">
+      <div id="notif-panel" style="display:none;position:fixed;top:60px;right:8px;width:340px;border-radius:20px;z-index:9999;border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);overflow:hidden;background:rgba(10,15,30,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
+        <!-- Gradient top border highlight -->
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);margin:0 20px"></div>
+        <!-- Header -->
         <div style="padding:12px 16px 10px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between">
-          <span style="font-size:0.78rem;font-weight:800;color:#e2e8f0">Notifications</span>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
-            <span id="notif-count-label" style="font-size:0.65rem;font-weight:700;color:#64748b"></span>
-            <span id="notif-timestamp" style="font-size:0.6rem;color:#334155"></span>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:0.85rem;font-weight:800;color:#f1f5f9">Notifications</span>
+            <span id="notif-timestamp" style="font-size:0.6rem;color:#475569"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span id="notif-count-label" style="font-size:0.62rem;font-weight:800;padding:2px 8px;border-radius:999px;color:#fff;background:#10b981"></span>
+            <button type="button" id="notif-mute-btn" onclick="toggleNotifMute()"
+              title="Toggle notification sound"
+              style="font-size:0.9rem;background:none;border:none;cursor:pointer;color:#64748b;padding:4px;border-radius:6px;line-height:1">🔔</button>
           </div>
         </div>
         <div id="notif-list" style="max-height:min(340px,60vh);overflow-y:auto;padding:6px 8px">
@@ -44,7 +52,11 @@
           </div>
         </div>
         <div style="padding:8px 12px;border-top:1px solid rgba(255,255,255,0.06);text-align:center">
-          <a href="/events" style="font-size:0.72rem;font-weight:600;color:#6366f1;text-decoration:none">View all events →</a>
+          <a href="/events" style="font-size:0.73rem;font-weight:700;color:#818cf8;text-decoration:none"
+            onmouseover="this.style.color='#a5b4fc';document.getElementById('notif-footer-arrow').style.transform='translateX(3px)'"
+            onmouseout="this.style.color='#818cf8';document.getElementById('notif-footer-arrow').style.transform='translateX(0)'">
+            <span>View all events</span><span id="notif-footer-arrow" style="display:inline-block;margin-left:4px;transition:transform 0.18s ease">→</span>
+          </a>
         </div>
       </div>
     </div>
@@ -73,8 +85,67 @@
 
 <script>
 (function() {
-  // Sync theme toggle icon on load
+  // Inject @keyframes for panel slide-in animation
+  (function injectNotifStyles() {
+    var styleId = 'notif-panel-keyframes';
+    if (document.getElementById(styleId)) return;
+    var s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = '@keyframes notifSlideIn{from{transform:translateY(-8px);opacity:0}to{transform:translateY(0);opacity:1}}';
+    document.head.appendChild(s);
+  })();
 
+  // ── Sound System ─────────────────────────────────────────────────────────
+  var _userHasInteracted = false;
+  var _notifSoundMuted = (localStorage.getItem('ss-notif-sound') === 'off');
+
+  function _markInteraction() { _userHasInteracted = true; }
+  document.addEventListener('click', _markInteraction, { once: true, passive: true });
+  document.addEventListener('keydown', _markInteraction, { once: true, passive: true });
+  document.addEventListener('touchstart', _markInteraction, { once: true, passive: true });
+
+  function playNotifChime() {
+    if (!_userHasInteracted || _notifSoundMuted) return;
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      function tone(freq, startTime, duration) {
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0.3, startTime);
+        gain.gain.linearRampToValueAtTime(0, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      }
+      var t = ctx.currentTime;
+      tone(880, t,        0.3);
+      tone(660, t + 0.32, 0.3);
+      setTimeout(function() { try { ctx.close(); } catch(e) {} }, 800);
+    } catch(e) {}
+  }
+
+  window.toggleNotifMute = function() {
+    _notifSoundMuted = !_notifSoundMuted;
+    var btn = document.getElementById('notif-mute-btn');
+    if (_notifSoundMuted) {
+      localStorage.setItem('ss-notif-sound', 'off');
+      if (btn) btn.textContent = '🔕';
+    } else {
+      localStorage.removeItem('ss-notif-sound');
+      if (btn) btn.textContent = '🔔';
+    }
+  };
+
+  // Set initial mute icon
+  (function() {
+    var btn = document.getElementById('notif-mute-btn');
+    if (btn) btn.textContent = _notifSoundMuted ? '🔕' : '🔔';
+  })();
+
+  // ── Navbar Layout ─────────────────────────────────────────────────────────
   function applyNavbarLayout() {
     var usernameLabel = document.getElementById('navbar-username-label');
     var profilePill   = document.getElementById('navbar-profile-pill');
@@ -90,7 +161,24 @@
   applyNavbarLayout();
   window.addEventListener('resize', applyNavbarLayout);
 
-  // ── Notification System ──────────────────────────────────────────────────
+  // ── Responsive panel width ────────────────────────────────────────────────
+  function applyNotifPanelLayout() {
+    var panel = document.getElementById('notif-panel');
+    if (!panel) return;
+    if (window.innerWidth < 400) {
+      panel.style.left  = '8px';
+      panel.style.right = '8px';
+      panel.style.width = 'auto';
+    } else {
+      panel.style.left  = '';
+      panel.style.right = '8px';
+      panel.style.width = '340px';
+    }
+  }
+  applyNotifPanelLayout();
+  window.addEventListener('resize', applyNotifPanelLayout);
+
+  // ── Notification System ───────────────────────────────────────────────────
   var notifOpen = false;
   var notifData = [];
 
@@ -98,8 +186,15 @@
     var panel = document.getElementById('notif-panel');
     if (!panel) return;
     notifOpen = !notifOpen;
-    panel.style.display = notifOpen ? 'block' : 'none';
-    if (notifOpen) loadNotifications();
+    if (notifOpen) {
+      applyNotifPanelLayout();
+      panel.style.display = 'block';
+      panel.style.animation = 'notifSlideIn 220ms ease-out';
+      loadNotifications();
+    } else {
+      panel.style.display = 'none';
+      panel.style.animation = '';
+    }
   };
 
   // Close when clicking outside
@@ -107,7 +202,7 @@
     var wrapper = document.getElementById('notif-wrapper');
     if (wrapper && !wrapper.contains(e.target)) {
       var panel = document.getElementById('notif-panel');
-      if (panel) panel.style.display = 'none';
+      if (panel) { panel.style.display = 'none'; panel.style.animation = ''; }
       notifOpen = false;
     }
   });
@@ -127,29 +222,46 @@
     var list = document.getElementById('notif-list');
     var countLabel = document.getElementById('notif-count-label');
     if (!list) return;
-    if (countLabel) countLabel.textContent = alerts.length ? alerts.length + ' alert' + (alerts.length > 1 ? 's' : '') : 'All clear';
+
+    // Update count badge pill color
+    if (countLabel) {
+      var cnt = alerts.length;
+      countLabel.textContent = cnt > 0 ? cnt + ' alert' + (cnt > 1 ? 's' : '') : 'All clear';
+      if (cnt === 0) {
+        countLabel.style.background = '#10b981';
+      } else if (cnt <= 2) {
+        countLabel.style.background = '#f59e0b';
+      } else {
+        countLabel.style.background = '#ef4444';
+      }
+    }
 
     if (alerts.length === 0) {
-      list.innerHTML = '<div style="padding:28px 16px;text-align:center"><div style="font-size:1.4rem;margin-bottom:8px">✅</div><div style="font-size:0.78rem;font-weight:600;color:#64748b">No alerts right now</div><div style="font-size:0.7rem;color:#475569;margin-top:4px">All judges are on track</div></div>';
+      list.innerHTML = '<div style="padding:36px 16px;text-align:center">'
+        + '<div style="font-size:3rem;margin-bottom:8px">✅</div>'
+        + '<div style="font-size:0.82rem;font-weight:700;color:#e2e8f0;margin-bottom:4px">You\'re all caught up</div>'
+        + '<div style="font-size:0.7rem;color:#475569">No pending alerts</div>'
+        + '</div>';
       return;
     }
 
     var colors = { critical: '#ef4444', warning: '#f59e0b', info: '#3b82f6' };
     var bgs    = { critical: 'rgba(239,68,68,0.08)', warning: 'rgba(245,158,11,0.08)', info: 'rgba(59,130,246,0.06)' };
-    var borders= { critical: 'rgba(239,68,68,0.25)', warning: 'rgba(245,158,11,0.22)', info: 'rgba(59,130,246,0.18)' };
+    var bgsHover = { critical: 'rgba(239,68,68,0.13)', warning: 'rgba(245,158,11,0.13)', info: 'rgba(59,130,246,0.11)' };
 
     list.innerHTML = alerts.map(function(a) {
-      var c = colors[a.type] || colors.info;
-      var bg = bgs[a.type] || bgs.info;
-      var br = borders[a.type] || borders.info;
+      var c    = colors[a.type] || colors.info;
+      var bg   = bgs[a.type]   || bgs.info;
+      var bgH  = bgsHover[a.type] || bgsHover.info;
       var link = a.eventId ? '/events/' + a.eventId : (a.link || '#');
-      return '<a href="' + link + '" style="display:block;text-decoration:none;padding:10px 10px;border-radius:10px;margin-bottom:4px;border:1px solid ' + br + ';background:' + bg + ';transition:background 120ms ease" onmouseover="this.style.filter=\'brightness(1.1)\'" onmouseout="this.style.filter=\'\'">'
-        + '<div style="display:flex;align-items:flex-start;gap:9px">'
+      return '<a href="' + link + '" style="display:flex;align-items:flex-start;text-decoration:none;padding:12px 14px;border-radius:10px;margin-bottom:4px;border-left:3px solid ' + c + ';background:' + bg + ';gap:10px;transition:background 120ms ease"'
+        + ' onmouseover="this.style.background=\'' + bgH + '\'" onmouseout="this.style.background=\'' + bg + '\'">'
+        + '<span style="width:6px;height:6px;border-radius:50%;background:' + c + ';flex-shrink:0;margin-top:6px;display:inline-block"></span>'
         + '<span style="font-size:1rem;flex-shrink:0;margin-top:1px">' + (a.icon || '🔔') + '</span>'
         + '<div style="min-width:0">'
-        + '<div style="font-size:0.75rem;font-weight:800;color:' + c + ';margin-bottom:2px">' + escHtml(a.title) + '</div>'
-        + '<div style="font-size:0.68rem;color:#94a3b8;line-height:1.4">' + escHtml(a.message) + '</div>'
-        + '</div></div></a>';
+        + '<div style="font-size:0.76rem;font-weight:800;color:' + c + ';margin-bottom:2px">' + escHtml(a.title) + '</div>'
+        + '<div style="font-size:0.69rem;color:#94a3b8;line-height:1.45">' + escHtml(a.message) + '</div>'
+        + '</div></a>';
     }).join('');
   }
 
@@ -168,41 +280,50 @@
     }
   }
 
-  // Auto-poll every 30 seconds (real-time) + badge pulse on new alerts
+  // Auto-poll every 15 seconds + badge pulse + chime on new alerts
   var _lastNotifCount = 0;
+  var _isFirstPoll = true;
 
   function pollNotifications() {
     fetch('/api/notifications')
       .then(function(r) { return r.ok ? r.json() : { alerts: [], count: 0 }; })
       .then(function(data) {
         var count = data.count || 0;
-        // Pulse badge if new notifications arrived
-        if (count > _lastNotifCount) {
+        var isNew = !_isFirstPoll && count > _lastNotifCount;
+
+        if (isNew) {
+          // Pulse badge
           var badge = document.getElementById('notif-badge');
           if (badge) {
             badge.style.transform = 'scale(1.4)';
             setTimeout(function(){ badge.style.transform = ''; }, 300);
           }
+          // Play chime
+          playNotifChime();
         }
+
+        _isFirstPoll = false;
         _lastNotifCount = count;
         updateBadge(count);
+
         // Update list silently if panel is open
         if (notifOpen) {
           notifData = data.alerts || [];
           renderNotifications(notifData);
         }
+
         // Update last-refreshed timestamp
         var ts = document.getElementById('notif-timestamp');
         if (ts) {
           var now = new Date();
-          ts.textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+          ts.textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
         }
       })
       .catch(function() {});
   }
 
-  // Initial load after 2s, then every 30s
+  // Initial load after 2s, then every 15s
   setTimeout(pollNotifications, 2000);
-  setInterval(pollNotifications, 30000);
+  setInterval(pollNotifications, 15000);
 })();
 </script>
