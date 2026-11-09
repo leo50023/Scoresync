@@ -622,8 +622,9 @@
 
     </div>
 
+    {{#if finance}}
     <!-- Income Breakdown Donut Chart -->
-    <script id="finance-entries-data" type="application/json">[{{#each finance.entries}}{"type":"{{type}}","category":"{{category}}","amount":{{amount}}}{{#unless @last}},{{/unless}}{{/each}}]</script>
+    <script id="finance-entries-data" type="application/json">[{{#each entries}}{"type":"{{type}}","category":"{{category}}","amount":{{#if amount}}{{amount}}{{else}}0{{/if}}}{{#unless @last}},{{/unless}}{{/each}}]</script>
     <div class="rounded-2xl overflow-hidden mb-4" style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="px-5 py-3.5" style="border-bottom:1px solid rgba(255,255,255,0.06)">
         <h2 class="text-sm font-extrabold flex items-center gap-2" style="color:var(--text-primary)">
@@ -712,6 +713,7 @@
       });
     })();
     </script>
+    {{/if}}
 
     <!-- Main finance card -->
     <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
