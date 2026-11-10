@@ -9,13 +9,13 @@
   {{#if error_msg}}<div class="alert-error animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/></svg>{{error_msg}}</div>{{/if}}
 
   <!--  Page Header  -->
-  <div class="flex items-center justify-between animate-fadeup">
+  <div class="inventory-header flex items-center justify-between animate-fadeup">
     <div class="page-header mb-0">
       <div class="breadcrumb"><a href="/dashboard">Dashboard</a></div>
       <h1>Ticket Sales &amp; Income</h1>
       <p>Payment updates and income tracking per event.</p>
     </div>
-    <div class="flex items-center gap-2 flex-shrink-0">
+    <div class="inventory-actions flex items-center gap-2 flex-shrink-0">
       <!-- Event filter -->
       <form method="GET" action="/inventory" style="display:contents">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -433,6 +433,17 @@
   background:rgba(255,255,255,0.06); color:#94a3b8; border:1px solid rgba(255,255,255,0.1);
 }
 .preset-pill:hover { background:rgba(16,185,129,0.12); color:#6ee7b7; border-color:rgba(16,185,129,0.3); }
+
+  /* ── Mobile responsiveness (max-width: 640px) ── */
+  @media (max-width: 640px) {
+    /* Stack page title above the filter + action buttons */
+    .inventory-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .inventory-actions { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+    .inventory-actions select { flex: 1; min-width: 0 !important; }
+    .inventory-actions .btn-sm, .inventory-actions .btn-primary { flex-shrink: 0; white-space: nowrap; }
+    /* Charts fit within screen width, no horizontal overflow */
+    #income-bar-chart, #income-donut { max-width: 100% !important; }
+  }
 </style>
 
 <!-- Chart.js CDN -->

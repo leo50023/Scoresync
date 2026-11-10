@@ -4,6 +4,12 @@
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-5">
+  <style>
+    @media (max-width: 640px) {
+      /* KPI cards: stack to 1 column, full width */
+      .organizer-kpi-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
 
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
@@ -36,7 +42,7 @@
   </div>
 
   <!-- -- KPI Row -- -->
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" data-stagger="fm-scale-in">
+  <div class="organizer-kpi-grid grid grid-cols-2 lg:grid-cols-4 gap-3" data-stagger="fm-scale-in">
 
     <!-- My Events -->
     <div class="rounded-2xl p-4 sm:p-5 group transition-all hover:-translate-y-0.5"
