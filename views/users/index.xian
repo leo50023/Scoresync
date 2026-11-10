@@ -119,19 +119,19 @@
               <div class="flex items-center justify-end gap-2">
                 <form method="POST" action="/users/{{id}}/approve" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                  <button type="submit" class="btn-sm btn-sm-green text-xs px-3 py-1.5 flex items-center gap-1 shadow-sm">
+                  <button type="submit" class="btn-sm btn-sm-green text-xs" style="height:32px;padding:0 10px">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                     Approve
                   </button>
                 </form>
                 <form method="POST" action="/users/{{id}}/reject" onsubmit="return false" data-confirm-title="Reject Request" data-confirm-msg="Reject this account request?" data-confirm-ok="Reject" data-confirm-type="warning" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                  <button type="submit" class="btn-sm btn-sm-red text-xs px-2.5 py-1.5 flex items-center gap-1">
+                  <button type="submit" class="btn-sm btn-sm-red text-xs" style="height:32px;padding:0 10px">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     Reject
                   </button>
                 </form>
-                <a href="{{gmailUrl}}" target="_blank" class="btn-sm text-xs px-2.5 py-1.5 flex items-center gap-1 bg-red-600 text-white hover:bg-red-700 border-none shadow-sm" title="Send email via Gmail">
+                <a href="{{gmailUrl}}" target="_blank" class="btn-sm text-xs" style="height:32px;padding:0 10px;display:inline-flex;align-items:center;gap:4px;background:#dc2626;color:#fff;border-color:transparent;border-radius:999px">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   Gmail
                 </a>
@@ -198,15 +198,15 @@
               {{/if}}
             </td>
             <td class="text-right pr-5">
-              <div class="flex items-center justify-end gap-2">
-                <a href="{{gmailUrl}}" target="_blank" class="btn-sm text-xs px-2.5 py-1.5 flex items-center gap-1 bg-red-600 text-white hover:bg-red-700 border-none shadow-sm" title="Send email to {{email}} via Gmail">
+              <div class="flex items-center justify-end gap-1.5 flex-wrap">
+                <a href="{{gmailUrl}}" target="_blank" class="btn-sm text-xs" style="height:32px;padding:0 10px;display:inline-flex;align-items:center;gap:4px;background:#dc2626;color:#fff;border-color:transparent;border-radius:999px">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   Gmail
                 </a>
                 {{#unless (eq role 'admin')}}
                 <form method="POST" action="/users/{{id}}/delete" onsubmit="return false" data-confirm-title="Remove User" data-confirm-msg="Remove this user?" data-confirm-ok="Remove" data-confirm-type="danger" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                  <button type="submit" class="btn-sm btn-sm-red text-xs px-2.5 py-1.5" title="Delete User"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                  <button type="submit" class="btn-sm btn-sm-red text-xs" style="height:32px;width:32px;padding:0;display:inline-flex;align-items:center;justify-content:center" title="Delete User"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
                 </form>
                 {{/unless}}
               </div>

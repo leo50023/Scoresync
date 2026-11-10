@@ -19,7 +19,7 @@
       <!-- Event filter -->
       <form method="GET" action="/inventory">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <select name="eventId" onchange="this.form.submit()" class="form-input-bare text-sm" style="min-width:180px">
+        <select name="eventId" onchange="this.form.submit()" class="form-input-bare text-sm" style="min-width:180px;height:44px;border-radius:999px">
           <option value="">All Events</option>
           {{#each events}}
           <option value="{{id}}" {{#if (eq id ../filterEventId)}}selected{{/if}}>{{name}}</option>
@@ -37,7 +37,7 @@
       </a>
       {{/if}}
       {{#if isAdmin}}
-      <button onclick="openAddModal()" class="btn-primary text-sm">
+      <button onclick="openAddModal()" class="btn-primary text-sm" style="height:44px;white-space:nowrap">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add Record
       </button>
