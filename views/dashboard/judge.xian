@@ -4,6 +4,15 @@
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+  <style>
+    @media (max-width: 640px) {
+      /* Hero stat boxes: stack to 1 column, full width */
+      .judge-hero-stats { flex-direction: column; width: 100%; }
+      .judge-hero-stats > div { width: 100%; min-width: 0 !important; }
+      /* 3-step flow: collapse to 1 column */
+      #step-flow { grid-template-columns: 1fr !important; }
+    }
+  </style>
 
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
