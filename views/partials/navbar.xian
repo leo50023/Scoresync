@@ -79,9 +79,9 @@
 
 <!-- ── Global Page Loading Indicator (must be inside body) ── -->
 <div id="page-loader" aria-hidden="true" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;pointer-events:none;display:none"><div id="page-loader-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#4f46e5,#7c3aed,#06b6d4);background-size:200% 100%;border-radius:0 3px 3px 0;transition:width 0.2s ease"></div></div>
-<div id="page-loader-spinner" aria-hidden="true" aria-live="polite" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9998;flex-direction:column;align-items:center;gap:14px">
-  <div class="spinner-ring"></div>
-  <span style="font-size:12px;font-weight:700;color:#6366f1;letter-spacing:0.08em;text-transform:uppercase">Loading…</span>
+<div id="page-loader-spinner" aria-hidden="true" aria-live="polite" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(7,11,24,0.75);backdrop-filter:blur(6px);flex-direction:column;align-items:center;justify-content:center;gap:16px">
+  <div style="width:52px;height:52px;border-radius:50%;border:3px solid rgba(99,102,241,0.2);border-top-color:#6366f1;animation:spin 0.7s linear infinite"></div>
+  <span style="font-size:12px;font-weight:700;color:#a5b4fc;letter-spacing:0.12em;text-transform:uppercase">Loading…</span>
 </div>
 
 <script>
@@ -329,3 +329,18 @@
   setInterval(pollNotifications, 15000);
 })();
 </script>
+
+<!-- Premium Confirmation Modal -->
+<div id="ss-confirm-overlay">
+    <div id="ss-confirm-box">
+      <div id="ss-confirm-icon-wrap">
+        <svg id="ss-confirm-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"></svg>
+      </div>
+      <div id="ss-confirm-title"></div>
+      <div id="ss-confirm-msg"></div>
+      <div id="ss-confirm-actions">
+        <button id="ss-confirm-cancel" type="button">Cancel</button>
+        <button id="ss-confirm-ok" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
