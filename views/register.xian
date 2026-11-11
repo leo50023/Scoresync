@@ -7,7 +7,7 @@
     padding: 40px 20px;
     position: relative; isolation: isolate;
     overflow-y: auto; overflow-x: hidden;
-    background: #060c1a;
+    background: #0f1117;
   }
 
   /* ── Mesh gradient background ── */
@@ -16,11 +16,11 @@
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 12% 20%, rgba(88,56,255,0.28) 0%, transparent 52%),
-      radial-gradient(ellipse at 88% 78%, rgba(6,182,212,0.18) 0%, transparent 52%),
-      radial-gradient(ellipse at 55%  5%, rgba(124,58,237,0.18) 0%, transparent 45%),
-      radial-gradient(ellipse at 5%  80%, rgba(99,102,241,0.12) 0%, transparent 45%),
-      radial-gradient(ellipse at 90% 15%, rgba(14,165,233,0.12) 0%, transparent 40%);
+      radial-gradient(ellipse at 12% 20%, rgba(88,56,255,0.22) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 78%, rgba(6,182,212,0.14) 0%, transparent 52%),
+      radial-gradient(ellipse at 55%  5%, rgba(124,58,237,0.14) 0%, transparent 45%),
+      radial-gradient(ellipse at 5%  80%, rgba(99,102,241,0.09) 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 15%, rgba(14,165,233,0.09) 0%, transparent 40%);
     animation: bgPulse 22s ease-in-out infinite alternate;
   }
   .auth-bg::after {
@@ -105,7 +105,7 @@
 
   /* ── Card ── */
   .auth-card {
-    background: rgba(255,255,255,0.055);
+    background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 24px; padding: 28px 24px;
     box-shadow:
@@ -144,7 +144,7 @@
   .auth-input {
     width: 100%; height: 50px;
     padding: 0 14px 0 46px;
-    background: rgba(255,255,255,0.06) !important;
+    background: rgba(255,255,255,0.09) !important;
     border: 1.5px solid rgba(255,255,255,0.1) !important;
     border-radius: 13px !important;
     font-size: 14.5px; color: #f1f5f9 !important;

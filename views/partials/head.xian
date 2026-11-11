@@ -30,33 +30,33 @@
   </script>
   <style>
     /* ── Fix 300ms tap delay on all mobile browsers ── */
-    html { touch-action: manipulation; margin: 0; padding: 0; background: #0a0f1e; }
-    body { margin: 0 !important; padding: 0 !important; background: #0a0f1e !important; }
+    html { touch-action: manipulation; margin: 0; padding: 0; background: #0f1117; }
+    body { margin: 0 !important; padding: 0 !important; background: #0f1117 !important; }
     * { -webkit-tap-highlight-color: transparent; }
 
     /* ── Theme CSS Variables ── */
     :root, [data-theme="dark"] {
-      --bg-page:        #0a0f1e;
-      --bg-page-deep:   #060b18;
-      --bg-navbar:      #0d1424;
-      --bg-card:        #111827;
-      --bg-card-sub:    rgba(255,255,255,0.04);
-      --bg-card-hover:  rgba(255,255,255,0.02);
-      --bg-input:       rgba(255,255,255,0.05);
-      --bg-sidebar:     linear-gradient(180deg,#060e22 0%,#0b1a45 50%,#0f2462 100%);
+      --bg-page:        #0f1117;
+      --bg-page-deep:   #0b0e14;
+      --bg-navbar:      #13161f;
+      --bg-card:        #161b27;
+      --bg-card-sub:    rgba(255,255,255,0.07);
+      --bg-card-hover:  rgba(255,255,255,0.04);
+      --bg-input:       rgba(255,255,255,0.08);
+      --bg-sidebar:     linear-gradient(180deg,#0d1428 0%,#132050 50%,#1a2d75 100%);
       --bg-sidebar-foot:linear-gradient(180deg,#060e22,#0b1a45);
       --bg-overlay:     rgba(15,22,42,0.82);
-      --border:         rgba(255,255,255,0.08);
-      --border-strong:  rgba(255,255,255,0.13);
-      --border-subtle:  rgba(255,255,255,0.05);
-      --text-primary:   #e2e8f0;
-      --text-secondary: #94a3b8;
-      --text-muted:     #64748b;
-      --text-faint:     #475569;
-      --text-bright:    #f1f5f9;
-      --scrollbar-track:#0d1424;
-      --scrollbar-thumb:#1e3a5f;
-      --table-head-bg:  #0d1424;
+      --border:         rgba(255,255,255,0.12);
+      --border-strong:  rgba(255,255,255,0.18);
+      --border-subtle:  rgba(255,255,255,0.08);
+      --text-primary:   #f1f5f9;
+      --text-secondary: #a8b8cc;
+      --text-muted:     #718096;
+      --text-faint:     #556070;
+      --text-bright:    #f8fafc;
+      --scrollbar-track:#13161f;
+      --scrollbar-thumb:#2a4a72;
+      --table-head-bg:  #13161f;
     }
     [data-theme="light"] {
       --bg-page:        #f0f4f8;
@@ -111,7 +111,7 @@
     :focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; border-radius: 6px; }
 
     /* ── Smooth scrolling + touch ── */
-    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; background: #0a0f1e; }
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; background: #0f1117; }
     [data-theme="light"] html { background: #f0f4f8; }
     body, .ss-page-bg { background: var(--bg-page) !important; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
     /* GPU compositing for smooth animations */
