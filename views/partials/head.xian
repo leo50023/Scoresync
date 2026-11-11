@@ -1277,22 +1277,7 @@
     #ss-confirm-ok:hover { opacity: 0.88; transform: translateY(-1px); }
     #ss-confirm-ok:active { transform: translateY(0); }
   </style>
-
-  <div id="ss-confirm-overlay">
-    <div id="ss-confirm-box">
-      <div id="ss-confirm-icon-wrap">
-        <svg id="ss-confirm-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"></svg>
-      </div>
-      <div id="ss-confirm-title"></div>
-      <div id="ss-confirm-msg"></div>
-      <div id="ss-confirm-actions">
-        <button id="ss-confirm-cancel" type="button">Cancel</button>
-        <button id="ss-confirm-ok" type="button">Confirm</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
+<script>
     (function() {
       var overlay  = document.getElementById('ss-confirm-overlay');
       var box      = document.getElementById('ss-confirm-box');
@@ -1383,3 +1368,17 @@ document.addEventListener('submit', async function(e) {
   }
 }, true);
 </script></head>
+
+<div id="ss-confirm-overlay">
+    <div id="ss-confirm-box">
+      <div id="ss-confirm-icon-wrap">
+        <svg id="ss-confirm-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"></svg>
+      </div>
+      <div id="ss-confirm-title"></div>
+      <div id="ss-confirm-msg"></div>
+      <div id="ss-confirm-actions">
+        <button id="ss-confirm-cancel" type="button">Cancel</button>
+        <button id="ss-confirm-ok" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
