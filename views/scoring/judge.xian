@@ -193,6 +193,7 @@
                 <span>/ {{maxScore}}</span>
               </div>
             </div>
+            {{#unless ../../readOnly}}<div class="score-warning-msg" style="display:none;font-size:0.72rem;font-weight:700;margin-top:6px;transition:opacity 0.2s ease"></div>{{/unless}}
 
             <!-- Hidden elements for JS compatibility (display:none wrapper) -->
             <div style="display:none">
@@ -276,6 +277,9 @@
     <a href="/events/{{event.id}}" class="text-indigo-400 text-sm mt-2 inline-block">Back to event</a>
   </div>
   {{/if}}
+
+  <!-- Score warning toast -->
+  <div id="score-toast" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:1000;padding:10px 24px;border-radius:999px;font-size:0.8rem;font-weight:700;backdrop-filter:blur(8px);transition:opacity 0.3s ease;white-space:nowrap"></div>
 
 </main>
 </div>
@@ -1160,6 +1164,10 @@ main::-webkit-scrollbar { display:none; }
     if (isNaN(val) || entryEl.value === '') {
       input.value = '';
       entryEl.style.borderColor = 'rgba(201,162,39,0.4)';
+      entryEl.style.boxShadow = '';
+      // Clear inline warning
+      var warnMsg = panel.querySelector('.score-warning-msg');
+      if (warnMsg) warnMsg.style.display = 'none';
       updateBox(panel);
       schedSave();
       return;
@@ -1169,12 +1177,41 @@ main::-webkit-scrollbar { display:none; }
       val = max;
       entryEl.value = max;
       entryEl.style.borderColor = 'rgba(239,68,68,0.6)';
+      entryEl.style.boxShadow = '';
     } else {
       entryEl.style.borderColor = 'rgba(201,162,39,0.7)';
+      entryEl.style.boxShadow = '';
     }
     input.value = val;
     updateBox(panel);
     schedSave();
+
+    // Low score warning (not in read-only mode)
+    if (entryEl.readOnly) return;
+    var warnDiv = panel.querySelector('.score-warning-msg');
+    if (val < 50) {
+      entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
+      entryEl.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+      if (warnDiv) {
+        warnDiv.textContent = '⚠️ Score is critically low! Are you sure?';
+        warnDiv.style.color = '#fca5a5';
+        warnDiv.style.display = 'block';
+      }
+      showScoreToast('⚠️ Score is critically low! Are you sure?', 'critical');
+    } else if (val < 75) {
+      entryEl.style.borderColor = 'rgba(245,158,11,0.8)';
+      entryEl.style.boxShadow = '0 0 0 3px rgba(245,158,11,0.15)';
+      if (warnDiv) {
+        warnDiv.textContent = '⚠️ Score is below average (below 75)';
+        warnDiv.style.color = '#fcd34d';
+        warnDiv.style.display = 'block';
+      }
+      showScoreToast('⚠️ Score is below average (below 75)', 'warning');
+    } else {
+      entryEl.style.borderColor = 'rgba(201,162,39,0.4)';
+      entryEl.style.boxShadow = '';
+      if (warnDiv) warnDiv.style.display = 'none';
+    }
   };
 
   /* -- updateBox: update progress bar + totals -- */
@@ -1338,6 +1375,30 @@ main::-webkit-scrollbar { display:none; }
   };
 
   window.nextContestant = function(idx) { goToContestant(idx + 1); };
+
+  /* -- Low score toast notification -- */
+  var _toastTimer = null;
+  window.showScoreToast = function(msg, type) {
+    var t = document.getElementById('score-toast');
+    if (!t) return;
+    clearTimeout(_toastTimer);
+    t.textContent = msg;
+    if (type === 'critical') {
+      t.style.background = 'rgba(239,68,68,0.15)';
+      t.style.border = '1px solid rgba(239,68,68,0.3)';
+      t.style.color = '#fca5a5';
+    } else {
+      t.style.background = 'rgba(245,158,11,0.1)';
+      t.style.border = '1px solid rgba(245,158,11,0.3)';
+      t.style.color = '#fcd34d';
+    }
+    t.style.display = 'block';
+    t.style.opacity = '1';
+    _toastTimer = setTimeout(function() {
+      t.style.opacity = '0';
+      setTimeout(function(){ t.style.display = 'none'; }, 300);
+    }, 3000);
+  };
 
   /* -- Draft save/restore -- */
   function schedSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveDraft, 600); }
