@@ -333,7 +333,7 @@
           <input type="number" name="quantity" value="1" min="0" class="form-input-bare" oninput="calcPreview()"/>
         </div>
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (?)</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (&#8369;)</label>
           <input type="number" name="unitPrice" placeholder="0.00" min="0" step="0.01" id="add-unit-price" oninput="calcPreview()" class="form-input-bare"/>
         </div>
       </div>
@@ -399,7 +399,7 @@
           <input type="number" name="quantity" id="edit-quantity" min="0" class="form-input-bare"/>
         </div>
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (?)</label>
+          <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Unit Price (&#8369;)</label>
           <input type="number" name="unitPrice" id="edit-unitPrice" min="0" step="0.01" class="form-input-bare"/>
         </div>
       </div>
@@ -540,7 +540,7 @@ if (donutCtx && ITEMS.length) {
             <span class="font-semibold truncate max-w-[110px]" style="color:var(--text-secondary)">${lbl}</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="font-bold" style="color:var(--text-primary)">?${values[i].toLocaleString('en-PH',{minimumFractionDigits:2})}</span>
+            <span class="font-bold" style="color:var(--text-primary)">&#8369;${values[i].toLocaleString('en-PH',{minimumFractionDigits:2})}</span>
             <span class="text-slate-400">${pct}%</span>
           </div>
         </div>`;

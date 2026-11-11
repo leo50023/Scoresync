@@ -1,4 +1,4 @@
-{{> head }}
+﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -65,7 +65,7 @@
               <div class="flex-1 min-w-0">
                 <div class="font-extrabold text-sm" style="color:var(--text-primary)">{{userName}}</div>
                 <div class="text-xs mt-0.5 capitalize" style="color:var(--text-muted)">{{#if isEncoder}}Participant{{else}}{{userRole}}{{/if}}</div>
-                <p class="text-[11px] mt-1.5" style="color:var(--text-secondary)">PNG, JPG, or WebP � Max 2 MB</p>
+                <p class="text-[11px] mt-1.5" style="color:var(--text-secondary)">PNG, JPG, or WebP &mdash; Max 2 MB</p>
                 <div class="flex flex-wrap items-center gap-2 mt-3">
                   <button type="button" onclick="document.getElementById('avatar-file').click()"
                     class="btn-sm btn-sm-indigo text-xs">
@@ -165,7 +165,7 @@ function removeProfilePhoto() {
 }
 </script>
 
-      <!-- System Behavior Card � accurate, read-only -->
+      <!-- System Behavior Card &mdash; accurate, read-only -->
       <div class="rounded-2xl overflow-hidden animate-fadeup-1" style="background:var(--bg-card);border:1px solid var(--border)">
         <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.3)">
@@ -182,7 +182,7 @@ function removeProfilePhoto() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2.5" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
               <span class="font-bold" style="color:var(--text-primary)">Weighted Average Scoring</span>
-              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Each criterion has a weight (%). Final score = sum of (score / maxScore � weight) across all criteria. Total weights must equal 100%.</p>
+              <p class="text-[11px] mt-0.5" style="color:var(--text-muted)">Each criterion has a weight (%). Final score = sum of (score / maxScore &mdash; weight) across all criteria. Total weights must equal 100%.</p>
             </div>
           </div>
 
@@ -253,7 +253,7 @@ function removeProfilePhoto() {
             </div>
             <div>
               <label class="block text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style="color:#4b5563">Detailed Description</label>
-              <textarea name="description" rows="3" placeholder="Explain how this feature would benefit the system�" required class="form-input-bare resize-none w-full"></textarea>
+              <textarea name="description" rows="3" placeholder="Explain how this feature would benefit the system&mdash;" required class="form-input-bare resize-none w-full"></textarea>
             </div>
             <div class="flex justify-end">
               <button type="submit" class="btn-sm btn-solid-gold text-xs">
@@ -265,7 +265,7 @@ function removeProfilePhoto() {
         </div>
       </div>
 
-      <!-- Community Feature Requests � only shown when real submissions exist -->
+      <!-- Community Feature Requests &mdash; only shown when real submissions exist -->
       {{#if suggestions.length}}
       <div class="rounded-2xl overflow-hidden animate-fadeup-2" style="background:rgba(255,255,255,0.02);border:1px solid var(--border)">
         <div class="px-6 py-4 flex items-center gap-3" style="border-bottom:1px solid var(--border-subtle)">
@@ -326,7 +326,7 @@ function removeProfilePhoto() {
         </div>
       </div>
 
-      <!-- Planned Features removed � will show when real data is available -->
+      <!-- Planned Features removed &mdash; will show when real data is available -->
 
 
 </main>

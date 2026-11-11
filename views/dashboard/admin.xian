@@ -1,4 +1,4 @@
-﻿{{> head }}
+﻿﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -50,7 +50,7 @@
         <div class="flex items-center gap-2 mb-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400" style="box-shadow:0 0 6px #10b981"></span>
           <span class="text-xs font-bold uppercase tracking-widest" style="color:#34d399">System Online</span>
-          <span class="text-xs font-medium" style="color:#1f4037">�</span>
+          <span class="text-xs font-medium" style="color:#1f4037">&mdash;</span>
           <span id="today-date" class="text-xs font-medium" style="color:var(--text-faint)"></span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-black tracking-tight" style="color:var(--text-bright)">

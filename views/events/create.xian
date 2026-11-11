@@ -43,7 +43,7 @@
               </div>
               <input type="file" id="create-cover-file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" onchange="handleCoverUpload(this,'create-cover-preview','create-cover-placeholder','create-cover-b64')"/>
               <input type="hidden" name="coverPhoto" id="create-cover-b64"/>
-              <button type="button" id="create-cover-clear" onclick="clearCover('create-cover-preview','create-cover-placeholder','create-cover-b64','create-cover-clear')" class="hidden mt-1.5 text-xs font-bold" style="color:#f87171">? Remove photo</button>
+              <button type="button" id="create-cover-clear" onclick="clearCover('create-cover-preview','create-cover-placeholder','create-cover-b64','create-cover-clear')" class="hidden mt-1.5 text-xs font-bold" style="color:#f87171">&#10005; Remove photo</button>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Event Type</label>
@@ -178,7 +178,7 @@
             <h2 class="font-bold text-slate-800">Prizes &amp; Rules</h2>
           </div>
           <div class="px-6 py-5 space-y-4">
-            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place — ?10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
+            <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Prizes / Awards</label><textarea name="prizes" rows="3" placeholder="e.g. 1st Place — &#8369;10,000 + Crown" class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Rules &amp; Mechanics</label><textarea name="rules" rows="4" placeholder="List the competition rules..." class="form-input-bare resize-none"></textarea></div>
             <div><label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Additional Notes</label><textarea name="notes" rows="2" class="form-input-bare resize-none"></textarea></div>
           </div>

@@ -1,4 +1,4 @@
-﻿{{> head }}
+﻿﻿{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -980,7 +980,7 @@ main::-webkit-scrollbar { display:none; }
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-/* Reveal main after CSS loads � prevents FOUC (photo flash) */
+/* Reveal main after CSS loads &mdash; prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
 /* ── Judge Remarks ── */
 .judge-remarks-wrap { margin-top: 8px; }
@@ -1297,7 +1297,7 @@ main::-webkit-scrollbar { display:none; }
     updateOverallRing();
   };
 
-  /* -- nextOrSave � kept for compatibility -- */
+  /* -- nextOrSave &mdash; kept for compatibility -- */
   window.nextOrSave = function(cid, panelIdx, total) {
     submitContestant(panelIdx);
   };

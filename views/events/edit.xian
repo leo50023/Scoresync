@@ -71,7 +71,7 @@
             <!-- Event Cover Photo -->
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
-                Event Cover Photo {{#if event.coverPhoto}}<span class="text-emerald-500 font-bold ml-1">? Uploaded</span>{{/if}}
+                Event Cover Photo {{#if event.coverPhoto}}<span class="text-emerald-500 font-bold ml-1">&#10003; Uploaded</span>{{/if}}
               </label>
               <div id="edit-cover-dropzone" onclick="document.getElementById('edit-cover-file').click()"
                 class="relative w-full rounded-xl border-2 border-dashed cursor-pointer overflow-hidden transition"
@@ -89,7 +89,7 @@
               <input type="hidden" name="coverPhoto" id="edit-cover-b64" value="{{event.coverPhoto}}"/>
               <button type="button" id="edit-cover-clear"
                 onclick="clearCover('edit-cover-preview','edit-cover-placeholder','edit-cover-b64','edit-cover-clear')"
-                class="mt-1.5 text-xs font-bold {{#unless event.coverPhoto}}hidden{{/unless}}" style="color:#f87171">? Remove photo</button>
+                class="mt-1.5 text-xs font-bold {{#unless event.coverPhoto}}hidden{{/unless}}" style="color:#f87171">&#10005; Remove photo</button>
             </div>
           </div>
         </div>
@@ -203,7 +203,7 @@
 
             <div>
               <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
-                QR Image {{#if event.paymentQR}}<span class="text-emerald-600 font-bold ml-1">? Uploaded</span>{{/if}}
+                QR Image {{#if event.paymentQR}}<span class="text-emerald-600 font-bold ml-1">&#10003; Uploaded</span>{{/if}}
               </label>
 
               {{#if event.paymentQR}}
