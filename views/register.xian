@@ -356,6 +356,12 @@
 <div class="auth-bg-particles" id="auth-particles"></div>
 <div class="auth-loader" id="auth-loader"><div class="auth-loader-bar" id="auth-loader-bar"></div></div>
 
+<!-- Centered loading overlay -->
+<div id="auth-spin-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(7,11,24,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);flex-direction:column;align-items:center;justify-content:center;gap:16px">
+  <div style="width:52px;height:52px;border-radius:50%;border:3px solid rgba(99,102,241,0.2);border-top-color:#6366f1;animation:spin 0.7s linear infinite"></div>
+  <span style="font-size:12px;font-weight:700;color:#a5b4fc;letter-spacing:0.12em;text-transform:uppercase">Submitting...</span>
+</div>
+
 <body class="auth-page" style="overflow-x:hidden">
 <div class="auth-shell fm-fade-up">
 
@@ -554,6 +560,9 @@ document.querySelectorAll('.auth-card form').forEach(function(f){
       return;
     }
     startLoader();
+    // Show centered spinner overlay
+    var overlay=document.getElementById('auth-spin-overlay');
+    if(overlay) overlay.style.display='flex';
     var btn=f.querySelector('.auth-btn');
     if(btn){btn.classList.add('loading');var t=btn.querySelector('.btn-text');if(t)t.textContent=btn.dataset.loading||'Please wait...';}
   });
