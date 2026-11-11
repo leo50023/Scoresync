@@ -32,6 +32,7 @@
     /* ── Fix 300ms tap delay on all mobile browsers ── */
     html { touch-action: manipulation; margin: 0; padding: 0; background: #0f1117; }
     body { margin: 0 !important; padding: 0 !important; background: #0f1117 !important; }
+    nav, header { margin-top: 0 !important; padding-top: 0 !important; }
     * { -webkit-tap-highlight-color: transparent; }
 
     /* ── Theme CSS Variables ── */
@@ -975,10 +976,10 @@
         requestAnimationFrame(() => {
           if (bar) { bar.style.transition = 'width 8s cubic-bezier(0.1,0.05,0.01,1)'; bar.style.width = '85%'; }
         });
-        // Show spinner after 400ms for slow navigations
+        // Show spinner after 200ms for slow navigations
         spinnerTimer = setTimeout(() => {
-          if (spinner) spinner.style.display = 'flex';
-        }, 400);
+          if (spinner) { spinner.style.display = 'flex'; }
+        }, 200);
       }
 
       function stopLoader() {
