@@ -1,7 +1,7 @@
-// ScoreSync Service Worker — v13
+// ScoreSync Service Worker — v14
 // PWA support: caches static assets for fast loads
 
-const CACHE_STATIC = 'scoresync-static-v13';
+const CACHE_STATIC = 'scoresync-static-v14';
 const CACHE_FONTS  = 'scoresync-fonts-v8';
 
 const STATIC_ASSETS = [
@@ -45,6 +45,9 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
 
   const url = new URL(e.request.url);
+
+  // 0. Never intercept /api/ routes — let the browser handle them normally
+  if (url.pathname.startsWith('/api/')) return;
 
   // 1. Google Fonts — cache on first load
   if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {

@@ -1,32 +1,17 @@
 {
-  "name": "ScoreSync — Competition Tabulator",
+  "name": "ScoreSync — Competition Management",
   "short_name": "ScoreSync",
   "description": "Official competition scoring and tabulation system",
   "start_url": "/dashboard",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0d1f35",
-  "theme_color": "#10b981",
   "orientation": "portrait-primary",
+  "background_color": "#0f1117",
+  "theme_color": "#6366f1",
   "icons": [
-    {
-      "src": "/icon.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "/icon.png?v=7", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon.png?v=7", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
-  "categories": ["productivity", "utilities"],
-  "lang": "en-PH"
+  "categories": ["utilities", "productivity"],
+  "screenshots": []
 }

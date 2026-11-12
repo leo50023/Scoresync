@@ -8,8 +8,10 @@
   <link rel="icon" type="image/png" href="/icon.png?v=7"/>
   <meta name="theme-color" content="#10b981"/>
   <!-- build: dc85e14 -->
+  <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="ScoreSync"/>
   <meta name="csrf-token" content="{{csrfToken}}"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/fa.embedded.css"/>
@@ -916,6 +918,10 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    @keyframes slideUpIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(80px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
   </style>
   <script>
     /* ── Mobile sidebar toggle ── */
@@ -1029,7 +1035,11 @@
     })();
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(reg) { console.log('[SW] registered, scope:', reg.scope); })
+          .catch(function(err) { console.warn('[SW] registration failed:', err); });
+      });
     }
     // bfcache fix: when user navigates back to this page, check if still logged in
     window.addEventListener('pageshow', function(e) {
@@ -1040,6 +1050,69 @@
           .catch(() => {});
       }
     });
+
+    // PWA Install Prompt
+    (function() {
+      var dismissed = localStorage.getItem('pwa-install-dismissed');
+      if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) return;
+      // Skip on login/register pages
+      if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
+
+      var deferredPrompt = null;
+      var banner = null;
+
+      window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        if (!banner) {
+          banner = document.createElement('div');
+          banner.id = 'pwa-install-banner';
+          banner.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);z-index:9990;min-width:300px;max-width:calc(100vw - 32px);border-radius:16px;padding:16px 20px;background:rgba(10,15,30,0.97);border:1px solid rgba(99,102,241,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;align-items:center;gap:14px;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.4s ease;';
+          banner.innerHTML = '<img src="/scoresync-logo.png?v=8" style="width:40px;height:40px;border-radius:10px;flex-shrink:0" alt="ScoreSync"/>'
+            + '<div style="flex:1;min-width:0">'
+            + '<div style="font-size:0.85rem;font-weight:800;color:#f1f5f9">Install ScoreSync</div>'
+            + '<div style="font-size:0.72rem;color:#64748b;margin-top:2px">Add to home screen for quick access</div>'
+            + '</div>'
+            + '<button id="pwa-install-btn" style="padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border:none;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:36px;">Install</button>'
+            + '<button id="pwa-dismiss-btn" style="width:28px;height:28px;min-height:28px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">&#x2715;</button>';
+          document.body.appendChild(banner);
+
+          document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(function(result) {
+              if (result.outcome === 'accepted') {
+                banner.style.transform = 'translateX(-50%) translateY(100px)';
+                banner.style.opacity = '0';
+                setTimeout(function() { if (banner && banner.parentNode) banner.parentNode.removeChild(banner); banner = null; }, 400);
+              }
+              deferredPrompt = null;
+            });
+          });
+
+          document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.style.transform = 'translateX(-50%) translateY(100px)';
+            banner.style.opacity = '0';
+            localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+            setTimeout(function() { if (banner) banner.style.display = 'none'; }, 400);
+          });
+        }
+
+        // Show banner after 2 seconds
+        setTimeout(function() {
+          if (banner) {
+            banner.style.transform = 'translateX(-50%) translateY(0)';
+          }
+        }, 2000);
+      });
+
+      // Hide banner if already installed
+      window.addEventListener('appinstalled', function() {
+        if (banner && banner.parentNode) banner.parentNode.removeChild(banner);
+        banner = null;
+      });
+    })();
   </script>
 
   <!-- Framer-Motion-style animations — smooth edition -->
