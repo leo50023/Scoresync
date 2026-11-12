@@ -7,15 +7,9 @@ const CACHE_FONTS  = 'scoresync-fonts-v8';
 const STATIC_ASSETS = [
   '/tailwind.css',
   '/fa.embedded.css',
-  '/fa.min.css',
   '/manifest.json',
   '/scoresync-logo.png',
-  '/minsu-logo.png',
   '/icon.png',
-  '/icon.png?v=7',
-  '/webfonts/fa-solid-900.woff2',
-  '/webfonts/fa-regular-400.woff2',
-  '/webfonts/fa-brands-400.woff2',
 ];
 
 // ── Install ───────────────────────────────────────────────────────────────────
