@@ -1279,7 +1279,7 @@
     #ss-confirm-ok:active { transform: translateY(0); }
   </style>
 <script>
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
       var overlay  = document.getElementById('ss-confirm-overlay');
       var box      = document.getElementById('ss-confirm-box');
       var titleEl  = document.getElementById('ss-confirm-title');
@@ -1347,7 +1347,7 @@
         if (e.key === 'Escape') close(false);
         if (e.key === 'Enter')  close(true);
       });
-    })();
+    });
   </script>
 <script>
 // Global form interceptor for data-confirm-title forms
