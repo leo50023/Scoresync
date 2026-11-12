@@ -1054,7 +1054,7 @@
     // PWA Install Prompt
     (function() {
       var dismissed = localStorage.getItem('pwa-install-dismissed');
-      if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) return;
+      if (dismissed && Date.now() - parseInt(dismissed) < 1 * 24 * 60 * 60 * 1000) return; // 1 day
       // Skip on login/register pages
       if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
 
