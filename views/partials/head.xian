@@ -1362,6 +1362,8 @@
       var iconWrap = document.getElementById('ss-confirm-icon-wrap');
       var iconEl   = document.getElementById('ss-confirm-icon');
       var _resolve = null;
+      // Guard: modal not present on pages without navbar (e.g. home page)
+      if (!okBtn || !cancelBtn) return;
 
       var TYPES = {
         danger: {
