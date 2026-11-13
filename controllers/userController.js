@@ -247,31 +247,11 @@ export const deleteUser = async (req, res) => {
     // Delete from Firestore
     await deleteDoc(doc(db, "users", id));
 
-    // Also delete from Firebase Auth using a temp app instance
-    // The document ID equals the Firebase Auth UID
-    let tempApp2 = null;
+    // Also delete from Firebase Auth using Admin SDK
     try {
-      const { deleteUser: deleteAuthUser } = await import("firebase/auth");
-      // We need admin privileges to delete another user's Auth account
-      // Since we only have client SDK, we re-authenticate as the target is not possible
-      // Instead, use Firebase Admin REST API via fetch
-      const projectId = process.env.FIREBASE_PROJECT_ID;
-      const apiKey = process.env.FIREBASE_API_KEY;
-      // Use Identity Toolkit API to delete the user
-      const response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ localId: id }),
-        }
-      );
-      if (!response.ok) {
-        const err = await response.json();
-        console.warn('[deleteUser] Auth delete failed (non-critical):', err?.error?.message);
-      }
+      const { deleteAuthUser } = await import('../models/firebaseAdmin.js');
+      await deleteAuthUser(id);
     } catch (authErr) {
-      // Auth deletion failure is non-critical — Firestore doc is already gone
       console.warn('[deleteUser] Could not delete Firebase Auth account:', authErr.message);
     }
 
