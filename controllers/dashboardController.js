@@ -27,7 +27,9 @@ export const dashboardPage = async (req, res) => {
       ? query(collection(db, "events"), orderBy("createdAt", "desc"))
       : query(collection(db, "events"), orderBy("createdAt", "desc"), limit(5));
     const snap = await getDocs(eventsQuery);
-    const recentEvents = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const recentEvents = snap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(e => !e.parentEventId); // hide sub-events — they appear inside parent event pages
 
     // Count totals for admin
     let totalEvents = 0, totalUsers = 0, pendingCount = 0, ongoingCount = 0;
