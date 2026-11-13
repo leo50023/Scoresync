@@ -15,16 +15,8 @@ export const addContestantPage = async (req, res) => {
     if (!eSnap.exists()) return res.redirect("/events");
 
     const ev = eSnap.data();
-    const maxContestants = Number(ev.maxContestants) || 0;
 
-    // Check limit before showing the form
-    if (maxContestants > 0) {
-      const cSnap = await getDocs(collection(db, "events", req.params.eventId, "contestants"));
-      if (cSnap.size >= maxContestants) {
-        req.flash("error_msg", `Contestant limit reached. This event allows a maximum of ${maxContestants} contestants.`);
-        return res.redirect(`/events/${req.params.eventId}`);
-      }
-    }
+    // Limit check removed — no contestant limit enforced
 
     const PAYMENT_TYPES = ['talent','cultural','choral','dance','culinary','booth','sports','academic','other'];
     res.render("contestants/create", {
@@ -58,18 +50,13 @@ export const storeContestant = async (req, res) => {
   const registrationFee = req.body.registrationFee || "";
   const { eventId } = req.params;
   try {
-    // ── Enforce maxContestants limit ─────────────────────────────────────────
     // Parallel fetch — event + contestants at the same time
     const [eSnap, cSnapInit] = await Promise.all([
       getDoc(doc(db, "events", eventId)),
       getDocs(collection(db, "events", eventId, "contestants")),
     ]);
     if (eSnap.exists()) {
-      const maxContestants = Number(eSnap.data().maxContestants) || 0;
-      if (maxContestants > 0 && cSnapInit.size >= maxContestants) {
-        req.flash("error_msg", `Cannot add more contestants. The limit for this event is ${maxContestants}.`);
-        return res.redirect(`/events/${eventId}`);
-      }
+      // Limit check removed
     }
 
     const docRef = await addDoc(collection(db, "events", eventId, "contestants"), {
