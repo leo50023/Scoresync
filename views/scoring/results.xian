@@ -31,7 +31,7 @@
             </span>
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(124,58,237,0.15);color:#a78bfa">
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-              {{ranked.length}} contestants
+              {{ranked.length}} participants
             </span>
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(5,150,105,0.15);color:#34d399">
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -309,7 +309,7 @@
         </span>
         All Participants by Rank
       </h3>
-      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(37,99,235,0.12);color:#60a5fa;border:1px solid rgba(37,99,235,0.2)">{{ranked.length}} contestants</span>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(37,99,235,0.12);color:#60a5fa;border:1px solid rgba(37,99,235,0.2)">{{ranked.length}} participants</span>
     </div>
 
     {{#each ranked}}
@@ -664,7 +664,7 @@
           {{else}}
           <div class="font-bold text-sm" style="color:var(--text-primary)">{{alias}}</div>
           {{/if}}
-          <div class="text-[10px] mt-0.5" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} contestants scored</div>
+          <div class="text-[10px] mt-0.5" style="color:var(--text-muted)">{{scoredCount}} / {{totalContestants}} participants scored</div>
         </div>
         <div>
           <div class="h-1.5 rounded-full w-24 overflow-hidden" style="background:rgba(255,255,255,0.07)">
