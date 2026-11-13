@@ -8,6 +8,23 @@ import { loginRateLimit } from "../middleware/rateLimit.js";
 import { getNotifications } from "../controllers/notificationController.js";
 router.get("/api/notifications", requireAuth, getNotifications);
 
+// Web Push subscription
+router.post('/api/push/subscribe', requireAuth, async (req, res) => {
+  try {
+    const { subscription } = req.body;
+    if (!subscription || !subscription.endpoint) return res.status(400).json({ error: 'Invalid subscription' });
+    const { db } = await import('../models/firebaseConfig.js');
+    const { doc, updateDoc, arrayUnion } = await import('firebase/firestore');
+    await updateDoc(doc(db, 'users', req.session.userId), {
+      pushSubscriptions: arrayUnion(JSON.stringify(subscription))
+    });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[push subscribe]', err);
+    res.status(500).json({ error: 'Failed to save subscription' });
+  }
+});
+
 // ─── Scheduled jobs (authenticated with CRON_SECRET) ─────────────────────────
 import { updateScheduledEventStatuses } from "../controllers/cronController.js";
 

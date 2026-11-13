@@ -1,7 +1,7 @@
-// ScoreSync Service Worker — v14
+// ScoreSync Service Worker — v15
 // PWA support: caches static assets for fast loads
 
-const CACHE_STATIC = 'scoresync-static-v14';
+const CACHE_STATIC = 'scoresync-static-v15';
 const CACHE_FONTS  = 'scoresync-fonts-v8';
 
 const STATIC_ASSETS = [
@@ -95,4 +95,33 @@ self.addEventListener('fetch', e => {
   }
 
   // 4. Everything else — network only (always fresh)
+});
+
+// ── Web Push ───────────────────────────────────────────────────────────────────
+self.addEventListener('push', e => {
+  const data = e.data ? e.data.json() : {};
+  const title = data.title || 'ScoreSync';
+  const options = {
+    body: data.body || '',
+    icon: data.icon || '/icon.png',
+    badge: data.badge || '/icon.png',
+    data: { url: data.url || '/dashboard' },
+    vibrate: [200, 100, 200],
+    tag: 'scoresync-notif',
+    renotify: true,
+  };
+  e.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(
+    clients.matchAll({ type: 'window' }).then(function(clientList) {
+      const url = e.notification.data?.url || '/dashboard';
+      for (var c of clientList) {
+        if (c.url.includes(url) && 'focus' in c) return c.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
+  );
 });

@@ -104,6 +104,25 @@ export const approveUser = async (req, res) => {
       </div>`,
     }).catch(err => console.error('[mailer] approval email failed:', err));
 
+    // Send push notification to user if they have subscriptions
+    try {
+      const freshSnap = await getDoc(doc(db, 'users', id));
+      const subs = (freshSnap.data()?.pushSubscriptions || []);
+      if (subs.length > 0) {
+        const { sendPushNotification } = await import('../utils/pushNotifications.js');
+        for (const subStr of subs) {
+          const sub = JSON.parse(subStr);
+          await sendPushNotification(sub, {
+            title: '\u2705 ScoreSync \u2014 Account Approved!',
+            body: `Hi ${userData.name || 'User'}, your ${userData.role || 'user'} account has been approved. You can now log in.`,
+            icon: '/icon.png',
+            badge: '/icon.png',
+            url: '/login'
+          });
+        }
+      }
+    } catch (e) { console.error('[push approval]', e); }
+
     req.flash("success_msg", `Account approved and ${userData.name} notified via email.`);
     res.redirect("/users");
   } catch (err) {
@@ -144,6 +163,25 @@ export const rejectUser = async (req, res) => {
         </div>`,
       }).catch(err => console.error('[mailer] rejection email failed:', err));
     }
+
+    // Send push notification to user if they have subscriptions
+    try {
+      const freshSnap2 = await getDoc(doc(db, 'users', id));
+      const subs2 = (freshSnap2.data()?.pushSubscriptions || []);
+      if (subs2.length > 0) {
+        const { sendPushNotification } = await import('../utils/pushNotifications.js');
+        for (const subStr2 of subs2) {
+          const sub2 = JSON.parse(subStr2);
+          await sendPushNotification(sub2, {
+            title: '\u274c ScoreSync \u2014 Account Update',
+            body: `Hi ${userData.name || 'User'}, your account request was not approved. Contact admin for more info.`,
+            icon: '/icon.png',
+            badge: '/icon.png',
+            url: '/login'
+          });
+        }
+      }
+    } catch (e) { console.error('[push rejection]', e); }
 
     req.flash("success_msg", `Account request for ${userData.name || 'user'} rejected.`);
     res.redirect("/users");
