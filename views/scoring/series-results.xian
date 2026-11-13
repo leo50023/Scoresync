@@ -95,8 +95,8 @@
 
   <!-- Embedded data for JS table rendering -->
   <script id="series-data" type="application/json">{
-    "overall": {{overallJson}},
-    "subEventResults": {{subEventResultsJson}}
+    "overall": {{{overallJson}}},
+    "subEventResults": {{{subEventResultsJson}}}
   }</script>
 
   <script>
