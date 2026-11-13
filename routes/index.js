@@ -71,7 +71,6 @@ import { dashboardPage } from "../controllers/dashboardController.js";
 router.get("/dashboard", requireAuth, dashboardPage);
 
 // ─── Users (admin only) ──────────────────────────────────────────────────────
-import {
   listUsers, updateUserRole, deleteUser, approveUser, rejectUser, createUser,
 } from "../controllers/userController.js";
 
@@ -88,7 +87,6 @@ import { backupData } from "../controllers/backupController.js";
 router.get("/admin/backup", requireAuth, requireRole("admin"), backupData);
 
 // ─── Events (admin + organizer for mutations, all auth for reads) ─────────────
-import {
   listEvents, createEventPage, storeEvent,
   showEvent, editEventPage, updateEvent, deleteEvent, updateEventStatus,
   assignJudge, removeJudge, toggleResultsLock,
@@ -106,7 +104,6 @@ router.post("/events/:id/judges/assign",          requireAuth, requireRole("admi
 router.post("/events/:id/judges/:judgeId/remove", requireAuth, requireRole("admin","organizer"), removeJudge);
 
 // ─── Contestants (admin, organizer & encoder can mutate) ──────────────────────
-import {
   addContestantPage, storeContestant,
   editContestantPage, updateContestant, deleteContestant,
   selfRegisterPage, selfRegister,
@@ -122,7 +119,6 @@ router.get( "/events/:eventId/self-register",  selfRegisterPage);
 router.post("/events/:eventId/self-register",  selfRegister);
 
 // ─── Categories (admin & organizer) ──────────────────────────────────────────
-import {
   categoriesPage, storeCategory, deleteCategory,
   storeCategorycriterion, deleteCategorycriterion,
 } from "../controllers/categoryController.js";
@@ -134,7 +130,6 @@ router.post( "/events/:eventId/categories/:categoryId/criteria",               r
 router.post( "/events/:eventId/categories/:categoryId/criteria/:criterionId/delete", requireAuth, requireRole("admin","organizer"), deleteCategorycriterion);
 
 // ─── Criteria (admin & organizer) ────────────────────────────────────────────
-import {
   addCriteriaPage, storeCriteria, deleteCriteria,
 } from "../controllers/criteriaController.js";
 
@@ -143,7 +138,6 @@ router.post("/events/:eventId/criteria",            requireAuth, requireRole("ad
 router.post("/events/:eventId/criteria/:id/delete", requireAuth, requireRole("admin","organizer"), deleteCriteria);
 
 // ─── Audience Voting ──────────────────────────────────────────────────────────
-import {
   audienceVotingQrPage, votingPage, submitVote, voteResults, toggleVoting,
   saveOrganizerMoreMenu, voteCounts,
 } from "../controllers/votingController.js";
@@ -157,7 +151,6 @@ router.post("/events/:eventId/vote/toggle",  requireAuth, requireRole("admin","o
 router.get( "/events/:eventId/vote/counts",  voteCounts);
 
 // ─── Scoring (judges can enter scores; all auth can view results) ─────────────
-import {
   scoringPage, submitScores, resultsPage, scoresJson, announcePage,
   displayBoard, publicResults, toggleScoreLock,
   exportResults, getScoringProgress, reportPage, confirmSignature,
@@ -191,7 +184,6 @@ router.post("/events/:eventId/tabulator/update",      requireAuth, requireRole("
 router.get( "/events/:eventId/tabulator/audit-export",requireAuth, requireRole("admin","tabulator"), exportAuditLog);
 
 // ─── Inventory (admin & organizer) ────────────────────────────────────────────
-import {
   listInventory, storeInventoryItem, updateInventoryItem, deleteInventoryItem, exportInventoryCSV,
 } from "../controllers/inventoryController.js";
 
