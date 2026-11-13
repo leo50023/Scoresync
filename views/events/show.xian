@@ -67,12 +67,10 @@
       </form>
       {{/if}}
       {{#if (eq event.status 'ongoing')}}
-      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
+      <form method="POST" action="/events/{{event.id}}/status" style="display:contents" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
-        <button type="submit" class="btn-sm btn-solid-blue">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event
-        </button>
+        <button type="submit" class="btn-sm btn-solid-blue" style="height:34px;min-height:unset;display:inline-flex;align-items:center;gap:5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event</button>
       </form>
       {{/if}}
       {{#if (eq event.status 'completed')}}
@@ -128,12 +126,10 @@
       </form>
       {{/if}}
       {{#if (eq event.status 'ongoing')}}
-      <form method="POST" action="/events/{{event.id}}/status" class="inline" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
+      <form method="POST" action="/events/{{event.id}}/status" style="display:contents" onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="Manually mark this event as completed? This will lock all scoring." data-confirm-ok="End Event" data-confirm-type="warning">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="status" value="completed">
-        <button type="submit" class="btn-sm btn-solid-blue">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event
-        </button>
+        <button type="submit" class="btn-sm btn-solid-blue" style="height:34px;min-height:unset;display:inline-flex;align-items:center;gap:5px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> End Event</button>
       </form>
       {{/if}}
       {{#if (eq event.status 'completed')}}
