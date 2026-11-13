@@ -325,11 +325,11 @@
       .then(function(r) { return r.ok ? r.json() : { alerts: [], count: 0 }; })
       .then(function(data) {
         var raw = data.alerts || [];
-        // Mark all fetched IDs as seen
-        var fetchedIds = raw.filter(function(a) { return a.id; }).map(function(a) { return a.id; });
-        addSeen(fetchedIds);
         notifData = raw;
         renderFilteredList();
+        // Mark all fetched IDs as seen AFTER rendering (so badge shows correctly first)
+        var fetchedIds = raw.filter(function(a) { return a.id; }).map(function(a) { return a.id; });
+        setTimeout(function() { addSeen(fetchedIds); }, 500);
         updateBadgeFromData(raw);
       })
       .catch(function() { renderNotifications([]); });
@@ -396,7 +396,7 @@
       var link   = a.eventId ? '/events/' + a.eventId : (a.link || '#');
       var dotStyle = 'width:7px;height:7px;border-radius:50%;background:' + c + ';flex-shrink:0;margin-top:5px;display:' + (isSeen ? 'none' : 'inline-block');
       var itemStyle = 'display:flex;align-items:flex-start;text-decoration:none;padding:12px 14px;border-radius:10px;margin-bottom:4px;border-left:4px solid ' + c + ';background:' + bg + ';gap:10px;transition:all 150ms ease;' + (isSeen ? 'opacity:0.72' : '');
-      return '<a href="' + escHtml(link) + '" onclick="event.preventDefault();_notifCloseAndNavigate(\'' + escHtml(link) + '\')" style="' + itemStyle + '"'
+      return '<a href="' + escHtml(link) + '" onclick="event.preventDefault();_notifCloseAndNavigate(\'' + link.replace(/'/g, "\\'") + '\')" style="' + itemStyle + '"'
         + ' onmouseover="this.style.filter=\'brightness(1.08)\';this.style.transform=\'translateY(-1px)\'"'
         + ' onmouseout="this.style.filter=\'\';this.style.transform=\'\'">'
         + '<span style="' + dotStyle + '"></span>'
@@ -448,8 +448,10 @@
         // Detect new IDs
         var newIds = rawIds.filter(function(id) { return _prevRawIds.indexOf(id) === -1; });
         if (!_isFirstPoll && newIds.length > 0) {
-          // New alerts arrived — reset dismissed and seen for those IDs
-          localStorage.removeItem('ss-notif-dismissed');
+          // New alerts arrived — only remove new IDs from dismissed (don't nuke all)
+          var dismissed = getDismissed();
+          var updatedDismissed = dismissed.filter(function(id) { return newIds.indexOf(id) === -1; });
+          setDismissed(updatedDismissed);
           // Remove new IDs from seen so they appear unread
           var seen = getSeen();
           var updatedSeen = seen.filter(function(id) { return newIds.indexOf(id) === -1; });
