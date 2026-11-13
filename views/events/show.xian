@@ -1523,6 +1523,27 @@ document.getElementById('add-judge-modal').addEventListener('click', function(e)
 });
 </script>
 
+<script>
+(function() {
+  var REFRESH_MS = 15000;
+  var lastActivity = Date.now();
+  ['mousemove','keydown','click','scroll','touchstart','wheel'].forEach(function(ev) {
+    document.addEventListener(ev, function(){ lastActivity = Date.now(); }, { passive: true });
+  });
+  function canRefresh() {
+    if (document.hidden) return false;
+    if (document.activeElement && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return false;
+    if (document.querySelector('.fixed.inset-0:not([style*="display: none"]):not([style*="display:none"])')) return false;
+    if ((document.querySelector('main') || document.documentElement).scrollTop > 300) return false;
+    if (Date.now() - lastActivity < REFRESH_MS) return false;
+    return true;
+  }
+  setInterval(function() {
+    if (canRefresh()) location.reload();
+  }, REFRESH_MS);
+})();
+</script>
+
 {{> footer }}
 </body>
 </html>

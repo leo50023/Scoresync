@@ -169,14 +169,14 @@
                 </div>
                 <div>
                   <div class="font-semibold text-slate-800 text-sm">{{name}}</div>
-                  <div class="text-slate-400 text-xs mt-0.5 capitalize">{{#if (eq role 'encoder')}}Participant{{else}}{{role}}{{/if}}</div>
+                  <div class="text-slate-400 text-xs mt-0.5 capitalize">{{role}}</div>
                 </div>
               </div>
             </td>
             <td class="text-slate-500 text-sm">{{email}}</td>
             <td>
               <span class="badge {{#if (eq role 'admin')}}badge-blue{{else}}{{#if (eq role 'judge')}}badge-purple{{else}}badge-green{{/if}}{{/if}}">
-                {{#if (eq role 'encoder')}}Participant{{else}}{{role}}{{/if}}
+                {{role}}
               </span>
             </td>
             <td class="text-slate-400 text-xs">{{createdAt}}</td>
@@ -192,7 +192,7 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <select name="role" class="text-xs rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400 form-input-bare">
                   <option value="judge"     {{#if (eq role 'judge')}}selected{{/if}}>Judge</option>
-                  <option value="encoder"   {{#if (eq role 'encoder')}}selected{{/if}}>Participant</option>
+                  <option value="encoder"   {{#if (eq role 'encoder')}}selected{{/if}}>Encoder</option>
                   <option value="organizer" {{#if (eq role 'organizer')}}selected{{/if}}>Organizer</option>
                   <option value="tabulator" {{#if (eq role 'tabulator')}}selected{{/if}}>Tabulator</option>
                 </select>
@@ -270,7 +270,7 @@
         <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:var(--text-muted)">Assign System Role</label>
         <select name="role" required class="form-input-bare">
           <option value="judge">Judge &mdash; Can enter scores &amp; view results</option>
-          <option value="encoder">Participant &mdash; Can manage contestants</option>
+          <option value="encoder">Encoder &mdash; Can manage contestants</option>
           <option value="organizer">Organizer &mdash; Can manage &amp; oversee events</option>
           <option value="tabulator">Tabulator &mdash; Can enter and review all event scores</option>
         </select>
@@ -369,6 +369,26 @@
   }
 
   showPage(1);
+})();
+</script>
+<script>
+(function() {
+  var REFRESH_MS = 15000;
+  var lastActivity = Date.now();
+  ['mousemove','keydown','click','scroll','touchstart','wheel'].forEach(function(ev) {
+    document.addEventListener(ev, function(){ lastActivity = Date.now(); }, { passive: true });
+  });
+  function canRefresh() {
+    if (document.hidden) return false;
+    if (document.activeElement && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return false;
+    if (document.querySelector('.fixed.inset-0:not([style*="display: none"]):not([style*="display:none"])')) return false;
+    if ((document.querySelector('main') || document.documentElement).scrollTop > 300) return false;
+    if (Date.now() - lastActivity < REFRESH_MS) return false;
+    return true;
+  }
+  setInterval(function() {
+    if (canRefresh()) location.reload();
+  }, REFRESH_MS);
 })();
 </script>
 {{> footer }}
