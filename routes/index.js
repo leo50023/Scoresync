@@ -162,6 +162,7 @@ import {
   displayBoard, publicResults, toggleScoreLock,
   exportResults, getScoringProgress, reportPage, confirmSignature,
   tabulatorScoringPage, tabulatorUpdateScore, exportAuditLog,
+  seriesOverallResults,
 } from "../controllers/scoringController.js";
 
 router.get( "/events/:eventId/scoring",          requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
@@ -170,6 +171,7 @@ router.post("/events/:eventId/scoring",          requireAuth, requireRole("admin
 router.get( "/events/:eventId/scoring/:categoryId", requireAuth, requireRole("admin","judge","organizer","tabulator"), scoringPage);
 router.post("/events/:eventId/scoring/:categoryId", requireAuth, requireRole("admin","judge","organizer","tabulator"), submitScores);
 router.get( "/events/:eventId/results",          requireAuth,                               resultsPage);
+router.get( "/events/:eventId/series-results",   requireAuth, requireRole("admin","organizer","tabulator"), seriesOverallResults);
 router.get( "/events/:eventId/announce",         requireAuth,                               announcePage);
 router.get( "/events/:eventId/scores-json",      requireAuth,                               scoresJson);
 router.get( "/events/:eventId/results/export",   requireAuth,                               exportResults);

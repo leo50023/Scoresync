@@ -1,7 +1,7 @@
 ﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc,
-  setDoc, updateDoc, addDoc, serverTimestamp, orderBy, query,
+  setDoc, updateDoc, addDoc, serverTimestamp, orderBy, query, where,
 } from "firebase/firestore";
 import { sanitizeText } from "../utils/sanitize.js";
 import { applyAutoStatus } from "../utils/autoStatus.js";
@@ -1416,5 +1416,124 @@ export const exportAuditLog = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).send("Could not export audit log.");
+  }
+};
+
+export const seriesOverallResults = async (req, res) => {
+  const { eventId } = req.params; // This is the PARENT event ID
+  try {
+    const parentSnap = await getDoc(doc(db, 'events', eventId));
+    if (!parentSnap.exists() || !parentSnap.data().isEventSeries) {
+      return res.redirect(`/events/${eventId}`);
+    }
+    const parentEv = { id: eventId, ...parentSnap.data() };
+
+    // Get all sub-events
+    const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', eventId)));
+    const subEvents = subSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // For each sub-event, get contestants and their final scores
+    const subEventResults = await Promise.all(subEvents.map(async (se) => {
+      // Get contestants
+      const cSnap = await getDocs(collection(db, 'events', se.id, 'contestants'));
+      const contestants = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      // Get criteria for this sub-event
+      const crSnap = await getDocs(collection(db, 'events', se.id, 'criteria'));
+      const criteria = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      // Get all score submissions
+      const scoresSnap = await getDocs(collection(db, 'events', se.id, 'scores'));
+      const allScores = scoresSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      // Compute final score per contestant (average across judges, weighted by criteria)
+      const contestantScores = contestants.map(c => {
+        const judgeScores = allScores.filter(s => s.contestantId === c.id);
+        if (!judgeScores.length) return { name: c.name, score: 0 };
+
+        const totalWeight = criteria.reduce((s, cr) => s + (Number(cr.weight) || 0), 0);
+        if (!totalWeight) return { name: c.name, score: 0 };
+
+        // Group scores by judge
+        const judgeMap = {};
+        judgeScores.forEach(s => {
+          if (!judgeMap[s.judgeId]) judgeMap[s.judgeId] = [];
+          judgeMap[s.judgeId].push(s);
+        });
+
+        const judgeAverages = Object.values(judgeMap).map(judgeScoreArr => {
+          return criteria.reduce((sum, cr) => {
+            const scoreDoc = judgeScoreArr.find(s => s.criteriaId === cr.id);
+            const val = Number(scoreDoc ? scoreDoc.score : (judgeScoreArr[0]?.[cr.id] || judgeScoreArr[0]?.scores?.[cr.id] || 0));
+            const max = Number(cr.maxScore) || 100;
+            const weight = Number(cr.weight) || 0;
+            return sum + (val / max) * weight;
+          }, 0);
+        });
+        const avgScore = judgeAverages.reduce((s, v) => s + v, 0) / judgeAverages.length;
+        return { name: c.name, score: Math.round(avgScore * 100) / 100 };
+      });
+
+      return { subEvent: se, contestantScores };
+    }));
+
+    // Aggregate: match contestants by name across sub-events
+    const contestantMap = {}; // name -> { displayName, scores, total, count }
+    for (const { subEvent, contestantScores } of subEventResults) {
+      for (const { name, score } of contestantScores) {
+        if (!name) continue;
+        const key = name.trim().toLowerCase();
+        if (!contestantMap[key]) {
+          contestantMap[key] = { displayName: name, scores: [], total: 0, count: 0 };
+        }
+        contestantMap[key].scores.push({ subEventName: subEvent.name, score });
+        contestantMap[key].total += score;
+        contestantMap[key].count++;
+      }
+    }
+
+    // Build ranked list
+    const overall = Object.values(contestantMap)
+      .map(c => ({
+        name: c.displayName,
+        scores: c.scores,
+        average: c.count > 0 ? Math.round((c.total / c.count) * 100) / 100 : 0,
+      }))
+      .sort((a, b) => b.average - a.average)
+      .map((c, i) => ({ ...c, rank: i + 1 }));
+
+    // Prepare subEventResults with per-contestant score lookup for the template
+    // Build a scoreMatrix: for each subEvent, map contestant name key -> score
+    const subEventResultsForTemplate = subEventResults.map(({ subEvent, contestantScores }) => {
+      const scoreByName = {};
+      contestantScores.forEach(({ name, score }) => {
+        if (name) scoreByName[name.trim().toLowerCase()] = score;
+      });
+      return { subEvent, contestantScores, scoreByName };
+    });
+
+    res.render('scoring/series-results', {
+      title: `Overall Results — ${parentEv.name}`,
+      parentEvent: parentEv,
+      subEvents,
+      overall,
+      subEventResults: subEventResultsForTemplate,
+      overallJson: JSON.stringify(overall),
+      subEventResultsJson: JSON.stringify(subEventResultsForTemplate.map(r => ({
+        subEventName: r.subEvent.name,
+        scoreByName: r.scoreByName,
+      }))),
+      userName: req.session.userName,
+      userRole: req.session.userRole,
+      userInitial: (req.session.userName || 'U')[0].toUpperCase(),
+      isAdmin: req.session.userRole === 'admin',
+      isOrganizer: req.session.userRole === 'organizer',
+      isTabulator: req.session.userRole === 'tabulator',
+      isJudge: req.session.userRole === 'judge',
+    });
+  } catch (err) {
+    console.error('[seriesOverallResults]', err);
+    req.flash('error_msg', 'Could not compute overall results.');
+    res.redirect(`/events/${eventId}`);
   }
 };

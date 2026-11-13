@@ -96,6 +96,12 @@
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
+      {{#if event.isEventSeries}}
+      <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
 
       <!-- More dropdown -->
       <div class="relative" id="admin-more-wrap">
@@ -155,6 +161,12 @@
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
+      {{#if event.isEventSeries}}
+      <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
 
       <!-- Organizer More dropdown -->
       <div class="relative" id="org-more-wrap">
