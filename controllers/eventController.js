@@ -3,7 +3,7 @@ import { getFinanceSummary } from "./financeController.js";
 import {
   collection, addDoc, getDocs, getDoc, doc,
   updateDoc, deleteDoc, query, orderBy, serverTimestamp,
-  arrayUnion, where,
+  arrayUnion, arrayRemove, where,
 } from "firebase/firestore";
 import { applyAutoStatus } from "../utils/autoStatus.js";
 import { sanitizeText } from "../utils/sanitize.js";
@@ -200,17 +200,23 @@ export const showEvent = async (req, res) => {
     if (ev.isEventSeries) {
       try {
         const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', req.params.id)));
-        subEvents = subSnap.docs.map(d => {
+        subEvents = await Promise.all(subSnap.docs.map(async d => {
           const sd = d.data();
+          // Fetch contestant count from subcollection
+          let contestantCount = 0;
+          try {
+            const cntSnap = await getDocs(collection(db, 'events', d.id, 'contestants'));
+            contestantCount = cntSnap.size;
+          } catch (e) { /* silent */ }
           return {
             id: d.id,
             name: sd.name || '',
             status: sd.status || 'upcoming',
             date: sd.date || '',
             venue: sd.venue || '',
-            contestants: sd.contestants || [],
+            contestantCount,
           };
-        });
+        }));
       } catch (e) { console.error('Sub-events fetch error:', e); }
     }
 
@@ -370,10 +376,25 @@ export const updateEvent = async (req, res) => {
 // --- Delete event -------------------------------------------------------------
 export const deleteEvent = async (req, res) => {
   try {
-    await deleteDoc(doc(db, EVENTS, req.params.id));
+    const eventId = req.params.id;
+    // Read the event before deleting to check if it's a child
+    const evSnap = await getDoc(doc(db, EVENTS, eventId));
+    const evData = evSnap.exists() ? evSnap.data() : {};
+
+    await deleteDoc(doc(db, EVENTS, eventId));
+
+    // If this was a child event, remove its ID from parent's subEvents array
+    if (evData.parentEventId) {
+      try {
+        await updateDoc(doc(db, 'events', evData.parentEventId), {
+          subEvents: arrayRemove(eventId),
+        });
+      } catch (e) { /* silent */ }
+    }
+
     // If this was a series parent, clear parentEventId on its children
     try {
-      const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', req.params.id)));
+      const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', eventId)));
       await Promise.all(subSnap.docs.map(d => updateDoc(doc(db, 'events', d.id), { parentEventId: '', parentEventName: '' })));
     } catch (e) { /* silent */ }
     req.flash("success_msg", "Event deleted.");

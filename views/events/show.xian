@@ -898,7 +898,7 @@
           <span class="{{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}badge-gray{{/if}}{{/if}}" style="font-size:0.7rem;padding:2px 8px;border-radius:999px">{{status}}</span>
         </div>
         <div class="text-xs" style="color:var(--text-muted)">{{#if date}}{{date}}{{/if}}{{#if venue}} &middot; {{venue}}{{/if}}</div>
-        <div class="text-xs mt-1" style="color:var(--text-faint)">{{contestants.length}} contestants</div>
+        <div class="text-xs mt-1" style="color:var(--text-faint)">{{contestantCount}} contestants</div>
       </a>
       {{else}}
       <p style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">No sub-events yet.{{#if isAdmin}} Click "+ Add Sub-Event" to create one.{{/if}}{{#if isOrganizer}} Click "+ Add Sub-Event" to create one.{{/if}}</p>
