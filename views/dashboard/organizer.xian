@@ -209,15 +209,17 @@
         <!-- Judges + progress -->
         <div class="px-4 py-3 flex-1">
           {{#if ../judges.length}}
-          <div class="text-[10px] font-extrabold uppercase tracking-wider mb-2" style="color:var(--text-faint)">Active Judges</div>
+          <div class="text-[10px] font-extrabold uppercase tracking-wider mb-2" style="color:var(--text-faint)">Assigned Judges</div>
           <div class="flex flex-wrap gap-1 mb-3">
             {{#each ../judges}}
+            {{#if (includes ../../assignedJudges id)}}
             <div class="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold"
               style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.12);color:#a5b4fc">
               <div class="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-extrabold text-white"
                 style="background:linear-gradient(135deg,#1e3a8a,#4f46e5)">{{initial}}</div>
               {{alias}}
             </div>
+            {{/if}}
             {{/each}}
           </div>
           <!-- Scoring progress bar -->
