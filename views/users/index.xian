@@ -77,11 +77,6 @@
       <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#78350f,#f59e0b)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div>
       <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Organizers</p><p class="text-2xl font-black text-yellow-600">{{organizerCount}}</p></div>
     </div>
-    <div class="card-flat px-5 py-4 flex items-center gap-4">
-      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background:linear-gradient(135deg,#064e3b,#059669)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-      <div><p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Encoders</p><p class="text-2xl font-black text-emerald-700">{{encoderCount}}</p></div>
-    </div>
-  </div>
 
   <!-- Pending Account Requests -->
   {{#if pendingUsers.length}}
