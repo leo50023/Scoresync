@@ -20,7 +20,10 @@ export const listEvents = async (req, res) => {
   try {
     const q    = query(collection(db, EVENTS), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
-    const events = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Filter out sub-events (events with a parentEventId) — they appear only inside their parent
+    const events = snap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(e => !e.parentEventId);
 
     await Promise.all(
       events
