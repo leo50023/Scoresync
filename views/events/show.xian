@@ -25,7 +25,14 @@
       <div class="absolute top-0 right-0 w-48 h-48 rounded-full translate-x-16 -translate-y-16" style="background:rgba(255,255,255,0.05)"></div>
       <div class="relative">
         <div class="breadcrumb mb-3" style="color:rgba(147,197,253,0.8)">
+          {{#if parentEventId}}
+          <a href="/events/{{parentEventId}}" style="color:rgba(147,139,250,0.9)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to {{parentEventName}}
+          </a>
+          {{else}}
           <a href="/events" style="color:rgba(147,197,253,0.9)">Back to All Events</a>
+          {{/if}}
         </div>
         <div class="flex items-start justify-between gap-4">
           <div>
