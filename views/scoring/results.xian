@@ -96,6 +96,19 @@
     </div>
   </div>
 
+  {{#if event.isEventSeries}}
+  <div class="mx-4 mt-3 rounded-xl px-4 py-3 flex items-center justify-between gap-3 no-print" style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.3)">
+    <div>
+      <div class="text-sm font-bold" style="color:#a5b4fc">This is an Event Series</div>
+      <div class="text-xs" style="color:#64748b">View the combined overall results for all sub-events</div>
+    </div>
+    <a href="/events/{{event.id}}/series-results" class="btn-sm btn-solid-indigo text-xs flex-shrink-0">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Overall Results
+    </a>
+  </div>
+  {{/if}}
+
   {{#if (and resultsLocked isJudge)}}
   <div class="fm-fade-up rounded-2xl p-8 text-center" style="background:var(--bg-card);border:1px solid var(--border)">
     <div class="text-4xl mb-4">🔒</div>
