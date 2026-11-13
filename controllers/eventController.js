@@ -3,6 +3,7 @@ import { getFinanceSummary } from "./financeController.js";
 import {
   collection, addDoc, getDocs, getDoc, doc,
   updateDoc, deleteDoc, query, orderBy, serverTimestamp,
+  arrayUnion, where,
 } from "firebase/firestore";
 import { applyAutoStatus } from "../utils/autoStatus.js";
 import { sanitizeText } from "../utils/sanitize.js";
@@ -47,16 +48,44 @@ export const listEvents = async (req, res) => {
 };
 
 // --- Create event form --------------------------------------------------------
-export const createEventPage = (req, res) => {
-  res.render("events/create", {
-    title:       "Create Event",
-    userName:    req.session.userName,
-    userRole:    req.session.userRole,
-    userInitial: (req.session.userName || "U")[0].toUpperCase(),
-    isAdmin:     req.session.userRole === "admin",
-    isOrganizer: req.session.userRole === "organizer",
-      isTabulator: req.session.userRole === "tabulator",
-  });
+export const createEventPage = async (req, res) => {
+  try {
+    const seriesSnap = await getDocs(query(collection(db, 'events'), where('isEventSeries', '==', true)));
+    const seriesEvents = seriesSnap.docs.map(d => ({ id: d.id, name: d.data().name }));
+    // pre-fill parentEventId from query string if present
+    const preParentId = req.query.parentEventId || '';
+    let preParentName = '';
+    if (preParentId) {
+      const parentSnap = await getDoc(doc(db, 'events', preParentId));
+      if (parentSnap.exists()) preParentName = parentSnap.data().name || '';
+    }
+    res.render('events/create', {
+      title: 'Create Event',
+      userName: req.session.userName,
+      userRole: req.session.userRole,
+      userInitial: (req.session.userName || 'U')[0].toUpperCase(),
+      isAdmin: req.session.userRole === 'admin',
+      isOrganizer: req.session.userRole === 'organizer',
+      isTabulator: req.session.userRole === 'tabulator',
+      seriesEvents,
+      preParentId,
+      preParentName,
+    });
+  } catch (err) {
+    console.error(err);
+    res.render('events/create', {
+      title: 'Create Event',
+      userName: req.session.userName,
+      userRole: req.session.userRole,
+      userInitial: (req.session.userName || 'U')[0].toUpperCase(),
+      isAdmin: req.session.userRole === 'admin',
+      isOrganizer: req.session.userRole === 'organizer',
+      isTabulator: req.session.userRole === 'tabulator',
+      seriesEvents: [],
+      preParentId: '',
+      preParentName: '',
+    });
+  }
 };
 
 // --- Store new event ----------------------------------------------------------
@@ -67,6 +96,7 @@ export const storeEvent = async (req, res) => {
     paymentMethod, paymentAccountName, paymentAccountNumber, paymentQR,
     otherType, coverPhoto,
   } = req.body;
+  const { isEventSeries, parentEventId } = req.body;
   try {
     const evRef = await addDoc(collection(db, EVENTS), {
       name:                 name || "",
@@ -90,9 +120,25 @@ export const storeEvent = async (req, res) => {
       paymentAccountNumber: paymentAccountNumber || "",
       paymentQR:            paymentQR            || "",
       assignedJudges:       [],                        // no judges assigned on creation
+      isEventSeries:        isEventSeries === 'true' ? true : false,
+      parentEventId:        parentEventId || '',
+      parentEventName:      '',  // filled in below
+      subEvents:            [],
       createdBy:            req.session.userId,
       createdAt:            serverTimestamp(),
     });
+
+    // If part of a series, resolve parent name and update parent's subEvents array
+    if (parentEventId) {
+      try {
+        const parentSnap = await getDoc(doc(db, 'events', parentEventId));
+        const pName = parentSnap.exists() ? (parentSnap.data().name || '') : '';
+        await updateDoc(doc(db, 'events', evRef.id), { parentEventName: pName });
+        await updateDoc(doc(db, 'events', parentEventId), {
+          subEvents: arrayUnion(evRef.id),
+        });
+      } catch (e) { console.error('Series link error:', e); }
+    }
 
     // -- Save inline criteria submitted from create form ----------------------
     const useMultiCategory = req.body.useMultiCategory;
@@ -148,6 +194,25 @@ export const showEvent = async (req, res) => {
     ev.canManageFinance = ['admin','organizer'].includes(req.session.userRole);
 
     await applyAutoStatus(req.params.id, ev);
+
+    // If this is an event series, fetch sub-events
+    let subEvents = [];
+    if (ev.isEventSeries) {
+      try {
+        const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', req.params.id)));
+        subEvents = subSnap.docs.map(d => {
+          const sd = d.data();
+          return {
+            id: d.id,
+            name: sd.name || '',
+            status: sd.status || 'upcoming',
+            date: sd.date || '',
+            venue: sd.venue || '',
+            contestants: sd.contestants || [],
+          };
+        });
+      } catch (e) { console.error('Sub-events fetch error:', e); }
+    }
 
     const [cSnap, crSnap, finance, usersSnap, auditSnap] = await Promise.all([
       getDocs(collection(db, EVENTS, req.params.id, "contestants")),
@@ -222,6 +287,7 @@ export const showEvent = async (req, res) => {
       isOrganizer: req.session.userRole === "organizer",
       isTabulator: req.session.userRole === "tabulator",
       canManageFinance: ['admin','organizer'].includes(req.session.userRole),
+      subEvents,
     });
   } catch (err) {
     console.error(err);
@@ -305,6 +371,11 @@ export const updateEvent = async (req, res) => {
 export const deleteEvent = async (req, res) => {
   try {
     await deleteDoc(doc(db, EVENTS, req.params.id));
+    // If this was a series parent, clear parentEventId on its children
+    try {
+      const subSnap = await getDocs(query(collection(db, 'events'), where('parentEventId', '==', req.params.id)));
+      await Promise.all(subSnap.docs.map(d => updateDoc(doc(db, 'events', d.id), { parentEventId: '', parentEventName: '' })));
+    } catch (e) { /* silent */ }
     req.flash("success_msg", "Event deleted.");
     res.redirect("/events");
   } catch (err) {

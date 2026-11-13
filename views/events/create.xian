@@ -187,6 +187,34 @@
       </div>
 
       <div class="space-y-5">
+        <!-- ── Event Series Options ───────────────────────────────────── -->
+        <div class="card-flat" id="series-options-card">
+          <div class="px-6 py-4" style="border-bottom:1px solid var(--border)">
+            <h2 class="font-bold" style="color:var(--text-primary)">Event Series Options <span style="color:#64748b;font-weight:500;font-size:0.82rem">(optional)</span></h2>
+          </div>
+          <div class="px-6 py-5 space-y-4">
+            <!-- Mark as Series -->
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" name="isEventSeries" value="true" id="isSeriesCheck" style="width:16px;height:16px;cursor:pointer"/>
+              <div>
+                <div style="font-weight:700;color:var(--text-primary)">Create as Event Series</div>
+                <div style="font-size:0.78rem;color:#64748b">This event will be a parent that groups multiple sub-events under it</div>
+              </div>
+            </label>
+            <!-- Add to existing series -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Add to Existing Series <span style="color:#94a3b8;font-weight:400">(optional)</span></label>
+              <select name="parentEventId" id="parentEventIdSelect" class="form-input-bare bg-white">
+                <option value="">— None (standalone event) —</option>
+                {{#each seriesEvents}}
+                <option value="{{id}}"{{#if (eq ../preParentId id)}} selected{{/if}}>{{name}}</option>
+                {{/each}}
+              </select>
+              <p style="font-size:0.75rem;color:#64748b;margin-top:4px">Select a parent series to nest this event under it</p>
+            </div>
+          </div>
+        </div>
+
         <div class="card-flat">
           <div class="px-6 py-4 border-b border-slate-100"><h2 class="font-bold text-slate-800 text-sm flex items-center gap-2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ready to Create</h2></div>
           <div class="px-6 py-4 space-y-2 text-sm text-slate-600">
@@ -799,6 +827,15 @@ document.addEventListener('click', function(e) {
     if (menu) menu.classList.add('hidden');
   }
 });
+</script>
+<script>
+(function(){
+  var preParent = '{{preParentId}}';
+  if (preParent) {
+    var sel = document.getElementById('parentEventIdSelect');
+    if (sel) sel.value = preParent;
+  }
+})();
 </script>
 {{> footer }}
 </html>
