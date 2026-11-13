@@ -1,4 +1,4 @@
-import { db } from "../models/firebaseConfig.js";
+﻿import { db } from "../models/firebaseConfig.js";
 import {
   collection, getDocs, getDoc, doc, updateDoc, query, orderBy, limit, where,
 } from "firebase/firestore";
@@ -115,7 +115,7 @@ export const dashboardPage = async (req, res) => {
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin:     role === "admin",
       isJudge:     role === "judge",
-      isEncoder:   role === "encoder",
+      isEncoder:   role === 
       isOrganizer: role === "organizer",
       isTabulator: role === "tabulator",
       recentEvents,
@@ -208,7 +208,7 @@ export const dashboardPage = async (req, res) => {
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin:     role === "admin",
       isJudge:     role === "judge",
-      isEncoder:   role === "encoder",
+      isEncoder:   role === 
       isOrganizer: role === "organizer",
       isTabulator: role === "tabulator",
       recentEvents: [],

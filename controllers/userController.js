@@ -195,8 +195,8 @@ export const rejectUser = async (req, res) => {
 // ─── Edit user role ───────────────────────────────────────────────────────────
 export const updateUserRole = async (req, res) => {
   const { id } = req.params;
-  const role   = sanitizeRole(req.body.role, ["judge", "encoder", "organizer", "tabulator"]);
-  const allowed = ["judge", "encoder", "organizer", "tabulator"]; // admin NOT in allowed — cannot assign or change to/from admin
+  const role   = sanitizeRole(req.body.role, ["judge", "organizer", "tabulator"]);
+  const allowed = ["judge", "organizer", "tabulator"]; // admin NOT in allowed — cannot assign or change to/from admin
 
   if (!allowed.includes(role)) {
     req.flash("error_msg", "Invalid role selection.");
@@ -269,8 +269,8 @@ export const createUser = async (req, res) => {
   const name     = sanitizeText(req.body.name, 100);
   const email    = sanitizeEmail(req.body.email);
   const password = req.body.password || "";
-  const role     = sanitizeRole(req.body.role, ["judge", "encoder", "organizer", "tabulator"]);
-  const allowed = ["judge", "encoder", "organizer", "tabulator"]; // admin cannot be created via this form
+  const role     = sanitizeRole(req.body.role, ["judge", "organizer", "tabulator"]);
+  const allowed = ["judge", "organizer", "tabulator"]; // admin cannot be created via this form
 
   if (!name || !email || !password || !allowed.includes(role)) {
     req.flash("error_msg", "Please fill in all required fields and select a valid role.");

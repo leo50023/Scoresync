@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 const router = express.Router();
 
 import { requireAuth, requireRole } from "../middleware/auth.js";
@@ -112,10 +112,10 @@ import {
   selfRegisterPage, selfRegister,
 } from "../controllers/contestantController.js";
 
-router.get( "/events/:eventId/contestants/add",              requireAuth, requireRole("admin","organizer","encoder"), addContestantPage);
-router.post("/events/:eventId/contestants",                  requireAuth, requireRole("admin","organizer","encoder"), storeContestant);
-router.get( "/events/:eventId/contestants/:id/edit",         requireAuth, requireRole("admin","organizer","encoder"), editContestantPage);
-router.post("/events/:eventId/contestants/:id/update",       requireAuth, requireRole("admin","organizer","encoder"), updateContestant);
+router.get( "/events/:eventId/contestants/add",              requireAuth, requireRole("admin","organizer"), addContestantPage);
+router.post("/events/:eventId/contestants",                  requireAuth, requireRole("admin","organizer"), storeContestant);
+router.get( "/events/:eventId/contestants/:id/edit",         requireAuth, requireRole("admin","organizer"), editContestantPage);
+router.post("/events/:eventId/contestants/:id/update",       requireAuth, requireRole("admin","organizer"), updateContestant);
 router.post("/events/:eventId/contestants/:id/delete",       requireAuth, requireRole("admin","organizer"),           deleteContestant);
 // Public self-registration (no login)
 router.get( "/events/:eventId/self-register",  selfRegisterPage);

@@ -1,4 +1,4 @@
-// Input sanitization helpers — no external package required
+﻿// Input sanitization helpers — no external package required
 
 /**
  * Strip HTML tags, trim whitespace, enforce max length.
@@ -27,7 +27,7 @@ export function sanitizeEmail(value) {
 /**
  * Sanitize a role string — only allow known values.
  */
-export function sanitizeRole(value, allowed = ["admin", "judge", "encoder", "organizer", "tabulator"]) {
+export function sanitizeRole(value, allowed = ["admin", "judge", "organizer", "tabulator"]) {
   if (!value || typeof value !== "string") return "";
   return allowed.includes(value.trim().toLowerCase()) ? value.trim().toLowerCase() : "";
 }
