@@ -133,7 +133,6 @@
             <textarea name="description" rows="3" placeholder="Short bio, background, or notes about this contestant..." class="form-input-bare resize-none"></textarea>
           </div>
 
-          {{/if}}
 
           <div class="flex gap-3 pt-2">
             <button type="submit" class="btn-primary text-sm">
