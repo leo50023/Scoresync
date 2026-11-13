@@ -3,15 +3,68 @@
 {{> navbar}}
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar}}
-<main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+<main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
 
-  <!-- Sticky toolbar -->
-  <div class="sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 no-print" style="background:rgba(7,12,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 32px rgba(0,0,0,0.5)">
-    <div class="flex items-center justify-between gap-2">
+<style>
+/* ── Series Results Premium Styles ── */
+.sr-toolbar { position:sticky;top:0;z-index:20;margin:-1rem -1.5rem 0;padding:.75rem 1.5rem;background:rgba(7,12,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 4px 32px rgba(0,0,0,0.5); }
+@media(max-width:640px){.sr-toolbar{margin:-1rem -1rem 0;padding:.75rem 1rem;}}
+.sr-rank-row { border-radius:14px;background:linear-gradient(135deg,#0d1526,#111827);border:1px solid rgba(255,255,255,0.07);box-shadow:0 2px 12px rgba(0,0,0,0.3);overflow:hidden;transition:transform .15s,box-shadow .15s; }
+.sr-rank-row:hover { transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,0.5); }
+.sr-rank-row.rank-1 { border-color:rgba(245,158,11,0.35);box-shadow:0 4px 20px rgba(245,158,11,0.12); }
+.sr-rank-row.rank-2 { border-color:rgba(148,163,184,0.25); }
+.sr-rank-row.rank-3 { border-color:rgba(205,127,50,0.25); }
+.sr-score-chip { display:inline-flex;align-items:center;padding:.2rem .55rem;border-radius:9999px;font-size:.625rem;font-weight:700;border:1px solid rgba(99,102,241,0.2);background:rgba(99,102,241,0.1);color:#a5b4fc; }
+.sr-breakdown-table { width:100%;border-collapse:collapse; }
+.sr-breakdown-table th { text-align:left;padding:10px 14px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.1); }
+.sr-breakdown-table th.contestant-col { text-align:center; }
+.sr-breakdown-table td { padding:10px 14px;font-size:.8rem;border-bottom:1px solid rgba(255,255,255,0.04); }
+.sr-breakdown-table td.score-cell { text-align:center;font-weight:700;border-radius:6px; }
+.sr-breakdown-table tr:hover td { background:rgba(255,255,255,0.02); }
+.sr-breakdown-table tr.overall-row td { font-weight:800;border-top:2px solid rgba(124,58,237,0.4);background:rgba(124,58,237,0.08);color:#a78bfa; }
+.sr-score-emerald { color:#10b981;background:rgba(16,185,129,0.12); }
+.sr-score-blue { color:#60a5fa;background:rgba(96,165,250,0.12); }
+.sr-score-amber { color:#f59e0b;background:rgba(245,158,11,0.12); }
+.sr-score-red { color:#ef4444;background:rgba(239,68,68,0.12); }
+.sr-score-muted { color:var(--text-muted);background:transparent; }
+.sr-podium-container { overflow:hidden;border-radius:1rem;background:linear-gradient(160deg,#060d1f 0%,#0a1535 50%,#0d1e42 100%);border:1px solid rgba(255,255,255,0.07);box-shadow:0 8px 48px rgba(0,0,0,0.6); }
+.sr-podium-hero { position:relative;overflow:hidden;padding:2rem 1.5rem 1.5rem;text-align:center;background:linear-gradient(135deg,#0c1e4a,#1a3a8c,#0c2060); }
+.sr-podium-hero::before { content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(96,165,250,.12) 0%,transparent 65%); }
+@keyframes sr-fadein { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+@keyframes sr-pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+.fm-fade-up { animation:sr-fadein .5s ease both; }
+.fm-fade-up-1 { animation:sr-fadein .5s .1s ease both; }
+.fm-fade-up-2 { animation:sr-fadein .5s .2s ease both; }
+.fm-fade-up-3 { animation:sr-fadein .5s .3s ease both; }
+@media print {
+  .no-print, nav, aside, .sr-toolbar { display:none!important; }
+  body, main { background:#fff!important;color:#111!important;padding:0!important; }
+  .sr-podium-container, .sr-rank-row, .card-flat { border:1px solid #ddd!important;box-shadow:none!important;background:#fff!important;color:#111!important; }
+  .sr-breakdown-table th, .sr-breakdown-table td { color:#111!important;border-color:#ddd!important;background:#fff!important; }
+  .sr-breakdown-table tr.overall-row td { background:#f3f0ff!important;color:#4f46e5!important; }
+  .sr-score-emerald { color:#059669!important;background:transparent!important; }
+  .sr-score-blue { color:#2563eb!important;background:transparent!important; }
+  .sr-score-amber { color:#d97706!important;background:transparent!important; }
+  .sr-score-red { color:#dc2626!important;background:transparent!important; }
+  .print-header { display:block!important; }
+  @page { margin:1.5cm; }
+}
+.print-header { display:none;border-bottom:2px solid #4f46e5;margin-bottom:1rem;padding-bottom:.5rem; }
+</style>
+
+  <!-- Print-only header -->
+  <div class="print-header">
+    <div style="font-size:1.3rem;font-weight:900">ScoreSync — Overall Results</div>
+    <div style="font-size:.85rem;color:#555">{{parentEvent.name}} &bull; <span id="sr-print-date"></span></div>
+  </div>
+
+  <!-- ── Sticky Top Bar ── -->
+  <div class="sr-toolbar no-print">
+    <div class="flex items-center justify-between gap-2" style="min-width:0">
       <div class="flex items-center gap-3 min-w-0">
-        <a href="/events/{{parentEvent.id}}" class="btn-sm btn-sm-gray text-xs no-print flex items-center gap-1.5 flex-shrink-0">
+        <a href="/events/{{parentEvent.id}}" class="btn-sm btn-sm-gray text-xs flex items-center gap-1.5 flex-shrink-0">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to {{parentEvent.name}}
+          Back
         </a>
         <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -30,62 +83,153 @@
           </div>
         </div>
       </div>
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <button onclick="window.print()" class="btn-sm btn-sm-gray text-xs no-print">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          Print
-        </button>
-      </div>
+      <button onclick="window.print()" class="btn-sm btn-sm-gray text-xs flex-shrink-0">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
     </div>
   </div>
 
   {{#if error_msg}}<div class="alert-error animate-fadeup"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>{{error_msg}}</div>{{/if}}
 
-  <!-- Rankings Podium -->
-  <div class="card-flat p-6 animate-fadeup">
-    <h2 class="font-extrabold text-base mb-5 flex items-center gap-2" style="color:var(--text-primary)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/><path d="M15 7a3 3 0 1 0-6 0"/><path d="M12 2v5"/><path d="M6.5 7.5H3l1.5 5H7"/><path d="M17.5 7.5H21l-1.5 5H17"/></svg>
-      Overall Rankings
-    </h2>
-    {{#if overall.length}}
-    <div class="grid gap-3">
-      {{#each overall}}
-      <div class="flex items-center gap-4 rounded-xl px-4 py-3 animate-fadeup" style="{{#if (eq rank 1)}}background:linear-gradient(90deg,rgba(234,179,8,0.15),rgba(234,179,8,0.05));border:1px solid rgba(234,179,8,0.3){{else}}{{#if (eq rank 2)}}background:linear-gradient(90deg,rgba(148,163,184,0.12),rgba(148,163,184,0.04));border:1px solid rgba(148,163,184,0.25){{else}}{{#if (eq rank 3)}}background:linear-gradient(90deg,rgba(180,83,9,0.12),rgba(180,83,9,0.04));border:1px solid rgba(180,83,9,0.25){{else}}background:rgba(255,255,255,0.03);border:1px solid var(--border){{/if}}{{/if}}{{/if}}">
-        <div class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0" style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#f59e0b,#d97706);color:#1c1917{{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#94a3b8,#64748b);color:#0f172a{{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#b45309,#92400e);color:#fff{{else}}background:rgba(255,255,255,0.08);color:var(--text-secondary){{/if}}{{/if}}{{/if}}">
-          {{rank}}
+  {{#if overall.length}}
+
+  <!-- ── Podium Hero ── -->
+  <div class="sr-podium-container fm-fade-up">
+    <div class="sr-podium-hero">
+      <div class="relative">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-4" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.15)">
+          <span class="w-1.5 h-1.5 rounded-full bg-purple-400 inline-block" style="animation:sr-pulse 1.5s infinite"></span>
+          Overall Rankings
         </div>
+        <h2 class="text-white font-black text-2xl tracking-tight mb-1">{{parentEvent.name}}</h2>
+        <p class="text-purple-300 text-xs opacity-70 tracking-widest uppercase">Combined Sub-Event Results</p>
+      </div>
+    </div>
+
+    <!-- Podium Blocks -->
+    <div class="px-6 pt-8 pb-6">
+      <div class="flex items-end justify-center gap-4 max-w-2xl mx-auto">
+
+        <!-- 2nd Place -->
+        {{#each overall}}{{#if (eq rank 2)}}
+        <div class="flex-1 min-w-0 text-center max-w-[190px] fm-fade-up-1">
+          <div class="text-4xl mb-3" style="filter:drop-shadow(0 2px 8px rgba(148,163,184,0.4))">🥈</div>
+          <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(148,163,184,0.25);background:linear-gradient(160deg,#1a2240,#1e2a4a);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
+            <div class="text-[9px] uppercase font-black tracking-[.2em] mb-3" style="color:rgba(148,163,184,0.7)">2nd Place</div>
+            <div class="font-extrabold text-sm leading-tight mb-2" style="color:#e2e8f0;overflow-wrap:anywhere">{{name}}</div>
+            <div class="text-2xl font-black leading-none mt-2" style="color:#94a3b8"><span class="sr-count" data-target="{{average}}">{{average}}</span><span class="text-sm font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full" style="width:{{average}}%;background:linear-gradient(90deg,#64748b,#94a3b8);transition:width 1s"></div>
+            </div>
+          </div>
+          <div class="mt-2 h-14 rounded-t-xl mx-6" style="background:linear-gradient(180deg,rgba(148,163,184,0.3),rgba(148,163,184,0.1))"></div>
+        </div>
+        {{/if}}{{/each}}
+
+        <!-- 1st Place -->
+        {{#each overall}}{{#if (eq rank 1)}}
+        <div class="flex-1 min-w-0 text-center max-w-[210px] -mt-8 fm-fade-up">
+          <div class="text-5xl mb-3" style="filter:drop-shadow(0 4px 16px rgba(251,191,36,0.6))">🏆</div>
+          <div class="rounded-2xl p-5 border-2 transition-all hover:scale-[1.02]" style="border-color:rgba(245,158,11,0.4);background:linear-gradient(160deg,#2a1f05,#3d2a06,#2a1f05);box-shadow:0 8px 40px rgba(245,158,11,0.25),0 0 0 1px rgba(245,158,11,0.15)">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-3" style="background:rgba(245,158,11,0.2);border:1px solid rgba(245,158,11,0.3)">
+              <span class="text-[9px] text-yellow-400 uppercase font-black tracking-[.18em]">Champion</span>
+            </div>
+            <div class="font-extrabold text-base leading-tight mb-2" style="color:#fef3c7;overflow-wrap:anywhere">{{name}}</div>
+            <div class="text-3xl font-black mt-2 leading-none" style="color:#f59e0b"><span class="sr-count" data-target="{{average}}">{{average}}</span><span class="text-base font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full" style="width:{{average}}%;background:linear-gradient(90deg,#d97706,#fbbf24,#f59e0b);transition:width 1s"></div>
+            </div>
+          </div>
+          <div class="mt-2 h-24 rounded-t-xl mx-4" style="background:linear-gradient(180deg,rgba(245,158,11,0.4),rgba(245,158,11,0.1))"></div>
+        </div>
+        {{/if}}{{/each}}
+
+        <!-- 3rd Place -->
+        {{#each overall}}{{#if (eq rank 3)}}
+        <div class="flex-1 min-w-0 text-center max-w-[190px] fm-fade-up-1">
+          <div class="text-4xl mb-3" style="filter:drop-shadow(0 2px 8px rgba(205,127,50,0.4))">🥉</div>
+          <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(205,127,50,0.25);background:linear-gradient(160deg,#1e140a,#261a0c,#1e140a);box-shadow:0 4px 24px rgba(0,0,0,0.4)">
+            <div class="text-[9px] uppercase font-black tracking-[.2em] mb-3" style="color:rgba(205,127,50,0.7)">3rd Place</div>
+            <div class="font-extrabold text-sm leading-tight mb-2" style="color:#fed7aa;overflow-wrap:anywhere">{{name}}</div>
+            <div class="text-2xl font-black mt-2 leading-none" style="color:#cd7f32"><span class="sr-count" data-target="{{average}}">{{average}}</span><span class="text-sm font-normal opacity-60">%</span></div>
+            <div class="mt-3 h-1 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
+              <div class="h-full rounded-full" style="width:{{average}}%;background:linear-gradient(90deg,#92400e,#f97316);transition:width 1s"></div>
+            </div>
+          </div>
+          <div class="mt-2 h-8 rounded-t-xl mx-6" style="background:linear-gradient(180deg,rgba(205,127,50,0.3),rgba(205,127,50,0.08))"></div>
+        </div>
+        {{/if}}{{/each}}
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Full Rankings List ── -->
+  <div class="space-y-2 fm-fade-up">
+    <div class="flex items-center justify-between px-1 mb-3">
+      <h3 class="font-extrabold text-sm flex items-center gap-2" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(124,58,237,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </span>
+        All Participants by Rank
+      </h3>
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold" style="background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.2)">{{overall.length}} contestants</span>
+    </div>
+
+    {{#each overall}}
+    <div class="sr-rank-row {{#if (eq rank 1)}}rank-1{{else}}{{#if (eq rank 2)}}rank-2{{else}}{{#if (eq rank 3)}}rank-3{{/if}}{{/if}}{{/if}}">
+      <div class="px-4 py-3.5 flex items-center gap-3">
+        <!-- Rank badge -->
+        <div class="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-black text-sm shadow"
+          style="{{#if (eq rank 1)}}background:linear-gradient(135deg,#92400e,#f59e0b);color:#fff{{else}}{{#if (eq rank 2)}}background:linear-gradient(135deg,#334155,#94a3b8);color:#fff{{else}}{{#if (eq rank 3)}}background:linear-gradient(135deg,#78350f,#f97316);color:#fff{{else}}background:rgba(255,255,255,0.06);color:#64748b;border:1px solid rgba(255,255,255,0.1){{/if}}{{/if}}{{/if}}">
+          {{#if (eq rank 1)}}🥇{{else}}{{#if (eq rank 2)}}🥈{{else}}{{#if (eq rank 3)}}🥉{{else}}{{rank}}{{/if}}{{/if}}{{/if}}
+        </div>
+        <!-- Name + score chips -->
         <div class="flex-1 min-w-0">
           <div class="font-bold text-sm truncate" style="color:var(--text-primary)">{{name}}</div>
           <div class="flex flex-wrap gap-1.5 mt-1">
             {{#each scores}}
-            <span class="text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2)">{{subEventName}}: {{score}}%</span>
+            <span class="sr-score-chip">{{subEventName}}: {{score}}%</span>
             {{/each}}
           </div>
         </div>
+        <!-- Overall average -->
         <div class="text-right flex-shrink-0">
-          <div class="font-black text-xl" style="{{#if (eq rank 1)}}color:#f59e0b{{else}}{{#if (eq rank 2)}}color:#94a3b8{{else}}{{#if (eq rank 3)}}color:#b45309{{else}}color:var(--text-primary){{/if}}{{/if}}{{/if}}">{{average}}%</div>
-          <div class="text-[10px]" style="color:var(--text-muted)">overall avg</div>
+          <div class="font-black text-xl leading-none" style="{{#if (eq rank 1)}}color:#f59e0b{{else}}{{#if (eq rank 2)}}color:#94a3b8{{else}}{{#if (eq rank 3)}}color:#cd7f32{{else}}color:var(--text-primary){{/if}}{{/if}}{{/if}}">
+            <span class="sr-count" data-target="{{average}}">{{average}}</span><span class="text-xs font-normal opacity-50">%</span>
+          </div>
+          <div class="text-[10px] mt-1" style="color:var(--text-muted)">overall avg</div>
         </div>
       </div>
-      {{/each}}
+      <!-- Score bar -->
+      <div class="h-0.5" style="background:rgba(255,255,255,0.04)">
+        <div class="h-full" style="width:{{average}}%;transition:width 1.2s cubic-bezier(.4,0,.2,1);background:{{#if (eq rank 1)}}linear-gradient(90deg,#d97706,#fbbf24){{else}}{{#if (eq rank 2)}}linear-gradient(90deg,#475569,#94a3b8){{else}}{{#if (eq rank 3)}}linear-gradient(90deg,#c2410c,#fb923c){{else}}linear-gradient(90deg,#4f46e5,#a78bfa){{/if}}{{/if}}{{/if}}"></div>
+      </div>
     </div>
-    {{else}}
-    <div class="text-center py-12" style="color:var(--text-muted)">
-      <svg class="mx-auto mb-3" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <p class="text-sm font-medium">No results yet</p>
-      <p class="text-xs mt-1">Sub-events need contestants and scores to show overall rankings.</p>
-    </div>
-    {{/if}}
+    {{/each}}
   </div>
 
-  <!-- Breakdown Table (rendered via JS with embedded JSON) -->
-  <div class="card-flat p-6 animate-fadeup-1" id="breakdown-section">
-    <h2 class="font-extrabold text-base mb-4 flex items-center gap-2" style="color:var(--text-primary)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      Score Breakdown by Sub-Event
-    </h2>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm" id="breakdown-table" style="border-collapse:collapse">
+  {{else}}
+  <div class="fm-fade-up rounded-2xl p-12 text-center" style="background:var(--bg-card);border:1px solid var(--border)">
+    <div class="text-4xl mb-4">📊</div>
+    <h2 class="font-extrabold text-lg mb-2" style="color:var(--text-primary)">No Results Yet</h2>
+    <p class="text-sm" style="color:var(--text-secondary)">Sub-events need contestants and scores to show overall rankings.</p>
+  </div>
+  {{/if}}
+
+  <!-- ── Score Breakdown Table ── -->
+  <div class="fm-fade-up rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)" id="breakdown-section">
+    <div class="px-5 py-4 flex items-center justify-between" style="border-bottom:1px solid rgba(255,255,255,0.07);background:linear-gradient(135deg,rgba(13,20,36,0.9),rgba(17,24,39,0.9))">
+      <h2 class="flex items-center gap-2 font-extrabold text-sm" style="color:var(--text-primary)">
+        <span class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(59,130,246,0.18)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
+        Score Breakdown by Sub-Event
+      </h2>
+    </div>
+    <div class="overflow-x-auto p-1">
+      <table class="sr-breakdown-table" id="breakdown-table">
         <thead id="breakdown-thead"></thead>
         <tbody id="breakdown-tbody"></tbody>
       </table>
@@ -93,7 +237,7 @@
     <p id="breakdown-empty" class="text-center py-8 text-sm" style="color:var(--text-muted);display:none">No sub-event score data available.</p>
   </div>
 
-  <!-- Embedded data for JS table rendering -->
+  <!-- Embedded data -->
   <script id="series-data" type="application/json">{
     "overall": {{{overallJson}}},
     "subEventResults": {{{subEventResultsJson}}}
@@ -101,63 +245,99 @@
 
   <script>
   (function() {
+    // Print date
+    var pd = document.getElementById('sr-print-date');
+    if (pd) pd.textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+    // Score count-up animation
+    function animateCount(el) {
+      var target = parseFloat(el.getAttribute('data-target'));
+      if (isNaN(target)) return;
+      var start = 0, duration = 900, startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = (start + (target - start) * ease).toFixed(2);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(2);
+      }
+      requestAnimationFrame(step);
+    }
+    document.querySelectorAll('.sr-count').forEach(function(el) {
+      var io = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { animateCount(el); obs.disconnect(); }
+        });
+      }, {threshold:0.3});
+      io.observe(el);
+    });
+
+    // Breakdown table
     try {
       var data = JSON.parse(document.getElementById('series-data').textContent);
       var overall = data.overall;
       var subEventResults = data.subEventResults;
 
-      if (!overall.length || !subEventResults.length) {
+      if (!overall || !overall.length || !subEventResults || !subEventResults.length) {
         document.getElementById('breakdown-empty').style.display = '';
         document.getElementById('breakdown-table').style.display = 'none';
         return;
       }
 
-      // Build header: Contest | Contestant1 | Contestant2 ...
+      function scoreClass(score) {
+        if (score === undefined || score === null || score === '') return 'sr-score-muted';
+        var n = parseFloat(score);
+        if (isNaN(n)) return 'sr-score-muted';
+        if (n >= 90) return 'sr-score-emerald';
+        if (n >= 75) return 'sr-score-blue';
+        if (n >= 60) return 'sr-score-amber';
+        return 'sr-score-red';
+      }
+
       var thead = document.getElementById('breakdown-thead');
       var tr = document.createElement('tr');
-      var thContest = document.createElement('th');
-      thContest.textContent = 'Sub-Event';
-      thContest.style.cssText = 'text-align:left;padding:10px 14px;font-size:0.75rem;font-weight:700;color:var(--text-muted);border-bottom:1px solid var(--border);white-space:nowrap';
-      tr.appendChild(thContest);
+      var thSub = document.createElement('th');
+      thSub.textContent = 'Sub-Event';
+      tr.appendChild(thSub);
       overall.forEach(function(c) {
         var th = document.createElement('th');
         th.textContent = c.name;
-        th.style.cssText = 'text-align:center;padding:10px 14px;font-size:0.75rem;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);white-space:nowrap';
+        th.className = 'contestant-col';
         tr.appendChild(th);
       });
       thead.appendChild(tr);
 
-      // Build sub-event rows
       var tbody = document.getElementById('breakdown-tbody');
       subEventResults.forEach(function(ser) {
         var row = document.createElement('tr');
-        row.style.cssText = 'border-bottom:1px solid rgba(255,255,255,0.04)';
         var tdName = document.createElement('td');
         tdName.textContent = ser.subEventName;
-        tdName.style.cssText = 'padding:10px 14px;font-size:0.8rem;font-weight:600;color:var(--text-primary);white-space:nowrap';
+        tdName.style.cssText = 'font-weight:600;color:var(--text-primary);white-space:nowrap';
         row.appendChild(tdName);
         overall.forEach(function(c) {
           var td = document.createElement('td');
+          td.className = 'score-cell';
           var key = c.name.trim().toLowerCase();
           var score = ser.scoreByName[key];
-          td.textContent = (score !== undefined && score !== null) ? score + '%' : '—';
-          td.style.cssText = 'text-align:center;padding:10px 14px;font-size:0.8rem;color:' + (score > 0 ? 'var(--text-primary)' : 'var(--text-muted)') + ';';
+          var hasScore = (score !== undefined && score !== null);
+          td.textContent = hasScore ? score + '%' : '—';
+          td.classList.add(scoreClass(hasScore ? score : null));
           row.appendChild(td);
         });
         tbody.appendChild(row);
       });
 
-      // Overall average row
       var totalRow = document.createElement('tr');
-      totalRow.style.cssText = 'border-top:2px solid rgba(124,58,237,0.3);background:rgba(124,58,237,0.06)';
+      totalRow.className = 'overall-row';
       var tdLabel = document.createElement('td');
       tdLabel.textContent = 'Overall Score';
-      tdLabel.style.cssText = 'padding:12px 14px;font-size:0.8rem;font-weight:800;color:#a78bfa;white-space:nowrap';
+      tdLabel.style.cssText = 'white-space:nowrap';
       totalRow.appendChild(tdLabel);
       overall.forEach(function(c) {
         var td = document.createElement('td');
+        td.className = 'score-cell';
         td.textContent = c.average + '%';
-        td.style.cssText = 'text-align:center;padding:12px 14px;font-size:0.8rem;font-weight:800;color:#a78bfa';
         totalRow.appendChild(td);
       });
       tbody.appendChild(totalRow);
