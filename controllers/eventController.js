@@ -345,6 +345,8 @@ export const showEvent = async (req, res) => {
       isTabulator: req.session.userRole === "tabulator",
       canManageFinance: ['admin','organizer'].includes(req.session.userRole),
       subEvents,
+      parentEventId:   ev.parentEventId   || '',
+      parentEventName: ev.parentEventName || '',
     });
   } catch (err) {
     console.error(err);
