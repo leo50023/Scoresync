@@ -255,9 +255,12 @@ export const showEvent = async (req, res) => {
           const sd = d.data();
           // Fetch contestant count from subcollection
           let contestantCount = 0;
+          let contestants = [];
           try {
             const cntSnap = await getDocs(collection(db, 'events', d.id, 'contestants'));
             contestantCount = cntSnap.size;
+            contestants = cntSnap.docs.map(c => ({ id: c.id, ...c.data() }))
+              .sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
           } catch (e) { /* silent */ }
           return {
             id: d.id,
@@ -266,6 +269,7 @@ export const showEvent = async (req, res) => {
             date: sd.date || '',
             venue: sd.venue || '',
             contestantCount,
+            contestants,
           };
         }));
       } catch (e) { console.error('Sub-events fetch error:', e); }
