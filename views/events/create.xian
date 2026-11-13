@@ -195,12 +195,24 @@
           <div class="px-6 py-5 space-y-4">
             <!-- Mark as Series -->
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" name="isEventSeries" value="true" id="isSeriesCheck" style="width:16px;height:16px;cursor:pointer"/>
+              <input type="checkbox" name="isEventSeries" value="true" id="isSeriesCheck" onchange="toggleSeriesFields()" style="width:16px;height:16px;cursor:pointer"/>
               <div>
                 <div style="font-weight:700;color:var(--text-primary)">Create as Event Series</div>
                 <div style="font-size:0.78rem;color:#64748b">This event will be a parent that groups multiple sub-events under it</div>
               </div>
             </label>
+            <!-- Sub-Events Inline Builder -->
+            <div id="subEventsBuilder" style="display:none;margin-top:12px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span style="font-size:0.78rem;font-weight:700;color:var(--text-primary)">Sub-Events</span>
+                <span id="subEventsCount" style="font-size:0.72rem;font-weight:600;padding:1px 8px;border-radius:999px;background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25)">0 sub-events</span>
+              </div>
+              <div id="subEventRows"></div>
+              <button type="button" onclick="addSubEventRow()" class="btn-sm btn-sm-blue" style="margin-top:4px;font-size:0.78rem">
+                + Add Sub-Event
+              </button>
+            </div>
+            <input type="hidden" name="subEventsJson" id="subEventsJson"/>
             <!-- Add to existing series -->
             <div>
               <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5" style="color:#64748b">Add to Existing Series <span style="color:#94a3b8;font-weight:400">(optional)</span></label>
@@ -834,6 +846,75 @@ document.addEventListener('click', function(e) {
   if (preParent) {
     var sel = document.getElementById('parentEventIdSelect');
     if (sel) sel.value = preParent;
+  }
+})();
+
+// ---- Sub-Events Builder ----
+function toggleSeriesFields() {
+  var isChecked = document.getElementById('isSeriesCheck').checked;
+  document.getElementById('subEventsBuilder').style.display = isChecked ? 'block' : 'none';
+  if (!isChecked) {
+    // clear rows when unchecked
+    document.getElementById('subEventRows').innerHTML = '';
+    _subEventCount = 0;
+    updateSubEventCount();
+  }
+}
+
+var _subEventCount = 0;
+var _subEventTypeOptions = [
+  ['pageant','Pageant'],['cultural','Cultural'],['float','Float'],['marching','Marching'],
+  ['choral','Choral'],['dance','Dance'],['booth','Booth'],['sports','Sports'],
+  ['academic','Academic'],['culinary','Culinary'],['talent','Talent'],['other','Other']
+];
+
+function addSubEventRow() {
+  var rows = document.querySelectorAll('.sub-event-row').length;
+  if (rows >= 10) return;
+  _subEventCount++;
+  var id = 'ser' + _subEventCount;
+  var optHtml = _subEventTypeOptions.map(function(o){
+    return '<option value="'+o[0]+'">'+o[1]+'</option>';
+  }).join('');
+  var row = document.createElement('div');
+  row.className = 'sub-event-row';
+  row.id = id;
+  row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;';
+  row.innerHTML = [
+    '<input type="text" class="form-input-bare se-name" placeholder="e.g. Miss Fiesta 2026" style="flex:2;min-width:0" required/>',
+    '<input type="date" class="form-input-bare se-date" style="flex:1;min-width:0"/>',
+    '<select class="form-input-bare se-type" style="flex:1;min-width:0">'+optHtml+'</select>',
+    '<button type="button" onclick="removeSubEventRow(this)" style="flex-shrink:0;padding:4px 8px;border-radius:6px;background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);cursor:pointer;font-size:0.85rem;line-height:1" title="Remove">&#10005;</button>'
+  ].join('');
+  document.getElementById('subEventRows').appendChild(row);
+  updateSubEventCount();
+}
+
+function removeSubEventRow(btn) {
+  btn.closest('.sub-event-row').remove();
+  updateSubEventCount();
+}
+
+function updateSubEventCount() {
+  var rows = document.querySelectorAll('.sub-event-row').length;
+  document.getElementById('subEventsCount').textContent = rows + ' sub-event' + (rows !== 1 ? 's' : '');
+}
+
+// Serialize sub-events before form submit
+(function() {
+  var form = document.querySelector('form[action="/events"]');
+  if (form) {
+    form.addEventListener('submit', function() {
+      var rows = document.querySelectorAll('.sub-event-row');
+      var data = Array.from(rows).map(function(row) {
+        return {
+          name: row.querySelector('.se-name').value,
+          date: row.querySelector('.se-date').value,
+          type: row.querySelector('.se-type').value
+        };
+      }).filter(function(r) { return r.name.trim(); });
+      document.getElementById('subEventsJson').value = JSON.stringify(data);
+    });
   }
 })();
 </script>

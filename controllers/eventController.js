@@ -140,6 +140,54 @@ export const storeEvent = async (req, res) => {
       } catch (e) { console.error('Series link error:', e); }
     }
 
+    // -- Create inline sub-events submitted from create form -----------------
+    if (isEventSeries === 'true' && req.body.subEventsJson) {
+      try {
+        const subEventsData = JSON.parse(req.body.subEventsJson);
+        if (Array.isArray(subEventsData) && subEventsData.length > 0) {
+          const subEventIds = [];
+          for (const se of subEventsData) {
+            if (!se.name || !se.name.trim()) continue;
+            const seRef = await addDoc(collection(db, EVENTS), {
+              name:            se.name.trim(),
+              description:     '',
+              date:            se.date || '',
+              time:            '',
+              endTime:         '',
+              venue:           '',
+              type:            se.type || (type || 'pageant'),
+              otherType:       '',
+              status:          'upcoming',
+              organizer:       '',
+              maxContestants:  '',
+              prizes:          '',
+              rules:           '',
+              theme:           'blue',
+              notes:           '',
+              coverPhoto:      '',
+              paymentMethod:   '',
+              paymentAccountName:   '',
+              paymentAccountNumber: '',
+              paymentQR:       '',
+              assignedJudges:  [],
+              isEventSeries:   false,
+              parentEventId:   evRef.id,
+              parentEventName: name || '',
+              subEvents:       [],
+              createdBy:       req.session.userId,
+              createdAt:       serverTimestamp(),
+            });
+            subEventIds.push(seRef.id);
+          }
+          if (subEventIds.length > 0) {
+            await updateDoc(doc(db, EVENTS, evRef.id), {
+              subEvents: arrayUnion(...subEventIds),
+            });
+          }
+        }
+      } catch (e) { console.error('Inline sub-events creation error:', e); }
+    }
+
     // -- Save inline criteria submitted from create form ----------------------
     const useMultiCategory = req.body.useMultiCategory;
     if (useMultiCategory) {
