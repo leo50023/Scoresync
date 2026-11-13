@@ -134,6 +134,10 @@ export const scoringPage = async (req, res) => {
       return { ...cat, scoreCount: catScores.length };
     });
 
+    // Build judgeMap to count unique judges who have submitted scores
+    const judgeMap = {};
+    sSnap.docs.forEach(d => { const jid = d.data().judgeId; if (jid) judgeMap[jid] = true; });
+
     // Check if all categories are fully scored by this judge
     const totalExpected = categories.length > 0
       ? categories.reduce((sum, cat) => {
@@ -154,6 +158,7 @@ export const scoringPage = async (req, res) => {
       scoringLocked: ev.scoringLocked || false, readOnly, hasExistingScores,
       isMultiCategory, categories: categoryProgress, activeCategoryId, activeCategory,
       showCompleteModal, remarksMap,
+      judgeCount: Object.keys(judgeMap).length || 0,
       userName: req.session.userName, userRole: req.session.userRole,
       userInitial: (req.session.userName || "U")[0].toUpperCase(),
       isAdmin: req.session.userRole === "admin", isJudge: req.session.userRole === "judge",

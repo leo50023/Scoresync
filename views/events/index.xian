@@ -47,6 +47,7 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5" id="events-grid">
     {{#each events}}
     <div class="overflow-hidden flex flex-col rounded-2xl fm-hover event-card"
+      data-event-id="{{id}}"
       data-status="{{status}}"
       style="background:var(--bg-card);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.3)">
       <!-- Card Header -->
@@ -64,7 +65,7 @@
             {{#if isEventSeries}}{{#if subEvents.length}}<div class="text-xs mt-0.5" style="color:#a5b4fc">{{subEvents.length}} sub-event(s)</div>{{/if}}{{/if}}
             {{#if parentEventId}}<div class="text-xs mt-0.5" style="color:#94a3b8">↳ Sub-event of {{parentEventName}}</div>{{/if}}
           </div>
-          <span class="badge flex-shrink-0 mt-1 {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize">{{status}}</span>
+          <span data-status-badge class="badge flex-shrink-0 mt-1 {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize">{{status}}</span>
         </div>
       </div>
 
@@ -243,5 +244,59 @@ document.addEventListener('DOMContentLoaded', function() {
     if (canRefresh()) location.reload();
   }, REFRESH_MS);
 })();
+</script>
+
+<script type="module">
+import { collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+const STATUS_BADGE_CLASSES = {
+  ongoing:   'badge-green',
+  completed: 'badge-blue',
+  cancelled: 'badge-red',
+  upcoming:  'badge-yellow',
+};
+
+let unsub;
+window.addEventListener('ss-firebase-ready', function(e) {
+  const db = e.detail.db;
+  unsub = onSnapshot(collection(db, 'events'), (snap) => {
+    snap.docChanges().forEach(change => {
+      if (change.type === 'removed') return;
+      const data = change.doc.data();
+      const eventId = change.doc.id;
+      const newStatus = data.status || 'upcoming';
+      const card = document.querySelector(`[data-event-id="${eventId}"]`);
+      if (!card) return;
+      const oldStatus = card.getAttribute('data-status');
+      if (oldStatus === newStatus) return;
+      // Update data-status attribute
+      card.setAttribute('data-status', newStatus);
+      // Update badge element
+      const badge = card.querySelector('[data-status-badge]');
+      if (badge) {
+        // Remove old badge colour class
+        badge.classList.remove('badge-green', 'badge-blue', 'badge-red', 'badge-yellow', 'badge-gray');
+        badge.classList.add(STATUS_BADGE_CLASSES[newStatus] || 'badge-gray');
+        badge.textContent = newStatus;
+        // Brief flash to signal the update
+        badge.style.transition = 'transform 0.2s';
+        badge.style.transform = 'scale(1.25)';
+        setTimeout(() => { badge.style.transform = ''; }, 300);
+      }
+      // Also reapply the client-side filterEvents() if it exists
+      if (typeof window.filterEvents === 'function') {
+        const activeFilterBtn = document.querySelector('.filter-btn.btn-solid-green');
+        if (activeFilterBtn) {
+          const currentFilter = activeFilterBtn.id.replace('filter-', '');
+          window.filterEvents(currentFilter);
+        }
+      }
+    });
+  }, (err) => {
+    console.warn('[ScoreSync RT] events listener error:', err);
+  });
+}, { once: true });
+
+window.addEventListener('beforeunload', () => { if (unsub) unsub(); });
 </script>
 {{> footer }}

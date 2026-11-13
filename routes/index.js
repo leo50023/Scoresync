@@ -4,6 +4,17 @@ const router = express.Router();
 import { requireAuth, requireRole } from "../middleware/auth.js";
 import { loginRateLimit } from "../middleware/rateLimit.js";
 
+// Public Firebase client config — apiKey/projectId are safe to expose (already in browser for any Firebase app)
+router.get('/api/firebase-config', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.json({
+    apiKey:            process.env.FIREBASE_API_KEY            || 'AIzaSyCQTkh6tsjLjuw6d6KaPetiNH2CriQxD7Q',
+    authDomain:        process.env.FIREBASE_AUTH_DOMAIN        || 'scoresync-92994.firebaseapp.com',
+    projectId:         process.env.FIREBASE_PROJECT_ID         || 'scoresync-92994',
+    appId:             process.env.FIREBASE_APP_ID             || '1:518166819896:web:8155a8be113adb9adb62cd',
+  });
+});
+
 // ─── Notifications API ────────────────────────────────────────────────────────
 import { getNotifications } from "../controllers/notificationController.js";
 router.get("/api/notifications", requireAuth, getNotifications);

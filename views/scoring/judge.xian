@@ -5,6 +5,8 @@
 {{> sidebar }}
 <main class="flex-1 overflow-y-auto overflow-x-hidden pb-32" id="scoring-main" style="min-width:0;opacity:0;transition:opacity 0.15s">
 
+  <span id="rt-event-id" data-event-id="{{event.id}}" data-judge-count="{{judgeCount}}" style="display:none"></span>
+
   <!-- -- TOP BAR -- -->
   <div class="sticky top-0 z-20 no-print" style="background:rgba(6,11,24,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-subtle)">
 
@@ -33,6 +35,15 @@
               transform="rotate(-90 14 14)" style="transition:stroke-dashoffset 0.5s,stroke 0.3s"/>
           </svg>
           <span id="overall-pct" class="font-extrabold" style="color:var(--text-primary)">0%</span>
+        </div>
+        <div id="judges-completion-wrap" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs" style="background:rgba(255,255,255,0.05);border:1px solid var(--border)">
+          <svg id="judges-ring" width="22" height="22" viewBox="0 0 22 22">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2.5"/>
+            <circle id="judges-ring-arc" cx="11" cy="11" r="7" fill="none" stroke="#34d399" stroke-width="2.5"
+              stroke-dasharray="43.98" stroke-dashoffset="43.98" stroke-linecap="round"
+              transform="rotate(-90 11 11)" style="transition:stroke-dashoffset 0.5s"/>
+          </svg>
+          <span id="judges-completion-label" class="font-bold text-xs" style="color:var(--text-secondary)">...</span>
         </div>
         <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green text-xs">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -1533,6 +1544,48 @@ main::-webkit-scrollbar { display:none; }
 
 {{> footer }}
 </body>
+
+<script type="module">
+import { collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+let unsub;
+window.addEventListener('ss-firebase-ready', function(e) {
+  const db = e.detail.db;
+  const meta = document.getElementById('rt-event-id');
+  if (!meta) return;
+  const eventId = meta.getAttribute('data-event-id');
+  if (!eventId) return;
+
+  unsub = onSnapshot(collection(db, 'events', eventId, 'scores'), (snap) => {
+    // Count distinct judges who have submitted at least one score
+    const judgeSet = new Set();
+    snap.docs.forEach(d => {
+      const judgeId = d.data().judgeId;
+      if (judgeId) judgeSet.add(judgeId);
+    });
+    const submittedJudges = judgeSet.size;
+
+    // Expected total judges: use the judgeCount passed from server, or fall back to max observed
+    const totalJudges = parseInt(meta.getAttribute('data-judge-count') || '0', 10) || Math.max(submittedJudges, 1);
+
+    const pct = Math.min(submittedJudges / totalJudges, 1);
+    const circumference = 43.98;
+    const offset = circumference * (1 - pct);
+
+    const arc = document.getElementById('judges-ring-arc');
+    const label = document.getElementById('judges-completion-label');
+    if (arc) arc.style.strokeDashoffset = offset;
+    if (label) label.textContent = submittedJudges + '/' + totalJudges + ' judges';
+
+    // Colour: green if complete, gold if partial, gray if none
+    if (arc) arc.style.stroke = pct >= 1 ? '#34d399' : pct > 0 ? '#fbbf24' : '#475569';
+  }, (err) => {
+    console.warn('[ScoreSync RT] judges completion listener error:', err);
+  });
+}, { once: true });
+
+window.addEventListener('beforeunload', () => { if (unsub) unsub(); });
+</script>
 
 <!-- -- Photo Fullscreen Modal -- -->
 <div id="photo-modal" role="dialog" aria-modal="true" aria-label="Full photo view" style="display:none" onclick="closePhotoModal(event)">

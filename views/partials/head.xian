@@ -1500,4 +1500,6 @@ document.addEventListener('submit', async function(e) {
     form.submit();
   }
 }, true);
-</script></head>
+</script>
+{{> firebase-rt}}
+</head>
