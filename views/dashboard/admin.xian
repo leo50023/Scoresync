@@ -410,6 +410,8 @@
   };
 
   // ── Unobtrusive "Live" indicator (bottom-right, dark theme) ──
+  const dot = { style: {} };   // no-op stub — indicator not shown on admin dashboard
+  const label = { textContent: '' };
 
   // 1s ticker: countdown + idle/active state
   setInterval(() => {
