@@ -339,7 +339,7 @@
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-        <a href="/users" class="flex items-center gap-3 px-3 py-3 rounded-xl transition group"
+        <a href="/events" class="flex items-center gap-3 px-3 py-3 rounded-xl transition group"
           style="border:1px solid transparent"
           onmouseover="this.style.background='rgba(99,102,241,0.06)';this.style.borderColor='rgba(99,102,241,0.12)'"
           onmouseout="this.style.background='';this.style.borderColor='transparent'">
@@ -349,7 +349,7 @@
           </div>
           <div class="flex-1 min-w-0">
             <div class="text-xs font-bold" style="color:var(--text-primary)">Manage Judges</div>
-            <div class="text-[11px]" style="color:var(--text-faint)">View &amp; manage judge accounts</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">Assign judges to events</div>
           </div>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
