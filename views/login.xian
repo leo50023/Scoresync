@@ -290,7 +290,7 @@
   /* ── Mobile ── */
   @media (max-width: 480px) {
     body.auth-page { padding: 10px 12px 14px; align-items: flex-start; }
-    .auth-shell { width: calc(100% - 24px); margin: 0 auto; max-width: 100%; }
+    .auth-shell { width: 100%; margin: 0 auto; max-width: 320px; }
     .auth-logomark { width: 42px; height: 42px; border-radius: 12px; margin-bottom: 8px; animation: none; }
     .auth-title { font-size: 18px; }
     .auth-subtitle { font-size: 11px; margin-bottom: 12px; }
