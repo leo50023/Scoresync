@@ -1345,44 +1345,44 @@ window._onTimerEventEnd = function() {
 <!-- -- Assign Judge Modal -- -->
 {{#unless event.isEventSeries}}
 <div id="add-judge-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
-  style="background:rgba(0,0,0,0.7);backdrop-filter:blur(4px)">
-  <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
-    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:90vh;overflow-y:auto;max-width:calc(100vw - 32px)">
+  style="background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)">
+  <div class="w-full rounded-2xl overflow-hidden shadow-2xl"
+    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:85vh;overflow-y:auto;max-width:420px">
     <!-- Header -->
-    <div class="px-6 py-4 flex items-center justify-between"
+    <div class="px-4 py-3 flex items-center justify-between"
       style="border-bottom:1px solid var(--border);background:rgba(99,102,241,0.08)">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
           style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div>
           <h3 class="font-extrabold text-sm" style="color:var(--text-primary)">Assign Judge</h3>
-          <p class="text-[11px]" style="color:var(--text-muted)">Select an existing judge to assign to this event</p>
+          <p class="text-[10px]" style="color:var(--text-muted)">Assign a judge to this event</p>
         </div>
       </div>
-      <button onclick="closeAddJudgeModal()" class="w-8 h-8 rounded-lg flex items-center justify-center transition hover:bg-white/10" style="color:var(--text-muted)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button onclick="closeAddJudgeModal()" class="w-6 h-6 rounded-lg flex items-center justify-center transition hover:bg-white/10" style="color:var(--text-muted);min-height:unset">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
 
     <!-- Assigned judges list -->
     {{#if assignedJudges.length}}
-    <div class="px-6 pt-4">
-      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-muted)">Currently Assigned</p>
-      <div class="space-y-2 mb-4">
+    <div class="px-4 pt-3">
+      <p class="text-[10px] font-bold uppercase tracking-wider mb-1.5" style="color:var(--text-muted)">Currently Assigned</p>
+      <div class="space-y-1.5 mb-3">
         {{#each assignedJudges}}
-        <div class="flex items-center justify-between px-3 py-2 rounded-xl" style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2)">
+        <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg" style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.18)">
           <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">{{name.[0]}}</div>
+            <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-[9px] font-black flex-shrink-0" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">{{name.[0]}}</div>
             <div>
-              <div class="text-xs font-bold" style="color:var(--text-primary)">{{name}}</div>
-              <div class="text-[10px]" style="color:var(--text-muted)">{{email}}</div>
+              <div class="text-[11px] font-bold" style="color:var(--text-primary)">{{name}}</div>
+              <div class="text-[9px]" style="color:var(--text-muted)">{{email}}</div>
             </div>
           </div>
           <form method="POST" action="/events/{{../event.id}}/judges/{{id}}/remove" class="inline">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <button type="submit" class="text-[10px] font-bold px-2.5 py-1 rounded-lg transition" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)">Remove</button>
+            <button type="submit" class="text-[9px] font-bold px-2 py-0.5 rounded-md transition" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.2);min-height:unset">Remove</button>
           </form>
         </div>
         {{/each}}
@@ -1391,29 +1391,29 @@ window._onTimerEventEnd = function() {
     {{/if}}
 
     <!-- Assign from available judges -->
-    <form method="POST" action="/events/{{event.id}}/judges/assign" class="px-6 py-4 space-y-3">
+    <form method="POST" action="/events/{{event.id}}/judges/assign" class="px-4 py-3 space-y-2">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
       {{#if availableJudges.length}}
-      <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-muted)">Add Judge</p>
-      <select name="judgeId" required class="form-input-bare w-full">
+      <p class="text-[10px] font-bold uppercase tracking-wider" style="color:var(--text-muted)">Add Judge</p>
+      <select name="judgeId" required class="form-input-bare w-full" style="font-size:0.8rem;min-height:unset;height:38px">
         <option value="">&mdash; Select a judge &mdash;</option>
         {{#each availableJudges}}
         <option value="{{id}}">{{name}} ({{email}})</option>
         {{/each}}
       </select>
-      <div class="flex gap-3 pt-1">
-        <button type="submit" class="btn-primary flex-1 justify-center">
+      <div class="flex gap-2 pt-0.5">
+        <button type="submit" class="btn-primary flex-1 justify-center" style="min-height:unset;height:36px;font-size:0.8rem">
           Assign Judge
         </button>
-        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-5">Cancel</button>
+        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-4" style="min-height:unset;height:36px;font-size:0.8rem">Cancel</button>
       </div>
       {{else}}
-      <div class="py-4 text-center text-xs" style="color:var(--text-faint)">
+      <div class="py-3 text-center text-xs" style="color:var(--text-faint)">
         All judges are already assigned, or no judge accounts exist yet.
         <br><a href="/users" class="text-indigo-400 font-semibold mt-1 inline-block">Create judge accounts in Users &rarr;</a>
       </div>
-      <div class="flex justify-end pb-2">
-        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-5">Close</button>
+      <div class="flex justify-end pb-1">
+        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-4" style="min-height:unset;height:34px;font-size:0.8rem">Close</button>
       </div>
       {{/if}}
     </form>
