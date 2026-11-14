@@ -171,6 +171,7 @@
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Edit
           </a>
+          {{#unless isEventSeries}}
           <a href="/events/{{id}}/contestants/add"
             class="flex items-center justify-center gap-1.5 py-2 rounded-xl text-[11px] font-bold transition active:scale-95"
             style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2)">
@@ -183,16 +184,19 @@
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
             Categories
           </a>
+          {{/unless}}
         </div>
 
         <!-- Results + End -->
         <div class="px-3 py-2.5 grid grid-cols-2 gap-1.5" style="border-bottom:1px solid var(--border-subtle)">
+          {{#unless isEventSeries}}
           <a href="/events/{{id}}/results"
             class="flex items-center justify-center gap-1.5 py-2 rounded-xl text-[11px] font-bold transition active:scale-95"
             style="background:rgba(16,185,129,0.07);color:#6ee7b7;border:1px solid rgba(16,185,129,0.12)">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             Live Results
           </a>
+          {{/unless}}
           <form method="POST" action="/events/{{id}}/status" class="w-full"
             onsubmit="return false" data-confirm-title="End Event" data-confirm-msg="End this event and mark as completed?" data-confirm-ok="End Event" data-confirm-type="warning">
             <input type="hidden" name="_csrf" value="{{../csrfToken}}">

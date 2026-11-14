@@ -96,7 +96,7 @@ export const dashboardPage = async (req, res) => {
       ]);
       ongoingEvents = ongoingSnap.docs
         .map(d => ({ id: d.id, ...d.data() }))
-        .filter(e => e.name && e.name.trim() !== ''); // skip corrupt/deleted stale docs
+        .filter(e => e.name && e.name.trim() !== '' && !e.parentEventId); // skip sub-events
       ongoingCount  = ongoingEvents.length;
       totalEvents   = allEvSnap.size;
       judges = usersSnap.docs.map(d => ({ id: d.id, ...d.data() }))
