@@ -45,8 +45,8 @@
 
   /* ── Logo ── */
   .auth-logomark {
-    width: 52px; height: 52px; border-radius: 15px;
-    overflow: hidden; flex-shrink: 0; margin-bottom: 12px;
+    width: 72px; height: 72px; border-radius: 20px;
+    overflow: hidden; flex-shrink: 0; margin-bottom: 14px;
     box-shadow: 0 0 0 1px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.3), 0 8px 32px rgba(0,0,0,0.5);
     animation: logoPulse 5s ease-in-out infinite, logoFloat 6s ease-in-out infinite;
   }
@@ -314,7 +314,7 @@
   @media (max-width: 480px) {
     body.auth-page { padding: 10px 12px 14px; }
     .auth-shell { width: 100%; margin: 0 auto; max-width: 320px; }
-    .auth-logomark { width: 42px; height: 42px; border-radius: 12px; margin-bottom: 8px; animation: none; }
+    .auth-logomark { width: 56px; height: 56px; border-radius: 15px; margin-bottom: 10px; animation: none; }
     .auth-title { font-size: 18px; }
     .auth-subtitle { font-size: 11px; margin-bottom: 12px; }
     .auth-tab-wrap { margin-bottom: 10px; }
