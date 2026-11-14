@@ -1,0 +1,22 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    {
+      "id": "B1",
+      "title": "contestants.length always 0 in sub-events grid",
+      "file": "controllers/eventController.js",
+      "lines": "203-213",
+      "description": "Sub-event objects are built from the Firestore event root document using `sd.contestants || []`. Contestants are stored only as a sub-collection (events/{id}/contestants), never as an array field on the document, so `sd.contestants` is always undefined and resolves to []. The template expression `{{contestants.length}}` renders '0 contestants' for every sub-event card regardless of actual count.",
+      "correction": "Either fetch the contestant sub-collection count for each sub-event inside the existing try block, or remove the contestants count from the sub-event card."
+    },
+    {
+      "id": "B2",
+      "title": "Deleting a child event leaves a stale ID in parent's subEvents array",
+      "file": "controllers/eventController.js",
+      "lines": "371-380",
+      "description": "deleteEvent only cleans up children when a parent is deleted. When a child (sub-event) is deleted, its ID is never removed from the parent's subEvents array. arrayRemove is not imported and is not called. The parent show page then renders a broken card linking to the deleted document, and the sub-event count in both show.xian and index.xian is permanently inflated.",
+      "correction": "When deleting an event whose parentEventId is non-empty, call updateDoc on the parent document with arrayRemove(req.params.id). Import arrayRemove from firebase/firestore."
+    }
+  ],
+  "reviewDoc": "c:\\Users\\ACER\\Downloads\\https-github.com-MSWDO11-ScoreSync1.0.1-main\\.agents\\tasks\\multi-event-series\\review.md"
+}

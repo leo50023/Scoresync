@@ -245,58 +245,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }, REFRESH_MS);
 })();
 </script>
-
-<script type="module">
-import { collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
-const STATUS_BADGE_CLASSES = {
-  ongoing:   'badge-green',
-  completed: 'badge-blue',
-  cancelled: 'badge-red',
-  upcoming:  'badge-yellow',
-};
-
-let unsub;
-window.addEventListener('ss-firebase-ready', function(e) {
-  const db = e.detail.db;
-  unsub = onSnapshot(collection(db, 'events'), (snap) => {
-    snap.docChanges().forEach(change => {
-      if (change.type === 'removed') return;
-      const data = change.doc.data();
-      const eventId = change.doc.id;
-      const newStatus = data.status || 'upcoming';
-      const card = document.querySelector(`[data-event-id="${eventId}"]`);
-      if (!card) return;
-      const oldStatus = card.getAttribute('data-status');
-      if (oldStatus === newStatus) return;
-      // Update data-status attribute
-      card.setAttribute('data-status', newStatus);
-      // Update badge element
-      const badge = card.querySelector('[data-status-badge]');
-      if (badge) {
-        // Remove old badge colour class
-        badge.classList.remove('badge-green', 'badge-blue', 'badge-red', 'badge-yellow', 'badge-gray');
-        badge.classList.add(STATUS_BADGE_CLASSES[newStatus] || 'badge-gray');
-        badge.textContent = newStatus;
-        // Brief flash to signal the update
-        badge.style.transition = 'transform 0.2s';
-        badge.style.transform = 'scale(1.25)';
-        setTimeout(() => { badge.style.transform = ''; }, 300);
-      }
-      // Also reapply the client-side filterEvents() if it exists
-      if (typeof window.filterEvents === 'function') {
-        const activeFilterBtn = document.querySelector('.filter-btn.btn-solid-green');
-        if (activeFilterBtn) {
-          const currentFilter = activeFilterBtn.id.replace('filter-', '');
-          window.filterEvents(currentFilter);
-        }
-      }
-    });
-  }, (err) => {
-    console.warn('[ScoreSync RT] events listener error:', err);
-  });
-}, { once: true });
-
-window.addEventListener('beforeunload', () => { if (unsub) unsub(); });
-</script>
+
 {{> footer }}

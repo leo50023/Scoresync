@@ -1,0 +1,22 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    {
+      "id": "F1",
+      "file": "views/scoring/series-results.xian",
+      "lines": "98-100",
+      "title": "JSON data HTML-escaped in script tag breaks JSON.parse()",
+      "description": "{{overallJson}} and {{subEventResultsJson}} use double-brace Handlebars syntax, which HTML-escapes &, <, >, and \". Any contestant or event name containing these characters produces malformed JSON inside the <script type=\"application/json\"> tag. JSON.parse() throws, the catch block hides the breakdown table and shows the empty-state message instead.",
+      "correction": "Change both to triple-brace unescaped output: {{{overallJson}}} and {{{subEventResultsJson}}}."
+    },
+    {
+      "id": "F2",
+      "file": "views/events/show.xian",
+      "lines": "toolbar section",
+      "title": "Overall Results button missing for tabulator role",
+      "description": "The task requires the button in isAdmin, isOrganizer, and isTabulator sections. show.xian has no {{#if isTabulator}} block in the action toolbar at all (confirmed by grep). The commit message also omits isTabulator. Tabulators can access the route but see no UI entry point.",
+      "correction": "Add a {{#if isTabulator}} toolbar section containing the Results button and, inside {{#if event.isEventSeries}}, the Overall Results button, matching the pattern used for isAdmin and isOrganizer."
+    }
+  ],
+  "reviewDoc": "c:\\Users\\ACER\\Downloads\\https-github.com-MSWDO11-ScoreSync1.0.1-main\\.agents\\tasks\\series-results\\review.md"
+}

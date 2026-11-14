@@ -1,0 +1,10 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
+    "Dismissed-list nuke on new alert — localStorage.removeItem('ss-notif-dismissed') wipes all prior dismissals when any new alert ID appears. Fix: filter only newIds out of the existing dismissed array instead of removing the whole key.",
+    "Badge drops to zero after first panel open — loadNotifications() calls addSeen(fetchedIds) immediately on fetch completion, so the background poll zeroes the badge on the next tick regardless of how long the panel was open. Record seen state on panel close rather than on fetch.",
+    "escHtml applied to URL in JS string context — escHtml(link) in the onclick attribute encodes ' as &#x27;, which the JS engine sees as a literal five-character sequence. A URL with a single quote produces broken JS. Use a separate JS-string escape for the onclick value.",
+    "Unrelated files bundled in commit — seven .agents/tasks/ planning artifacts are deleted in the same commit as the feature. These should be in a separate cleanup commit."
+  ],
+  "reviewDoc": "c:\\Users\\ACER\\Downloads\\https-github.com-MSWDO11-ScoreSync1.0.1-main\\.agents\\tasks\\notif-v2\\2026-11-13-121600-review.md"
+}

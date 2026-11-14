@@ -1132,62 +1132,6 @@ document.getElementById("print-date") && (document.getElementById("print-date").
 </script>
 
 {{> footer }}
-<script type="module">
-import { collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
-let unsub;
-window.addEventListener('ss-firebase-ready', function(e) {
-  const db = e.detail.db;
-  const meta = document.getElementById('rt-results-meta');
-  if (!meta) return;
-  const eventId = meta.getAttribute('data-event-id');
-  if (!eventId) return;
-
-  const badge = document.getElementById('rt-live-badge');
-  if (badge) badge.style.display = 'inline-flex';
-
-  let debounceTimer;
-  unsub = onSnapshot(collection(db, 'events', eventId, 'scores'), () => {
-    // Debounce: wait 800ms after the last change before fetching updated results
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(async () => {
-      try {
-        const resp = await fetch(`/events/${eventId}/scores-json`, { credentials: 'same-origin' });
-        if (!resp.ok) return;
-        const data = await resp.json();
-        if (!data || !data.ranked) return;
-
-        // Update the standings table rows
-        data.ranked.forEach((contestant) => {
-          const row = document.querySelector(`tr[data-contestant-id="${contestant.id}"]`);
-          if (!row) return;
-          // Update rank
-          const rankCell = row.querySelector('[data-rank-cell]');
-          if (rankCell) rankCell.textContent = '#' + contestant.rank;
-          // Update score
-          const scoreCell = row.querySelector('[data-score-cell]');
-          if (scoreCell) scoreCell.textContent = contestant.finalScoreDisplay + '%';
-        });
-
-        // Update podium scores
-        data.ranked.forEach((contestant) => {
-          const podiumEl = document.querySelector(`[data-podium-rank="${contestant.rank}"]`);
-          if (podiumEl) {
-            const scoreEl = podiumEl.querySelector('[data-podium-score]');
-            if (scoreEl) scoreEl.textContent = contestant.finalScoreDisplay;
-          }
-        });
-      } catch (err) {
-        console.warn('[ScoreSync RT] results fetch error:', err);
-      }
-    }, 800);
-  }, (err) => {
-    console.warn('[ScoreSync RT] scores listener error:', err);
-  });
-}, { once: true });
-
-window.addEventListener('beforeunload', () => { if (unsub) unsub(); });
-</script>
 <script>
 // ── Auto-reload for tabulator ──
 (function(){

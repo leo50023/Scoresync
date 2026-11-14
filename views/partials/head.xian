@@ -1501,5 +1501,5 @@ document.addEventListener('submit', async function(e) {
   }
 }, true);
 </script>
-{{> firebase-rt}}
+{{! firebase-rt removed to reduce Firestore reads }}
 </head>
