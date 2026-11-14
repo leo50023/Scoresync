@@ -312,23 +312,24 @@
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
-    body.auth-page { padding: 14px 16px 20px; }
+    body.auth-page { padding: 10px 12px 14px; }
     .auth-shell { width: calc(100% - 24px); margin: 0 auto; max-width: 100%; }
-    .auth-logomark { width: 52px; height: 52px; border-radius: 15px; margin-bottom: 12px; animation: none; }
-    .auth-title { font-size: 22px; }
-    .auth-subtitle { font-size: 13px; margin-bottom: 18px; }
-    .auth-card { padding: 20px 16px; border-radius: 18px; animation: none; }
+    .auth-logomark { width: 42px; height: 42px; border-radius: 12px; margin-bottom: 8px; animation: none; }
+    .auth-title { font-size: 18px; }
+    .auth-subtitle { font-size: 11px; margin-bottom: 12px; }
+    .auth-tab-wrap { margin-bottom: 10px; }
+    .auth-card { padding: 14px 12px; border-radius: 14px; animation: none; }
     .input-icon-wrap { margin-bottom: 14px; }
-    .auth-input { height: 46px !important; font-size: 16px !important; }
-    .auth-btn { height: 48px; font-size: 14.5px; }
-    .role-grid { gap: 8px; }
-    .role-card { padding: 13px 10px; border-radius: 12px; }
-    .role-icon { width: 34px; height: 34px; border-radius: 9px; margin-bottom: 8px; }
-    .auth-footer { margin-top: 16px; }
+    .auth-input { height: 36px !important; font-size: 13px !important; }
+    .auth-btn { height: 36px; font-size: 12px; }
+    .role-grid { gap: 6px; }
+    .role-card { padding: 8px 8px; border-radius: 8px; }
+    .role-icon { width: 26px; height: 26px; border-radius: 6px; margin-bottom: 4px; }
+    .auth-footer { margin-top: 10px; }
   }
   @media (max-width: 360px) {
-    body.auth-page { padding: 10px 12px 16px; }
-    .auth-title { font-size: 20px; }
+    body.auth-page { padding: 8px 10px 12px; }
+    .auth-title { font-size: 16px; }
     .role-grid { grid-template-columns: 1fr; }
     .role-grid-full { grid-column: 1; }
   }
