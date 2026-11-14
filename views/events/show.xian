@@ -1346,8 +1346,8 @@ window._onTimerEventEnd = function() {
 {{#unless event.isEventSeries}}
 <div id="add-judge-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
   style="background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)">
-  <div class="w-full rounded-2xl overflow-hidden shadow-2xl"
-    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:85vh;overflow-y:auto;max-width:420px">
+  <div class="rounded-2xl overflow-hidden shadow-2xl"
+    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:85vh;overflow-y:auto;width:min(420px,calc(100vw - 2rem));max-width:420px">
     <!-- Header -->
     <div class="px-4 py-3 flex items-center justify-between"
       style="border-bottom:1px solid var(--border);background:rgba(99,102,241,0.08)">
