@@ -90,12 +90,22 @@
       </button>
       {{/if}}
 
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Participant
       </a>
+      {{/unless}}
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
+      {{/unless}}
+      {{#if parentEventId}}
+      <a href="/events/{{parentEventId}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
       {{#if event.isEventSeries}}
       <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -116,9 +126,17 @@
       <a href="/events/{{event.id}}/scoring" class="btn-sm btn-sm-purple">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Score This Event
       </a>
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
+      {{/unless}}
+      {{#if parentEventId}}
+      <a href="/events/{{parentEventId}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
       {{#if event.isEventSeries}}
       <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -126,9 +144,17 @@
       </a>
       {{/if}}
       {{/if}}{{#if isTabulator}}
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> View Result
       </a>
+      {{/unless}}
+      {{#if parentEventId}}
+      <a href="/events/{{parentEventId}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
       {{#if event.isEventSeries}}
       <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -136,9 +162,11 @@
       </a>
       {{/if}}
       {{/if}}{{#if isEncoder}}
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Participant
       </a>
+      {{/unless}}
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
@@ -171,12 +199,22 @@
       </form>
       {{/if}}
 
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/contestants/add" class="btn-sm btn-sm-blue">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Participant
       </a>
+      {{/unless}}
+      {{#unless parentEventId}}
       <a href="/events/{{event.id}}/results" class="btn-sm btn-sm-green">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Results
       </a>
+      {{/unless}}
+      {{#if parentEventId}}
+      <a href="/events/{{parentEventId}}/series-results" class="btn-sm btn-sm-purple text-xs">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Overall Results
+      </a>
+      {{/if}}
       {{#if event.isEventSeries}}
       <a href="/events/{{event.id}}/series-results" class="btn-sm btn-sm-purple text-xs">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -244,6 +282,7 @@
       {{/each}}
     </div>
     {{else}}
+    {{#unless parentEventId}}
     <!-- Normal non-series events: existing contestants section unchanged -->
     <!-- Contestants -->
     <div class="section-card">
@@ -339,6 +378,7 @@
       {{/if}}
     </div>
     {{/if}}
+    {{/unless}}
 
     {{#unless event.isEventSeries}}
     <!-- Criteria -->
@@ -1414,14 +1454,20 @@ window._onTimerEventEnd = function() {
   <button type="button" onclick="openAddJudgeModal();closeDropdown('admin-more')" class="dropdown-item w-full text-left">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Assign Judge</button>
   {{/unless}}
+  {{#unless parentEventId}}
   <a href="/events/{{event.id}}/criteria" class="dropdown-item">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Scoring Criteria</a>
+  {{/unless}}
+  {{#unless parentEventId}}
   <form method="POST" action="/events/{{event.id}}/lock"><input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type="submit" class="dropdown-item w-full text-left {{#if event.scoringLocked}}item-danger{{/if}}">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> {{#if event.scoringLocked}}Unlock Scores{{else}}Lock Scores{{/if}}</button></form>
+  {{/unless}}
+  {{#unless parentEventId}}
   <form method="POST" action="/events/{{event.id}}/results/lock"><input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type="submit" class="dropdown-item w-full text-left">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> {{#if event.resultsLocked}}Unlock Results{{else}}Lock Results{{/if}}</button></form>
+  {{/unless}}
   <div class="dropdown-divider"></div>
   <div class="dropdown-section-label">Publishing</div>
   <a href="/events/{{event.id}}/display" target="_blank" class="dropdown-item">
@@ -1435,6 +1481,7 @@ window._onTimerEventEnd = function() {
   <a href="/events/{{event.id}}/results/export" class="dropdown-item">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</a>
   <div class="dropdown-divider"></div>
+  {{#unless parentEventId}}
   <div class="dropdown-section-label">Finance &amp; Voting</div>
   {{#if event.isPaymentType}}<a href="#finance" onclick="document.getElementById('finance')?.scrollIntoView({behavior:'smooth'});closeDropdown('admin-more')" class="dropdown-item item-finance">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Finance</a>{{/if}}
@@ -1443,6 +1490,7 @@ window._onTimerEventEnd = function() {
   <form method="POST" action="/events/{{event.id}}/vote/toggle"><input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type="submit" class="dropdown-item item-voting w-full text-left">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> {{#if event.votingOpen}}Close Voting{{else}}Open Voting{{/if}}</button></form>
+  {{/unless}}
   <div class="dropdown-divider"></div>
   <div class="dropdown-section-label">Admin</div>
   <button type="button" onclick="openOrganizerMenuModal();closeDropdown('admin-more')" class="dropdown-item w-full text-left">
@@ -1522,19 +1570,25 @@ window._onTimerEventEnd = function() {
   <a href="/events/{{event.id}}/edit" class="dropdown-item">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Event</a>
     {{/unless}}
+    {{#unless parentEventId}}
     {{#unless event.isEventSeries}}
     {{#unless (includes event.hiddenOrganizerMoreItems "assignJudge")}}
   <button type="button" onclick="openAddJudgeModal();closeDropdown('org-more')" class="dropdown-item w-full text-left">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Assign Judge</button>
     {{/unless}}
     {{/unless}}
+    {{/unless}}
+    {{#unless parentEventId}}
     {{#unless (includes event.hiddenOrganizerMoreItems "criteria")}}
   <a href="/events/{{event.id}}/criteria" class="dropdown-item">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Scoring Criteria</a>
     {{/unless}}
+    {{/unless}}
+    {{#unless parentEventId}}
   <form method="POST" action="/events/{{event.id}}/results/lock"><input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type="submit" class="dropdown-item w-full text-left">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> {{#if event.resultsLocked}}Unlock Results{{else}}Lock Results{{/if}}</button></form>
+    {{/unless}}
   <div class="dropdown-divider"></div>
   <div class="dropdown-section-label">Publishing</div>
     {{#unless (includes event.hiddenOrganizerMoreItems "display")}}
@@ -1558,6 +1612,7 @@ window._onTimerEventEnd = function() {
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</a>
     {{/unless}}
   <div class="dropdown-divider"></div>
+  {{#unless parentEventId}}
   <div class="dropdown-section-label">Finance &amp; Voting</div>
     {{#unless (includes event.hiddenOrganizerMoreItems "finance")}}
   {{#if event.isPaymentType}}<a href="#finance" onclick="document.getElementById('finance')?.scrollIntoView({behavior:'smooth'});closeDropdown('org-more')" class="dropdown-item item-finance">
@@ -1572,6 +1627,7 @@ window._onTimerEventEnd = function() {
     <button type="submit" class="dropdown-item item-voting w-full text-left">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> {{#if event.votingOpen}}Close Voting{{else}}Open Voting{{/if}}</button></form>
     {{/unless}}
+  {{/unless}}
     {{#unless (includes event.hiddenOrganizerMoreItems "delete")}}
   <div class="dropdown-divider"></div>
   <form method="POST" action="/events/{{event.id}}/delete" onsubmit="return false" data-confirm-title="Delete Event" data-confirm-msg="Permanently delete this event and all its data? This cannot be undone." data-confirm-ok="Delete Event" data-confirm-type="danger">
