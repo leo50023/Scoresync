@@ -1347,7 +1347,7 @@ window._onTimerEventEnd = function() {
 <div id="add-judge-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
   style="background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)">
   <div class="rounded-2xl overflow-hidden shadow-2xl"
-    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:85vh;overflow-y:auto;width:min(360px,calc(100vw - 2rem));max-width:360px">
+    style="background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);max-height:80vh;overflow-y:auto;width:min(300px,calc(100vw - 2rem));max-width:300px">
     <!-- Header -->
     <div class="px-3 py-2 flex items-center justify-between"
       style="border-bottom:1px solid var(--border);background:rgba(99,102,241,0.08)">
@@ -1401,11 +1401,11 @@ window._onTimerEventEnd = function() {
         <option value="{{id}}">{{name}} ({{email}})</option>
         {{/each}}
       </select>
-      <div class="flex gap-2 pt-0.5">
-        <button type="submit" class="btn-primary flex-1 justify-center" style="min-height:unset;height:32px;font-size:0.75rem">
+      <div class="flex gap-2 pt-0.5 justify-end">
+        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-3" style="min-height:unset;height:30px;font-size:0.72rem">Cancel</button>
+        <button type="submit" class="btn-primary px-4" style="min-height:unset;height:30px;font-size:0.72rem">
           Assign Judge
         </button>
-        <button type="button" onclick="closeAddJudgeModal()" class="btn-secondary px-4" style="min-height:unset;height:32px;font-size:0.75rem">Cancel</button>
       </div>
       {{else}}
       <div class="py-3 text-center text-xs" style="color:var(--text-faint)">
