@@ -339,39 +339,21 @@
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-      </div>
-    </div>
-
-    <!-- Judges Panel — compact button -->
-    <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
-      <div class="px-5 py-3.5 flex items-center justify-between" style="border-bottom:1px solid var(--border-subtle)">
-        <div class="flex items-center gap-2.5">
-          <div class="w-6 h-6 rounded-lg flex items-center justify-center" style="background:rgba(99,102,241,0.15)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <a href="/users" class="flex items-center gap-3 px-3 py-3 rounded-xl transition group"
+          style="border:1px solid transparent"
+          onmouseover="this.style.background='rgba(99,102,241,0.06)';this.style.borderColor='rgba(99,102,241,0.12)'"
+          onmouseout="this.style.background='';this.style.borderColor='transparent'">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+            style="background:linear-gradient(135deg,#1e3a8a,#4f46e5)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h2 class="text-sm font-extrabold tracking-tight" style="color:var(--text-primary)">Judges</h2>
-        </div>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.18)">{{judges.length}}</span>
-      </div>
-      <div class="px-4 py-4">
-        <a href="/users" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-bold transition"
-          style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2)"
-          onmouseover="this.style.background='rgba(99,102,241,0.18)'" onmouseout="this.style.background='rgba(99,102,241,0.1)'">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Manage Judges
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-bold" style="color:var(--text-primary)">Manage Judges</div>
+            <div class="text-[11px]" style="color:var(--text-faint)">View &amp; manage judge accounts</div>
+          </div>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" class="opacity-0 group-hover:opacity-100 transition-opacity"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
-      </div>
-      <!-- Organizer info -->
-      <div class="px-4 pb-3">
-        <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.12)">
-          <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#92400e,#b45309)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          </div>
-          <div class="min-w-0">
-            <div class="text-xs font-extrabold truncate" style="color:#fbbf24">{{userName}}</div>
-            <p class="text-[10px]" style="color:var(--text-faint)">Organizer &mdash; Full event access</p>
-          </div>
-        </div>
+
       </div>
     </div>
 
