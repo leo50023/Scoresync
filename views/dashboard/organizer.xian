@@ -1,4 +1,4 @@
-﻿﻿{{> head }}
+?{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -41,7 +41,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Hero Header ── -->
+  <!-- -- Hero Header -- -->
   <div class="relative rounded-2xl overflow-hidden fm-fade-up"
     style="background:linear-gradient(135deg,#06040f 0%,#0d0a1f 40%,#0f0c1e 70%,#060412 100%);border:1px solid rgba(99,102,241,0.18);box-shadow:0 0 60px rgba(79,70,229,0.08)">
     <!-- Ambient purple/indigo glow blobs -->
@@ -73,7 +73,7 @@
     </div>
   </div>
 
-  <!-- ── KPI Row ── -->
+  <!-- -- KPI Row -- -->
   <div class="organizer-kpi-grid grid grid-cols-2 lg:grid-cols-4 gap-3" data-stagger="fm-scale-in">
 
     <!-- My Events -->
@@ -152,7 +152,7 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── Live / Ongoing Events ── -->
+  <!-- -- Live / Ongoing Events -- -->
   <div class="fm-reveal space-y-4">
 
     <div class="flex items-center justify-between px-0.5">
@@ -314,7 +314,7 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── Quick Actions ── -->
+  <!-- -- Quick Actions -- -->
   <div class="animate-fadeup-2">
     <div class="flex items-center gap-2.5 mb-4 px-0.5">
       <div class="w-7 h-7 rounded-lg flex items-center justify-center"
@@ -387,7 +387,7 @@
 
 </main>
 </div>
-{{> footer }}
+
 <script>
 (function() {
   const cards = document.querySelectorAll('[data-event-id]');
@@ -418,8 +418,8 @@
 </script>
 
 <script>
-/* ── 15s smart auto-refresh: reloads the dashboard only when the user is idle,
-   so admin/organizer changes appear for judges & other roles automatically. ── */
+/* -- 15s smart auto-refresh: reloads the dashboard only when the user is idle,
+   so admin/organizer changes appear for judges & other roles automatically. -- */
 (() => {
   const REFRESH_MS = 15000;
   let lastActivity = Date.now();          // last user-interaction timestamp
@@ -432,7 +432,7 @@
     window.addEventListener(ev, touch, { passive: true, capture: true }));
   window.addEventListener('scroll', touch, { passive: true, capture: true });
 
-  // ── Guards: never reload while the user is mid-interaction ──
+  // -- Guards: never reload while the user is mid-interaction --
   const isInputFocused = () => {
     const ae = document.activeElement;
     if (!ae) return false;
@@ -466,22 +466,22 @@
     return true;
   };
 
-  // ── Unobtrusive "Live" indicator (bottom-right, dark theme) ──
+  // -- Unobtrusive "Live" indicator (bottom-right, dark theme) --
 
   // 1s ticker: countdown + idle/active state
   setInterval(() => {
     if (refreshing) return;
     const remain = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
     const idle = Date.now() - lastActivity >= REFRESH_MS;
-    if (idle) {                          // eligible to refresh → steady green
+    if (idle) {                          // eligible to refresh ? steady green
       dot.style.opacity = '1';
-    } else {                             // user active → paused (dim grey)
+    } else {                             // user active ? paused (dim grey)
       dot.style.background = '#64748b';
       dot.style.opacity = '.55';
     }
   }, 1000);
 
-  // ── Main reload poll (every 15s) ──
+  // -- Main reload poll (every 15s) --
   const poll = () => {
     nextRefreshAt = Date.now() + REFRESH_MS;     // reset countdown either way
     if (!canRefresh()) return;                   // try again next tick

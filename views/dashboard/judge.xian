@@ -1,4 +1,4 @@
-﻿{{> head }}
+{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -17,7 +17,7 @@
   {{#if success_msg}}<div class="alert-success animate-fadeup">{{success_msg}}</div>{{/if}}
   {{#if error_msg}}<div class="alert-error animate-fadeup">{{error_msg}}</div>{{/if}}
 
-  <!-- ── Hero Header ── -->
+  <!-- -- Hero Header -- -->
   <div class="relative rounded-2xl overflow-hidden fm-fade-up"
     style="background:linear-gradient(135deg,#1e1b4b 0%,#2e1065 40%,#1e3a8a 100%);border:1px solid rgba(139,92,246,0.25)">
     <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full blur-3xl pointer-events-none" style="background:rgba(139,92,246,0.15)"></div>
@@ -33,7 +33,7 @@
           Welcome, <span style="background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span>
         </h1>
         <p class="text-sm font-medium" style="color:rgba(196,181,253,0.7)">
-          {{#if isTabulator}}Review and correct scores for any event from this panel.{{else}}Score your assigned events below — work through one contestant at a time.{{/if}}
+          {{#if isTabulator}}Review and correct scores for any event from this panel.{{else}}Score your assigned events below � work through one contestant at a time.{{/if}}
         </p>
       </div>
       <div class="flex items-center gap-3 flex-wrap flex-shrink-0 judge-hero-stats">
@@ -50,7 +50,7 @@
   </div>
 
   {{#unless isTabulator}}
-  <!-- ── How It Works — 3-step flow ── -->
+  <!-- -- How It Works � 3-step flow -- -->
   <div class="fm-fade-up fm-delay-2">
     <div class="flex items-center gap-2 mb-3 px-1">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -76,7 +76,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
         <div class="font-extrabold text-sm mb-1" style="color:#e2e8f0">Score Contestants</div>
-        <p class="text-[11px] leading-relaxed" style="color:#64748b">Enter scores for each contestant across all criteria — one at a time.</p>
+        <p class="text-[11px] leading-relaxed" style="color:#64748b">Enter scores for each contestant across all criteria � one at a time.</p>
       </div>
 
       <div class="step-card rounded-2xl p-4 relative overflow-hidden" data-step="3"
@@ -93,7 +93,7 @@
   </div>
   {{/unless}}
 
-  <!-- ── Events List ── -->
+  <!-- -- Events List -- -->
   <div class="space-y-4 fm-reveal">
     <div class="flex items-center justify-between px-1">
       <h2 class="font-extrabold text-base flex items-center gap-2" style="color:var(--text-primary)">
@@ -144,7 +144,7 @@
         {{#if (eq status 'ongoing')}}
         <div class="flex items-center gap-2 px-5 pt-3 pb-0">
           <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" style="animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite"></span>
-          <span class="text-[10px] font-extrabold uppercase tracking-widest" style="color:#34d399">Live — Scoring Open</span>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest" style="color:#34d399">Live � Scoring Open</span>
         </div>
         {{/if}}
 
@@ -199,7 +199,7 @@
                 <div class="flex justify-between text-[10px] mb-1.5" style="color:var(--text-muted)">
                   <span>Your progress</span>
                   <span class="font-extrabold" style="color:{{#if (gte completionPct 100)}}#34d399{{else}}var(--text-primary){{/if}}">
-                    {{myScoreCount}}/{{contestantCount}} contestants &nbsp;·&nbsp; {{completionPct}}%
+                    {{myScoreCount}}/{{contestantCount}} contestants &nbsp;�&nbsp; {{completionPct}}%
                   </span>
                 </div>
                 <div class="h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.07)">
@@ -237,7 +237,7 @@
                   <!-- Context hint below button -->
                   <span class="text-[10px] font-semibold text-center w-full" style="color:{{#if (gte completionPct 100)}}#34d399{{else}}#94a3b8{{/if}}">
                     {{#if (gte completionPct 100)}}
-                      ✓ All {{contestantCount}} scored
+                      ? All {{contestantCount}} scored
                     {{else}}
                       {{myScoreCount}} of {{contestantCount}} done
                     {{/if}}
@@ -311,7 +311,7 @@
     {{/if}}
   </div>
 
-  <!-- ── Quick Tips ── -->
+  <!-- -- Quick Tips -- -->
   {{#if isTabulator}}
   <div class="grid sm:grid-cols-3 gap-3 animate-fadeup-2">
     <div class="rounded-2xl p-4 flex items-start gap-3" style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.15)">
@@ -338,7 +338,7 @@
       </div>
       <div>
         <div class="text-xs font-bold mb-0.5" style="color:#fca5a5">Locked Events</div>
-        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only — no edits allowed.</p>
+        <p class="text-[11px] leading-relaxed" style="color:var(--text-faint)">When scoring is locked by the admin, scores are read-only � no edits allowed.</p>
       </div>
     </div>
   </div>
@@ -376,11 +376,11 @@
 
 </main>
 </div>
-{{> footer }}
+
 
 <script>
 (() => {
-  // ── Auto-sort: ongoing first, then pending, then completed ──
+  // -- Auto-sort: ongoing first, then pending, then completed --
   const list = document.getElementById('judge-event-list');
   if (list) {
     const cards = Array.from(list.querySelectorAll('[data-judge-event]'));
@@ -388,7 +388,7 @@
     cards.forEach(c => list.appendChild(c));
   }
 
-  // ── Filter + search ──
+  // -- Filter + search --
   const cards = Array.from(document.querySelectorAll('[data-judge-event]'));
   const search = document.getElementById('judge-event-search');
   const filters = Array.from(document.querySelectorAll('.judge-event-filter'));
@@ -445,7 +445,7 @@
     });
   }
 
-  // ── Highlight active step based on state ──
+  // -- Highlight active step based on state --
   const hasOngoing = cards.some(c => c.dataset.status === 'ongoing' && c.dataset.assigned === 'true');
   const allDone = cards.every(c => {
     if (c.dataset.status !== 'ongoing') return true;
@@ -466,8 +466,8 @@
 </script>
 
 <script>
-/* ── 15s smart auto-refresh: reloads the dashboard only when the user is idle,
-   so admin/organizer changes appear for judges & other roles automatically. ── */
+/* -- 15s smart auto-refresh: reloads the dashboard only when the user is idle,
+   so admin/organizer changes appear for judges & other roles automatically. -- */
 (() => {
   const REFRESH_MS = 15000;
   let lastActivity = Date.now();          // last user-interaction timestamp
@@ -480,7 +480,7 @@
     window.addEventListener(ev, touch, { passive: true, capture: true }));
   window.addEventListener('scroll', touch, { passive: true, capture: true });
 
-  // ── Guards: never reload while the user is mid-interaction ──
+  // -- Guards: never reload while the user is mid-interaction --
   const isInputFocused = () => {
     const ae = document.activeElement;
     if (!ae) return false;
@@ -514,22 +514,22 @@
     return true;
   };
 
-  // ── Unobtrusive "Live" indicator (bottom-right, dark theme) ──
+  // -- Unobtrusive "Live" indicator (bottom-right, dark theme) --
 
   // 1s ticker: countdown + idle/active state
   setInterval(() => {
     if (refreshing) return;
     const remain = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
     const idle = Date.now() - lastActivity >= REFRESH_MS;
-    if (idle) {                          // eligible to refresh → steady green
+    if (idle) {                          // eligible to refresh ? steady green
       dot.style.opacity = '1';
-    } else {                             // user active → paused (dim grey)
+    } else {                             // user active ? paused (dim grey)
       dot.style.background = '#64748b';
       dot.style.opacity = '.55';
     }
   }, 1000);
 
-  // ── Main reload poll (every 15s) ──
+  // -- Main reload poll (every 15s) --
   const poll = () => {
     nextRefreshAt = Date.now() + REFRESH_MS;     // reset countdown either way
     if (!canRefresh()) return;                   // try again next tick

@@ -1,4 +1,4 @@
-﻿{{> head }}
+{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -70,7 +70,7 @@
             style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">{{order}}</div>
           <div>
             <h2 style="color:var(--text-primary)">{{name}}</h2>
-            <p class="text-xs mt-0.5" style="color:var(--text-muted)">{{criteria.length}} criteria · {{totalWeight}}% / 100%</p>
+            <p class="text-xs mt-0.5" style="color:var(--text-muted)">{{criteria.length}} criteria � {{totalWeight}}% / 100%</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -164,7 +164,7 @@
 
 </main>
 </div>
-{{> footer }}
+
 <script>
 function toggleCriteriaForm(categoryId) {
   const form = document.getElementById('criteria-form-' + categoryId);

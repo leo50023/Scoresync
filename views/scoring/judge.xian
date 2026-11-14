@@ -1,4 +1,4 @@
-﻿﻿{{> head }}
+?{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -821,7 +821,7 @@
     flex-direction: row;
     gap: 12px;
   }
-  /* Small photo on mobile — just a card thumbnail */
+  /* Small photo on mobile � just a card thumbnail */
   .judge-photo-frame {
     width: 90px !important;
     min-width: 90px !important;
@@ -934,7 +934,7 @@
   display: block;
 }
 
-/* ── Responsive: bigger nav dots on mobile (#1) ── */
+/* -- Responsive: bigger nav dots on mobile (#1) -- */
 @media (max-width: 600px) {
   .nav-dot {
     min-width: 40px !important;
@@ -953,7 +953,7 @@
   }
 }
 
-/* ── Responsive: score input full-width on mobile (#2) ── */
+/* -- Responsive: score input full-width on mobile (#2) -- */
 @media (max-width: 600px) {
   .judge-score-row {
     flex-direction: column;
@@ -997,7 +997,7 @@ main::-webkit-scrollbar { display:none; }
 }
 /* Reveal main after CSS loads &mdash; prevents FOUC (photo flash) */
 #scoring-main { opacity: 1 !important; }
-/* ── Judge Remarks ── */
+/* -- Judge Remarks -- */
 .judge-remarks-wrap { margin-top: 8px; }
 .judge-remarks-label {
   display: block;
@@ -1052,7 +1052,7 @@ main::-webkit-scrollbar { display:none; }
   word-break: break-word;
 }
 
-/* ── Mobile scoring improvements ── */
+/* -- Mobile scoring improvements -- */
 @media (max-width: 767px) {
   .contestant-panel {
     margin: 10px 6px !important;
@@ -1204,20 +1204,20 @@ main::-webkit-scrollbar { display:none; }
       entryEl.style.borderColor = 'rgba(239,68,68,0.8)';
       entryEl.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
       if (warnDiv) {
-        warnDiv.textContent = '⚠️ Score is critically low! Are you sure?';
+        warnDiv.textContent = '?? Score is critically low! Are you sure?';
         warnDiv.style.color = '#fca5a5';
         warnDiv.style.display = 'block';
       }
-      showScoreToast('⚠️ Score is critically low! Are you sure?', 'critical');
+      showScoreToast('?? Score is critically low! Are you sure?', 'critical');
     } else if (val < 75) {
       entryEl.style.borderColor = 'rgba(245,158,11,0.8)';
       entryEl.style.boxShadow = '0 0 0 3px rgba(245,158,11,0.15)';
       if (warnDiv) {
-        warnDiv.textContent = '⚠️ Score is below average (below 75)';
+        warnDiv.textContent = '?? Score is below average (below 75)';
         warnDiv.style.color = '#fcd34d';
         warnDiv.style.display = 'block';
       }
-      showScoreToast('⚠️ Score is below average (below 75)', 'warning');
+      showScoreToast('?? Score is below average (below 75)', 'warning');
     } else {
       entryEl.style.borderColor = 'rgba(201,162,39,0.4)';
       entryEl.style.boxShadow = '';
@@ -1371,7 +1371,7 @@ main::-webkit-scrollbar { display:none; }
     if (nextIdx < totalContestants) {
       try { localStorage.setItem('ss_next_contestant_' + '{{event.id}}', nextIdx); } catch(e) {}
     }
-    // Check if this is the last contestant being scored — count already-scored panels
+    // Check if this is the last contestant being scored � count already-scored panels
     var _alreadyScored = 0;
     document.querySelectorAll('.contestant-panel').forEach(function(panel, pIdx) {
       if (pIdx === panelIdx) return; // the current one being submitted counts as scoring now
@@ -1542,7 +1542,7 @@ main::-webkit-scrollbar { display:none; }
 })();
 </script>
 
-{{> footer }}
+
 </body>
 
 
@@ -1558,7 +1558,7 @@ main::-webkit-scrollbar { display:none; }
   </div>
 </div>
 
-<!-- ── All Scores Complete Modal ── -->
+<!-- -- All Scores Complete Modal -- -->
 {{#if showCompleteModal}}
 <div id="complete-modal" style="display:flex;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px">
   <div style="position:relative;max-width:420px;width:100%;border-radius:24px;overflow:hidden;border:2px solid rgba(201,162,39,0.4);box-shadow:0 24px 80px rgba(0,0,0,0.7),0 0 40px rgba(201,162,39,0.15);background:linear-gradient(145deg,#101c30,#0b1424);animation:modalIn 0.3s ease;text-align:center;padding:40px 32px 32px" id="complete-modal-inner">
@@ -1576,7 +1576,7 @@ main::-webkit-scrollbar { display:none; }
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
     </div>
     <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:#c9a227;margin-bottom:8px">All Categories Completed</div>
-    <h2 style="font-size:1.6rem;font-weight:900;color:#f1f5f9;margin:0 0 10px;line-height:1.2">Scoring Complete! 🎉</h2>
+    <h2 style="font-size:1.6rem;font-weight:900;color:#f1f5f9;margin:0 0 10px;line-height:1.2">Scoring Complete! ??</h2>
     <p style="font-size:0.85rem;color:#94a3b8;margin:0 0 20px;line-height:1.6">You have successfully scored all {{contestants.length}} contestants.</p>
     <div style="background:rgba(255,255,255,0.055);border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;font-size:0.8rem;color:#94a3b8">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
@@ -1609,7 +1609,7 @@ main::-webkit-scrollbar { display:none; }
 @keyframes confetti3 { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.3) rotate(90deg)} }
 </style>
 <script>
-// closeCompleteModal removed — modal is not dismissable by outside click
+// closeCompleteModal removed � modal is not dismissable by outside click
 </script>
 {{/if}}
 

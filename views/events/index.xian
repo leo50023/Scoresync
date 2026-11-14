@@ -1,4 +1,4 @@
-﻿{{> head }}
+{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -63,7 +63,7 @@
             <span class="text-[10px] font-bold uppercase tracking-widest capitalize" style="color:rgba(147,197,253,0.8)">{{#if (eq type 'other')}}{{#if otherType}}{{otherType}}{{else}}Other{{/if}}{{else}}{{type}}{{/if}}</span>
             <h3 class="text-white font-extrabold text-base leading-tight mt-0.5 truncate">{{name}}{{#if isEventSeries}}<span style="font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:999px;background:rgba(99,102,241,0.18);color:#a5b4fc;margin-left:4px">SERIES</span>{{/if}}</h3>
             {{#if isEventSeries}}{{#if subEvents.length}}<div class="text-xs mt-0.5" style="color:#a5b4fc">{{subEvents.length}} sub-event(s)</div>{{/if}}{{/if}}
-            {{#if parentEventId}}<div class="text-xs mt-0.5" style="color:#94a3b8">↳ Sub-event of {{parentEventName}}</div>{{/if}}
+            {{#if parentEventId}}<div class="text-xs mt-0.5" style="color:#94a3b8">? Sub-event of {{parentEventName}}</div>{{/if}}
           </div>
           <span data-status-badge class="badge flex-shrink-0 mt-1 {{#if (eq status 'ongoing')}}badge-green{{else}}{{#if (eq status 'completed')}}badge-blue{{else}}{{#if (eq status 'cancelled')}}badge-red{{else}}badge-yellow{{/if}}{{/if}}{{/if}} capitalize">{{status}}</span>
         </div>
@@ -246,4 +246,4 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-{{> footer }}
+

@@ -1,4 +1,4 @@
-﻿﻿{{> head }}
+?{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -340,7 +340,7 @@
             {{/if}}
             {{#if submissionLink}}
             <div class="mt-1">
-              <a href="{{submissionLink}}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-0.5 text-[10px] font-semibold px-2 py-0.5 rounded-full" style="background:rgba(99,102,241,0.5);color:#e0e7ff" onclick="event.stopPropagation()">🔗 View Submission</a>
+              <a href="{{submissionLink}}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-0.5 text-[10px] font-semibold px-2 py-0.5 rounded-full" style="background:rgba(99,102,241,0.5);color:#e0e7ff" onclick="event.stopPropagation()">?? View Submission</a>
             </div>
             {{/if}}
           </div>
@@ -1010,7 +1010,7 @@
 <!-- QR Code library (CDN, no install needed) -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <style>
-/* ── Premium Dropdown ── */
+/* -- Premium Dropdown -- */
 .dropdown-menu-premium {
   background: rgba(13,18,36,0.92);
   backdrop-filter: blur(18px) saturate(1.6);
@@ -1068,7 +1068,7 @@
 .dropdown-item.item-danger { color: #fca5a5; }
 .dropdown-item.item-danger:hover { background: rgba(239,68,68,0.12); box-shadow: inset 3px 0 0 #ef4444; }
 
-/* ── Premium Status Badge Glow ── */
+/* -- Premium Status Badge Glow -- */
 .badge-premium-green {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 4px 12px; border-radius: 999px;
@@ -1115,7 +1115,7 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
-/* ── Premium Contestant Cards ── */
+/* -- Premium Contestant Cards -- */
 .contestant-card {
   aspect-ratio: 3/4;
   border: 1px solid var(--border);
@@ -1156,7 +1156,7 @@
   z-index: 1;
 }
 
-/* ── Criteria weight badge ── */
+/* -- Criteria weight badge -- */
 .criteria-weight-badge {
   font-size: 11px; font-weight: 800;
   padding: 4px 10px; border-radius: 999px;
@@ -1653,6 +1653,6 @@ document.getElementById('add-judge-modal').addEventListener('click', function(e)
 })();
 </script>
 
-{{> footer }}
+
 </body>
 </html>

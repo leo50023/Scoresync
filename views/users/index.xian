@@ -1,4 +1,4 @@
-﻿﻿{{> head }}
+?{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -332,7 +332,7 @@
     var start = (currentPage - 1) * PAGE_SIZE + 1;
     var end   = Math.min(currentPage * PAGE_SIZE, rows.length);
     info.style.cssText = 'font-size:11px;color:var(--text-faint)';
-    info.textContent = 'Showing ' + start + '–' + end + ' of ' + rows.length + ' users';
+    info.textContent = 'Showing ' + start + '�' + end + ' of ' + rows.length + ' users';
     container.appendChild(info);
 
     var btnsRow = document.createElement('div');
@@ -385,6 +385,6 @@
   }, REFRESH_MS);
 })();
 </script>
-{{> footer }}
+
 </body>
 </html>

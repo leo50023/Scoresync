@@ -1,4 +1,4 @@
-﻿{{> head }}
+{{> head }}
 <body class="min-h-screen flex flex-col ss-page-bg">
 {{> navbar }}
 <div class="flex flex-1 overflow-hidden">
@@ -287,6 +287,6 @@ function removeProfilePhoto() {
 
 </main>
 </div>
-{{> footer }}
+
 </body>
 </html>
