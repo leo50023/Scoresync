@@ -342,7 +342,7 @@
       </div>
     </div>
 
-    <!-- Judges Panel -->
+    <!-- Judges Panel — compact button -->
     <div class="rounded-2xl overflow-hidden" style="background:var(--bg-card);border:1px solid var(--border)">
       <div class="px-5 py-3.5 flex items-center justify-between" style="border-bottom:1px solid var(--border-subtle)">
         <div class="flex items-center gap-2.5">
@@ -353,24 +353,14 @@
         </div>
         <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.18)">{{judges.length}}</span>
       </div>
-
-      {{#if judges.length}}
-      <!-- Compact avatar row -->
-      <div class="px-4 py-3 flex flex-wrap gap-2">
-        {{#each judges}}
-        <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold"
-          style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);color:#a5b4fc"
-          title="{{alias}}">
-          <div class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-extrabold text-white flex-shrink-0"
-            style="background:linear-gradient(135deg,#1e3a8a,#4f46e5)">{{initial}}</div>
-          {{alias}}
-        </div>
-        {{/each}}
+      <div class="px-4 py-4">
+        <a href="/users" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-bold transition"
+          style="background:rgba(99,102,241,0.1);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2)"
+          onmouseover="this.style.background='rgba(99,102,241,0.18)'" onmouseout="this.style.background='rgba(99,102,241,0.1)'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Manage Judges
+        </a>
       </div>
-      {{else}}
-      <div class="px-5 py-4 text-xs text-center" style="color:var(--text-faint)">No judges assigned yet.</div>
-      {{/if}}
-
       <!-- Organizer info -->
       <div class="px-4 pb-3">
         <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.12)">
