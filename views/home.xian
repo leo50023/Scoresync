@@ -386,8 +386,8 @@
   .footer-bottom {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 12px;
-    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04);
-    font-size: 0.72rem; color: #1e293b;
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.72rem; color: #94a3b8;
   }
   @media (max-width: 600px) {
     .footer-top { grid-template-columns: 1fr; }
