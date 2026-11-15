@@ -1,7 +1,0 @@
-{
-  "task_id": "task-scoresync-3-features",
-  "task_description": "Add three features to ScoreSync: (1) real-time results polling with live indicator replacing the manual refresh dropdown, (2) a full-screen dramatic announce/reveal page at /events/:eventId/announce, (3) admin data backup JSON download at /admin/backup.",
-  "status": "completed",
-  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
-  "blocked_reason": null
-}
