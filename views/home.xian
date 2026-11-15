@@ -587,84 +587,158 @@
     </div>
 
     <!-- Preview card -->
-    <div class="preview-card animate-fadeup-1 sr sr-delay-2">
-      <!-- Glow -->
-      <div style="position:absolute;top:-60px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.14),transparent 70%);filter:blur(30px);pointer-events:none"></div>
+    <div class="preview-card animate-fadeup-1 sr sr-delay-2" style="box-shadow:0 40px 100px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.06);max-height:380px;overflow:hidden;padding:0;position:relative">
 
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <div class="text-[10px] uppercase tracking-[0.18em] font-bold mb-1" style="color:#60a5fa">Live Preview</div>
-          <div class="text-white text-sm font-bold">ScoreSync in action</div>
-        </div>
-        <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold" style="color:#a7f3d0;background:rgba(16,185,129,0.1);border:1px solid rgba(52,211,153,0.2)">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400" style="animation:pulse 2s infinite"></span>
-          LIVE
-        </span>
-      </div>
+      <!-- Ambient glow -->
+      <div style="position:absolute;top:-60px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.14),transparent 70%);filter:blur(30px);pointer-events:none;z-index:0"></div>
 
-      <!-- Scores preview -->
-      <div class="preview-inner">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-semibold" style="color:#64748b">Weighted Criteria</span>
-          <span class="text-[10px] font-semibold" style="color:#475569">SCORING OVERVIEW</span>
+      <!-- App mockup wrapper -->
+      <div style="position:relative;z-index:1;display:flex;flex-direction:column;height:380px;background:rgba(8,12,24,0.98);border-radius:24px;overflow:hidden">
+
+        <!-- 1. Top navbar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(6,10,20,0.98);border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:7px">
+            <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#1d4ed8,#4f46e5);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <span style="font-size:11px;font-weight:900;color:#f1f5f9;letter-spacing:-0.02em">ScoreSync</span>
+          </div>
+          <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:9px;font-weight:800;letter-spacing:0.1em;color:#a7f3d0;background:rgba(16,185,129,0.12);border:1px solid rgba(52,211,153,0.25)">
+            <span style="width:5px;height:5px;border-radius:50%;background:#10b981;display:inline-block;animation:pulse 2s infinite"></span>
+            LIVE
+          </span>
         </div>
-        <div class="space-y-4">
-          <div>
-            <div class="flex justify-between text-xs mb-1.5">
-              <span style="color:#94a3b8">Performance</span>
-              <span class="font-bold" style="color:#e2e8f0">40% &nbsp;<span style="color:#60a5fa">78.4</span></span>
+
+        <!-- 2. Event header -->
+        <div style="padding:10px 14px 8px;background:rgba(10,16,32,0.9);border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+            <div>
+              <div style="font-size:11px;font-weight:800;color:#e2e8f0;line-height:1.3;margin-bottom:3px">UI/UX Design Contest</div>
+              <div style="display:flex;align-items:center;gap:5px">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span style="font-size:9px;color:#64748b;font-weight:600">IT Building</span>
+              </div>
             </div>
-            <div class="h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.06)">
-              <div class="h-full rounded-full prog-bar" style="--pw:78%;background:linear-gradient(90deg,#1d4ed8,#60a5fa);box-shadow:0 0 8px rgba(96,165,250,0.4)"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-xs mb-1.5">
-              <span style="color:#94a3b8">Presentation</span>
-              <span class="font-bold" style="color:#e2e8f0">35% &nbsp;<span style="color:#a78bfa">65.2</span></span>
-            </div>
-            <div class="h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.06)">
-              <div class="h-full rounded-full prog-bar" style="--pw:65%;background:linear-gradient(90deg,#5b21b6,#a78bfa);box-shadow:0 0 8px rgba(167,139,250,0.3)"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-xs mb-1.5">
-              <span style="color:#94a3b8">Creativity</span>
-              <span class="font-bold" style="color:#e2e8f0">25% &nbsp;<span style="color:#34d399">52.8</span></span>
-            </div>
-            <div class="h-2 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.06)">
-              <div class="h-full rounded-full prog-bar" style="--pw:52%;background:linear-gradient(90deg,#065f46,#34d399);box-shadow:0 0 8px rgba(52,211,153,0.25)"></div>
-            </div>
+            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:9px;font-weight:800;letter-spacing:0.08em;color:#6ee7b7;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);flex-shrink:0;text-transform:uppercase">
+              <span style="width:4px;height:4px;border-radius:50%;background:#10b981;display:inline-block"></span>
+              ongoing
+            </span>
           </div>
         </div>
 
-        <!-- Judge avatars -->
-        <div class="flex items-center gap-3 mt-5 pt-4" style="border-top:1px solid rgba(255,255,255,0.07)">
-          <div class="flex -space-x-2">
-            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black text-white" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);border:2px solid #080f1e">J1</span>
-            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black text-white" style="background:linear-gradient(135deg,#4c1d95,#7c3aed);border:2px solid #080f1e">J2</span>
-            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black text-white" style="background:linear-gradient(135deg,#064e3b,#10b981);border:2px solid #080f1e">J3</span>
-          </div>
-          <div class="text-[11px] leading-snug" style="color:#64748b">3 judges scoring independently.<br/><span style="color:#94a3b8">Results stay organized.</span></div>
+        <!-- 3. Tab bar -->
+        <div style="display:flex;align-items:center;gap:0;padding:0 14px;background:rgba(8,14,28,0.95);border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
+          <div style="padding:8px 10px;font-size:9px;font-weight:700;color:#64748b;cursor:default;border-bottom:2px solid transparent">Contestants</div>
+          <div style="padding:8px 10px;font-size:9px;font-weight:800;color:#3b82f6;cursor:default;border-bottom:2px solid #3b82f6;background:rgba(59,130,246,0.06)">Scoring</div>
+          <div style="padding:8px 10px;font-size:9px;font-weight:700;color:#64748b;cursor:default;border-bottom:2px solid transparent">Results</div>
         </div>
-      </div>
 
-      <!-- Mini steps -->
-      <div class="grid grid-cols-3 gap-2 mt-4">
-        <div class="rounded-xl px-2 py-3 text-center" style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15)">
-          <div class="text-[10px] font-extrabold text-blue-400 mb-0.5">DEFINE</div>
-          <div class="text-[9px]" style="color:#475569">Your criteria</div>
+        <!-- 4. Scoring section — scrollable body -->
+        <div style="flex:1;overflow:hidden;padding:10px 14px;display:flex;flex-direction:column;gap:10px">
+
+          <!-- Contestant 01 -->
+          <div style="background:rgba(16,24,40,0.9);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#1e3a8a,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:white;flex-shrink:0">01</div>
+                <div>
+                  <div style="font-size:10px;font-weight:800;color:#e2e8f0">Maria Santos</div>
+                  <div style="font-size:8px;color:#475569;font-weight:600">Contestant 01</div>
+                </div>
+              </div>
+            </div>
+            <!-- Performance 85% -->
+            <div style="margin-bottom:6px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Performance</span>
+                <span style="font-size:8.5px;font-weight:800;color:#3b82f6">85%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:85%;height:100%;border-radius:999px;background:linear-gradient(90deg,#1d4ed8,#60a5fa);box-shadow:0 0 6px rgba(96,165,250,0.4)"></div>
+              </div>
+            </div>
+            <!-- Presentation 78% -->
+            <div style="margin-bottom:6px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Presentation</span>
+                <span style="font-size:8.5px;font-weight:800;color:#7c3aed">78%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:78%;height:100%;border-radius:999px;background:linear-gradient(90deg,#5b21b6,#a78bfa);box-shadow:0 0 6px rgba(167,139,250,0.3)"></div>
+              </div>
+            </div>
+            <!-- Creativity 92% -->
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Creativity</span>
+                <span style="font-size:8.5px;font-weight:800;color:#10b981">92%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:92%;height:100%;border-radius:999px;background:linear-gradient(90deg,#065f46,#34d399);box-shadow:0 0 6px rgba(52,211,153,0.3)"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 02 -->
+          <div style="background:rgba(16,24,40,0.9);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#4c1d95,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:white;flex-shrink:0">02</div>
+                <div>
+                  <div style="font-size:10px;font-weight:800;color:#e2e8f0">Juan dela Cruz</div>
+                  <div style="font-size:8px;color:#475569;font-weight:600">Contestant 02</div>
+                </div>
+              </div>
+            </div>
+            <!-- Performance 72% -->
+            <div style="margin-bottom:6px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Performance</span>
+                <span style="font-size:8.5px;font-weight:800;color:#3b82f6">72%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:72%;height:100%;border-radius:999px;background:linear-gradient(90deg,#1d4ed8,#60a5fa);box-shadow:0 0 6px rgba(96,165,250,0.4)"></div>
+              </div>
+            </div>
+            <!-- Presentation 88% -->
+            <div style="margin-bottom:6px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Presentation</span>
+                <span style="font-size:8.5px;font-weight:800;color:#7c3aed">88%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:88%;height:100%;border-radius:999px;background:linear-gradient(90deg,#5b21b6,#a78bfa);box-shadow:0 0 6px rgba(167,139,250,0.3)"></div>
+              </div>
+            </div>
+            <!-- Creativity 65% -->
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:8.5px;color:#94a3b8;font-weight:600">Creativity</span>
+                <span style="font-size:8.5px;font-weight:800;color:#10b981">65%</span>
+              </div>
+              <div style="height:4px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden">
+                <div class="prog-bar" style="--pw:65%;height:100%;border-radius:999px;background:linear-gradient(90deg,#065f46,#34d399);box-shadow:0 0 6px rgba(52,211,153,0.3)"></div>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="rounded-xl px-2 py-3 text-center" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15)">
-          <div class="text-[10px] font-extrabold text-purple-400 mb-0.5">SCORE</div>
-          <div class="text-[9px]" style="color:#475569">With confidence</div>
+
+        <!-- 5. Bottom strip — judge footer -->
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(6,10,20,0.98);border-top:1px solid rgba(255,255,255,0.07);flex-shrink:0">
+          <div style="display:flex;align-items:center;margin-right:2px">
+            <span style="width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:white;background:linear-gradient(135deg,#1e3a8a,#3b82f6);border:2px solid rgba(8,12,24,0.98);margin-right:-6px;z-index:3">J1</span>
+            <span style="width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:white;background:linear-gradient(135deg,#4c1d95,#7c3aed);border:2px solid rgba(8,12,24,0.98);margin-right:-6px;z-index:2">J2</span>
+            <span style="width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:white;background:linear-gradient(135deg,#064e3b,#10b981);border:2px solid rgba(8,12,24,0.98);z-index:1">J3</span>
+          </div>
+          <span style="font-size:9px;font-weight:700;color:#64748b">3 Judges Scoring</span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:4px">
+            <span style="width:5px;height:5px;border-radius:50%;background:#10b981;display:inline-block;animation:pulse 2s infinite"></span>
+            <span style="font-size:8.5px;color:#10b981;font-weight:700">Active</span>
+          </div>
         </div>
-        <div class="rounded-xl px-2 py-3 text-center" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15)">
-          <div class="text-[10px] font-extrabold text-emerald-400 mb-0.5">REVEAL</div>
-          <div class="text-[9px]" style="color:#475569">Clear results</div>
-        </div>
-      </div>
+
+      </div><!-- end app mockup wrapper -->
 
       <!-- Floating tag -->
       <div class="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-white"
