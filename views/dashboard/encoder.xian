@@ -19,7 +19,7 @@
         Data Encoder Panel
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight" style="color:var(--text-bright)">
-        Welcome, <span style="background:linear-gradient(90deg,#34d399,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> ??
+        Welcome, <span style="background:linear-gradient(90deg,#34d399,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">{{userName}}</span> 👋
       </h1>
       <p class="text-sm font-medium" style="color:var(--text-faint)">Manage contestant rosters, numbers, photos, and team details for active events.</p>
     </div>

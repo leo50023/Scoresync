@@ -282,7 +282,17 @@ export const showEvent = async (req, res) => {
       getDocs(collection(db, "users")),
       getDocs(collection(db, EVENTS, req.params.id, "audit_log")),
     ]);
-    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+    // Strip full Base64 photo data from contestants — send a flag instead.
+    // The actual photo is loaded lazily via /api/contestant-photo/:eventId/:id
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => {
+      const data = d.data();
+      return {
+        id: d.id,
+        ...data,
+        photo: data.photo ? `__lazy__` : "",   // placeholder; real data fetched on demand
+        hasPhoto: !!data.photo,
+      };
+    }));
     const criteria    = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
     // Load categories for multi-category events

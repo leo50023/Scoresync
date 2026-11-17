@@ -18,7 +18,24 @@ router.get('/api/firebase-config', (req, res) => {
   });
 });
 
-// ─── Notifications API ────────────────────────────────────────────────────────
+// ─── Lazy contestant photo loader ─────────────────────────────────────────────
+router.get('/api/contestant-photo/:eventId/:id', requireAuth, async (req, res) => {
+  try {
+    const { db } = await import('../models/firebaseConfig.js');
+    const { doc, getDoc } = await import('firebase/firestore');
+    const snap = await getDoc(doc(db, 'events', req.params.eventId, 'contestants', req.params.id));
+    if (!snap.exists()) return res.status(404).json({ photo: '' });
+    const photo = snap.data().photo || '';
+    // Cache for 1 hour — photo doesn't change often
+    res.setHeader('Cache-Control', 'private, max-age=3600');
+    res.json({ photo });
+  } catch (err) {
+    console.error('[contestant-photo]', err);
+    res.status(500).json({ photo: '' });
+  }
+});
+
+
 import { getNotifications } from "../controllers/notificationController.js";
 router.get("/api/notifications", requireAuth, getNotifications);
 

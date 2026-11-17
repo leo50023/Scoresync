@@ -237,7 +237,7 @@ function removeProfilePhoto() {
               <h3 class="text-xs font-bold" style="color:var(--text-primary)">{{title}}</h3>
               <div class="flex items-center gap-1.5 flex-shrink-0">
                 <span class="badge badge-blue text-[10px]">{{category}}</span>
-                <span class="badge badge-gray text-[10px]">?? {{votes}}</span>
+                <span class="badge badge-gray text-[10px]">🗳️ {{votes}}</span>
               </div>
             </div>
             {{#if submittedBy}}<p class="text-[11px] mt-1" style="color:var(--text-faint)">By: <span class="font-semibold" style="color:var(--text-secondary)">{{submittedBy}}</span></p>{{/if}}

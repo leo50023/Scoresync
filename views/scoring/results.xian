@@ -144,7 +144,7 @@
 
   {{#if (and resultsLocked isJudge)}}
   <div class="fm-fade-up rounded-2xl p-8 text-center" style="background:var(--bg-card);border:1px solid var(--border)">
-    <div class="text-4xl mb-4">??</div>
+    <div class="text-4xl mb-4">🔒</div>
     <h2 class="font-extrabold text-lg mb-2" style="color:var(--text-primary)">Results Locked</h2>
     <p class="text-sm" style="color:var(--text-secondary)">Results are currently locked by the organizer. Please wait for them to be unlocked.</p>
   </div>
@@ -181,7 +181,7 @@
         <!-- 2nd Place -->
         {{#each ranked}}{{#if (eq rank 2)}}
         <div class="flex-1 min-w-0 text-center max-w-[190px]" data-podium-rank="2">
-          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(148,163,184,0.4))">??</div>
+          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(148,163,184,0.4))">🥈</div>
           <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(148,163,184,0.25);background:linear-gradient(160deg,#1a2240,#1e2a4a);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)">
             <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(148,163,184,0.7)">2nd Place</div>
             <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(148,163,184,0.4);ring:4px solid rgba(148,163,184,0.1)">
@@ -205,7 +205,7 @@
         <!-- 1st Place / Champion -->
         {{#each ranked}}{{#if (eq rank 1)}}
         <div class="flex-1 min-w-0 text-center max-w-[210px] -mt-8" data-podium-rank="1">
-          <div class="text-5xl mb-3 animate-fadeup" style="filter:drop-shadow(0 4px 16px rgba(251,191,36,0.6))">??</div>
+          <div class="text-5xl mb-3 animate-fadeup" style="filter:drop-shadow(0 4px 16px rgba(251,191,36,0.6))">🏆</div>
           <div class="rounded-2xl p-5 border-2 border-yellow-400/40 transition-all hover:scale-[1.02]" style="background:linear-gradient(160deg,#2a1f05,#3d2a06,#2a1f05);box-shadow:0 8px 40px rgba(245,158,11,0.25),0 0 0 1px rgba(245,158,11,0.15),inset 0 1px 0 rgba(255,255,255,0.08)">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-3" style="background:rgba(245,158,11,0.2);border:1px solid rgba(245,158,11,0.3)">
               <span class="text-[9px] text-yellow-400 uppercase font-black tracking-[0.18em]">Champion</span>
@@ -231,7 +231,7 @@
         <!-- 3rd Place -->
         {{#each ranked}}{{#if (eq rank 3)}}
         <div class="flex-1 min-w-0 text-center max-w-[190px]" data-podium-rank="3">
-          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(205,127,50,0.4))">??</div>
+          <div class="text-4xl mb-3 animate-fadeup-1" style="filter:drop-shadow(0 2px 8px rgba(205,127,50,0.4))">🥉</div>
           <div class="rounded-2xl p-5 border transition-all hover:scale-[1.02]" style="border-color:rgba(205,127,50,0.25);background:linear-gradient(160deg,#1e140a,#261a0c,#1e140a);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)">
             <div class="text-[9px] uppercase font-black tracking-[0.2em] mb-3" style="color:rgba(205,127,50,0.7)">3rd Place</div>
             <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-3 shadow-xl" style="border:2px solid rgba(205,127,50,0.4)">
@@ -1211,9 +1211,9 @@ document.getElementById("print-date") && (document.getElementById("print-date").
       {{#each ranked}}
       <tr>
         <td class="print-rank-num">
-          {{#if (eq rank 1)}}?? 1st{{/if}}
-          {{#if (eq rank 2)}}?? 2nd{{/if}}
-          {{#if (eq rank 3)}}?? 3rd{{/if}}
+          {{#if (eq rank 1)}}🏆 1st{{/if}}
+          {{#if (eq rank 2)}}🥈 2nd{{/if}}
+          {{#if (eq rank 3)}}🥉 3rd{{/if}}
           {{#unless (lte rank 3)}}{{rank}}th{{/unless}}
         </td>
         <td style="color:#555">#{{number}}</td>
