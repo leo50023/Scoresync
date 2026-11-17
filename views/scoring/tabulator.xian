@@ -65,14 +65,11 @@
           Audit Log
         </a>
         {{#if isAdmin}}
-        <form method="POST" action="/events/{{event.id}}/lock" style="display:contents"
-          onsubmit="return false"
-          data-confirm-title="{{#if locked}}Unlock Scoring{{else}}Lock Scoring{{/if}}"
-          data-confirm-msg="{{#if locked}}Unlock scoring? Judges will be able to submit scores again.{{else}}Lock scoring? Judges will no longer be able to submit or edit scores.{{/if}}"
-          data-confirm-ok="{{#if locked}}Unlock{{else}}Lock{{/if}}"
-          data-confirm-type="{{#if locked}}warning{{else}}danger{{/if}}">
+        <form method="POST" action="/events/{{event.id}}/lock" id="tab-lock-form">
           <input type="hidden" name="_csrf" value="{{csrfToken}}">
-          <button type="submit" class="btn-sm {{#if locked}}btn-sm-green{{else}}btn-sm-red{{/if}} flex-shrink-0">
+          <button type="button"
+            onclick="tabLockConfirm()"
+            class="btn-sm {{#if locked}}btn-sm-green{{else}}btn-sm-red{{/if}} flex-shrink-0">
             {{#if locked}}
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
             Unlock Scoring
@@ -351,6 +348,17 @@ function confirmEdit(form) {
     if (id) toggleContestant(id);
   }
 })();
+
+function tabLockConfirm() {
+  var isLocked = {{#if locked}}true{{else}}false{{/if}};
+  var title = isLocked ? 'Unlock Scoring' : 'Lock Scoring';
+  var msg   = isLocked
+    ? 'Unlock scoring? Judges will be able to submit scores again.'
+    : 'Lock scoring? Judges will no longer be able to submit or edit scores.';
+  if (confirm(title + '\n\n' + msg)) {
+    document.getElementById('tab-lock-form').submit();
+  }
+}
 </script>
 
 
