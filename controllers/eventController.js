@@ -282,7 +282,11 @@ export const showEvent = async (req, res) => {
       getDocs(collection(db, "users")),
       getDocs(collection(db, EVENTS, req.params.id, "audit_log")),
     ]);
-    const contestants = sortContestantsByNumber(cSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+    // Strip Base64 photo data — send only a flag; photos are loaded via /api/contestant-photo
+    const contestants = sortContestantsByNumber(cSnap.docs.map(d => {
+      const data = d.data();
+      return { id: d.id, ...data, photo: data.photo ? '__has_photo__' : '' };
+    }));
     const criteria    = crSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
     // Load categories for multi-category events
@@ -296,7 +300,7 @@ export const showEvent = async (req, res) => {
       }));
     } catch (_) { categories = []; }
 
-    // Audit log � sorted newest first
+    // Audit log — sorted newest first
     const auditLog = auditSnap.docs
       .map(d => {
         const data = d.data();

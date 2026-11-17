@@ -259,7 +259,7 @@
           {{#each contestants}}
           <div class="rounded-xl p-3 text-center" style="background:var(--bg-card-sub);border:1px solid var(--border)">
             {{#if photo}}
-            <img src="{{photo}}" class="w-12 h-12 rounded-full object-cover mx-auto mb-2" alt="{{name}}"/>
+            <div class="w-12 h-12 rounded-full mx-auto mb-2 overflow-hidden ss-lazy-photo" data-eid="{{../id}}" data-cid="{{id}}" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
             {{else}}
             <div class="w-12 h-12 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-black" style="background:linear-gradient(135deg,#1e3a8a,#4f46e5)">{{number}}</div>
             {{/if}}
@@ -290,11 +290,9 @@
         {{#each contestants}}
         <div class="group contestant-card"
           style="border:1px solid var(--border)">
-          <!-- Photo or premium placeholder -->
+          <!-- Photo or premium placeholder — loaded lazily after page render -->
           {{#if photo}}
-          <img src="{{photo}}" alt="{{name}}"
-            class="absolute inset-0 w-full h-full object-cover"
-            style="object-position:center top" loading="lazy"/>
+          <div class="absolute inset-0 w-full h-full ss-lazy-photo" data-eid="{{../event.id}}" data-cid="{{id}}" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
           {{else}}
           <div class="contestant-initials-placeholder">
             <div class="contestant-number-badge">{{number}}</div>
@@ -1667,6 +1665,38 @@ document.getElementById('add-judge-modal').addEventListener('click', function(e)
   setInterval(function() {
     if (canRefresh()) location.reload();
   }, REFRESH_MS);
+})();
+</script>
+
+<script>
+// Load all contestant photos in parallel after page is fully painted
+(function () {
+  function loadPhotos() {
+    var cards = document.querySelectorAll('.ss-lazy-photo');
+    if (!cards.length) return;
+    cards.forEach(function(el) {
+      var eid = el.dataset.eid, cid = el.dataset.cid;
+      if (!eid || !cid) return;
+      var isRound = el.classList.contains('rounded-full');
+      fetch('/api/contestant-photo/' + eid + '/' + cid)
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if (!d.photo) return;
+          var img = document.createElement('img');
+          img.src = d.photo;
+          img.alt = '';
+          img.style.cssText = isRound
+            ? 'width:100%;height:100%;object-fit:cover;border-radius:9999px;display:block'
+            : 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top';
+          el.innerHTML = '';
+          el.appendChild(img);
+        })
+        .catch(function(){});
+    });
+  }
+  // Fire after browser finishes painting
+  if (document.readyState === 'complete') { loadPhotos(); }
+  else { window.addEventListener('load', loadPhotos); }
 })();
 </script>
 
