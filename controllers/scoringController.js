@@ -1562,6 +1562,7 @@ export const seriesOverallResults = async (req, res) => {
       isOrganizer: req.session.userRole === 'organizer',
       isTabulator: req.session.userRole === 'tabulator',
       isJudge: req.session.userRole === 'judge',
+      csrfToken: res.locals.csrfToken || '',
     });
   } catch (err) {
     console.error('[seriesOverallResults]', err);
