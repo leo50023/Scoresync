@@ -64,6 +64,25 @@
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Audit Log
         </a>
+        {{#if isAdmin}}
+        <form method="POST" action="/events/{{event.id}}/lock" style="display:contents"
+          onsubmit="return false"
+          data-confirm-title="{{#if locked}}Unlock Scoring{{else}}Lock Scoring{{/if}}"
+          data-confirm-msg="{{#if locked}}Unlock scoring? Judges will be able to submit scores again.{{else}}Lock scoring? Judges will no longer be able to submit or edit scores.{{/if}}"
+          data-confirm-ok="{{#if locked}}Unlock{{else}}Lock{{/if}}"
+          data-confirm-type="{{#if locked}}warning{{else}}danger{{/if}}">
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+          <button type="submit" class="btn-sm {{#if locked}}btn-sm-green{{else}}btn-sm-red{{/if}} flex-shrink-0">
+            {{#if locked}}
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+            Unlock Scoring
+            {{else}}
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Lock Scoring
+            {{/if}}
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>
