@@ -156,15 +156,26 @@ function handlePhotoUpload(input) {
   if (file.size > 10 * 1024 * 1024) { alert('Image too large. Max 10MB.'); input.value=''; return; }
   const reader = new FileReader();
   reader.onload = function(e) {
-    const b64 = e.target.result;
-    document.getElementById('photo-b64').value      = b64;
-    document.getElementById('photo-b64-form').value = b64;
-    const img = document.getElementById('photo-preview');
-    img.src = b64;
-    img.classList.remove('hidden');
-    document.getElementById('photo-placeholder').style.display = 'none';
-    document.getElementById('remove-photo-wrap').classList.remove('hidden');
-    updateOverlay();
+    // Compress via canvas: max 400px wide, JPEG 60% quality
+    const srcImg = new Image();
+    srcImg.onload = function() {
+      const MAX = 400;
+      let w = srcImg.width, h = srcImg.height;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(srcImg, 0, 0, w, h);
+      const b64 = canvas.toDataURL('image/jpeg', 0.6);
+      document.getElementById('photo-b64').value      = b64;
+      document.getElementById('photo-b64-form').value = b64;
+      const img = document.getElementById('photo-preview');
+      img.src = b64;
+      img.classList.remove('hidden');
+      document.getElementById('photo-placeholder').style.display = 'none';
+      document.getElementById('remove-photo-wrap').classList.remove('hidden');
+      updateOverlay();
+    };
+    srcImg.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
