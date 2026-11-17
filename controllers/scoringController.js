@@ -550,6 +550,36 @@ export const resultsPage = async (req, res) => {
       };
     });
 
+    // Build per-judge-per-contestant weighted scores for comparison table
+    const judgeIds = [...new Set(allScores.map(s => s.judgeId))].filter(Boolean);
+    const judgeComparisonData = {
+      judgeLabels: judgeIds.map((_, i) => 'Judge ' + (i + 1)),
+      contestants: ranked.map(contestant => {
+        const judgeScores = judgeIds.map(judgeId => {
+          const judgeScoreDocs = allScores.filter(s => s.judgeId === judgeId && s.contestantId === contestant.id);
+          if (!judgeScoreDocs.length) return null;
+          let total = 0;
+          let hasScore = false;
+          criteria.forEach(c => {
+            const scoreDoc = judgeScoreDocs.find(s => s.criteriaId === c.id);
+            const raw = Number((scoreDoc || {}).score || 0);
+            const weight = Number(c.weight || 100) / 100;
+            total += raw * weight;
+            if (raw > 0) hasScore = true;
+          });
+          return hasScore ? Math.round(total * 100) / 100 : null;
+        });
+        const validScores = judgeScores.filter(s => s !== null);
+        const avg = validScores.length > 0 ? validScores.reduce((a, b) => a + b, 0) / validScores.length : 0;
+        return {
+          name: contestant.name,
+          number: contestant.number || '',
+          judgeScores,
+          avg: Math.round(avg * 100) / 100,
+        };
+      }),
+    };
+
     res.render("scoring/results", {
       title:       `Results — ${ev.name}`,
       event:       ev,
@@ -575,6 +605,8 @@ export const resultsPage = async (req, res) => {
       isTabulator: req.session.userRole === "tabulator",
       isMultiCategory,
       categoryGroups,
+      judgeComparisonData,
+      judgeComparisonJson: JSON.stringify(judgeComparisonData),
     });
   } catch (err) {
     console.error(err);

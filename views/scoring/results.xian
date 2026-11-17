@@ -1,8 +1,41 @@
 {{> head }}
+<style>
+@media print {
+  /* Hide nav, sidebar, toolbar, buttons */
+  nav, .sidebar, #page-loader, #page-loader-spinner,
+  #session-warning-modal, #ss-confirm-overlay,
+  .no-print, [class*="no-print"], .results-toolbar,
+  .btn-sm, button, a.btn-sm, .breadcrumb { display: none !important; }
+
+  /* Reset backgrounds for print */
+  body, main, html { background: #fff !important; color: #000 !important; }
+
+  /* Make the ranked results table readable */
+  .data-table th, .data-table td { color: #000 !important; border-color: #ccc !important; }
+  .data-table thead th { background: #f0f0f0 !important; }
+
+  /* Page title */
+  @page { margin: 1.5cm; }
+
+  /* Show main content full width */
+  main { padding: 0 !important; width: 100% !important; }
+  .flex { display: block !important; }
+
+  /* Show print-only header */
+  .print-only-header { display: block !important; }
+}
+</style>
 <body class="min-h-screen flex flex-col ss-page-bg">
 <div class="flex flex-1 overflow-hidden">
 {{> sidebar }}
 <main class="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 space-y-5">
+
+  <!-- Print-only header (hidden on screen) -->
+  <div class="print-only-header" style="display:none">
+    <h1 style="font-size:1.4rem;font-weight:900;margin-bottom:4px">Official Results â€” {{event.name}}</h1>
+    <p style="font-size:0.85rem;color:#555">Generated: <span id="print-date"></span></p>
+  </div>
+  <script>document.getElementById('print-date') && (document.getElementById('print-date').textContent = new Date().toLocaleString());</script>
 
   <span id="rt-results-meta" data-event-id="{{event.id}}" style="display:none"></span>
 
@@ -18,7 +51,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
         <div class="min-w-0">
-          <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">Official Results — {{event.name}}</div>
+          <div class="font-extrabold text-sm truncate" style="color:var(--text-primary)">Official Results ï¿½ {{event.name}}</div>
           <span id="rt-live-badge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background:rgba(16,185,129,0.15);color:#34d399;display:none">
             <span id="rt-pulse-dot" class="w-1.5 h-1.5 rounded-full" style="background:#34d399;animation:rt-pulse 1.5s infinite"></span>
             LIVE
@@ -87,7 +120,7 @@
           Print
         </button>
         <!-- Auto-reload toggle for tabulator -->
-        <button id="auto-reload-btn" type="button" onclick="toggleAutoReload()" class="btn-sm btn-sm-teal text-xs no-print" title="Auto-reload results — right-click to change interval">
+        <button id="auto-reload-btn" type="button" onclick="toggleAutoReload()" class="btn-sm btn-sm-teal text-xs no-print" title="Auto-reload results ï¿½ right-click to change interval">
           <svg id="auto-reload-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
           <span id="auto-reload-label">Auto: 15s</span>
         </button>
@@ -512,7 +545,7 @@
           </td>
           <td class="text-center no-print">
             {{#if (eq rank 1)}}
-            <span class="text-[10px] font-bold" style="color:#64748b">—</span>
+            <span class="text-[10px] font-bold" style="color:#64748b">ï¿½</span>
             {{else}}
             <span class="text-[11px] font-bold" style="color:rgba(239,68,68,0.75)">-{{gapToFirst}}%</span>
             {{/if}}
@@ -726,6 +759,77 @@
   {{/if}}
 {{/if}}
 
+{{#if judgeComparisonData}}
+<div class="section-card animate-fadeup-3 no-print" style="margin-top:1.5rem">
+  <div class="section-header">
+    <h2>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Judge Score Comparison
+    </h2>
+    <span style="font-size:0.72rem;color:var(--text-muted)">Cells highlighted in orange deviate &gt;10 pts from that contestant's average</span>
+  </div>
+  <div style="overflow-x:auto;padding:0 0 8px">
+    <table class="data-table" style="min-width:400px">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th>Contestant</th>
+          <th style="background:rgba(16,185,129,0.1);color:#34d399">Average</th>
+        </tr>
+      </thead>
+      <tbody id="judge-comparison-tbody">
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+(function() {
+  var data = {{{judgeComparisonJson}}};
+  if (!data || !data.judgeLabels || data.judgeLabels.length === 0) return;
+
+  // Add judge header columns
+  var headerRow = document.querySelector('#judge-comparison-tbody').closest('table').querySelector('thead tr');
+  var avgTh = headerRow.querySelector('th:last-child');
+  data.judgeLabels.forEach(function(label) {
+    var th = document.createElement('th');
+    th.textContent = label;
+    headerRow.insertBefore(th, avgTh);
+  });
+
+  // Build rows
+  var tbody = document.getElementById('judge-comparison-tbody');
+  data.contestants.forEach(function(c, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td style="font-weight:700;color:var(--text-muted)">' + (i + 1) + '</td>' +
+      '<td style="font-weight:600">' + (c.number ? '#' + c.number + ' &mdash; ' : '') + escH(c.name) + '</td>';
+    c.judgeScores.forEach(function(score) {
+      var td = document.createElement('td');
+      if (score === null) {
+        td.textContent = '\u2014';
+        td.style.color = 'var(--text-faint)';
+      } else {
+        td.textContent = score.toFixed(2);
+        if (Math.abs(score - c.avg) > 10) {
+          td.style.background = 'rgba(245,158,11,0.18)';
+          td.style.color = '#fcd34d';
+          td.style.fontWeight = '700';
+        }
+      }
+      tr.appendChild(td);
+    });
+    var avgTd = document.createElement('td');
+    avgTd.textContent = c.avg.toFixed(2);
+    avgTd.style.fontWeight = '700';
+    avgTd.style.color = '#34d399';
+    tr.appendChild(avgTd);
+    tbody.appendChild(tr);
+  });
+
+  function escH(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+})();
+</script>
+{{/if}}
+
 </main>
 </div>
 
@@ -901,7 +1005,7 @@
   .tabulation-score { background: transparent !important; border: none !important; }
 }
 
-/* -- #3: Toolbar — icons only on very small screens -- */
+/* -- #3: Toolbar ï¿½ icons only on very small screens -- */
 @media (max-width: 520px) {
   .results-toolbar-actions .btn-sm {
     padding: 8px 10px !important;
@@ -1071,7 +1175,7 @@ document.getElementById("print-date") && (document.getElementById("print-date").
   window.addEventListener('resize',upd);
   upd();
 })();
-// #4 — Tabulation scroll hint
+// #4 ï¿½ Tabulation scroll hint
 (function() {
   var wrap = document.querySelector('.tabulation-scroll-wrapper');
   var scr  = document.querySelector('.tabulation-scroll');
@@ -1088,7 +1192,7 @@ document.getElementById("print-date") && (document.getElementById("print-date").
 
 <!-- -- Print-only Rankings Table -- -->
 <div class="print-rank-table" style="display:none">
-  <h2>Official Results — {{event.name}}</h2>
+  <h2>Official Results ï¿½ {{event.name}}</h2>
   <div class="print-event-meta">
     {{#if event.date}}Date: {{event.date}} &nbsp;|&nbsp;{{/if}}
     {{judgeCount}} Judge(s) &nbsp;|&nbsp; {{ranked.length}} Contestant(s) &nbsp;|&nbsp; {{criteria.length}} Criteria &nbsp;|&nbsp;
@@ -1119,7 +1223,7 @@ document.getElementById("print-date") && (document.getElementById("print-date").
       {{/each}}
     </tbody>
   </table>
-  <div class="print-footer">ScoreSync — Official Competition Results &bull; {{event.name}} &bull; <span class="print-date-footer"></span></div>
+  <div class="print-footer">ScoreSync ï¿½ Official Competition Results &bull; {{event.name}} &bull; <span class="print-date-footer"></span></div>
 </div>
 
 <script>

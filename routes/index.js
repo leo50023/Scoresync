@@ -6,12 +6,15 @@ import { loginRateLimit } from "../middleware/rateLimit.js";
 
 // Public Firebase client config — apiKey/projectId are safe to expose (already in browser for any Firebase app)
 router.get('/api/firebase-config', (req, res) => {
+  if (!process.env.FIREBASE_API_KEY) {
+    return res.status(500).json({ error: 'Firebase not configured' });
+  }
   res.setHeader('Cache-Control', 'public, max-age=3600');
   res.json({
-    apiKey:            process.env.FIREBASE_API_KEY            || 'AIzaSyCQTkh6tsjLjuw6d6KaPetiNH2CriQxD7Q',
-    authDomain:        process.env.FIREBASE_AUTH_DOMAIN        || 'scoresync-92994.firebaseapp.com',
-    projectId:         process.env.FIREBASE_PROJECT_ID         || 'scoresync-92994',
-    appId:             process.env.FIREBASE_APP_ID             || '1:518166819896:web:8155a8be113adb9adb62cd',
+    apiKey:     process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId:  process.env.FIREBASE_PROJECT_ID,
+    appId:      process.env.FIREBASE_APP_ID,
   });
 });
 
@@ -91,7 +94,7 @@ router.get("/admin/backup", requireAuth, requireRole("admin"), backupData);
 import {
   listEvents, createEventPage, storeEvent,
   showEvent, editEventPage, updateEvent, deleteEvent, updateEventStatus,
-  assignJudge, removeJudge, toggleResultsLock,
+  assignJudge, removeJudge, toggleResultsLock, duplicateEvent,
 } from "../controllers/eventController.js";
 
 router.get( "/events",                requireAuth,                                      listEvents);
@@ -104,6 +107,7 @@ router.post("/events/:id/status",     requireAuth, requireRole("admin","organize
 router.post("/events/:id/delete",     requireAuth, requireRole("admin","organizer"),     deleteEvent);
 router.post("/events/:id/judges/assign",          requireAuth, requireRole("admin","organizer"), assignJudge);
 router.post("/events/:id/judges/:judgeId/remove", requireAuth, requireRole("admin","organizer"), removeJudge);
+router.post("/events/:id/duplicate",              requireAuth, requireRole("admin","organizer"), duplicateEvent);
 
 // ─── Contestants (admin, organizer & encoder can mutate) ──────────────────────
 import {

@@ -163,6 +163,15 @@ export const registerUser = async (req, res) => {
     return res.redirect("/register");
   }
 
+  const pwdErrors = [];
+  if (password.length < 8) pwdErrors.push('at least 8 characters');
+  if (!/[A-Z]/.test(password)) pwdErrors.push('at least one uppercase letter');
+  if (!/[0-9!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]/.test(password)) pwdErrors.push('at least one number or special character');
+  if (pwdErrors.length > 0) {
+    req.flash('error_msg', 'Password must contain: ' + pwdErrors.join(', ') + '.');
+    return res.redirect('/register');
+  }
+
   try {
     const credential = await createUserWithEmailAndPassword(auth, email, password);
     const uid = credential.user.uid;

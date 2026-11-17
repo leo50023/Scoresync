@@ -571,3 +571,70 @@ export const toggleResultsLock = async (req, res) => {
     res.redirect(`/events/${id}`);
   }
 };
+
+// --- Duplicate event ----------------------------------------------------------
+export const duplicateEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const snap = await getDoc(doc(db, EVENTS, id));
+    if (!snap.exists()) {
+      req.flash('error_msg', 'Event not found.');
+      return res.redirect('/events');
+    }
+    const original = snap.data();
+
+    // Create the duplicate event (no contestants, scores, judges)
+    const newEvRef = await addDoc(collection(db, EVENTS), {
+      name:                 'Copy of ' + (original.name || 'Event'),
+      description:          original.description || '',
+      date:                 original.date || '',
+      time:                 original.time || '',
+      endTime:              original.endTime || '',
+      venue:                original.venue || '',
+      type:                 original.type || 'pageant',
+      otherType:            original.otherType || '',
+      status:               'upcoming',
+      organizer:            original.organizer || '',
+      maxContestants:       original.maxContestants || '',
+      prizes:               original.prizes || '',
+      rules:                original.rules || '',
+      theme:                original.theme || 'blue',
+      notes:                original.notes || '',
+      coverPhoto:           '',
+      paymentMethod:        original.paymentMethod || '',
+      paymentAccountName:   original.paymentAccountName || '',
+      paymentAccountNumber: original.paymentAccountNumber || '',
+      paymentQR:            '',
+      assignedJudges:       [],
+      isEventSeries:        false,
+      parentEventId:        '',
+      parentEventName:      '',
+      subEvents:            [],
+      createdBy:            req.session.userId,
+      createdAt:            serverTimestamp(),
+    });
+
+    // Copy flat criteria
+    const crSnap = await getDocs(collection(db, EVENTS, id, 'criteria'));
+    await Promise.all(crSnap.docs.map(d =>
+      addDoc(collection(db, EVENTS, newEvRef.id, 'criteria'), { ...d.data(), createdAt: serverTimestamp() })
+    ));
+
+    // Copy categories and their criteria
+    const catSnap = await getDocs(collection(db, EVENTS, id, 'categories'));
+    await Promise.all(catSnap.docs.map(async catDoc => {
+      const newCatRef = await addDoc(collection(db, EVENTS, newEvRef.id, 'categories'), { ...catDoc.data(), createdAt: serverTimestamp() });
+      const catCrSnap = await getDocs(collection(db, EVENTS, id, 'categories', catDoc.id, 'criteria'));
+      await Promise.all(catCrSnap.docs.map(d =>
+        addDoc(collection(db, EVENTS, newEvRef.id, 'categories', newCatRef.id, 'criteria'), { ...d.data(), createdAt: serverTimestamp() })
+      ));
+    }));
+
+    req.flash('success_msg', `Event duplicated as "Copy of ${original.name}".`);
+    res.redirect(`/events/${newEvRef.id}`);
+  } catch (err) {
+    console.error('Duplicate event error:', err);
+    req.flash('error_msg', 'Failed to duplicate event.');
+    res.redirect(`/events/${id}`);
+  }
+};
