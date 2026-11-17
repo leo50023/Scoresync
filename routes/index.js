@@ -201,7 +201,7 @@ router.get( "/events/:eventId/scoring-progress", requireAuth,                   
 router.get( "/events/:eventId/display",  displayBoard);
 router.get( "/events/:eventId/public",   publicResults);
 // Score lock
-router.post("/events/:eventId/lock",     requireAuth, requireRole("admin","organizer"), toggleScoreLock);
+router.post("/events/:eventId/lock",     requireAuth, requireRole("tabulator"), toggleScoreLock);
 // Results lock (anonymous judging mode)
 router.post("/events/:id/results/lock",  requireAuth, requireRole("admin","organizer"), toggleResultsLock);
 // Report & signatures
