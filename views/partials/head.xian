@@ -1101,6 +1101,9 @@
     // bfcache fix: when user navigates back to this page, check if still logged in
     window.addEventListener('pageshow', function(e) {
       if (e.persisted) {
+        // Skip on public pages — only check on authenticated pages
+        var path = window.location.pathname;
+        if (path === '/' || path === '/login' || path === '/register' || path === '/forgot-password') return;
         // Page was restored from bfcache — verify session is still valid
         fetch('/dashboard', { method: 'HEAD', cache: 'no-store', redirect: 'manual' })
           .then(r => { if (r.type === 'opaqueredirect' || r.status === 302 || r.url.includes('/login')) { window.location.replace('/login'); } })
