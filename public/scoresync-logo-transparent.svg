@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Bar chart bars -->
+  <rect x="12" y="55" width="16" height="28" rx="3" fill="#2563eb"/>
+  <rect x="34" y="38" width="16" height="45" rx="3" fill="#3b82f6"/>
+  <rect x="56" y="25" width="16" height="58" rx="3" fill="#60a5fa"/>
+
+  <!-- Upward arrow/trend line -->
+  <polyline points="14,62 36,45 58,32 80,18" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Arrow head -->
+  <polyline points="68,14 80,18 76,30" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

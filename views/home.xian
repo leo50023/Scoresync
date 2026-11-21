@@ -893,6 +893,395 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════
+     HOW IT WORKS — Animated Step-by-Step Demo Section
+     ═══════════════════════════════════════════════════════════ -->
+<section id="how-it-works" style="background:linear-gradient(180deg,#060d1f 0%,#070e22 100%);padding:80px 0;overflow:hidden">
+  <div class="section-wrap">
+
+    <!-- Section Header -->
+    <div class="text-center mb-14 sr fm-fade-up">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4"
+        style="background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.25)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        See How It Works
+      </div>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#f8fafc;letter-spacing:-0.03em;line-height:1.15;margin-bottom:12px">
+        From setup to<br/><span style="background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">final results</span> in minutes
+      </h2>
+      <p style="color:#64748b;font-size:1rem;max-width:480px;margin:0 auto;line-height:1.6">
+        ScoreSync guides you through every step of your competition — no confusion, no delays.
+      </p>
+    </div>
+
+    <!-- Demo Window -->
+    <div class="hiw-demo-wrap sr fm-fade-up" style="max-width:860px;margin:0 auto">
+
+      <!-- Step Tabs -->
+      <div class="hiw-tabs" id="hiw-tabs">
+        <button class="hiw-tab active" onclick="hiwGoTo(0)" data-step="0">
+          <span class="hiw-tab-num">01</span>
+          <span class="hiw-tab-label">Create Event</span>
+        </button>
+        <button class="hiw-tab" onclick="hiwGoTo(1)" data-step="1">
+          <span class="hiw-tab-num">02</span>
+          <span class="hiw-tab-label">Add Participants</span>
+        </button>
+        <button class="hiw-tab" onclick="hiwGoTo(2)" data-step="2">
+          <span class="hiw-tab-num">03</span>
+          <span class="hiw-tab-label">Judges Score</span>
+        </button>
+        <button class="hiw-tab" onclick="hiwGoTo(3)" data-step="3">
+          <span class="hiw-tab-num">04</span>
+          <span class="hiw-tab-label">Live Results</span>
+        </button>
+      </div>
+
+      <!-- Demo Screen -->
+      <div class="hiw-screen" id="hiw-screen">
+
+        <!-- Progress bar -->
+        <div style="height:3px;background:rgba(255,255,255,0.06);border-radius:0">
+          <div id="hiw-progress" style="height:100%;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:0;transition:width 0.1s linear;width:0%"></div>
+        </div>
+
+        <!-- Step 0: Create Event -->
+        <div class="hiw-panel active" id="hiw-panel-0">
+          <div class="hiw-panel-inner">
+            <div class="hiw-panel-left">
+              <div class="hiw-step-badge" style="background:rgba(99,102,241,0.15);color:#a5b4fc;border-color:rgba(99,102,241,0.3)">Step 01</div>
+              <h3 class="hiw-panel-title">Create Your Event</h3>
+              <p class="hiw-panel-desc">Set up your competition in seconds — name it, choose the type (pageant, sports, cultural), set the date and venue, and pick a theme.</p>
+              <ul class="hiw-checklist">
+                <li><span class="hiw-check">✓</span> Choose event type &amp; theme</li>
+                <li><span class="hiw-check">✓</span> Set date, time &amp; venue</li>
+                <li><span class="hiw-check">✓</span> Define scoring criteria &amp; weights</li>
+              </ul>
+            </div>
+            <div class="hiw-panel-right">
+              <div class="hiw-mockup" style="border-color:rgba(99,102,241,0.3)">
+                <div class="hiw-mockup-bar" style="background:rgba(99,102,241,0.15)">
+                  <span class="hiw-dot" style="background:#ef4444"></span>
+                  <span class="hiw-dot" style="background:#f59e0b"></span>
+                  <span class="hiw-dot" style="background:#10b981"></span>
+                  <span style="font-size:10px;color:#64748b;margin-left:8px">Create Event</span>
+                </div>
+                <div class="hiw-mockup-body">
+                  <div class="hiw-form-row">
+                    <div class="hiw-form-label">Event Name</div>
+                    <div class="hiw-form-field hiw-typing" id="hiw-type-0">Miss Barangay 2026</div>
+                  </div>
+                  <div class="hiw-form-row">
+                    <div class="hiw-form-label">Type</div>
+                    <div class="hiw-form-field" style="color:#a78bfa">Pageant</div>
+                  </div>
+                  <div class="hiw-form-row">
+                    <div class="hiw-form-label">Date</div>
+                    <div class="hiw-form-field">December 15, 2026</div>
+                  </div>
+                  <div class="hiw-form-row">
+                    <div class="hiw-form-label">Criteria</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                      <span class="hiw-chip" style="background:rgba(37,99,235,0.2);color:#60a5fa">Beauty 30%</span>
+                      <span class="hiw-chip" style="background:rgba(124,58,237,0.2);color:#a78bfa">Talent 25%</span>
+                      <span class="hiw-chip" style="background:rgba(5,150,105,0.2);color:#34d399">Poise 20%</span>
+                      <span class="hiw-chip" style="background:rgba(217,119,6,0.2);color:#fbbf24">Q&amp;A 25%</span>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px">
+                    <div class="hiw-btn-mock" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      Create Event
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: Add Participants -->
+        <div class="hiw-panel" id="hiw-panel-1">
+          <div class="hiw-panel-inner">
+            <div class="hiw-panel-left">
+              <div class="hiw-step-badge" style="background:rgba(5,150,105,0.15);color:#34d399;border-color:rgba(5,150,105,0.3)">Step 02</div>
+              <h3 class="hiw-panel-title">Add Participants &amp; Judges</h3>
+              <p class="hiw-panel-desc">Register contestants with photos and profiles. Assign judges to the event — they'll receive an email notification automatically.</p>
+              <ul class="hiw-checklist">
+                <li><span class="hiw-check" style="color:#34d399">✓</span> Add contestants with photos</li>
+                <li><span class="hiw-check" style="color:#34d399">✓</span> Assign judges instantly</li>
+                <li><span class="hiw-check" style="color:#34d399">✓</span> Auto email notification to judges</li>
+              </ul>
+            </div>
+            <div class="hiw-panel-right">
+              <div class="hiw-mockup" style="border-color:rgba(5,150,105,0.3)">
+                <div class="hiw-mockup-bar" style="background:rgba(5,150,105,0.1)">
+                  <span class="hiw-dot" style="background:#ef4444"></span>
+                  <span class="hiw-dot" style="background:#f59e0b"></span>
+                  <span class="hiw-dot" style="background:#10b981"></span>
+                  <span style="font-size:10px;color:#64748b;margin-left:8px">Participants</span>
+                </div>
+                <div class="hiw-mockup-body">
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+                    <div class="hiw-contestant-card" style="animation-delay:0s">
+                      <div class="hiw-avatar" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">01</div>
+                      <div class="hiw-contestant-name">Maria</div>
+                    </div>
+                    <div class="hiw-contestant-card" style="animation-delay:0.15s">
+                      <div class="hiw-avatar" style="background:linear-gradient(135deg,#059669,#10b981)">02</div>
+                      <div class="hiw-contestant-name">Ana</div>
+                    </div>
+                    <div class="hiw-contestant-card" style="animation-delay:0.3s">
+                      <div class="hiw-avatar" style="background:linear-gradient(135deg,#b45309,#d97706)">03</div>
+                      <div class="hiw-contestant-name">Rosa</div>
+                    </div>
+                  </div>
+                  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px">
+                    <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Assigned Judges</div>
+                    <div style="display:flex;flex-direction:column;gap:5px">
+                      <div class="hiw-judge-row"><div class="hiw-judge-dot" style="background:#6366f1"></div><span>Judge 1 — Assigned ✓</span></div>
+                      <div class="hiw-judge-row"><div class="hiw-judge-dot" style="background:#8b5cf6"></div><span>Judge 2 — Assigned ✓</span></div>
+                      <div class="hiw-judge-row"><div class="hiw-judge-dot" style="background:#06b6d4"></div><span>Judge 3 — Assigned ✓</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Judges Score -->
+        <div class="hiw-panel" id="hiw-panel-2">
+          <div class="hiw-panel-inner">
+            <div class="hiw-panel-left">
+              <div class="hiw-step-badge" style="background:rgba(217,119,6,0.15);color:#fbbf24;border-color:rgba(217,119,6,0.3)">Step 03</div>
+              <h3 class="hiw-panel-title">Judges Score Live</h3>
+              <p class="hiw-panel-desc">Judges log in on any device and submit scores in real-time. The tabulator monitors progress and can review or edit scores if needed.</p>
+              <ul class="hiw-checklist">
+                <li><span class="hiw-check" style="color:#fbbf24">✓</span> Works on any device</li>
+                <li><span class="hiw-check" style="color:#fbbf24">✓</span> Real-time progress tracking</li>
+                <li><span class="hiw-check" style="color:#fbbf24">✓</span> Tabulator can review &amp; edit</li>
+              </ul>
+            </div>
+            <div class="hiw-panel-right">
+              <div class="hiw-mockup" style="border-color:rgba(217,119,6,0.3)">
+                <div class="hiw-mockup-bar" style="background:rgba(217,119,6,0.1)">
+                  <span class="hiw-dot" style="background:#ef4444"></span>
+                  <span class="hiw-dot" style="background:#f59e0b"></span>
+                  <span class="hiw-dot" style="background:#10b981"></span>
+                  <span style="font-size:10px;color:#64748b;margin-left:8px">Score Entry</span>
+                </div>
+                <div class="hiw-mockup-body">
+                  <div style="font-size:10px;font-weight:700;color:#fbbf24;margin-bottom:8px">Maria Santos — Contestant #01</div>
+                  <div style="display:flex;flex-direction:column;gap:6px">
+                    <div class="hiw-score-row">
+                      <span class="hiw-criteria-label" style="color:#60a5fa">Beauty</span>
+                      <div class="hiw-score-bar-wrap"><div class="hiw-score-bar" style="width:88%;background:linear-gradient(90deg,#2563eb,#60a5fa)" id="hiw-bar-0"></div></div>
+                      <span class="hiw-score-val" id="hiw-score-0">88</span>
+                    </div>
+                    <div class="hiw-score-row">
+                      <span class="hiw-criteria-label" style="color:#a78bfa">Talent</span>
+                      <div class="hiw-score-bar-wrap"><div class="hiw-score-bar" style="width:92%;background:linear-gradient(90deg,#7c3aed,#a78bfa)" id="hiw-bar-1"></div></div>
+                      <span class="hiw-score-val" id="hiw-score-1">92</span>
+                    </div>
+                    <div class="hiw-score-row">
+                      <span class="hiw-criteria-label" style="color:#34d399">Poise</span>
+                      <div class="hiw-score-bar-wrap"><div class="hiw-score-bar" style="width:85%;background:linear-gradient(90deg,#059669,#34d399)" id="hiw-bar-2"></div></div>
+                      <span class="hiw-score-val" id="hiw-score-2">85</span>
+                    </div>
+                    <div class="hiw-score-row">
+                      <span class="hiw-criteria-label" style="color:#fbbf24">Q&amp;A</span>
+                      <div class="hiw-score-bar-wrap"><div class="hiw-score-bar" style="width:95%;background:linear-gradient(90deg,#d97706,#fbbf24)" id="hiw-bar-3"></div></div>
+                      <span class="hiw-score-val" id="hiw-score-3">95</span>
+                    </div>
+                  </div>
+                  <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:10px;color:#64748b">Weighted Total</span>
+                    <span style="font-size:16px;font-weight:900;color:#fbbf24" id="hiw-total">91.25%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Live Results -->
+        <div class="hiw-panel" id="hiw-panel-3">
+          <div class="hiw-panel-inner">
+            <div class="hiw-panel-left">
+              <div class="hiw-step-badge" style="background:rgba(245,158,11,0.15);color:#fde047;border-color:rgba(245,158,11,0.3)">Step 04</div>
+              <h3 class="hiw-panel-title">Announce Live Results</h3>
+              <p class="hiw-panel-desc">Scores are automatically tallied and ranked. Display the live leaderboard on screen, export results to CSV, or print the official report.</p>
+              <ul class="hiw-checklist">
+                <li><span class="hiw-check" style="color:#fde047">✓</span> Auto-ranked leaderboard</li>
+                <li><span class="hiw-check" style="color:#fde047">✓</span> Live display board</li>
+                <li><span class="hiw-check" style="color:#fde047">✓</span> Export CSV &amp; print report</li>
+              </ul>
+            </div>
+            <div class="hiw-panel-right">
+              <div class="hiw-mockup" style="border-color:rgba(245,158,11,0.3)">
+                <div class="hiw-mockup-bar" style="background:rgba(245,158,11,0.1)">
+                  <span class="hiw-dot" style="background:#ef4444"></span>
+                  <span class="hiw-dot" style="background:#f59e0b"></span>
+                  <span class="hiw-dot" style="background:#10b981"></span>
+                  <span style="font-size:10px;color:#64748b;margin-left:8px">Official Results</span>
+                </div>
+                <div class="hiw-mockup-body">
+                  <div style="text-align:center;margin-bottom:10px">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fde047">🏆 Miss Barangay 2026</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:5px">
+                    <div class="hiw-rank-row" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08)">
+                      <span style="font-size:16px">🏆</span>
+                      <div style="flex:1"><div style="font-size:11px;font-weight:800;color:#fde047">Maria Santos</div><div style="font-size:9px;color:#92400e">Champion</div></div>
+                      <span style="font-size:14px;font-weight:900;color:#fbbf24">91.25%</span>
+                    </div>
+                    <div class="hiw-rank-row" style="border-color:rgba(148,163,184,0.2)">
+                      <span style="font-size:14px">🥈</span>
+                      <div style="flex:1"><div style="font-size:11px;font-weight:700;color:#e2e8f0">Ana Reyes</div><div style="font-size:9px;color:#64748b">2nd Place</div></div>
+                      <span style="font-size:13px;font-weight:800;color:#94a3b8">88.50%</span>
+                    </div>
+                    <div class="hiw-rank-row" style="border-color:rgba(205,127,50,0.2)">
+                      <span style="font-size:14px">🥉</span>
+                      <div style="flex:1"><div style="font-size:11px;font-weight:700;color:#e2e8f0">Rosa Cruz</div><div style="font-size:9px;color:#64748b">3rd Place</div></div>
+                      <span style="font-size:13px;font-weight:800;color:#cd7f32">85.75%</span>
+                    </div>
+                  </div>
+                  <div style="margin-top:10px;display:flex;gap:6px">
+                    <div class="hiw-btn-mock" style="background:rgba(5,150,105,0.2);color:#34d399;font-size:9px;flex:1">Export CSV</div>
+                    <div class="hiw-btn-mock" style="background:rgba(99,102,241,0.2);color:#a5b4fc;font-size:9px;flex:1">Print Report</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation dots -->
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:20px">
+        <button class="hiw-dot-btn active" onclick="hiwGoTo(0)" id="hiw-dot-0"></button>
+        <button class="hiw-dot-btn" onclick="hiwGoTo(1)" id="hiw-dot-1"></button>
+        <button class="hiw-dot-btn" onclick="hiwGoTo(2)" id="hiw-dot-2"></button>
+        <button class="hiw-dot-btn" onclick="hiwGoTo(3)" id="hiw-dot-3"></button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── How It Works Styles ── */
+.hiw-tabs { display:flex; gap:4px; padding:4px; background:rgba(255,255,255,0.04); border-radius:12px; margin-bottom:0; border:1px solid rgba(255,255,255,0.07); }
+.hiw-tab { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 8px; border-radius:9px; border:none; cursor:pointer; background:transparent; transition:all .2s; }
+.hiw-tab:hover { background:rgba(255,255,255,0.05); }
+.hiw-tab.active { background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.15)); border:1px solid rgba(99,102,241,0.3); }
+.hiw-tab-num { font-size:9px; font-weight:800; color:#4b5563; letter-spacing:.08em; }
+.hiw-tab.active .hiw-tab-num { color:#818cf8; }
+.hiw-tab-label { font-size:11px; font-weight:700; color:#64748b; white-space:nowrap; }
+.hiw-tab.active .hiw-tab-label { color:#e2e8f0; }
+.hiw-screen { background:rgba(10,15,30,0.8); border:1px solid rgba(255,255,255,0.08); border-top:none; border-radius:0 0 16px 16px; overflow:hidden; backdrop-filter:blur(12px); }
+.hiw-panel { display:none; }
+.hiw-panel.active { display:block; animation:hiwFadeIn .35s ease both; }
+@keyframes hiwFadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.hiw-panel-inner { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:28px 24px; align-items:center; }
+@media(max-width:640px) { .hiw-panel-inner { grid-template-columns:1fr; } .hiw-panel-right { display:none; } .hiw-tabs { flex-wrap:wrap; } .hiw-tab { min-width:calc(50% - 4px); } }
+.hiw-step-badge { display:inline-flex; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:800; border:1px solid; margin-bottom:12px; letter-spacing:.06em; }
+.hiw-panel-title { font-size:1.3rem; font-weight:900; color:#f1f5f9; margin-bottom:10px; line-height:1.2; }
+.hiw-panel-desc { font-size:0.82rem; color:#64748b; line-height:1.6; margin-bottom:14px; }
+.hiw-checklist { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px; }
+.hiw-checklist li { display:flex; align-items:center; gap:8px; font-size:0.8rem; color:#94a3b8; }
+.hiw-check { font-size:11px; font-weight:900; color:#6366f1; flex-shrink:0; }
+.hiw-mockup { border-radius:12px; overflow:hidden; border:1px solid; background:rgba(5,10,20,0.9); }
+.hiw-mockup-bar { display:flex; align-items:center; padding:8px 12px; gap:5px; }
+.hiw-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+.hiw-mockup-body { padding:14px; }
+.hiw-form-row { margin-bottom:8px; }
+.hiw-form-label { font-size:9px; font-weight:700; color:#4b5563; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+.hiw-form-field { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:7px; padding:6px 10px; font-size:11px; font-weight:600; color:#e2e8f0; }
+.hiw-chip { font-size:9px; font-weight:700; padding:3px 8px; border-radius:999px; }
+.hiw-btn-mock { display:flex; align-items:center; justify-content:center; gap:5px; padding:8px 14px; border-radius:8px; font-size:11px; font-weight:700; color:white; cursor:default; }
+.hiw-score-row { display:flex; align-items:center; gap:8px; }
+.hiw-criteria-label { font-size:10px; font-weight:700; width:38px; flex-shrink:0; }
+.hiw-score-bar-wrap { flex:1; height:6px; background:rgba(255,255,255,0.07); border-radius:999px; overflow:hidden; }
+.hiw-score-bar { height:100%; border-radius:999px; transition:width 1s ease; }
+.hiw-score-val { font-size:11px; font-weight:800; color:#f1f5f9; width:24px; text-align:right; flex-shrink:0; }
+.hiw-contestant-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:10px 6px; text-align:center; animation:hiwFadeIn .4s ease both; }
+.hiw-avatar { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:white; margin:0 auto 6px; }
+.hiw-contestant-name { font-size:10px; font-weight:700; color:#94a3b8; }
+.hiw-judge-row { display:flex; align-items:center; gap:7px; font-size:10px; color:#64748b; }
+.hiw-judge-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.hiw-rank-row { display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:9px; border:1px solid; background:rgba(255,255,255,0.03); }
+.hiw-dot-btn { width:8px; height:8px; border-radius:50%; border:none; cursor:pointer; background:rgba(255,255,255,0.15); padding:0; transition:all .2s; }
+.hiw-dot-btn.active { width:24px; border-radius:999px; background:linear-gradient(90deg,#6366f1,#8b5cf6); }
+.hiw-typing::after { content:'|'; animation:hiwBlink .7s infinite; color:#6366f1; }
+@keyframes hiwBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+
+<script>
+(function(){
+  var current = 0;
+  var total = 4;
+  var timer = null;
+  var progressTimer = null;
+  var STEP_MS = 5000;
+  var progress = 0;
+
+  function hiwGoTo(idx) {
+    // Deactivate old
+    document.getElementById('hiw-panel-' + current).classList.remove('active');
+    document.querySelectorAll('.hiw-tab')[current].classList.remove('active');
+    document.getElementById('hiw-dot-' + current).classList.remove('active');
+
+    current = idx;
+
+    // Activate new
+    document.getElementById('hiw-panel-' + current).classList.add('active');
+    document.querySelectorAll('.hiw-tab')[current].classList.add('active');
+    document.getElementById('hiw-dot-' + current).classList.add('active');
+
+    // Reset progress
+    progress = 0;
+    document.getElementById('hiw-progress').style.width = '0%';
+
+    // Restart timers
+    clearInterval(timer);
+    clearInterval(progressTimer);
+    startTimers();
+  }
+
+  function startTimers() {
+    var startTime = Date.now();
+    progressTimer = setInterval(function(){
+      var elapsed = Date.now() - startTime;
+      progress = Math.min((elapsed / STEP_MS) * 100, 100);
+      document.getElementById('hiw-progress').style.width = progress + '%';
+    }, 50);
+
+    timer = setTimeout(function(){
+      clearInterval(progressTimer);
+      hiwGoTo((current + 1) % total);
+    }, STEP_MS);
+  }
+
+  // Expose globally for onclick
+  window.hiwGoTo = hiwGoTo;
+
+  // Start auto-play when section is visible
+  var observed = false;
+  var observer = new IntersectionObserver(function(entries){
+    if (entries[0].isIntersecting && !observed) {
+      observed = true;
+      startTimers();
+    }
+  }, { threshold: 0.3 });
+
+  var section = document.getElementById('how-it-works');
+  if (section) observer.observe(section);
+})();
+</script>
+
 <!-- -- CTA -- -->
 <section class="cta-section">
   <div class="section-wrap relative z-10">

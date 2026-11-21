@@ -3,8 +3,14 @@
   <!-- Brand -->
   <div class="px-4 flex-shrink-0 flex items-center justify-between" style="height:56px;border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 0 16px rgba(52,211,153,0.2)">
     <div class="flex items-center gap-3 sidebar-brand-content">
-      <div style="background:linear-gradient(135deg,#0d2137,#0a1628);border-radius:9999px;padding:2px;box-shadow:0 0 12px rgba(52,211,153,0.2)">
-        <img src="/scoresync-logo.png?v=8" alt="ScoreSync" class="w-10 h-10 rounded-full flex-shrink-0 shadow-lg object-cover" style="mix-blend-mode:screen;border:2px solid rgba(52,211,153,0.3)"/>
+      <div style="background:linear-gradient(135deg,#0d2137,#1a3a5c);border-radius:9999px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 14px rgba(52,211,153,0.25);border:2px solid rgba(52,211,153,0.3)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="24" height="24">
+          <rect x="12" y="52" width="16" height="30" rx="3" fill="#2563eb"/>
+          <rect x="34" y="36" width="16" height="46" rx="3" fill="#3b82f6"/>
+          <rect x="56" y="22" width="16" height="60" rx="3" fill="#60a5fa"/>
+          <polyline points="14,60 36,43 58,30 80,16" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="68,12 80,16 76,28" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
       <div class="sidebar-label-text">
         <div class="text-white font-black text-base leading-tight tracking-tight">ScoreSync</div>

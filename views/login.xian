@@ -50,17 +50,11 @@
   /* ── Logo ── */
   .auth-logomark {
     width: 72px; height: 72px; border-radius: 50%;
-    overflow: hidden; flex-shrink: 0; margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-bottom: 14px;
     background: linear-gradient(135deg,#0d1a2e,#0a1628);
-    box-shadow:
-      0 0 0 1px rgba(124,58,237,0.35),
-      0 0 24px rgba(124,58,237,0.3),
-      0 8px 32px rgba(0,0,0,0.5);
+    box-shadow: 0 0 0 1px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.3), 0 8px 32px rgba(0,0,0,0.5);
     animation: logoPulse 5s ease-in-out infinite, logoFloat 6s ease-in-out infinite;
-  }
-  @keyframes logoFloat {
-    0%,100% { transform: translateY(0px); }
-    50%     { transform: translateY(-6px); }
   }
   .auth-logomark img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
   @keyframes logoPulse {
@@ -371,7 +365,13 @@
 <div class="auth-shell fm-fade-up">
 
   <div class="auth-logomark">
-    <img src="/scoresync-logo.png?v=8" alt="ScoreSync"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="52" height="52">
+      <rect x="12" y="52" width="16" height="30" rx="3" fill="#2563eb"/>
+      <rect x="34" y="36" width="16" height="46" rx="3" fill="#3b82f6"/>
+      <rect x="56" y="22" width="16" height="60" rx="3" fill="#60a5fa"/>
+      <polyline points="14,60 36,43 58,30 80,16" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="68,12 80,16 76,28" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
   <div class="auth-eyebrow">ScoreSync</div>
   <h1 class="auth-title">Welcome back</h1>
