@@ -365,13 +365,7 @@
 <div class="auth-shell fm-fade-up">
 
   <div class="auth-logomark">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="52" height="52">
-      <rect x="12" y="52" width="16" height="30" rx="3" fill="#2563eb"/>
-      <rect x="34" y="36" width="16" height="46" rx="3" fill="#3b82f6"/>
-      <rect x="56" y="22" width="16" height="60" rx="3" fill="#60a5fa"/>
-      <polyline points="14,60 36,43 58,30 80,16" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline points="68,12 80,16 76,28" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <img src="/scoresync-logo-transparent.svg" alt="ScoreSync" width="68" height="68" style="display:block"/>
   </div>
   <div class="auth-eyebrow">ScoreSync</div>
   <h1 class="auth-title">Welcome back</h1>

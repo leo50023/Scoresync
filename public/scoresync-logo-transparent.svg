@@ -1,11 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <!-- Bar chart bars -->
-  <rect x="12" y="55" width="16" height="28" rx="3" fill="#2563eb"/>
-  <rect x="34" y="38" width="16" height="45" rx="3" fill="#3b82f6"/>
-  <rect x="56" y="25" width="16" height="58" rx="3" fill="#60a5fa"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Dark navy circle background -->
+  <circle cx="100" cy="100" r="98" fill="#0d1f35"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#1e3a5f" stroke-width="2"/>
 
-  <!-- Upward arrow/trend line -->
-  <polyline points="14,62 36,45 58,32 80,18" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bar chart bars -->
+  <rect x="38" y="90" width="22" height="45" rx="4" fill="#1a56db"/>
+  <rect x="68" y="68" width="22" height="67" rx="4" fill="#1e6fdb"/>
+  <rect x="98" y="50" width="22" height="85" rx="4" fill="#2a85e8"/>
+
+  <!-- Arrow swoosh -->
+  <path d="M38 88 C55 70, 75 55, 130 38" fill="none" stroke="white" stroke-width="6" stroke-linecap="round"/>
   <!-- Arrow head -->
-  <polyline points="68,14 80,18 76,30" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="118,30 130,38 122,50" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- SCORESYNC text -->
+  <text x="100" y="162" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="800" letter-spacing="3" fill="white" opacity="0.9">SCORESYNC</text>
 </svg>

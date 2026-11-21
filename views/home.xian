@@ -506,14 +506,8 @@
 
       <!-- Brand -->
       <a href="/" class="flex items-center gap-3 flex-shrink-0 text-decoration-none" style="text-decoration:none">
-        <div style="background:linear-gradient(135deg,#0d2137,#1a3a5c);border-radius:9999px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 14px rgba(52,211,153,0.2);border:1.5px solid rgba(52,211,153,0.25)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
-            <rect x="12" y="52" width="16" height="30" rx="3" fill="#2563eb"/>
-            <rect x="34" y="36" width="16" height="46" rx="3" fill="#3b82f6"/>
-            <rect x="56" y="22" width="16" height="60" rx="3" fill="#60a5fa"/>
-            <polyline points="14,60 36,43 58,30 80,16" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="68,12 80,16 76,28" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div style="border-radius:9999px;width:36px;height:36px;flex-shrink:0;overflow:hidden;box-shadow:0 0 14px rgba(29,78,216,0.4);border:1.5px solid rgba(30,111,219,0.4)">
+          <img src="/scoresync-logo-transparent.svg" alt="ScoreSync" width="36" height="36" style="display:block;border-radius:9999px"/>
         </div>
         <span class="font-black text-base tracking-tight text-white hidden sm:block">ScoreSync</span>
       </a>
