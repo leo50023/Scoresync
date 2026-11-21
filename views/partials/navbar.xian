@@ -12,8 +12,8 @@
 
   <!-- Brand -->
   <a href="/dashboard" class="flex items-center gap-2 flex-shrink-0">
-    <div style="border-radius:9999px;width:32px;height:32px;flex-shrink:0;overflow:hidden;box-shadow:0 0 10px rgba(29,78,216,0.4);border:1.5px solid rgba(30,111,219,0.4)">
-      <img src="/scoresync-logo-transparent.svg" alt="ScoreSync" width="32" height="32" style="display:block;border-radius:9999px"/>
+    <div style="border-radius:9999px;width:36px;height:36px;flex-shrink:0;overflow:hidden;box-shadow:0 0 12px rgba(29,78,216,0.5);border:2px solid rgba(37,99,235,0.5)">
+      <img src="/scoresync-logo-transparent.svg" alt="ScoreSync" width="36" height="36" style="display:block"/>
     </div>
     <span class="font-black text-white text-sm tracking-tight hidden sm:block">ScoreSync</span>
   </a>
